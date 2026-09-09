@@ -11,7 +11,7 @@ export interface FlowerInfo {
 }
 
 export const FLOWERS: FlowerInfo[] = [
-  { type: "rose", name: "Rose", latin: "Rosa × hybrida", color: "#db6974", family: "Rosaceae", description: "A quiet unfolding.\nA thousand little curves.", detail: "Soft, overlapping petals spiral around a tightly furled heart." },
+  { type: "rose", name: "Rose", latin: "Rosa × hybrida", color: "#b8435c", family: "Rosaceae", description: "A quiet unfolding.\nA thousand little curves.", detail: "Soft, overlapping petals spiral around a tightly furled heart." },
   { type: "lotus", name: "Lotus", latin: "Nelumbo nucifera", color: "#f0a8b5", family: "Nelumbonaceae", description: "From still water,\nsomething extraordinary.", detail: "Waxy, tapered petals cradle a distinctive golden seed pod." },
   { type: "marigold", name: "Marigold", latin: "Tagetes erecta", color: "#f5a025", family: "Asteraceae", description: "Sunlight, gathered\ninto a single bloom.", detail: "Hundreds of ruffled florets make a dense, warmly colored crown." },
   { type: "sunflower", name: "Sunflower", latin: "Helianthus annuus", color: "#f8c43c", family: "Asteraceae", description: "Always turning\ntoward the light.", detail: "Golden rays surround a disk of seeds arranged in interlacing spirals." },

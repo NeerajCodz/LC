@@ -20,15 +20,16 @@ export function createPetalGeometry(profile: PetalProfile, seed: number, quality
     for (let row = 0; row <= rows; row++) {
       const t = row / rows;
       // A tiny nonzero margin keeps the shell manifold at its root and tip.
-      const envelope = 0.006 + Math.pow(Math.max(0, Math.sin(Math.PI * Math.pow(t, 0.83))), profile.taper);
+      const rounded = profile.roundness ?? 0;
+      const envelope = 0.006 + Math.pow(Math.max(0, Math.sin(Math.PI * Math.pow(t, 0.83) * (1 - rounded * .43))), profile.taper);
       for (let column = 0; column <= columns; column++) {
         const u = (column / columns) * 2 - 1;
         const edge = Math.pow(Math.abs(u), 3);
         const x = u * profile.width * 0.5 * envelope * (1 + asymmetry * u) + Math.sin(t * Math.PI) * asymmetry * profile.width;
         const notch = (profile.notch ?? 0) * Math.exp(-u * u * 45) * Math.pow(t, 12);
-        const y = profile.length * (t - notch) + Math.sin(u * 4.8 + phase) * profile.ripple * edge * Math.sin(t * Math.PI);
-        const z = profile.length * (profile.cup * t * t - profile.curl * Math.pow(t, 5))
-          + profile.edge * u * u * Math.sin(Math.PI * t * 0.85)
+        const y = profile.length * (t * (1 - rounded * .3 * (1 - Math.sqrt(Math.max(0, 1 - u * u)))) - notch) + Math.sin(u * 4.8 + phase) * profile.ripple * edge * Math.sin(t * Math.PI);
+        const z = profile.length * (profile.cup * t * t + profile.curl * Math.pow(t, 5))
+          - profile.edge * u * u * Math.sin(Math.PI * t * 0.85)
           + profile.ripple * Math.sin(u * 13 + t * 18 + phase) * edge * Math.sin(t * Math.PI)
           + profile.twist * u * t * t
           + (side === 0 ? 1 : -1) * profile.thickness * (0.65 + Math.sin(Math.PI * t) * 0.35) * 0.5;
@@ -66,6 +67,18 @@ export function createPetalGeometry(profile: PetalProfile, seed: number, quality
   geometry.setAttribute("uv", new Float32BufferAttribute(uvs, 2));
   geometry.setIndex(indices);
   geometry.computeVertexNormals();
+  const folded = positions.slice();
+  for (let i = 0; i < folded.length / 3; i++) {
+    const t = uvs[i * 2 + 1];
+    folded[i * 3] *= 1 - t * .32;
+    folded[i * 3 + 2] = positions[i * 3 + 2] * .24 - Math.pow(t, 3) * profile.length * .19;
+  }
+  const closed = new BufferGeometry();
+  closed.setAttribute('position', new Float32BufferAttribute(folded, 3));
+  closed.setIndex(indices); closed.computeVertexNormals();
+  geometry.morphAttributes.position = [closed.getAttribute('position')];
+  geometry.morphAttributes.normal = [closed.getAttribute('normal')];
+  closed.dispose();
   geometry.computeBoundingSphere();
   return geometry;
 }

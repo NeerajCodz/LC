@@ -1,6 +1,7 @@
 'use client';
 import dynamic from 'next/dynamic';
 import { useEffect, useRef, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { ArrowLeft, ArrowRight, ChevronDown, Maximize2, Minimize2, Pause, Play, RotateCcw, SlidersHorizontal, X, MoveUpRight } from 'lucide-react';
 import { FLOWERS, getFlower, isFlowerType } from '@/lib/flowers/catalog';
 import type { FlowerType } from '@/lib/flowers/types';
@@ -9,11 +10,11 @@ import { useExperienceSettings } from '@/hooks/useExperienceSettings';
 const Scene=dynamic(()=>import('./flowers/FlowerScene'),{ssr:false});
 
 export default function Experience(){
-  const [type,setType]=useState<FlowerType>('rose'),[target,setTarget]=useState(1),[bloom,setBloom]=useState(0),[switching,setSwitching]=useState(false),[picker,setPicker]=useState(false),[macro,setMacro]=useState(false),[paused,setPaused]=useState(false),[pulse,setPulse]=useState(0),[ready,setReady]=useState(false);
+  const params=useSearchParams(), initial=params.get('flower');
+  const [type,setType]=useState<FlowerType>(isFlowerType(initial)?initial:'rose'),[target,setTarget]=useState(1),[bloom,setBloom]=useState(0),[switching,setSwitching]=useState(false),[picker,setPicker]=useState(false),[macro,setMacro]=useState(false),[paused,setPaused]=useState(false),[pulse,setPulse]=useState(0),[ready,setReady]=useState(false);
   const timer=useRef<ReturnType<typeof setTimeout>|null>(null);
   const {reducedMotion}=useExperienceSettings();
   const info=getFlower(type),index=FLOWERS.findIndex(f=>f.type===type);
-  useEffect(()=>{const selected=new URLSearchParams(location.search).get('flower');if(isFlowerType(selected))setType(selected);},[]);
   useEffect(()=>{if(!ready)return;const id=setTimeout(()=>setBloom(target),reducedMotion?0:900);return()=>clearTimeout(id);},[ready,reducedMotion,target]);
   useEffect(()=>()=>{if(timer.current)clearTimeout(timer.current);},[]);
   useEffect(()=>{document.body.style.overflow=picker?'hidden':'';return()=>{document.body.style.overflow='';};},[picker]);

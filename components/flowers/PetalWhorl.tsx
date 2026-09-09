@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useRef, type RefObject } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useRef, type RefObject } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { Color, DynamicDrawUsage, InstancedMesh, Object3D } from 'three';
+import { Color, DynamicDrawUsage, InstancedMesh, Mesh, Object3D } from 'three';
 import type { PetalLayer, Quality } from '@/lib/flowers/types';
 import { createPetalGeometry } from '@/lib/three/geometry';
 import { createPetalMaterial } from '@/lib/three/materials';
@@ -13,6 +13,7 @@ export function PetalWhorl({ layer, color, seed, quality, bloom, time, wind, rou
   const dummy = useMemo(() => new Object3D(), []);
   const geometry = useMemo(() => createPetalGeometry(layer.profile, seed, quality), [layer.profile, seed, quality]);
   const material = useMemo(() => createPetalMaterial(layer.color ?? color, roughness, sheen, layer.profile.spots), [layer.color, color, roughness, sheen, layer.profile.spots]);
+  const morph = useMemo(() => new Mesh(geometry, material), [geometry, material]);
   const petals = useMemo(() => {
     const random = seededRandom(seed);
     return Array.from({ length: layer.count }, (_, i) => ({
@@ -22,13 +23,13 @@ export function PetalWhorl({ layer, color, seed, quality, bloom, time, wind, rou
       twist: (random() - .5) * .17, shade: .88 + random() * .19, phase: random() * 6.28,
     }));
   }, [layer, seed]);
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!mesh.current) return;
     mesh.current.instanceMatrix.setUsage(DynamicDrawUsage);
     const tint = new Color();
-    petals.forEach((p, i) => mesh.current!.setColorAt(i, tint.setRGB(p.shade, p.shade, p.shade)));
+    petals.forEach((p, i) => { mesh.current!.setColorAt(i, tint.setRGB(p.shade, p.shade, p.shade)); morph.morphTargetInfluences![0] = 1; mesh.current!.setMorphAt(i, morph); });
     if (mesh.current.instanceColor) mesh.current.instanceColor.needsUpdate = true;
-  }, [petals]);
+  }, [petals, morph]);
   useEffect(() => () => { geometry.dispose(); material.dispose(); }, [geometry, material]);
   useFrame(() => {
     if (!mesh.current) return;
@@ -42,8 +43,11 @@ export function PetalWhorl({ layer, color, seed, quality, bloom, time, wind, rou
       dummy.rotateZ(p.twist * (.2 + .8 * open));
       dummy.scale.set(p.width * (.6 + .4 * open), p.length * (.9 + .1 * open), .65 + .35 * open);
       dummy.updateMatrix(); mesh.current!.setMatrixAt(i, dummy.matrix);
+      morph.morphTargetInfluences![0] = 1 - open;
+      mesh.current!.setMorphAt(i, morph);
     });
     mesh.current.instanceMatrix.needsUpdate = true;
+    if (mesh.current.morphTexture) mesh.current.morphTexture.needsUpdate = true;
   });
-  return <instancedMesh ref={mesh} args={[geometry, material, layer.count]} castShadow receiveShadow frustumCulled={false} />;
+  return <instancedMesh ref={mesh} args={[geometry, material, layer.count]} castShadow frustumCulled={false} />;
 }

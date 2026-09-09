@@ -1,10 +1,10 @@
-import { Color, MeshPhysicalMaterial, DoubleSide } from 'three';
+import { Color, MeshPhysicalMaterial, DoubleSide, FrontSide } from 'three';
 
 /** Veins and papillae are evaluated in petal UV space; no image assets are used. */
 export function createPetalMaterial(color: string, roughness: number, sheen: number, spots = 0) {
   const material = new MeshPhysicalMaterial({ color, roughness, metalness: 0, sheen,
     sheenColor: new Color(color).lerp(new Color('#fff1df'), 0.55), sheenRoughness: 0.75,
-    side: DoubleSide, vertexColors: true, clearcoat: 0.025, clearcoatRoughness: 0.65 });
+    side: DoubleSide, shadowSide: FrontSide, vertexColors: true, clearcoat: 0.025, clearcoatRoughness: 0.65 });
   material.onBeforeCompile = (shader) => {
     shader.uniforms.uSpots = { value: spots };
     shader.vertexShader = shader.vertexShader.replace('#include <common>', '#include <common>\nvarying vec2 vPetalUv;');

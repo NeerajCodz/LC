@@ -42,7 +42,7 @@ export function Stem({ structure, quality, growth, time, wind, leaves }: { struc
   return <group ref={root}>
     <mesh geometry={geometry} castShadow><meshStandardMaterial color="#405335" roughness={.88} /></mesh>
     {leaves && Array.from({ length: structure.leafCount }, (_, i) => <group key={i} position={[0, -structure.stemLength * (.32 + i * .19), 0]} rotation={[0, i * 2.4 + .7, 0]}>
-      <group ref={el => { leafRefs.current[i] = el; }}><mesh geometry={leaf} material={material} castShadow receiveShadow /></group>
+      <group ref={el => { leafRefs.current[i] = el; }}><mesh geometry={leaf} material={material} onUpdate={m=>m.updateMorphTargets()} castShadow receiveShadow /></group>
     </group>)}
   </group>;
 }

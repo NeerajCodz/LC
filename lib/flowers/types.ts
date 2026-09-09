@@ -41,6 +41,7 @@ export interface PetalProfile {
   thickness: number;
   notch?: number;
   spots?: number;
+  roundness?: number;
 }
 
 export interface PetalLayer {
@@ -67,4 +68,5 @@ export interface FlowerStructure {
   headTilt: number;
   roughness: number;
   sheen: number;
+  blossoms?: { position: Vec3; rotation: Vec3; scale: number }[];
 }

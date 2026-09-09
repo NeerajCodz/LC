@@ -208,7 +208,9 @@ button {
   height: 32px;
   border-radius: 50%;
   background: var(--ink);
-  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), background 0.2s;
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    background 0.2s;
 }
 .theme-toggle[data-theme="black"] .theme-toggle-thumb {
   transform: translateX(35px);
@@ -842,11 +844,11 @@ input[type="range"]::-moz-range-thumb {
 .preview-link:hover .preview-caption > svg {
   transform: translate(3px, -3px);
 }
-.gallery-canvas {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 1;
+.flower-preview {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  touch-action: pan-y;
 }
 .gallery-toolbar,
 .collection-intro,
@@ -966,12 +968,6 @@ input[type="range"]::-moz-range-thumb {
   font-size: 10px;
   color: var(--muted);
   margin: 0;
-}
-.angle-gallery-canvas {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 1;
 }
 .angle-gallery-end {
   position: relative;

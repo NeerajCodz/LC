@@ -60,6 +60,7 @@ export default function FlowerScene({
     <Canvas
       className={hovered ? "flower-canvas is-hovered" : "flower-canvas"}
       frameloop={active ? "always" : "never"}
+      resize={{ scroll: false }}
       shadows={quality !== "low"}
       dpr={macro ? [2, 2.5] : [1.5, 2]}
       camera={{ position: [0, 1.5, 7.5], fov: 38, near: 0.1, far: 45 }}

@@ -1,20 +1,17 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { Canvas } from "@react-three/fiber";
-import { View } from "@react-three/drei";
 import { ArrowUpRight } from "lucide-react";
 import { FLOWERS, type FlowerInfo } from "@/lib/flowers/catalog";
-import { BotanicalView } from "./flowers/BotanicalView";
+import { FlowerPreview } from "./flowers/FlowerPreview";
 import { Header } from "./ui/Header";
 
 type Angle = "front" | "side" | "45°" | "macro";
 export default function Gallery() {
-  const container = useRef<HTMLDivElement>(null);
   const [angle, setAngle] = useState<Angle>("front"),
     [bloom, setBloom] = useState(1);
   return (
-    <div ref={container} className="gallery-page">
+    <div className="gallery-page">
       <Header active="gallery" />
       <div className="collection-intro">
         <div>
@@ -66,15 +63,6 @@ export default function Gallery() {
           />
         ))}
       </div>
-      <div className="gallery-canvas">
-        <Canvas
-          eventSource={container as React.RefObject<HTMLElement>}
-          dpr={angle === "macro" ? [2, 2.5] : [1.5, 2]}
-          gl={{ antialias: true, alpha: true }}
-        >
-          <View.Port />
-        </Canvas>
-      </div>
       <footer className="collection-footer">
         <span className="footer-wordmark">living colors</span>
         <Link href="/garden">
@@ -123,16 +111,14 @@ function SpecimenPreview({
         <span className="preview-number">
           {String(index + 1).padStart(2, "0")} / 15
         </span>
-        <View className="gallery-preview" index={index + 1} visible={visible}>
-          {visible && (
-            <BotanicalView
-              type={info.type}
-              angle={angle === "45°" ? "three-quarter" : angle}
-              bloom={bloom}
-              hovered={hover}
-            />
-          )}
-        </View>
+        <FlowerPreview
+          className="gallery-preview"
+          type={info.type}
+          angle={angle === "45°" ? "three-quarter" : angle}
+          bloom={bloom}
+          hovered={hover}
+          visible={visible}
+        />
         <div className="preview-caption">
           <div>
             <h2>{info.name}</h2>

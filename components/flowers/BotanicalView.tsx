@@ -7,7 +7,7 @@ import { useExperienceSettings } from "@/hooks/useExperienceSettings";
 import type { FlowerType } from "@/lib/flowers/types";
 import type { FlowerView } from "@/lib/flowers/views";
 
-/** A scissored view shares one renderer with its neighboring specimens. */
+/** Shared camera, lighting, and flower composition for inline previews. */
 export function BotanicalView({
   type,
   angle,

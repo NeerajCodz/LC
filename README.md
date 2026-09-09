@@ -36,7 +36,7 @@ Deploy as a regular Next.js application on a Node.js host or a Next.js-compatibl
 - `/flower/lotus` (and all fifteen species slugs) â€” a dedicated specimen route with species metadata. Legacy `/?flower=lotus` links permanently redirect here. Repeated slashes are normalized by Next.js.
 - `/flower/lotus/#angles` â€” four simultaneous live views of the selected flower: front, 45Â°, side, and macro, with a shared bloom control. Every specimen has this gallery section.
 - `/garden` â€” nine flowers in an asymmetric composition. A shared bloom slider controls the garden; select a flower to inspect it.
-- `/gallery` â€” all fifteen species, rendered through a single canvas with scissored viewports. Compare front, side, 45-degree and macro views, and control bloom across the collection.
+- `/gallery` â€” all fifteen species, with visible previews rendered directly inside their page frames. Compare front, side, 45-degree and macro views, and control bloom across the collection.
 - `/dev/inspection` â€” development-only seven-view geometry fixture. It returns 404 in production. Select any species to inspect full bloom, multiple angles, macro, bud and half bloom side by side.
 
 Move the pointer or drag on the flower to sway it. Click or tap for a bloom pulse and close-up. The equivalent macro, bloom and pause actions are available through keyboard-accessible DOM controls. Escape closes the collection selector. Reduced-motion preferences disable pulses and pollen, simplify camera movement and make bloom controls immediate.
@@ -76,12 +76,13 @@ import { Flower } from "@/components/flowers/Flower";
 app/                         Next.js App Router pages and error boundaries
 components/
   Experience.tsx             Specimen UI and closing/entry transitions
-  Gallery.tsx                Scissored shared-canvas previews
+  Gallery.tsx                Collection layout and visible previews
   AngleGallery.tsx           Four simultaneous views of the selected species
   Garden.tsx                 Garden controls
   flowers/
     Flower.tsx               Exhaustive species dispatcher
     BotanicalView.tsx         Reusable camera, lighting, and preview content
+    FlowerPreview.tsx        Inline canvas tied to each DOM preview frame
     FlowerPlant.tsx          Reusable plant hierarchy and interaction
     PetalWhorl.tsx           Instanced petals with individual transforms/morphs
     FlowerCore.tsx           Phyllotaxis seeds, florets, pods and stamens
@@ -109,7 +110,7 @@ Physical petal materials use species-specific root, body, edge, and vein pigment
 
 ### Performance
 
-Petals are instanced per whorl; seeds, anthers and pollen are instanced. Geometry/material construction is memoized and resources are disposed on replacement. Vector, matrix and color scratch objects are reused in frame callbacks. The hero keeps high geometry quality, upgrading to **ultra** in macro mode; macro pixel density is 2–2.5 and normal views use 1.5–2. There is no automatic hero resolution downgrade. Mobile reduces particles and skips expensive postprocessing while retaining detailed specimen geometry. Garden and collection previews use separate lighter quality settings. Offscreen gallery specimens are unmounted while their layout is retained, the angle gallery shares one renderer, and the hero renderer pauses while offscreen.
+Petals are instanced per whorl; seeds, anthers and pollen are instanced. Geometry/material construction is memoized and resources are disposed on replacement. Vector, matrix and color scratch objects are reused in frame callbacks. The hero keeps high geometry quality, upgrading to **ultra** in macro mode; macro pixel density is 2–2.5 and normal views use 1.5–2. There is no automatic hero resolution downgrade. Mobile reduces particles and skips expensive postprocessing while retaining detailed specimen geometry. Garden and collection previews use separate lighter quality settings. Only nearby gallery previews create renderers; offscreen previews are unmounted while their layout is retained. Each canvas belongs to its caption’s page frame, so native scrolling moves the artwork and text together. Previews measure size changes without recalculating viewport offsets during scrolling. The hero renderer pauses while offscreen.
 
 Frame rate depends on the browser, GPU, display resolution, active effects and selected species. The development hero exposes a screen-reader-hidden `#render-stats` output with a sampled `data-fps` value for local profiling. The seven-view inspection fixture is intentionally heavier than the public specimen view.
 
@@ -129,6 +130,8 @@ Optional Playwright scenarios are included for desktop and mobile regression che
 npx playwright install chromium webkit
 npm run test:browser
 ```
+
+Browser scenarios also check that flower canvases and captions move by the same amount when scrolling down and back up on the collection, home hero, and home angle gallery.
 
 Use `/dev/inspection` for the visual checks that numerical tests cannot establish. Confirm silhouettes, overlap, underside attachment and macro detail, then verify pointer/touch motion and the garden on the target GPU.
 

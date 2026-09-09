@@ -11,6 +11,8 @@ import { CameraRig } from "../scene/CameraRig";
 import { Pollen } from "../scene/Pollen";
 import { useExperienceSettings } from "@/hooks/useExperienceSettings";
 import type { FlowerType, Vec3 } from "@/lib/flowers/types";
+import { useTheme } from "@/hooks/useTheme";
+import { THEME_BACKGROUNDS } from "@/lib/theme";
 const PLANTS: {
   type: FlowerType;
   position: Vec3;
@@ -82,6 +84,7 @@ export default function FlowerGarden({
   pulse: number;
 }) {
   const { quality, reducedMotion } = useExperienceSettings();
+  const { theme } = useTheme();
   const [degraded, setDegraded] = useState(false);
   const router = useRouter();
   return (
@@ -94,8 +97,8 @@ export default function FlowerGarden({
         gl.shadowMap.type = PCFShadowMap;
       }}
     >
-      <color attach="background" args={["#101713"]} />
-      <fog attach="fog" args={["#101713", 13, 27]} />
+      <color attach="background" args={[THEME_BACKGROUNDS[theme]]} />
+      <fog attach="fog" args={[THEME_BACKGROUNDS[theme], 13, 27]} />
       <Suspense fallback={null}>
         <Lighting shadows={quality !== "low"} />
         <Environment />
@@ -121,7 +124,7 @@ export default function FlowerGarden({
             reducedMotion={reducedMotion}
             paused={paused}
             pulse={pulse}
-            onClick={() => router.push(`/?flower=${plant.type}`)}
+            onClick={() => router.push(`/flower/${plant.type}`)}
           />
         ))}
         <ContactShadows

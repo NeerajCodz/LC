@@ -16,6 +16,8 @@ import { PostProcessing } from "../scene/PostProcessing";
 import { Pollen } from "../scene/Pollen";
 import { Flower } from "./Flower";
 import { RenderDiagnostics } from "../scene/RenderDiagnostics";
+import { useTheme } from "@/hooks/useTheme";
+import { THEME_BACKGROUNDS } from "@/lib/theme";
 
 export interface SceneProps {
   type: FlowerType;
@@ -40,6 +42,7 @@ export default function FlowerScene({
   onReady,
 }: SceneProps) {
   const { quality, reducedMotion } = useExperienceSettings();
+  const { theme } = useTheme();
   const [hovered, setHovered] = useState(false),
     [degraded, setDegraded] = useState(false);
   const [available] = useState(() => {
@@ -74,8 +77,8 @@ export default function FlowerScene({
         onReady?.();
       }}
     >
-      <color attach="background" args={["#101713"]} />
-      <fog attach="fog" args={["#101713", 11, 25]} />
+      <color attach="background" args={[THEME_BACKGROUNDS[theme]]} />
+      <fog attach="fog" args={[THEME_BACKGROUNDS[theme], 11, 25]} />
       <Suspense fallback={null}>
         <Lighting shadows={quality !== "low"} />
         <Environment />

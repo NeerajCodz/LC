@@ -78,7 +78,7 @@ export default function Gallery() {
         </Canvas>
       </div>
       <footer className="collection-footer">
-        <span>Fifteen species. Infinite small details.</span>
+        <span className="footer-wordmark">living colors</span>
         <Link href="/garden">
           Step into the garden <ArrowUpRight size={16} />
         </Link>
@@ -120,7 +120,7 @@ function SpecimenPreview({
       onMouseLeave={() => setHover(false)}
     >
       <Link
-        href={`/?flower=${info.type}`}
+        href={`/flower/${info.type}`}
         className="preview-link"
         aria-label={`Explore ${info.name}`}
       >

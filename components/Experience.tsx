@@ -1,7 +1,7 @@
 "use client";
 import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import {
   ArrowLeft,
   ArrowRight,
@@ -15,21 +15,21 @@ import {
   X,
   MoveUpRight,
 } from "lucide-react";
-import { FLOWERS, getFlower, isFlowerType } from "@/lib/flowers/catalog";
+import { FLOWERS, getFlower } from "@/lib/flowers/catalog";
 import type { FlowerType } from "@/lib/flowers/types";
 import { Header } from "./ui/Header";
 import { useExperienceSettings } from "@/hooks/useExperienceSettings";
 const Scene = dynamic(() => import("./flowers/FlowerScene"), { ssr: false });
 
-export default function Experience() {
+export default function Experience({
+  initialType,
+}: {
+  initialType: FlowerType;
+}) {
   const router = useRouter();
   const pickerTrigger = useRef<HTMLButtonElement>(null);
-  const params = useSearchParams(),
-    initial = params.get("flower");
-  const [type, setType] = useState<FlowerType>(
-      isFlowerType(initial) ? initial : "rose",
-    ),
-    [target, setTarget] = useState(1),
+  const type = initialType;
+  const [target, setTarget] = useState(1),
     [bloom, setBloom] = useState(0),
     [switching, setSwitching] = useState(false),
     [picker, setPicker] = useState(false),
@@ -78,12 +78,7 @@ export default function Experience() {
     setBloom(0);
     timer.current = setTimeout(
       () => {
-        setType(next);
-        const url = new URL(location.href);
-        url.searchParams.set("flower", next);
-        history.replaceState(null, "", url);
-        setBloom(target);
-        setSwitching(false);
+        router.push(`/flower/${next}`, { scroll: false });
       },
       reducedMotion ? 0 : 1900,
     );
@@ -247,7 +242,7 @@ export default function Experience() {
           <span>Move to sway. Click to get closer.</span>
         </div>
         <footer className="experience-footer">
-          <span>SCULPTED BY NATURE. REIMAGINED IN THREE DIMENSIONS.</span>
+          <span className="footer-wordmark">living colors</span>
           <a href="#unfold">
             Take a moment <ChevronDown size={13} />
           </a>

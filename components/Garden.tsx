@@ -65,7 +65,7 @@ export default function Garden() {
         Move gently through the garden. Select a flower to meet it.
       </div>
       <footer className="experience-footer">
-        <span>NOTHING IN NATURE GROWS ALONE.</span>
+        <span className="footer-wordmark">living colors</span>
         <Link href="/gallery">
           Meet every species <ArrowUpRight size={13} />
         </Link>

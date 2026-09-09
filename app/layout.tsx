@@ -18,7 +18,15 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
+    <html lang="en" data-theme="current" suppressHydrationWarning>
+      <head>
+        <script
+          id="color-theme"
+          dangerouslySetInnerHTML={{
+            __html: `try{var t=localStorage.getItem('living-colors-theme');if(t==='black'||t==='white'||t==='current')document.documentElement.dataset.theme=t}catch(e){}`,
+          }}
+        />
+      </head>
       <body>{children}</body>
     </html>
   );

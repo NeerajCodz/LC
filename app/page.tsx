@@ -1,11 +1,12 @@
 import Experience from "@/components/Experience";
-import { Suspense } from "react";
-export default function Home() {
-  return (
-    <Suspense
-      fallback={<div className="loading-screen">Growing your garden…</div>}
-    >
-      <Experience />
-    </Suspense>
-  );
+import { permanentRedirect } from "next/navigation";
+import { isFlowerType } from "@/lib/flowers/catalog";
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: Promise<{ flower?: string | string[] }>;
+}) {
+  const { flower } = await searchParams;
+  if (isFlowerType(flower)) permanentRedirect(`/flower/${flower}`);
+  return <Experience initialType="rose" />;
 }

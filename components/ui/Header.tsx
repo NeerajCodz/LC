@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { Flower2, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import type { MouseEvent } from "react";
+import { ThemeSwitcher } from "./ThemeSwitcher";
 export function Header({
   active = "specimen",
   onNavigate,
@@ -28,8 +29,7 @@ export function Header({
         aria-label="Living Colors home"
         onClick={(e) => navigate(e, "/")}
       >
-        <Flower2 size={27} strokeWidth={1} />
-        <span>living colors</span>
+        <span>LC</span>
       </Link>
       <nav aria-label="Main navigation">
         <Link
@@ -54,7 +54,7 @@ export function Header({
           The collection <ArrowUpRight size={13} />
         </Link>
       </nav>
-      <span className="header-caption">A DIGITAL BOTANICAL STUDY</span>
+      <ThemeSwitcher />
     </header>
   );
 }

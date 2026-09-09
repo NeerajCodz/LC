@@ -5,7 +5,9 @@ import {
   Vignette,
   N8AO,
 } from "@react-three/postprocessing";
+import { useTheme } from "@/hooks/useTheme";
 export function PostProcessing({ macro = false }: { macro?: boolean }) {
+  const { theme } = useTheme();
   return (
     <EffectComposer multisampling={4}>
       <N8AO
@@ -22,7 +24,7 @@ export function PostProcessing({ macro = false }: { macro?: boolean }) {
         bokehScale={macro ? 1.6 : 0.65}
         height={360}
       />
-      <Vignette offset={0.25} darkness={0.38} />
+      <Vignette offset={0.25} darkness={theme === "white" ? 0.06 : 0.3} />
     </EffectComposer>
   );
 }

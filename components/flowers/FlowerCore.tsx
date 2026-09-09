@@ -2,18 +2,23 @@ import { useMemo, useEffect, useRef, type RefObject } from "react";
 import { useFrame } from "@react-three/fiber";
 import { Color, Group, InstancedMesh, Object3D } from "three";
 import { GOLDEN_ANGLE, seededRandom } from "@/lib/three/noise";
-import type { FlowerStructure, Quality } from "@/lib/flowers/types";
+import type { FlowerStructure, FlowerType, Quality } from "@/lib/flowers/types";
 import { LotusHeart } from "./lotus/LotusHeart";
+import { StamenHeart } from "./StamenHeart";
 
 export function FlowerCore({
+  type,
   structure,
   bloom,
   quality,
 }: {
+  type: FlowerType;
   structure: FlowerStructure;
   bloom: RefObject<number>;
   quality: Quality;
 }) {
+  if (type === "lily" || type === "tulip" || type === "hibiscus")
+    return <StamenHeart type={type} quality={quality} bloom={bloom} />;
   if (structure.center === "pod")
     return (
       <LotusHeart
@@ -152,12 +157,12 @@ function StandardFlowerCore({
         castShadow
         frustumCulled={false}
       >
-        <sphereGeometry args={[1, 8, 6]} />
+        <sphereGeometry args={[1, 20, 14]} />
         <meshStandardMaterial roughness={0.86} />
       </instancedMesh>
       {stamens && (
         <instancedMesh ref={filaments} args={[undefined, undefined, count]}>
-          <cylinderGeometry args={[0.65, 1, 1, 6]} />
+          <cylinderGeometry args={[0.65, 1, 1, 12, 3]} />
           <meshStandardMaterial color="#e4c8ad" roughness={0.7} />
         </instancedMesh>
       )}

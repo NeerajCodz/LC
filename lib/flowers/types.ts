@@ -58,6 +58,9 @@ export interface PetalProfile {
   spots?: number;
   roundness?: number;
   wrapAngle?: number;
+  marginTeeth?: number;
+  marginDepth?: number;
+  lobes?: number;
 }
 
 export interface PetalLayer {

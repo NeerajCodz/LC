@@ -15,7 +15,8 @@ export function createPetalGeometry(
   seed: number,
   quality: Quality = "high",
 ): BufferGeometry {
-  const [maximumColumns, rows] = RESOLUTION[quality];
+  const [maximumColumns, baseRows] = RESOLUTION[quality];
+  const rows = Math.max(baseRows, (profile.marginTeeth ?? 0) * 6);
   const columns = Math.max(
     12,
     Math.round(
@@ -45,13 +46,19 @@ export function createPetalGeometry(
           ),
           profile.taper,
         );
+      const margin =
+        (1 -
+          (profile.marginDepth ?? 0) *
+            (0.5 +
+              0.5 * Math.cos(t * Math.PI * 2 * (profile.marginTeeth ?? 0)))) *
+        (1 - (profile.lobes ?? 0) * (0.5 + 0.5 * Math.cos(t * Math.PI * 8)));
       for (let column = 0; column <= columns; column++) {
         const u = (column / columns) * 2 - 1;
         const edge = Math.pow(Math.abs(u), 3);
         const ruffle = Math.max(edge, Math.pow(t, 6) * rounded * 0.8);
         const ruffleEnvelope = Math.sin(t * Math.PI * (1 - rounded * 0.3));
         const x =
-          u * profile.width * 0.5 * envelope * (1 + asymmetry * u) +
+          u * profile.width * 0.5 * envelope * margin * (1 + asymmetry * u) +
           Math.sin(t * Math.PI) * asymmetry * profile.width;
         const notch =
           (profile.notch ?? 0) * Math.exp(-u * u * 45) * Math.pow(t, 12);

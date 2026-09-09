@@ -12,6 +12,7 @@ import { PetalWhorl } from "./PetalWhorl";
 import { Stem } from "./Stem";
 import { FlowerCore } from "./FlowerCore";
 import { Branch } from "./Branch";
+import { Calyx } from "./Calyx";
 
 export function FlowerPlant({
   structure,
@@ -136,6 +137,7 @@ export function FlowerPlant({
       >
         {stem && (
           <Stem
+            type={type}
             structure={structure}
             quality={quality}
             growth={growth}
@@ -182,6 +184,7 @@ export function FlowerPlant({
                   />
                 ))}
                 <FlowerCore
+                  type={type}
                   structure={structure}
                   bloom={bloom}
                   quality={quality}
@@ -189,16 +192,7 @@ export function FlowerPlant({
               </group>
             </group>
           ))}
-          {!structure.blossoms && (
-            <mesh
-              position={[0, -0.13, 0]}
-              scale={[0.105, 0.09, 0.105]}
-              castShadow
-            >
-              <sphereGeometry args={[1, 16, 12]} />
-              <meshStandardMaterial color="#425932" roughness={0.8} />
-            </mesh>
-          )}
+          {!structure.blossoms && <Calyx type={type} quality={quality} />}
         </group>
       </group>
     </group>

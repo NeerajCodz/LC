@@ -1,13 +1,9 @@
 import { useMemo, useEffect, useRef, type RefObject } from "react";
 import { useFrame } from "@react-three/fiber";
-import {
-  BufferGeometry,
-  Float32BufferAttribute,
-  Group,
-  MeshStandardMaterial,
-} from "three";
-import type { FlowerStructure, Quality } from "@/lib/flowers/types";
-import { createPetalGeometry, PETAL } from "@/lib/three/geometry";
+import { BufferGeometry, Float32BufferAttribute, Group } from "three";
+import type { FlowerStructure, FlowerType, Quality } from "@/lib/flowers/types";
+import { FOLIAGE } from "@/lib/flowers/foliage";
+import { LeafSprig } from "./LeafSprig";
 import { layeredWind, stemBend } from "@/lib/three/noise";
 import { LotusFoliage } from "./lotus/LotusFoliage";
 
@@ -39,6 +35,7 @@ function stemGeometry(length: number, radius: number) {
   return g;
 }
 export function Stem({
+  type,
   structure,
   quality,
   growth,
@@ -46,6 +43,7 @@ export function Stem({
   wind,
   leaves,
 }: {
+  type: FlowerType;
   structure: FlowerStructure;
   quality: Quality;
   growth: RefObject<number>;
@@ -63,69 +61,9 @@ export function Stem({
     () => Float32Array.from(geometry.getAttribute("position").array),
     [geometry],
   );
-  const leaf = useMemo(
-    () =>
-      createPetalGeometry(
-        {
-          ...PETAL,
-          length: structure.leafShape === "needle" ? 0.55 : 0.82,
-          width:
-            structure.leafShape === "broad"
-              ? 0.68
-              : structure.leafShape === "needle"
-                ? 0.055
-                : 0.37,
-          taper: structure.leafShape === "round" ? 0.35 : 0.85,
-          cup: 0.18,
-          curl: 0.27,
-          edge: 0.05,
-          thickness: 0.009,
-          ripple: structure.leafShape === "serrated" ? 0.014 : 0.003,
-        },
-        73,
-        quality,
-      ),
-    [structure.leafShape, quality],
-  );
-  const material = useMemo(() => {
-    const m = new MeshStandardMaterial({
-      color: "#3d602b",
-      roughness: 0.74,
-      vertexColors: true,
-    });
-    m.onBeforeCompile = (s) => {
-      s.vertexShader = s.vertexShader
-        .replace(
-          "#include <common>",
-          "#include <common>\nvarying vec2 vLeafUv;",
-        )
-        .replace(
-          "#include <begin_vertex>",
-          "#include <begin_vertex>\nvLeafUv = uv;",
-        );
-      s.fragmentShader = s.fragmentShader
-        .replace(
-          "#include <common>",
-          "#include <common>\nvarying vec2 vLeafUv;",
-        )
-        .replace(
-          "#include <color_fragment>",
-          `#include <color_fragment>
-        float midrib = exp(-abs(vLeafUv.x-.5)*120.);
-        float veins = pow(abs(cos((vLeafUv.y - abs(vLeafUv.x-.5)*.5)*115.)),24.);
-        diffuseColor.rgb *= .85 + midrib * .45 + veins * .14;`,
-        );
-    };
-    return m;
-  }, []);
-  useEffect(
-    () => () => {
-      geometry.dispose();
-      leaf.dispose();
-      material.dispose();
-    },
-    [geometry, leaf, material],
-  );
+  useEffect(() => () => geometry.dispose(), [geometry]);
+  const basal = FOLIAGE[type].basal;
+  const leafHeight = (i: number) => (basal ? 0.8 + i * 0.08 : 0.32 + i * 0.19);
   useFrame(() => {
     if (root.current) {
       root.current.scale.y = 0.03 + 0.97 * growth.current;
@@ -151,11 +89,15 @@ export function Stem({
       );
       group.rotation.x =
         0.22 +
-        unfold * 0.82 +
+        unfold * (basal ? 0.36 : 0.82) +
         layeredWind(time.current - i * 0.2, i * 2) * 0.045 * wind;
       group.scale.setScalar(unfold);
       if (group.parent)
-        group.parent.position.x = stemBend(time.current, 0.68 - i * 0.19, wind);
+        group.parent.position.x = stemBend(
+          time.current,
+          1 - leafHeight(i),
+          wind,
+        );
     });
   });
   return (
@@ -177,7 +119,7 @@ export function Stem({
         Array.from({ length: structure.leafCount }, (_, i) => (
           <group
             key={i}
-            position={[0, -structure.stemLength * (0.32 + i * 0.19), 0]}
+            position={[0, -structure.stemLength * leafHeight(i), 0]}
             rotation={[0, i * 2.4 + 0.7, 0]}
           >
             <group
@@ -185,13 +127,7 @@ export function Stem({
                 leafRefs.current[i] = el;
               }}
             >
-              <mesh
-                geometry={leaf}
-                material={material}
-                onUpdate={(m) => m.updateMorphTargets()}
-                castShadow
-                receiveShadow
-              />
+              <LeafSprig type={type} quality={quality} />
             </group>
           </group>
         ))}

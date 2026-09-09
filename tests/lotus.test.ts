@@ -9,6 +9,9 @@ import {
   receptacleTop,
 } from "../components/flowers/lotus/lotusHeartGeometry";
 import { createLotusLeaf } from "../components/flowers/lotus/lotusLeafGeometry";
+import { createStamenHeart } from "../components/flowers/StamenHeart";
+import { FOLIAGE } from "../lib/flowers/foliage";
+import { createPetalGeometry, PETAL } from "../lib/three/geometry";
 
 function assertClosed(geometry: BufferGeometry) {
   const p = geometry.getAttribute("position"),
@@ -62,4 +65,30 @@ test("lotus has recessed carpel sockets and deterministic varied stamens", () =>
   assert.deepEqual(stamens, lotusStamenLayout());
   assert.equal(new Set(stamens.map((s) => s.length)).size, stamens.length);
   assert.equal(new Set(stamens.map((s) => s.radius)).size, 4);
+});
+
+test("specialized stamens and all species leaf margins remain sealed", () => {
+  for (const type of ["lily", "tulip", "hibiscus"] as const) {
+    const parts = createStamenHeart(type, "ultra");
+    for (const geometry of Object.values(parts)) {
+      assertClosed(geometry);
+      geometry.dispose();
+    }
+  }
+  for (const profile of Object.values(FOLIAGE)) {
+    const leaf = createPetalGeometry(
+      {
+        ...PETAL,
+        length: profile.length,
+        width: profile.width,
+        marginTeeth: profile.teeth,
+        marginDepth: profile.depth,
+        lobes: profile.lobes,
+      },
+      73,
+      "high",
+    );
+    assertClosed(leaf);
+    leaf.dispose();
+  }
 });

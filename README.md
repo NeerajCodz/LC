@@ -41,7 +41,7 @@ Deploy as a regular Next.js application on a Node.js host or a Next.js-compatibl
 
 Move the pointer or drag on the flower to sway it. Click or tap for a bloom pulse and close-up. The equivalent macro, bloom and pause actions are available through keyboard-accessible DOM controls. Escape closes the collection selector. Reduced-motion preferences disable pulses and pollen, simplify camera movement and make bloom controls immediate.
 
-The LC header has one rounded toggle that cycles through **Current** (forest charcoal), **Black**, and **White** (warm ivory). Its sliding thumb and leaf/moon/sun icons show the active theme; its accessible label names the current and next theme. Themes update both the interface and the 3D background/fog. The choice persists locally and synchronizes between browser tabs; flower pigments stay consistent across themes. The footer carries the full **living colors** wordmark.
+The original flower emblem sits beside **LC** in the header. One rounded toggle that cycles through **Current** (forest charcoal), **Black**, and **White** (warm ivory). Its sliding thumb and leaf/moon/sun icons show the active theme; its accessible label names the current and next theme. Themes update both the interface and the 3D background/fog. The choice persists locally and synchronizes between browser tabs; flower pigments stay consistent across themes. The footer carries the full **living colors** wordmark.
 
 ## Flower API
 
@@ -99,17 +99,17 @@ tests/                       Geometry invariants and browser regression scenario
 
 Petals have indexed front and back surfaces joined around their perimeter. Thickness is applied along their computed surface normals, including recurved tips. Open and folded positions **and normals** are generated once, with deterministic seeds. Each instanced petal receives its own morph weight, opening delay, rotation, size, twist and tone. The Tulip uses cylindrical cup sections; the general petal generator supports rounded, tapered, ruffled, notched and spotted profiles.
 
-Species vary in whorl structure, petal count, profile, opening angle, core organs and branching. The Rose uses nested spiral whorls; Dahlia and Chrysanthemum use hundreds of different-sized florets; Sunflower uses 610 phyllotaxis seeds; Jasmine and Cherry Blossom form branch groups; Lavender uses tiered florets on multiple spikes. These are artist-directed procedural specimens, not scans of individual plants.
+Species vary in whorl structure, petal count, profile, opening angle, core organs and branching. The Rose uses nested spiral whorls; Dahlia and Chrysanthemum use hundreds of different-sized florets; Sunflower uses 610 phyllotaxis seeds; Jasmine and Cherry Blossom form branch groups; Lavender uses tiered florets on multiple spikes. The Lotus has a dedicated tapered receptacle, recessed carpel sockets, 156 curved stamens, and a peltate leaf on its own petiole. Lily and Tulip have six filaments with paired anthers and separate pistils; Hibiscus has a curved column with five stigma tips. Species-specific foliage includes compound leaflets, actual toothed/lobed margins, and basal strap leaves. These are artist-directed procedural specimens, not scans of individual plants. See [botanical references and interpretation notes](docs/botanical-references.md).
 
 Stem vertices and their leaf/head attachments sample the same travelling wind bend. Secondary head movement and delayed petal flutter keep the hierarchy from moving rigidly. Pointer rays intersect a world-space plane; local proximity drives individual petal response. Camera motion is damped; flower switching closes the outgoing petals before mounting and opening the next specimen. No global state store is needed.
 
 ### Materials and lighting
 
-Physical petal materials use species-specific root, body, edge, and vein pigment zones in `lib/flowers/palettes.ts`. Shader uniforms are converted to linear color space by Three.js. Subtle mottling, darker inner layers, neutral vertex shading, restrained tinted sheen, and a balanced studio light preserve saturated pigments and clean ivory whites. Procedural veins, derivative-based micro-normal detail, roughness variation and restrained back scattering add surface detail. This is a real-time approximation of organic light transport, not volumetric subsurface scattering. A local Lightformer studio environment provides reflections without an HDR download. Desktop effects include restrained visual bloom, ambient occlusion, depth of field and a vignette.
+Physical petal materials use species-specific root, body, edge, and vein pigment zones in `lib/flowers/palettes.ts`. Shader uniforms are converted to linear color space by Three.js. Subtle mottling, darker inner layers, neutral vertex shading, restrained tinted sheen, and a balanced studio light preserve saturated pigments and clean ivory whites. Procedural veins, derivative-based micro-normal detail, roughness variation and restrained back scattering add surface detail. This is a real-time approximation of organic light transport, not volumetric subsurface scattering. A local Lightformer studio environment provides reflections without an HDR download. Desktop effects include ambient occlusion, multisample antialiasing, and a subtle vignette. Depth-of-field and visual bloom are disabled so zooming preserves sharp petal and pollen detail. Procedural tissue noise is filtered at a distance to reduce shimmer.
 
 ### Performance
 
-Petals are instanced per whorl; seeds, anthers and pollen are instanced. Geometry/material construction is memoized and resources are disposed on replacement. Vector, matrix and color scratch objects are reused in frame callbacks. Mobile uses lower geometry resolution, lower DPR, fewer particles and no expensive postprocessing. A performance monitor can reduce desktop quality. Offscreen gallery specimens are unmounted while their layout is retained, the angle gallery shares one renderer, and the hero renderer pauses while offscreen.
+Petals are instanced per whorl; seeds, anthers and pollen are instanced. Geometry/material construction is memoized and resources are disposed on replacement. Vector, matrix and color scratch objects are reused in frame callbacks. The hero keeps high geometry quality, upgrading to **ultra** in macro mode; macro pixel density is 2–2.5 and normal views use 1.5–2. There is no automatic hero resolution downgrade. Mobile reduces particles and skips expensive postprocessing while retaining detailed specimen geometry. Garden and collection previews use separate lighter quality settings. Offscreen gallery specimens are unmounted while their layout is retained, the angle gallery shares one renderer, and the hero renderer pauses while offscreen.
 
 Frame rate depends on the browser, GPU, display resolution, active effects and selected species. The development hero exposes a screen-reader-hidden `#render-stats` output with a sampled `data-fps` value for local profiling. The seven-view inspection fixture is intentionally heavier than the public specimen view.
 
@@ -121,7 +121,7 @@ npm run lint
 npm test
 ```
 
-Geometry tests cover every species and every petal layer: closed topology, positive thickness, finite morph positions/normals, deterministic seeds, bloom endpoints, spring stability and characteristic organ counts.
+Geometry tests cover every species and every petal layer: closed topology, positive thickness, finite morph positions/normals, deterministic seeds, bloom endpoints, spring stability and characteristic organ counts. Lotus checks additionally cover sealed organ surfaces, outward normals, recessed sockets, and stable stamen variation.
 
 Optional Playwright scenarios are included for desktop and mobile regression checks:
 

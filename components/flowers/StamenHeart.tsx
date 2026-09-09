@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, type RefObject } from "react";
-import { useFrame } from "@react-three/fiber";
+import { useActiveFrame as useFrame } from "@/hooks/useActiveFrame";
 import { Group, type BufferGeometry } from "three";
 import { mergeGeometries } from "three/addons/utils/BufferGeometryUtils.js";
 import type { Quality, Vec3 } from "@/lib/flowers/types";

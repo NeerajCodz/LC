@@ -850,6 +850,16 @@ input[type="range"]::-moz-range-thumb {
   isolation: isolate;
   touch-action: pan-y;
 }
+.preview-stage {
+  position: relative;
+  isolation: isolate;
+}
+.preview-stage-surface {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+}
 .gallery-toolbar,
 .collection-intro,
 .collection-footer {

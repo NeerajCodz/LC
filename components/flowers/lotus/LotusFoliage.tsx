@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, type RefObject } from "react";
-import { useFrame } from "@react-three/fiber";
+import { useActiveFrame as useFrame } from "@/hooks/useActiveFrame";
 import { Group } from "three";
 import type { Quality } from "@/lib/flowers/types";
 import { createOrganicTube } from "@/lib/three/organicTube";

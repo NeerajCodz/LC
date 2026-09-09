@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { useFrame } from "@react-three/fiber";
+import { useActiveFrame as useFrame } from "@/hooks/useActiveFrame";
 import { Vector3, type Group } from "three";
 import type { RefObject } from "react";
 import { useCursor3D } from "./useCursor3D";

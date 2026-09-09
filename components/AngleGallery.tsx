@@ -7,6 +7,7 @@ import { FLOWER_VIEWS } from "@/lib/flowers/views";
 import { getFlower } from "@/lib/flowers/catalog";
 import type { FlowerType } from "@/lib/flowers/types";
 import { useInView } from "@/hooks/useInView";
+import { PreviewStage } from "./scene/PreviewStage";
 
 export default function AngleGallery({ type }: { type: FlowerType }) {
   const [bloom, setBloom] = useState(1);
@@ -43,11 +44,11 @@ export default function AngleGallery({ type }: { type: FlowerType }) {
           <span>{Math.round(bloom * 100)}%</span>
         </div>
       </div>
-      <div className="angle-gallery-grid">
+      <PreviewStage className="angle-gallery-grid">
         {FLOWER_VIEWS.map((view) => (
           <AngleFrame key={view.id} type={type} view={view} bloom={bloom} />
         ))}
-      </div>
+      </PreviewStage>
       <div className="angle-gallery-end">
         <span>Move gently to explore the form.</span>
         <Link href="/gallery">

@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { useFrame } from "@react-three/fiber";
+import { useActiveFrame as useFrame } from "@/hooks/useActiveFrame";
 import { Plane, Vector3, Vector2 } from "three";
 import { damp } from "@/lib/three/easing";
 

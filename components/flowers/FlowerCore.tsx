@@ -1,5 +1,5 @@
 import { useMemo, useEffect, useRef, type RefObject } from "react";
-import { useFrame } from "@react-three/fiber";
+import { useActiveFrame as useFrame } from "@/hooks/useActiveFrame";
 import { Color, Group, InstancedMesh, Object3D } from "three";
 import { GOLDEN_ANGLE, seededRandom } from "@/lib/three/noise";
 import type { FlowerStructure, FlowerType, Quality } from "@/lib/flowers/types";

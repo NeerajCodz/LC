@@ -1,5 +1,5 @@
 import { useMemo, useEffect, useRef, type RefObject } from "react";
-import { useFrame } from "@react-three/fiber";
+import { useActiveFrame as useFrame } from "@/hooks/useActiveFrame";
 import { BufferGeometry, Float32BufferAttribute, Group } from "three";
 import type { FlowerStructure, FlowerType, Quality } from "@/lib/flowers/types";
 import { FOLIAGE } from "@/lib/flowers/foliage";

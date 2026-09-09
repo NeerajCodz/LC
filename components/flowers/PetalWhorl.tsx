@@ -5,7 +5,7 @@ import {
   useRef,
   type RefObject,
 } from "react";
-import { useFrame } from "@react-three/fiber";
+import { useActiveFrame as useFrame } from "@/hooks/useActiveFrame";
 import { Color, DynamicDrawUsage, InstancedMesh, Mesh, Object3D } from "three";
 import type { PetalLayer, Quality } from "@/lib/flowers/types";
 import { createPetalGeometry } from "@/lib/three/geometry";

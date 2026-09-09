@@ -1,5 +1,5 @@
 import { useMemo, useRef } from "react";
-import { useFrame } from "@react-three/fiber";
+import { useActiveFrame as useFrame } from "@/hooks/useActiveFrame";
 import { Group } from "three";
 import type { FlowerProps, FlowerStructure } from "@/lib/flowers/types";
 import { getFlower } from "@/lib/flowers/catalog";

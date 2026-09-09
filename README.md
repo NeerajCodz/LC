@@ -82,13 +82,14 @@ components/
   flowers/
     Flower.tsx               Exhaustive species dispatcher
     BotanicalView.tsx         Reusable camera, lighting, and preview content
-    FlowerPreview.tsx        Inline canvas tied to each DOM preview frame
+    FlowerPreview.tsx        DOM preview registration; stable scene identity
     FlowerPlant.tsx          Reusable plant hierarchy and interaction
     PetalWhorl.tsx           Instanced petals with individual transforms/morphs
     FlowerCore.tsx           Phyllotaxis seeds, florets, pods and stamens
     Stem.tsx, Branch.tsx      Tapered stem, leaves, veins and branches
     <species>/               Distinct botanical construction per species
   scene/                     Lights, studio environment, camera, pollen, effects
+    PreviewStage.tsx         Shared in-flow WebGL renderer and retained scene portals
 hooks/                       Bloom damping, pointer projection, quality, interaction
 lib/
   flowers/                   Typed public API, metadata and whorl construction
@@ -119,7 +120,11 @@ If WebGPU is missing, blocked, or initialization fails, the complete GLSL tissue
 
 ### Performance
 
-Petals are instanced per whorl; seeds, anthers and pollen are instanced. Geometry/material construction is memoized and resources are disposed on replacement. Vector, matrix and color scratch objects are reused in frame callbacks. The hero keeps high geometry quality, upgrading to **ultra** in macro mode; macro pixel density is 2–2.5 and normal views use 1.5–2. There is no automatic hero resolution downgrade. Mobile reduces particles and skips expensive postprocessing while retaining detailed specimen geometry. Garden and collection previews use separate lighter quality settings. Only nearby gallery previews create renderers; offscreen previews are unmounted while their layout is retained. Each canvas belongs to its caption’s page frame, so native scrolling moves the artwork and text together. Previews measure size changes without recalculating viewport offsets during scrolling. The hero renderer pauses while offscreen.
+Petals are instanced per whorl; seeds, anthers and pollen are instanced. Geometry/material construction is memoized and resources are disposed on replacement. Vector, matrix and color scratch objects are reused in frame callbacks. The hero keeps high geometry quality, upgrading to **ultra** in macro mode; macro pixel density is 2–2.5 and normal views use 1.5–2. There is no automatic hero resolution downgrade. Mobile reduces particles and skips expensive postprocessing while retaining detailed specimen geometry. Garden and collection previews use separate lighter quality settings.
+
+Each gallery uses **one WebGL context** and a separate retained scene per visited preview. Intersection visibility initializes each scene once, then pauses/resumes it. `useActiveFrame` skips offscreen bloom, wind, petal matrices and interaction updates while retaining their refs, geometries, materials, and GPU buffers. Unvisited scenes remain lazy; leaving the route releases them. The home scroll study also stays mounted after its first visit, with its render loop paused offscreen. The collection therefore uses one context after visiting all fifteen flowers; the complete home page uses three (hero, angle gallery, scroll study).
+
+The shared gallery canvas is positioned inside the document-flow grid. Scissor rectangles are computed from the canvas and preview bounds sampled together, so native scrolling moves the flower pixels and captions together. This avoids both fixed-overlay scroll drift and one-renderer-per-flower context limits. The canvas backing buffer covers the finite gallery grid; only nearby scene rectangles are drawn. The implementation follows [R3F's guidance on avoiding repeated mounts](https://r3f.docs.pmnd.rs/advanced/pitfalls).
 
 Frame rate depends on the browser, GPU, display resolution, active effects and selected species. The development hero exposes a screen-reader-hidden `#render-stats` output with a sampled `data-fps` value for local profiling. The seven-view inspection fixture is intentionally heavier than the public specimen view.
 

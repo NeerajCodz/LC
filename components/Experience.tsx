@@ -333,18 +333,12 @@ export default function Experience({
 }
 
 function ScrollStudy({ type }: { type: FlowerType }) {
-  const section = useRef<HTMLElement>(null),
-    [progress, setProgress] = useState(0),
-    [visible, setVisible] = useState(false);
+  const { ref: section, visible, visited } = useInView<HTMLElement>();
+  const [progress, setProgress] = useState(0);
   useEffect(() => {
     const node = section.current;
     if (!node) return;
     let frame = 0;
-    const observer = new IntersectionObserver(
-      ([entry]) => setVisible(entry.isIntersecting),
-      { rootMargin: "100px" },
-    );
-    observer.observe(node);
     const update = () => {
       cancelAnimationFrame(frame);
       frame = requestAnimationFrame(() => {
@@ -357,11 +351,10 @@ function ScrollStudy({ type }: { type: FlowerType }) {
     addEventListener("scroll", update, { passive: true });
     update();
     return () => {
-      observer.disconnect();
       removeEventListener("scroll", update);
       cancelAnimationFrame(frame);
     };
-  }, []);
+  }, [section]);
   return (
     <section id="unfold" className="scroll-study" ref={section}>
       <div className="scroll-sticky">
@@ -386,8 +379,9 @@ function ScrollStudy({ type }: { type: FlowerType }) {
           </div>
         </div>
         <div className="scroll-scene">
-          {visible && (
+          {visited && (
             <Scene
+              active={visible}
               type={type}
               bloom={Math.max(0, (progress - 0.4) / 0.4)}
               growth={Math.min(1, progress / 0.35)}

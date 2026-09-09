@@ -32,17 +32,25 @@ for (const scenario of [
       await page
         .getByRole("link", { name: scenario.anchor, exact: true })
         .click();
-    const canvas = page.locator(`${scenario.frame} canvas`).first();
-    await expect(canvas).toBeVisible();
+    const frame = page.locator(scenario.frame).first();
+    await expect(frame).toBeVisible();
+    if (scenario.name !== "home hero")
+      await expect(frame).toHaveAttribute("data-render-rect", /,/);
+    else await expect(frame.locator("canvas")).toBeVisible();
     await page.evaluate(() => document.fonts.ready.then(() => undefined));
     const measure = () =>
       page.evaluate(({ frame, caption }) => {
         const container = document.querySelector(frame)!;
-        const surface = container.querySelector("canvas")!;
+        const surface =
+          container.querySelector("canvas") ??
+          container.closest(".preview-stage")!.querySelector("canvas")!;
+        const renderOffset = Number(
+          container.getAttribute("data-render-rect")?.split(",")[1] ?? 0,
+        );
         return {
           scroll: window.scrollY,
           frameTop: container.getBoundingClientRect().top,
-          canvasTop: surface.getBoundingClientRect().top,
+          canvasTop: surface.getBoundingClientRect().top + renderOffset,
           captionTop: document.querySelector(caption)!.getBoundingClientRect()
             .top,
         };

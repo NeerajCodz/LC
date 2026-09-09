@@ -5,6 +5,7 @@ import { ArrowUpRight } from "lucide-react";
 import { FLOWERS, type FlowerInfo } from "@/lib/flowers/catalog";
 import { FlowerPreview } from "./flowers/FlowerPreview";
 import { Header } from "./ui/Header";
+import { PreviewStage } from "./scene/PreviewStage";
 
 type Angle = "front" | "side" | "45°" | "macro";
 export default function Gallery() {
@@ -52,7 +53,7 @@ export default function Gallery() {
           <span>{Math.round(bloom * 100)}%</span>
         </div>
       </div>
-      <div className="gallery-grid">
+      <PreviewStage className="gallery-grid">
         {FLOWERS.map((info, i) => (
           <SpecimenPreview
             key={info.type}
@@ -62,7 +63,7 @@ export default function Gallery() {
             bloom={bloom}
           />
         ))}
-      </div>
+      </PreviewStage>
       <footer className="collection-footer">
         <span className="footer-wordmark">living colors</span>
         <Link href="/garden">

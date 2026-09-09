@@ -13,6 +13,7 @@ import { PostProcessing } from "../scene/PostProcessing";
 import { Pollen } from "../scene/Pollen";
 import { Flower } from "./Flower";
 import { RenderDiagnostics } from "../scene/RenderDiagnostics";
+import { SurfaceDetail } from "../scene/SurfaceDetail";
 import { useTheme } from "@/hooks/useTheme";
 import { THEME_BACKGROUNDS } from "@/lib/theme";
 
@@ -78,6 +79,7 @@ export default function FlowerScene({
         onReady?.();
       }}
     >
+      <SurfaceDetail />
       <color attach="background" args={[THEME_BACKGROUNDS[theme]]} />
       <fog attach="fog" args={[THEME_BACKGROUNDS[theme], 11, 25]} />
       <Suspense fallback={null}>

@@ -32,9 +32,9 @@ for (const scenario of [
       await page
         .getByRole("link", { name: scenario.anchor, exact: true })
         .click();
-      const canvas = page.locator(`${scenario.frame} canvas`).first();
-      await expect(canvas).toBeVisible();
-      await page.evaluate(() => document.fonts.ready.then(() => undefined));
+    const canvas = page.locator(`${scenario.frame} canvas`).first();
+    await expect(canvas).toBeVisible();
+    await page.evaluate(() => document.fonts.ready.then(() => undefined));
     const measure = () =>
       page.evaluate(({ frame, caption }) => {
         const container = document.querySelector(frame)!;

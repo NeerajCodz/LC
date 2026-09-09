@@ -4,7 +4,13 @@ export default defineConfig({
   timeout: 60000,
   use: { baseURL: "http://localhost:3000", trace: "retain-on-failure" },
   projects: [
-    { name: "desktop", use: { ...devices["Desktop Chrome"] } },
+    {
+      name: "desktop",
+      use: {
+        ...devices["Desktop Chrome"],
+        channel: process.env.PLAYWRIGHT_CHANNEL,
+      },
+    },
     { name: "mobile", use: { ...devices["iPhone 13"] } },
   ],
   webServer: {

@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { Flower } from "./Flower";
 import { Lighting } from "../scene/Lighting";
 import { Environment } from "../scene/Environment";
+import { SurfaceDetail } from "../scene/SurfaceDetail";
 import { CameraRig } from "../scene/CameraRig";
 import { Pollen } from "../scene/Pollen";
 import { useExperienceSettings } from "@/hooks/useExperienceSettings";
@@ -99,6 +100,7 @@ export default function FlowerGarden({
         gl.shadowMap.type = PCFShadowMap;
       }}
     >
+      <SurfaceDetail />
       <color attach="background" args={[THEME_BACKGROUNDS[theme]]} />
       <fog attach="fog" args={[THEME_BACKGROUNDS[theme], 13, 27]} />
       <Suspense fallback={null}>

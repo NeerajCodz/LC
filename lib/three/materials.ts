@@ -1,5 +1,6 @@
 import { Color, MeshPhysicalMaterial, DoubleSide, FrontSide } from "three";
 import type { PetalPalette } from "../flowers/palettes";
+import { tissueUniforms } from "../gpu/tissue-atlas";
 
 /** Veins and papillae are evaluated in petal UV space; no image assets are used. */
 export function createPetalMaterial(
@@ -34,6 +35,7 @@ export function createPetalMaterial(
     clearcoatRoughness: 0.65,
   });
   material.onBeforeCompile = (shader) => {
+    Object.assign(shader.uniforms, tissueUniforms);
     shader.uniforms.uSpots = { value: spots };
     shader.uniforms.uPigmentRoot = { value: root };
     shader.uniforms.uPigmentBody = { value: body };
@@ -55,9 +57,16 @@ export function createPetalMaterial(
       "#include <common>",
       `#include <common>
       varying vec2 vPetalUv; uniform float uSpots;
+      uniform sampler2D uTissueAtlas; uniform bool uTissueReady;
       uniform vec3 uPigmentRoot, uPigmentBody, uPigmentTip, uPigmentVein;
       uniform float uRootFalloff, uTipStart, uVeinStrength, uLayerDepth;
-      float hash21(vec2 p) { return fract(sin(dot(p, vec2(127.1,311.7))) * 43758.5453); }
+      float hash21(vec2 p) {
+        uvec2 cell = uvec2(p);
+        uint h = cell.x * 374761393u + cell.y * 668265263u + 93u;
+        h = (h ^ (h >> 13u)) * 1274126177u;
+        h = h ^ (h >> 16u);
+        return float(h & 0x00ffffffu) / 16777215.0;
+      }
       float tissueNoise(vec2 p) {
         vec2 i=floor(p), f=fract(p); f=f*f*(3.-2.*f);
         return mix(mix(hash21(i),hash21(i+vec2(1,0)),f.x),mix(hash21(i+vec2(0,1)),hash21(i+vec2(1,1)),f.x),f.y);
@@ -68,14 +77,16 @@ export function createPetalMaterial(
       `#include <color_fragment>
       float v = vPetalUv.y;
       float u = abs(vPetalUv.x-.5)*2.0;
-      float veinPhase=(vPetalUv.x-.5)*93.0+sin(v*7.0)*1.8+tissueNoise(vPetalUv*8.)*.65;
+      vec3 tissue = uTissueReady ? texture2D(uTissueAtlas, vPetalUv).rgb
+        : vec3(tissueNoise(vPetalUv*8.), tissueNoise(vPetalUv*vec2(11.,18.)), tissueNoise(vPetalUv*340.));
+      float veinPhase=(vPetalUv.x-.5)*93.0+sin(v*7.0)*1.8+tissue.r*.65;
       float veinVisibility=1.-smoothstep(.2,1.2,fwidth(veinPhase));
       float veins = pow(abs(sin(veinPhase)),20.0)*veinVisibility;
       float edgePigment = smoothstep(uTipStart,1.0,v) * (.8 + .2*u*u);
       vec3 pigment = mix(uPigmentRoot,uPigmentBody,smoothstep(0.0,uRootFalloff,v));
       pigment = mix(pigment,uPigmentTip,edgePigment);
       pigment = mix(pigment,uPigmentVein,veins*uVeinStrength*sin(v*3.14159));
-      float mottling = tissueNoise(vPetalUv*vec2(11.,18.))-.5;
+      float mottling = tissue.g-.5;
       pigment *= (1.0 + mottling*.07) * (1.0-uLayerDepth*.15);
       diffuseColor.rgb *= pigment;
       vec2 cell = vPetalUv * vec2(17., 22.);
@@ -87,14 +98,14 @@ export function createPetalMaterial(
       "#include <roughnessmap_fragment>",
       `#include <roughnessmap_fragment>
       float cellVisibility=1.-smoothstep(.003,.012,length(fwidth(vPetalUv)));
-      roughnessFactor = clamp(roughnessFactor + (tissueNoise(vPetalUv * 340.0) - .5) * .09 * cellVisibility, .3, .95);`,
+      roughnessFactor = clamp(roughnessFactor + (tissue.b - .5) * .09 * cellVisibility, .3, .95);`,
     );
     shader.fragmentShader = shader.fragmentShader.replace(
       "#include <normal_fragment_maps>",
       `#include <normal_fragment_maps>
       float ridge = sin(veinPhase);
       float microHeight = ridge * .000085 * sin(vPetalUv.y*3.14159) * veinVisibility
-        + (tissueNoise(vPetalUv*340.)-.5)*.000014*cellVisibility;
+        + (tissue.b-.5)*.000014*cellVisibility;
       vec3 dpdx=dFdx(-vViewPosition), dpdy=dFdy(-vViewPosition);
       vec3 r1=cross(dpdy,normal), r2=cross(normal,dpdx);
       float determinant=dot(dpdx,r1);
@@ -112,6 +123,6 @@ export function createPetalMaterial(
       #define RE_Direct RE_Direct_Botanical`,
     );
   };
-  material.customProgramCacheKey = () => "botanical-pigment-v4";
+  material.customProgramCacheKey = () => "botanical-pigment-v5-vgpu";
   return material;
 }

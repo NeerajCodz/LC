@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import { Flower } from "./Flower";
 import { Lighting } from "../scene/Lighting";
 import { Environment } from "../scene/Environment";
+import { SurfaceDetail } from "../scene/SurfaceDetail";
 import { useExperienceSettings } from "@/hooks/useExperienceSettings";
 import type { FlowerType } from "@/lib/flowers/types";
 import type { FlowerView } from "@/lib/flowers/views";
@@ -32,6 +33,7 @@ export function BotanicalView({
         : 0;
   return (
     <Suspense fallback={null}>
+      <SurfaceDetail />
       <PerspectiveCamera
         makeDefault
         position={[

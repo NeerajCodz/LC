@@ -93,6 +93,7 @@ hooks/                       Bloom damping, pointer projection, quality, interac
 lib/
   flowers/                   Typed public API, metadata and whorl construction
   three/                     Parametric geometry, physical materials, seeded noise
+  gpu/                       vgpu tissue bake, WGSL source, shared WebGL texture
 tests/                       Geometry invariants and browser regression scenarios
 ```
 
@@ -108,9 +109,17 @@ Stem vertices and their leaf/head attachments sample the same travelling wind be
 
 Physical petal materials use species-specific root, body, edge, and vein pigment zones in `lib/flowers/palettes.ts`. Shader uniforms are converted to linear color space by Three.js. Subtle mottling, darker inner layers, neutral vertex shading, restrained tinted sheen, and a balanced studio light preserve saturated pigments and clean ivory whites. Procedural veins, derivative-based micro-normal detail, roughness variation and restrained back scattering add surface detail. This is a real-time approximation of organic light transport, not volumetric subsurface scattering. A local Lightformer studio environment provides reflections without an HDR download. Desktop effects include ambient occlusion, multisample antialiasing, and a subtle vignette. Depth-of-field and visual bloom are disabled so zooming preserves sharp petal and pollen detail. Procedural tissue noise is filtered at a distance to reduce shimmer.
 
+### WebGL and vgpu
+
+All flower geometry, morphs, PBR lighting, shadows, instancing, and interaction render through Three.js / React Three Fiber in **WebGL 2**. [vgpu](https://vgpu.sh/docs/get-started/web) is a WebGPU library; its `Surface` requires a WebGPU canvas context and cannot replace an existing WebGL canvas directly.
+
+On WebGPU-capable browsers, `SurfaceDetail` asynchronously starts a real vgpu render pass that generates a **1024 Ã— 1024 linear tissue atlas**. Its three channels encode vein irregularity, pigment mottling, and cellular roughness/micro-height. The atlas is read back once, mipmapped, and shared by all species' WebGL materials. This avoids repeatedly evaluating those noise fields per fragment. The temporary WebGPU device and resources are disposed after the bake; there is no per-frame GPU readback or additional onscreen canvas. This is procedural material data, not a flower photograph or sprite.
+
+If WebGPU is missing, blocked, or initialization fails, the complete GLSL tissue field stays active. WebGPU preparation never suspends a flower canvas. `canvas[data-surface-detail]` reports `vgpu` or `webgl` for development inspection. Preview pointer events fall back to the renderer-owned canvas when Suspense clears the wrapper ref, preserving event cleanup during fast scrolling and route changes.
+
 ### Performance
 
-Petals are instanced per whorl; seeds, anthers and pollen are instanced. Geometry/material construction is memoized and resources are disposed on replacement. Vector, matrix and color scratch objects are reused in frame callbacks. The hero keeps high geometry quality, upgrading to **ultra** in macro mode; macro pixel density is 2–2.5 and normal views use 1.5–2. There is no automatic hero resolution downgrade. Mobile reduces particles and skips expensive postprocessing while retaining detailed specimen geometry. Garden and collection previews use separate lighter quality settings. Only nearby gallery previews create renderers; offscreen previews are unmounted while their layout is retained. Each canvas belongs to its caption’s page frame, so native scrolling moves the artwork and text together. Previews measure size changes without recalculating viewport offsets during scrolling. The hero renderer pauses while offscreen.
+Petals are instanced per whorl; seeds, anthers and pollen are instanced. Geometry/material construction is memoized and resources are disposed on replacement. Vector, matrix and color scratch objects are reused in frame callbacks. The hero keeps high geometry quality, upgrading to **ultra** in macro mode; macro pixel density is 2â€“2.5 and normal views use 1.5â€“2. There is no automatic hero resolution downgrade. Mobile reduces particles and skips expensive postprocessing while retaining detailed specimen geometry. Garden and collection previews use separate lighter quality settings. Only nearby gallery previews create renderers; offscreen previews are unmounted while their layout is retained. Each canvas belongs to its captionâ€™s page frame, so native scrolling moves the artwork and text together. Previews measure size changes without recalculating viewport offsets during scrolling. The hero renderer pauses while offscreen.
 
 Frame rate depends on the browser, GPU, display resolution, active effects and selected species. The development hero exposes a screen-reader-hidden `#render-stats` output with a sampled `data-fps` value for local profiling. The seven-view inspection fixture is intentionally heavier than the public specimen view.
 
@@ -120,9 +129,13 @@ Frame rate depends on the browser, GPU, display resolution, active effects and s
 npm run typecheck
 npm run lint
 npm test
+npm run check:shaders
+npm run test:gpu
 ```
 
 Geometry tests cover every species and every petal layer: closed topology, positive thickness, finite morph positions/normals, deterministic seeds, bloom endpoints, spring stability and characteristic organ counts. Lotus checks additionally cover sealed organ surfaces, outward normals, recessed sockets, and stable stamen variation.
+
+The event regression exercises null refs, reconnection, and listener cleanup using the actual R3F event manager. GPU checks require a working WebGPU adapter: `npx vgpu doctor --pretty` diagnoses it. `check:shaders` validates WGSL on a real device; `test:gpu` renders the production bake twice, checks determinism and RGBA readback, and compares all three channels against a numerical reference.
 
 Optional Playwright scenarios are included for desktop and mobile regression checks:
 
@@ -132,6 +145,8 @@ npm run test:browser
 ```
 
 Browser scenarios also check that flower canvases and captions move by the same amount when scrolling down and back up on the collection, home hero, and home angle gallery.
+
+Lifecycle scenarios cover rapid preview teardown, gallery/specimen navigation, and macro viewing with WebGPU unavailable. To use an installed Google Chrome for desktop tests, set `PLAYWRIGHT_CHANNEL=chrome` in your shell. The default uses Playwright's bundled Chromium; the mobile project uses WebKit.
 
 Use `/dev/inspection` for the visual checks that numerical tests cannot establish. Confirm silhouettes, overlap, underside attachment and macro detail, then verify pointer/touch motion and the garden on the target GPU.
 

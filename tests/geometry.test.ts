@@ -69,8 +69,8 @@ test("all species have distinct construction and finite, sealed petal shells", (
         `${type}: every edge has two incident faces`,
       );
       for (const attribute of [
-        ...geometry.morphAttributes.position,
-        ...geometry.morphAttributes.normal,
+        ...geometry.morphAttributes.position!,
+        ...geometry.morphAttributes.normal!,
       ]) {
         assert.equal(attribute.count, position.count);
         assert.ok(Array.from(attribute.array).every(Number.isFinite));

@@ -24,13 +24,13 @@ importers:
         specifier: 3.1.1
         version: 3.1.1(@react-three/fiber@9.7.0(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(three@0.185.0))(@types/three@0.185.4)(postprocessing@6.39.4(three@0.185.0))(react@19.2.8)(three@0.185.0)
       lucide-react:
-        specifier: latest
+        specifier: 1.43.0
         version: 1.43.0(react@19.2.8)
       next:
         specifier: 16.3.4
         version: 16.3.4(@babel/core@7.29.7)(@playwright/test@1.63.0)(@types/node@26.5.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       postprocessing:
-        specifier: latest
+        specifier: 6.39.4
         version: 6.39.4(three@0.185.0)
       react:
         specifier: 19.2.8
@@ -43,19 +43,19 @@ importers:
         version: 0.185.0
     devDependencies:
       '@playwright/test':
-        specifier: latest
+        specifier: 1.63.0
         version: 1.63.0
       '@types/node':
-        specifier: latest
+        specifier: 26.5.0
         version: 26.5.0
       '@types/react':
-        specifier: latest
+        specifier: 19.2.18
         version: 19.2.18
       '@types/react-dom':
-        specifier: latest
+        specifier: 19.2.7
         version: 19.2.7(@types/react@19.2.18)
       '@types/three':
-        specifier: latest
+        specifier: 0.185.4
         version: 0.185.4
       '@typescript/native':
         specifier: npm:typescript@7.0.2
@@ -70,7 +70,7 @@ importers:
         specifier: ^3.9.6
         version: 3.9.6
       tsx:
-        specifier: latest
+        specifier: 4.23.13
         version: 4.23.13
       typescript:
         specifier: npm:@typescript/typescript6@^6.0.2

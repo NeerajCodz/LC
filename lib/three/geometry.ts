@@ -68,7 +68,9 @@ export function createPetalGeometry(
             0.065 + profile.width * 0.52 * Math.sin(t * Math.PI * 0.66);
           positions.push(
             Math.sin(u * profile.wrapAngle) * radius,
-            profile.length * t * (1 - 0.08 * u * u),
+            profile.length *
+              t *
+              (0.8 + 0.2 * Math.sqrt(Math.max(0, 1 - u * u))),
             Math.cos(u * profile.wrapAngle) * radius -
               0.065 +
               profile.curl * Math.pow(t, 5),

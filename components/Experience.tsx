@@ -23,6 +23,7 @@ const Scene = dynamic(() => import("./flowers/FlowerScene"), { ssr: false });
 
 export default function Experience() {
   const router = useRouter();
+  const pickerTrigger = useRef<HTMLButtonElement>(null);
   const params = useSearchParams(),
     initial = params.get("flower");
   const [type, setType] = useState<FlowerType>(
@@ -37,12 +38,14 @@ export default function Experience() {
     [pulse, setPulse] = useState(0),
     [ready, setReady] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const introTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const { reducedMotion } = useExperienceSettings();
   const info = getFlower(type),
     index = FLOWERS.findIndex((f) => f.type === type);
   useEffect(() => {
     if (!ready) return;
     const id = setTimeout(() => setBloom(target), reducedMotion ? 0 : 900);
+    introTimer.current = id;
     return () => clearTimeout(id);
   }, [ready, reducedMotion, target]);
   useEffect(
@@ -52,13 +55,21 @@ export default function Experience() {
     [],
   );
   useEffect(() => {
-    document.body.style.overflow = picker ? "hidden" : "";
+    if (!picker) return;
+    const trigger = pickerTrigger.current;
+    document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = "";
+      trigger?.focus();
     };
   }, [picker]);
   function choose(next: FlowerType) {
-    if (next === type || switching) return;
+    if (switching) return;
+    if (next === type) {
+      setPicker(false);
+      return;
+    }
+    if (introTimer.current) clearTimeout(introTimer.current);
     if (timer.current) clearTimeout(timer.current);
     setPicker(false);
     setSwitching(true);
@@ -78,11 +89,14 @@ export default function Experience() {
     );
   }
   function setAmount(value: number) {
+    if (timer.current) clearTimeout(timer.current);
+    if (introTimer.current) clearTimeout(introTimer.current);
     setTarget(value);
     setBloom(value);
     setPaused(false);
   }
   function replay() {
+    if (introTimer.current) clearTimeout(introTimer.current);
     setBloom(0);
     setPaused(false);
     if (timer.current) clearTimeout(timer.current);
@@ -124,7 +138,12 @@ export default function Experience() {
         )}
         <Header
           onNavigate={(href) => {
+            if (href === "/") {
+              setMacro(false);
+              return;
+            }
             if (timer.current) clearTimeout(timer.current);
+            if (introTimer.current) clearTimeout(introTimer.current);
             setBloom(0);
             setPaused(false);
             setSwitching(true);
@@ -150,7 +169,11 @@ export default function Experience() {
             <p className="latin">{info.latin}</p>
             <p className="description">{info.description}</p>
           </div>
-          <button className="text-button" onClick={() => setPicker(true)}>
+          <button
+            ref={pickerTrigger}
+            className="text-button"
+            onClick={() => setPicker(true)}
+          >
             Explore the collection <MoveUpRight size={16} />
           </button>
         </div>

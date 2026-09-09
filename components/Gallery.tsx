@@ -100,7 +100,7 @@ function SpecimenPreview({
   const ref = useRef<HTMLElement>(null);
   const [visible, setVisible] = useState(false),
     [hover, setHover] = useState(false);
-  const { reducedMotion } = useExperienceSettings();
+  const { reducedMotion, quality } = useExperienceSettings();
   useEffect(() => {
     const node = ref.current;
     if (!node) return;
@@ -132,7 +132,17 @@ function SpecimenPreview({
             <Suspense fallback={null}>
               <PerspectiveCamera
                 makeDefault
-                position={[0, macro ? 1.4 : 1.7, macro ? 2.8 : 5.5]}
+                position={[
+                  0,
+                  macro ? 1.4 : 1.7,
+                  macro
+                    ? quality === "low"
+                      ? 3.5
+                      : 2.8
+                    : quality === "low"
+                      ? 7
+                      : 5.5,
+                ]}
                 fov={36}
                 onUpdate={(camera) => camera.lookAt(0, macro ? 0.5 : 0.05, 0)}
               />

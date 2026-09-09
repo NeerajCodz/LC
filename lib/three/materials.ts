@@ -57,7 +57,7 @@ export function createPetalMaterial(
       "#include <normal_fragment_maps>",
       `#include <normal_fragment_maps>
       float ridge = sin((vPetalUv.x-.5)*93.0+sin(vPetalUv.y*7.0)*1.8);
-      float microHeight = ridge * .0007 * sin(vPetalUv.y*3.14159);
+      float microHeight = ridge * .00022 * sin(vPetalUv.y*3.14159);
       vec3 dpdx=dFdx(-vViewPosition), dpdy=dFdy(-vViewPosition);
       vec3 r1=cross(dpdy,normal), r2=cross(normal,dpdx);
       float determinant=dot(dpdx,r1);

@@ -180,10 +180,16 @@ export function FlowerPlant({
               </group>
             </group>
           ))}
-          <mesh position={[0, -0.1, 0]} scale={[0.13, 0.16, 0.13]} castShadow>
-            <sphereGeometry args={[1, 16, 12]} />
-            <meshStandardMaterial color="#425932" roughness={0.8} />
-          </mesh>
+          {!structure.blossoms && (
+            <mesh
+              position={[0, -0.13, 0]}
+              scale={[0.105, 0.09, 0.105]}
+              castShadow
+            >
+              <sphereGeometry args={[1, 16, 12]} />
+              <meshStandardMaterial color="#425932" roughness={0.8} />
+            </mesh>
+          )}
         </group>
       </group>
     </group>

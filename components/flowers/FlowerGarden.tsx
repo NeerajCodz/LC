@@ -99,6 +99,15 @@ export default function FlowerGarden({
           <Flower
             key={plant.type}
             {...plant}
+            position={
+              quality === "low"
+                ? [
+                    plant.position[0] * 0.65,
+                    plant.position[1],
+                    plant.position[2],
+                  ]
+                : plant.position
+            }
             bloom={Math.max(0, Math.min(1, bloom + i * 0.018 - 0.06))}
             quality={quality === "low" || degraded ? "low" : "medium"}
             animationSpeed={0.85 + i * 0.055}

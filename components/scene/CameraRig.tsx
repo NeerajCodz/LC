@@ -29,7 +29,7 @@ export function CameraRig({
       : macro
         ? 3.0
         : mobile
-          ? 7.6
+          ? 6.8
           : 6.15;
     const intro = reducedMotion ? 0 : Math.exp(-elapsed.current * 0.5) * 1.2;
     const azimuth =

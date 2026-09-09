@@ -41,7 +41,7 @@ Deploy as a regular Next.js application on a Node.js host or a Next.js-compatibl
 
 Move the pointer or drag on the flower to sway it. Click or tap for a bloom pulse and close-up. The equivalent macro, bloom and pause actions are available through keyboard-accessible DOM controls. Escape closes the collection selector. Reduced-motion preferences disable pulses and pollen, simplify camera movement and make bloom controls immediate.
 
-The LC header includes three studio themes: **Current** (forest charcoal), **Black**, and **White** (warm ivory). Themes update both the interface and the 3D background/fog. The choice persists locally and synchronizes between browser tabs; flower pigments stay consistent across themes. The footer carries the full **living colors** wordmark.
+The LC header has one rounded toggle that cycles through **Current** (forest charcoal), **Black**, and **White** (warm ivory). Its sliding thumb and leaf/moon/sun icons show the active theme; its accessible label names the current and next theme. Themes update both the interface and the 3D background/fog. The choice persists locally and synchronizes between browser tabs; flower pigments stay consistent across themes. The footer carries the full **living colors** wordmark.
 
 ## Flower API
 

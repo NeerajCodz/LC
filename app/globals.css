@@ -181,44 +181,51 @@ button {
   letter-spacing: 0.18em;
   font-weight: 500;
 }
-.theme-switcher {
-  display: flex;
+.theme-toggle {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 34px);
+  gap: 1px;
   align-items: center;
-  gap: 5px;
-  font-size: 10px;
+  width: 116px;
+  height: 44px;
+  padding: 5px;
+  flex-shrink: 0;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--panel);
   color: var(--muted);
+  transition: border-color 0.2s;
 }
-.theme-switcher > span {
-  margin-right: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.13em;
+.theme-toggle:hover {
+  border-color: var(--muted);
 }
-.theme-switcher button {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  min-height: 40px;
-  padding: 8px 9px;
-  border-bottom: 1px solid transparent;
-}
-.theme-switcher button[aria-pressed="true"] {
-  color: var(--ink);
-  border-bottom-color: var(--accent);
-}
-.theme-swatch {
-  width: 8px;
-  height: 8px;
-  border: 1px solid var(--muted);
+.theme-toggle-thumb {
+  position: absolute;
+  left: 6px;
+  top: 5px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
+  background: var(--ink);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), background 0.2s;
 }
-.theme-swatch-current {
-  background: #334239;
+.theme-toggle[data-theme="black"] .theme-toggle-thumb {
+  transform: translateX(35px);
 }
-.theme-swatch-black {
-  background: #090909;
+.theme-toggle[data-theme="white"] .theme-toggle-thumb {
+  transform: translateX(70px);
 }
-.theme-swatch-white {
-  background: #f5f3ed;
+.theme-toggle-icon {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  height: 32px;
+  transition: color 0.2s;
+}
+.theme-toggle-icon.is-selected {
+  color: var(--background);
 }
 .footer-wordmark {
   font:
@@ -1206,15 +1213,8 @@ input[type="range"]::-moz-range-thumb {
     gap: 19px;
     font-size: 11px;
   }
-  .theme-switcher {
+  .theme-toggle {
     margin-left: auto;
-  }
-  .theme-switcher > span {
-    margin-right: 3px;
-  }
-  .theme-switcher button {
-    min-height: 44px;
-    padding: 7px;
   }
   .site-header nav a[aria-current="page"]::after {
     bottom: -22px;

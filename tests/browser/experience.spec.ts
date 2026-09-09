@@ -66,12 +66,26 @@ test("themes persist and the specimen gallery exposes four angles", async ({
   page,
 }) => {
   await page.goto("/flower/lotus");
-  await page.getByRole("button", { name: "White theme", exact: true }).click();
+  await page
+    .getByRole("button", {
+      name: "Theme: Current. Switch to Black theme",
+      exact: true,
+    })
+    .click();
+  await page
+    .getByRole("button", {
+      name: "Theme: Black. Switch to White theme",
+      exact: true,
+    })
+    .click();
   await expect(page.locator("html")).toHaveAttribute("data-theme", "white");
   await page.reload();
   await expect(
-    page.getByRole("button", { name: "White theme", exact: true }),
-  ).toHaveAttribute("aria-pressed", "true");
+    page.getByRole("button", {
+      name: "Theme: White. Switch to Current theme",
+      exact: true,
+    }),
+  ).toBeVisible();
   await page
     .getByRole("link", { name: "View every angle", exact: true })
     .click();

@@ -1,6 +1,7 @@
 import { expect, test } from "@playwright/test";
+import { FLOWER_TYPES } from "../../lib/flowers/types";
 
-test("all fifteen gallery scenes survive a round-trip scroll in one WebGL context", async ({
+test("all catalog scenes survive a round-trip scroll in one WebGL context", async ({
   page,
 }) => {
   const errors: string[] = [];
@@ -9,7 +10,8 @@ test("all fifteen gallery scenes survive a round-trip scroll in one WebGL contex
   await page.goto("/gallery/");
   const previews = page.locator(".flower-preview");
   const sceneIds: string[] = [];
-  for (let i = 0; i < 15; i++) {
+  await expect(previews).toHaveCount(FLOWER_TYPES.length);
+  for (let i = 0; i < FLOWER_TYPES.length; i++) {
     await previews.nth(i).scrollIntoViewIfNeeded();
     await expect(previews.nth(i)).toHaveAttribute("data-render-rect", /,/);
     sceneIds.push((await previews.nth(i).getAttribute("data-scene-id"))!);
@@ -17,7 +19,7 @@ test("all fifteen gallery scenes survive a round-trip scroll in one WebGL contex
   await previews.first().scrollIntoViewIfNeeded();
   await expect(page.locator(".preview-stage")).toHaveAttribute(
     "data-retained-scenes",
-    "15",
+    String(FLOWER_TYPES.length),
   );
   expect(
     await previews.evaluateAll((nodes) =>

@@ -43,7 +43,7 @@ test("all species have distinct construction and finite, sealed petal shells", (
   assert.equal(
     new Set(Object.values(structures).map((s) => JSON.stringify(s.layers)))
       .size,
-    15,
+    FLOWER_TYPES.length,
   );
   for (const type of FLOWER_TYPES)
     for (const layer of structures[type].layers) {

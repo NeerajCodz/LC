@@ -52,7 +52,7 @@ export default function AngleGallery({ type }: { type: FlowerType }) {
       <div className="angle-gallery-end">
         <span>Move gently to explore the form.</span>
         <Link href="/gallery">
-          Discover all fifteen flowers <ArrowUpRight size={15} />
+          Explore the growing collection <ArrowUpRight size={15} />
         </Link>
       </div>
     </section>

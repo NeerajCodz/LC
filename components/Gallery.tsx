@@ -16,15 +16,15 @@ export default function Gallery() {
       <Header active="gallery" />
       <div className="collection-intro">
         <div>
-          <span className="eyebrow">THE LIVING COLLECTION — VOLUME 01</span>
+          <span className="eyebrow">PROJECT LC — THE GROWING COLLECTION</span>
           <h1>
-            Fifteen little <em>wonders.</em>
+            A world in <em>bloom.</em>
           </h1>
         </div>
         <p>
-          A closer look at nature’s extraordinary forms.
+          Our mission: bring every flower in the world to life in 3D.
           <br />
-          Choose a specimen. Watch it unfold.
+          An ever-growing collection, one bloom at a time.
         </p>
       </div>
       <div className="gallery-toolbar">
@@ -110,7 +110,7 @@ function SpecimenPreview({
         aria-label={`Explore ${info.name}`}
       >
         <span className="preview-number">
-          {String(index + 1).padStart(2, "0")} / 15
+          {String(index + 1).padStart(2, "0")}
         </span>
         <FlowerPreview
           className="gallery-preview"

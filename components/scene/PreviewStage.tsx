@@ -144,7 +144,7 @@ function RetainedView({ entry }: { entry: PreviewEntry }) {
   );
 }
 
-// A global angle/bloom change should not rebuild fifteen offscreen specimens.
+// A global angle/bloom change should not rebuild every offscreen specimen.
 // Apply their latest inputs when they become visible; activity context still
 // reaches the existing descendants immediately to pause their frame callbacks.
 const RetainedFlower = memo(

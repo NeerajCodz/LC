@@ -390,11 +390,6 @@ p {
   font-size: 12px;
   letter-spacing: 0.13em;
 }
-.specimen-pagination i {
-  color: var(--muted);
-  font-style: normal;
-  margin-left: 4px;
-}
 .bloom-panel {
   position: absolute;
   bottom: 13%;
@@ -667,6 +662,12 @@ input[type="range"]::-moz-range-thumb {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   column-gap: 45px;
+}
+.collection-mission {
+  margin: -12px 0 30px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.8;
 }
 .species-list button {
   display: flex;

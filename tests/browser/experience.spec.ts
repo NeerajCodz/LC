@@ -1,13 +1,14 @@
 import { expect, test } from "@playwright/test";
+import { FLOWER_TYPES } from "../../lib/flowers/types";
 test("all species are reachable through the collection", async ({ page }) => {
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
   await page.goto("/gallery");
   await expect(
-    page.getByRole("heading", { name: "Fifteen little wonders." }),
+    page.getByRole("heading", { name: "A world in bloom." }),
   ).toBeVisible();
   const previews = page.locator(".preview-link");
-  await expect(previews).toHaveCount(15);
+  await expect(previews).toHaveCount(FLOWER_TYPES.length);
   await page.getByRole("button", { name: "Side", exact: true }).click();
   await expect(
     page.getByRole("button", { name: "Side", exact: true }),

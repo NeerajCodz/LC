@@ -76,7 +76,7 @@ export default function Garden() {
         <Link href="/gallery">
           Meet every species <ArrowUpRight size={13} />
         </Link>
-        <span>THE GARDEN · VOLUME 01</span>
+        <span>PROJECT LC · ALWAYS GROWING</span>
       </footer>
     </main>
   );

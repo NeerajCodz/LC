@@ -149,12 +149,12 @@ export default function Experience({
         />
         <div className={`specimen-copy ${macro ? "quiet" : ""}`}>
           <div className="eyebrow">
-            <span className="live-dot" /> THE LIVING COLLECTION{" "}
+            <span className="live-dot" /> PROJECT LC · LIVING COLORS{" "}
             <span className="copy-rule" />
           </div>
           <div className="specimen-heading" key={type}>
             <p className="specimen-number">
-              SPECIMEN {String(index + 1).padStart(2, "0")} / 15
+              SPECIMEN {String(index + 1).padStart(2, "0")}
             </p>
             <h1 className={info.name.length > 12 ? "long-name" : ""}>
               {info.name}
@@ -199,17 +199,19 @@ export default function Experience({
           <button
             aria-label="Previous flower"
             disabled={switching}
-            onClick={() => choose(FLOWERS[(index + 14) % 15].type)}
+            onClick={() =>
+              choose(
+                FLOWERS[(index + FLOWERS.length - 1) % FLOWERS.length].type,
+              )
+            }
           >
             <ArrowLeft size={18} />
           </button>
-          <span>
-            {String(index + 1).padStart(2, "0")} <i>/ 15</i>
-          </span>
+          <span>{String(index + 1).padStart(2, "0")}</span>
           <button
             aria-label="Next flower"
             disabled={switching}
-            onClick={() => choose(FLOWERS[(index + 1) % 15].type)}
+            onClick={() => choose(FLOWERS[(index + 1) % FLOWERS.length].type)}
           >
             <ArrowRight size={18} />
           </button>
@@ -281,7 +283,7 @@ export default function Experience({
           }}
         >
           <div className="overlay-header">
-            <span className="eyebrow">FIFTEEN WAYS TO BLOOM</span>
+            <span className="eyebrow">PROJECT LC — ALWAYS GROWING</span>
             <button
               autoFocus
               aria-label="Close collection"
@@ -293,6 +295,9 @@ export default function Experience({
           <h2>
             The living collection<span>.</span>
           </h2>
+          <p className="collection-mission">
+            Our mission: bring every single flower in the world to life in 3D.
+          </p>
           <div className="species-list">
             {FLOWERS.map((flower, i) => (
               <button
@@ -320,7 +325,7 @@ export default function Experience({
       <span className="sr-only" aria-live="polite">
         {switching
           ? "Gently closing the flower"
-          : `${info.name}, specimen ${index + 1} of 15`}
+          : `${info.name}, specimen ${index + 1}`}
       </span>
     </main>
   );

@@ -1,5 +1,7 @@
 # Botanical reference notes
 
+Project LC aims to bring every single flower in the world to life in 3D. These notes cover the specimens developed so far and expand with the collection; they do not define the limits of the project.
+
 Botanical sources reviewed September 9, 2026; implementation notes updated September 10, 2026. The collection uses authored procedural geometry rather than photographic textures or scanned plants. The references below guide organ arrangement, surface character, and foliage. Cultivar variation is substantial: the Rose, Peony, Dahlia, and Chrysanthemum represent ornamental double forms, not every form of their species.
 
 See [README](../README.md) for architecture and the public Flower API, [development notes](development.md) for inspection steps, and [AGENTS.md](../AGENTS.md) for implementation requirements.

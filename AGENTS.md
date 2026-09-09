@@ -1,13 +1,14 @@
-# Living Colors — agent reference
+# Project LC · Living Colors — agent reference
 
 ## Project brief
 
-Build and maintain LC as a premium, calm, interactive botanical art collection in a standalone Next.js app. The fifteen flowers must remain recognizably different, physically present procedural 3D specimens: Rose, Lotus, Marigold, Sunflower, Tulip, Lily, Jasmine, Orchid, Hibiscus, Dahlia, Peony, Lavender, Chrysanthemum, Daisy, and Cherry Blossom. Rose is the quality benchmark. Prioritize convincing petal thickness, curvature, layering, botanical organs, pigments, and crisp macro detail.
+Project LC's mission is to bring every single flower in the world to life as an interactive 3D specimen. Build and maintain Living Colors as a premium, calm botanical art experience in a standalone Next.js app. The current catalog is the beginning of an ongoing collection, not the project's final scope. Every flower must remain recognizably different and physically present. Rose is the quality benchmark. Prioritize convincing petal thickness, curvature, layering, botanical organs, pigments, and crisp macro detail.
 
 Read [README.md](README.md) for the public API and architecture, [development notes](docs/development.md) for commands and verification, and [botanical references](docs/botanical-references.md) before changing a species. Check `package.json` and the lockfile for installed versions; do not assume APIs from a different release.
 
 ## Established project requirements
 
+- Describe Project LC as an ever-growing collection with a mission to create every flower. Do not define the project by a fixed species count or imply that the current catalog completes the mission. Derive navigation bounds and test coverage from `FLOWERS` / `FLOWER_TYPES`; avoid hardcoded collection sizes in code or copy.
 - Use Next.js App Router, React, TypeScript, Three.js, React Three Fiber, and drei. Do not use ChatGPT Sites or migrate this repository to a site builder.
 - **Port 1607 is the permanent local port**, for development, production, browser tests, and documentation. Do not start alternate servers on 3000 or 3001 when it is occupied; inspect the existing process first.
 - Use canonical `/flower/<slug>/` routes. The legacy query-string route only redirects. Keep `/`, `/gallery/`, and `/garden/` working.

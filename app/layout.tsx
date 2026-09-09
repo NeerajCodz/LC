@@ -7,11 +7,11 @@ import "@fontsource/manrope/500.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "Living Colors — A study in bloom",
-    template: "%s — Living Colors",
+    default: "Project LC — Living Colors",
+    template: "%s — Project LC",
   },
   description:
-    "A living collection of fifteen sculptural flowers. Explore their forms, unfold each petal, and find a moment of stillness.",
+    "Project LC is on a mission to bring every single flower in the world to life in 3D. Explore an ever-growing collection of interactive botanical specimens.",
 };
 
 export default function RootLayout({

@@ -10,7 +10,7 @@ export const lotusStructure: FlowerStructure = {
   leafCount: 1,
   center: "pod",
   centerRadius: 0.23,
-  centerHeight: 0.25,
+  centerHeight: 0.52,
   roughness: 0.44,
   sheen: 0.55,
   layers: [

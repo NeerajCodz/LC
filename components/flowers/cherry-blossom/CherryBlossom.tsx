@@ -10,6 +10,8 @@ export const cherryBlossomStructure: FlowerStructure = {
   center: "stamens",
   centerRadius: 0.1,
   centerHeight: 0.06,
+  stamenCount: 22,
+  stamenLength: 0.16,
   roughness: 0.61,
   sheen: 0.65,
   layers: [

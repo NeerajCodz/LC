@@ -8,6 +8,7 @@ export const lilyStructure: FlowerStructure = {
   center: "stamens",
   centerRadius: 0.3,
   centerHeight: 0.52,
+  antherColor: "#a36c2e",
   layers: [
     whorl(
       3,

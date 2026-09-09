@@ -3,9 +3,9 @@ import type { PetalProfile, Quality } from "../flowers/types";
 import { seededRandom } from "./noise";
 
 const RESOLUTION: Record<Quality, [number, number]> = {
-  low: [10, 14],
-  medium: [16, 24],
-  high: [24, 36],
+  low: [16, 22],
+  medium: [22, 32],
+  high: [30, 44],
 };
 
 /** A sealed, double-surface petal. Its front, back and perimeter are real triangles. */
@@ -41,6 +41,8 @@ export function createPetalGeometry(
       for (let column = 0; column <= columns; column++) {
         const u = (column / columns) * 2 - 1;
         const edge = Math.pow(Math.abs(u), 3);
+        const ruffle = Math.max(edge, Math.pow(t, 6) * rounded * 0.8);
+        const ruffleEnvelope = Math.sin(t * Math.PI * (1 - rounded * 0.3));
         const x =
           u * profile.width * 0.5 * envelope * (1 + asymmetry * u) +
           Math.sin(t * Math.PI) * asymmetry * profile.width;
@@ -50,24 +52,28 @@ export function createPetalGeometry(
           profile.length *
             (t * (1 - rounded * 0.3 * (1 - Math.sqrt(Math.max(0, 1 - u * u)))) -
               notch) +
-          Math.sin(u * 4.8 + phase) *
-            profile.ripple *
-            edge *
-            Math.sin(t * Math.PI);
+          Math.sin(u * 4.8 + phase) * profile.ripple * ruffle * ruffleEnvelope;
         const z =
           profile.length *
             (profile.cup * t * t + profile.curl * Math.pow(t, 5)) -
-          profile.edge * u * u * Math.sin(Math.PI * t * 0.85) +
+          profile.edge * u * u * envelope * Math.sqrt(t) +
           profile.ripple *
             Math.sin(u * 13 + t * 18 + phase) *
-            edge *
-            Math.sin(t * Math.PI) +
-          profile.twist * u * t * t +
-          (side === 0 ? 1 : -1) *
-            profile.thickness *
-            (0.65 + Math.sin(Math.PI * t) * 0.35) *
-            0.5;
-        positions.push(x, y, z);
+            ruffle *
+            ruffleEnvelope +
+          profile.twist * u * t * t * envelope;
+        if (profile.wrapAngle) {
+          // A tulip tepal is a section of a cup, rather than a radial blade.
+          const radius =
+            0.065 + profile.width * 0.52 * Math.sin(t * Math.PI * 0.66);
+          positions.push(
+            Math.sin(u * profile.wrapAngle) * radius,
+            profile.length * t * (1 - 0.08 * u * u),
+            Math.cos(u * profile.wrapAngle) * radius -
+              0.065 +
+              profile.curl * Math.pow(t, 5),
+          );
+        } else positions.push(x, y, z);
         uvs.push(column / columns, t);
         const veins = Math.cos(u * 24 + t * 3) * 0.018 * Math.sin(t * Math.PI);
         const shade = 0.64 + 0.32 * Math.pow(t, 0.55) + edge * 0.035 + veins;
@@ -112,22 +118,50 @@ export function createPetalGeometry(
   geometry.setAttribute("uv", new Float32BufferAttribute(uvs, 2));
   geometry.setIndex(indices);
   geometry.computeVertexNormals();
+  giveThickness(geometry, uvs, profile.thickness);
   const folded = positions.slice();
   for (let i = 0; i < folded.length / 3; i++) {
     const t = uvs[i * 2 + 1];
-    folded[i * 3] *= 1 - t * 0.32;
+    const u = uvs[i * 2] * 2 - 1;
+    // Wrap around the bud envelope; tips approach the axis without crossing it.
+    const radius = 0.028 + profile.length * 0.235 * Math.sin(Math.PI * t);
+    folded[i * 3] = Math.sin(u * 1.13) * radius;
+    folded[i * 3 + 1] = profile.length * t * (1 - 0.12 * u * u);
     folded[i * 3 + 2] =
-      positions[i * 3 + 2] * 0.24 - Math.pow(t, 3) * profile.length * 0.19;
+      Math.cos(u * 1.13) * radius + profile.length * 0.125 * t - 0.028;
   }
   const closed = new BufferGeometry();
   closed.setAttribute("position", new Float32BufferAttribute(folded, 3));
   closed.setIndex(indices);
   closed.computeVertexNormals();
+  giveThickness(closed, uvs, profile.thickness);
   geometry.morphAttributes.position = [closed.getAttribute("position")];
   geometry.morphAttributes.normal = [closed.getAttribute("normal")];
   closed.dispose();
   geometry.computeBoundingSphere();
   return geometry;
+}
+
+/** Offset along the actual surface normal, including recurved tips and folds. */
+function giveThickness(
+  geometry: BufferGeometry,
+  uvs: number[],
+  thickness: number,
+) {
+  const position = geometry.getAttribute("position"),
+    normal = geometry.getAttribute("normal");
+  for (let i = 0; i < position.count; i++) {
+    const t = uvs[i * 2 + 1],
+      offset = thickness * (0.65 + 0.35 * Math.sin(Math.PI * t)) * 0.5;
+    position.setXYZ(
+      i,
+      position.getX(i) + normal.getX(i) * offset,
+      position.getY(i) + normal.getY(i) * offset,
+      position.getZ(i) + normal.getZ(i) * offset,
+    );
+  }
+  position.needsUpdate = true;
+  geometry.computeVertexNormals();
 }
 
 export const PETAL: PetalProfile = {

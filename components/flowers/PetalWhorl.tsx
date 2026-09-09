@@ -131,7 +131,7 @@ export function PetalWhorl({
       );
       dummy.updateMatrix();
       mesh.current!.setMatrixAt(i, dummy.matrix);
-      morph.morphTargetInfluences![0] = 1 - open;
+      morph.morphTargetInfluences![0] = 1 - open + open * p.tilt * 0.12;
       mesh.current!.setMorphAt(i, morph);
     });
     mesh.current.instanceMatrix.needsUpdate = true;

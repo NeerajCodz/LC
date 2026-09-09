@@ -9,6 +9,8 @@ export const jasmineStructure: FlowerStructure = {
   center: "stamens",
   centerRadius: 0.035,
   centerHeight: 0.015,
+  stamenCount: 2,
+  stamenLength: 0.06,
   layers: [
     whorl(
       5,

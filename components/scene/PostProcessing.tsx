@@ -3,10 +3,18 @@ import {
   DepthOfField,
   EffectComposer,
   Vignette,
+  N8AO,
 } from "@react-three/postprocessing";
 export function PostProcessing({ macro = false }: { macro?: boolean }) {
   return (
     <EffectComposer multisampling={4}>
+      <N8AO
+        aoRadius={0.22}
+        distanceFalloff={1}
+        intensity={1.2}
+        quality="medium"
+        halfRes
+      />
       <Bloom luminanceThreshold={1.8} intensity={0.09} mipmapBlur />
       <DepthOfField
         target={[0, 0.45, 0]}

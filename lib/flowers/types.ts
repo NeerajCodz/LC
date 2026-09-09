@@ -56,6 +56,7 @@ export interface PetalProfile {
   notch?: number;
   spots?: number;
   roundness?: number;
+  wrapAngle?: number;
 }
 
 export interface PetalLayer {
@@ -75,6 +76,9 @@ export interface FlowerStructure {
   center: "none" | "seeds" | "pod" | "stamens" | "column" | "florets";
   centerRadius: number;
   centerHeight: number;
+  stamenCount?: number;
+  stamenLength?: number;
+  antherColor?: string;
   stemLength: number;
   stemRadius: number;
   leafShape: "serrated" | "broad" | "lance" | "round" | "needle";

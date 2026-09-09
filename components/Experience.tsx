@@ -1,7 +1,7 @@
 "use client";
 import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
   ArrowLeft,
   ArrowRight,
@@ -22,6 +22,7 @@ import { useExperienceSettings } from "@/hooks/useExperienceSettings";
 const Scene = dynamic(() => import("./flowers/FlowerScene"), { ssr: false });
 
 export default function Experience() {
+  const router = useRouter();
   const params = useSearchParams(),
     initial = params.get("flower");
   const [type, setType] = useState<FlowerType>(
@@ -58,6 +59,7 @@ export default function Experience() {
   }, [picker]);
   function choose(next: FlowerType) {
     if (next === type || switching) return;
+    if (timer.current) clearTimeout(timer.current);
     setPicker(false);
     setSwitching(true);
     setPaused(false);
@@ -91,6 +93,9 @@ export default function Experience() {
   }
   return (
     <main>
+      {process.env.NODE_ENV === "development" && (
+        <output id="render-stats" className="sr-only" />
+      )}
       <section
         className="experience"
         aria-label="Interactive botanical specimen"
@@ -117,7 +122,18 @@ export default function Experience() {
             </p>
           </div>
         )}
-        <Header />
+        <Header
+          onNavigate={(href) => {
+            if (timer.current) clearTimeout(timer.current);
+            setBloom(0);
+            setPaused(false);
+            setSwitching(true);
+            timer.current = setTimeout(
+              () => router.push(href),
+              reducedMotion ? 0 : 1500,
+            );
+          }}
+        />
         <div className={`specimen-copy ${macro ? "quiet" : ""}`}>
           <div className="eyebrow">
             <span className="live-dot" /> THE LIVING COLLECTION{" "}

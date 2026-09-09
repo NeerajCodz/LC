@@ -12,14 +12,17 @@ export const tulipStructure: FlowerStructure = {
   center: "stamens",
   centerRadius: 0.13,
   centerHeight: 0.25,
+  stamenCount: 6,
+  stamenLength: 0.25,
   layers: [
     whorl(
       3,
       0.09,
       0,
-      0.24,
+      0.065,
       {
         length: 1.28,
+        wrapAngle: 0.68,
         width: 1.03,
         cup: 0.14,
         curl: 0.04,
@@ -34,9 +37,10 @@ export const tulipStructure: FlowerStructure = {
       3,
       0.07,
       0.035,
-      0.13,
+      0.035,
       {
         length: 1.24,
+        wrapAngle: 0.66,
         width: 1,
         cup: 0.15,
         curl: 0.06,

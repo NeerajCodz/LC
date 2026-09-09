@@ -14,7 +14,14 @@ export function FlowerCore({
   const group = useRef<Group>(null);
   const mesh = useRef<InstancedMesh>(null);
   const filaments = useRef<InstancedMesh>(null);
-  const { center, centerRadius: r, centerHeight: h } = structure;
+  const {
+    center,
+    centerRadius: r,
+    centerHeight: h,
+    stamenLength = 0.46,
+    stamenCount,
+    antherColor = "#e8b951",
+  } = structure;
   const count =
     center === "seeds"
       ? 610
@@ -25,9 +32,7 @@ export function FlowerCore({
           : center === "column"
             ? 65
             : center === "stamens"
-              ? r > 0.23
-                ? 6
-                : 27
+              ? (stamenCount ?? (r > 0.23 ? 6 : 27))
               : 0;
   const stamens = center === "stamens" || center === "column";
   const data = useMemo(() => {
@@ -41,13 +46,15 @@ export function FlowerCore({
           ? h + (i / count) * 0.48
           : h +
             (stamens
-              ? 0.12 + random() * 0.34
+              ? stamenLength * (0.3 + random() * 0.7)
               : Math.sqrt(1 - (radius * radius) / (r * r)) * r * 0.31);
       const x = Math.cos(a) * radius,
         z = Math.sin(a) * radius;
       dummy.position.set(x, y, z);
       dummy.rotation.set(stamens ? 0.25 : radius * 0.5, a, 0);
-      const size = stamens ? 0.032 : (r / Math.sqrt(count)) * 0.83;
+      const size = stamens
+        ? Math.min(0.032, stamenLength * 0.12)
+        : (r / Math.sqrt(count)) * 0.83;
       dummy.scale.set(
         size,
         size * (stamens ? 1.8 : 0.85 + random() * 0.5),
@@ -56,7 +63,7 @@ export function FlowerCore({
       dummy.updateMatrix();
       return { matrix: dummy.matrix.clone(), x, y, z, shade: random() };
     });
-  }, [count, r, h, stamens, center]);
+  }, [count, r, h, stamens, center, stamenLength]);
   useEffect(() => {
     const dummy = new Object3D(),
       tint = new Color();
@@ -70,16 +77,16 @@ export function FlowerCore({
               ? "#32201a"
               : center === "pod"
                 ? "#756837"
-                : "#e8b951",
+                : antherColor,
           )
           .multiplyScalar(0.6 + d.shade * 0.6),
       );
       dummy.position.set(d.x * 0.5, d.y * 0.5, d.z * 0.5);
       dummy.rotation.set(Math.atan2(d.z, d.y), 0, -Math.atan2(d.x, d.y));
       dummy.scale.set(
-        0.008,
+        Math.min(0.008, stamenLength * 0.026),
         Math.sqrt(d.x * d.x + d.y * d.y + d.z * d.z),
-        0.008,
+        Math.min(0.008, stamenLength * 0.026),
       );
       dummy.updateMatrix();
       filaments.current?.setMatrixAt(i, dummy.matrix);
@@ -90,7 +97,7 @@ export function FlowerCore({
         mesh.current.instanceColor.needsUpdate = true;
     }
     if (filaments.current) filaments.current.instanceMatrix.needsUpdate = true;
-  }, [data, center]);
+  }, [data, center, antherColor, stamenLength]);
   // Keep instance bounds valid after initialization without allocating per frame.
   useFrame(() => {
     if (mesh.current && !mesh.current.boundingSphere)

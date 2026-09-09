@@ -15,6 +15,7 @@ import { CameraRig, type ViewAngle } from "../scene/CameraRig";
 import { PostProcessing } from "../scene/PostProcessing";
 import { Pollen } from "../scene/Pollen";
 import { Flower } from "./Flower";
+import { RenderDiagnostics } from "../scene/RenderDiagnostics";
 
 export interface SceneProps {
   type: FlowerType;
@@ -120,6 +121,7 @@ export default function FlowerScene({
         angle={angle}
       />
       <AdaptiveDpr pixelated />
+      {process.env.NODE_ENV === "development" && <RenderDiagnostics />}
       <PerformanceMonitor onDecline={() => setDegraded(true)} />
     </Canvas>
   );

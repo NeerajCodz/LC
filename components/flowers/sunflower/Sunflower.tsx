@@ -48,11 +48,11 @@ export const sunflowerStructure: FlowerStructure = {
     ),
     whorl(
       14,
-      0.32,
+      0.24,
       -0.08,
       1.5,
       {
-        length: 0.44,
+        length: 0.3,
         width: 0.14,
         cup: 0.08,
         curl: 0.1,

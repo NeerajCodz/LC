@@ -12,6 +12,8 @@ export const orchidStructure: FlowerStructure = {
   center: "stamens",
   centerRadius: 0.055,
   centerHeight: 0.05,
+  stamenCount: 2,
+  stamenLength: 0.04,
   layers: [
     whorl(
       1,

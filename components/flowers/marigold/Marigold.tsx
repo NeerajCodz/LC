@@ -3,7 +3,7 @@ import { BASE_STRUCTURE, whorl } from "@/lib/flowers/structure";
 import { FlowerPlant } from "../FlowerPlant";
 export const marigoldStructure: FlowerStructure = {
   ...BASE_STRUCTURE,
-  headTilt: 0.45,
+  headTilt: 0.95,
   leafShape: "serrated",
   leafCount: 4,
   roughness: 0.82,
@@ -30,7 +30,6 @@ export const marigoldStructure: FlowerStructure = {
         offset: i * 2.399,
         delay: i * 0.017,
         variation: 0.23,
-        color: i % 3 === 0 ? "#e99015" : i % 3 === 1 ? "#f0ad22" : "#ed9c16",
       },
     ),
   ),

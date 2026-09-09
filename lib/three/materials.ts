@@ -53,7 +53,28 @@ export function createPetalMaterial(
       `#include <roughnessmap_fragment>
       roughnessFactor = clamp(roughnessFactor + (hash21(floor(vPetalUv * 850.0)) - .5) * .075, .3, .95);`,
     );
+    shader.fragmentShader = shader.fragmentShader.replace(
+      "#include <normal_fragment_maps>",
+      `#include <normal_fragment_maps>
+      float ridge = sin((vPetalUv.x-.5)*93.0+sin(vPetalUv.y*7.0)*1.8);
+      float microHeight = ridge * .0007 * sin(vPetalUv.y*3.14159);
+      vec3 dpdx=dFdx(-vViewPosition), dpdy=dFdy(-vViewPosition);
+      vec3 r1=cross(dpdy,normal), r2=cross(normal,dpdx);
+      float determinant=dot(dpdx,r1);
+      normal=normalize(abs(determinant)*normal-sign(determinant)*(dFdx(microHeight)*r1+dFdy(microHeight)*r2));`,
+    );
+    shader.fragmentShader = shader.fragmentShader.replace(
+      "#include <lights_physical_pars_fragment>",
+      `#include <lights_physical_pars_fragment>
+      void RE_Direct_Botanical(const in IncidentLight light, const in vec3 gp, const in vec3 gn, const in vec3 gv, const in vec3 gc, const in PhysicalMaterial pm, inout ReflectedLight reflected) {
+        RE_Direct_Physical(light,gp,gn,gv,gc,pm,reflected);
+        float scatter=pow(clamp(dot(-gn,light.direction)+.22,0.0,1.0),2.0);
+        reflected.directDiffuse+=light.color*pm.diffuseColor*scatter*.11;
+      }
+      #undef RE_Direct
+      #define RE_Direct RE_Direct_Botanical`,
+    );
   };
-  material.customProgramCacheKey = () => `botanical-surface-${spots}`;
+  material.customProgramCacheKey = () => `botanical-surface-v2-${spots}`;
   return material;
 }

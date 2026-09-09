@@ -75,7 +75,7 @@ export default function Inspection() {
                   type={type}
                   bloom={v.bloom}
                   position={[0, 0.25, 0]}
-                  quality="medium"
+                  quality={v.macro ? "ultra" : "high"}
                   windStrength={0}
                   reducedMotion
                 />

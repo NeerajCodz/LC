@@ -12,6 +12,7 @@ export interface FoliageProfile {
   parallel?: boolean;
   basal?: boolean;
   roughness?: number;
+  opposite?: boolean;
 }
 
 /** Cultivar-independent leaf traits; lotus has its own peltate blade generator. */
@@ -98,6 +99,7 @@ export const FOLIAGE: Record<FlowerType, FoliageProfile> = {
     color: "#829384",
     parallel: true,
     roughness: 0.92,
+    opposite: true,
   },
   chrysanthemum: {
     length: 0.83,

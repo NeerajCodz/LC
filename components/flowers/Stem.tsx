@@ -63,7 +63,16 @@ export function Stem({
   );
   useEffect(() => () => geometry.dispose(), [geometry]);
   const basal = FOLIAGE[type].basal;
-  const leafHeight = (i: number) => (basal ? 0.8 + i * 0.08 : 0.32 + i * 0.19);
+  const opposite = FOLIAGE[type].opposite;
+  const nodeIndex = (i: number) => (opposite ? Math.floor(i / 2) : i);
+  const leafHeight = (i: number) =>
+    opposite
+      ? 0.35 + i * 0.13
+      : basal
+        ? 0.8 + i * 0.08
+        : type === "sunflower"
+          ? 0.48 + i * 0.16
+          : 0.32 + i * 0.19;
   useFrame(() => {
     if (root.current) {
       root.current.scale.y = 0.03 + 0.97 * growth.current;
@@ -95,7 +104,7 @@ export function Stem({
       if (group.parent)
         group.parent.position.x = stemBend(
           time.current,
-          1 - leafHeight(i),
+          1 - leafHeight(nodeIndex(i)),
           wind,
         );
     });
@@ -116,21 +125,34 @@ export function Stem({
       )}
       {leaves &&
         structure.leafShape !== "round" &&
-        Array.from({ length: structure.leafCount }, (_, i) => (
-          <group
-            key={i}
-            position={[0, -structure.stemLength * leafHeight(i), 0]}
-            rotation={[0, i * 2.4 + 0.7, 0]}
-          >
+        Array.from(
+          { length: structure.leafCount * (opposite ? 2 : 1) },
+          (_, i) => (
             <group
-              ref={(el) => {
-                leafRefs.current[i] = el;
-              }}
+              key={i}
+              position={[
+                0,
+                -structure.stemLength * leafHeight(nodeIndex(i)),
+                0,
+              ]}
+              rotation={[
+                0,
+                opposite
+                  ? nodeIndex(i) * 1.5 + (i % 2) * Math.PI
+                  : i * 2.4 + 0.7,
+                0,
+              ]}
             >
-              <LeafSprig type={type} quality={quality} />
+              <group
+                ref={(el) => {
+                  leafRefs.current[i] = el;
+                }}
+              >
+                <LeafSprig type={type} quality={quality} />
+              </group>
             </group>
-          </group>
-        ))}
+          ),
+        )}
     </group>
   );
 }

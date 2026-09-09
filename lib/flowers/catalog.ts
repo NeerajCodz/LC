@@ -28,7 +28,8 @@ export const FLOWERS: FlowerInfo[] = [
     color: PETAL_PALETTES["lotus"].body,
     family: "Nelumbonaceae",
     description: "From still water,\nsomething extraordinary.",
-    detail: "Waxy, tapered petals cradle a distinctive golden seed pod.",
+    detail:
+      "Waxy petals surround a golden-green heart and a halo of fine stamens.",
   },
   {
     type: "marigold",

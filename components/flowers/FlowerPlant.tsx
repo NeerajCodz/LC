@@ -9,6 +9,7 @@ import { useBloomAnimation } from '@/hooks/useBloomAnimation';
 import { PetalWhorl } from './PetalWhorl';
 import { Stem } from './Stem';
 import { FlowerCore } from './FlowerCore';
+import { Branch } from './Branch';
 
 export function FlowerPlant({ structure, type, color, bloom: target = 1, scale = 1, position = [0,0,0], rotation = [0,0,0], interactive = false, animationSpeed = 1, windStrength = 1, cursorStrength = 1, hovered = false, stem = true, leaves = true, quality = 'high', reducedMotion = false, paused = false, pulse = 0, onHover, onClick }: FlowerProps & { structure: FlowerStructure }) {
   const root = useRef<Group>(null), head = useRef<Group>(null);
@@ -41,8 +42,13 @@ export function FlowerPlant({ structure, type, color, bloom: target = 1, scale =
     <group ref={root} onPointerOver={interactive ? e => { e.stopPropagation(); onHover?.(true); } : undefined} onPointerOut={interactive ? () => onHover?.(false) : undefined} onClick={interactive ? e => { e.stopPropagation(); onClick?.(); } : undefined}>
       {stem && <Stem structure={structure} quality={quality} growth={growth} time={time} wind={wind} leaves={leaves} />}
       <group ref={head} rotation={[structure.headTilt,0,0]}>
-        {structure.layers.map((layer, i) => <PetalWhorl key={i} layer={layer} seed={seed + i * 127} color={color ?? getFlower(type).color} quality={quality} bloom={bloom} time={time} wind={wind} roughness={structure.roughness} sheen={structure.sheen} pulse={pulseValue} cursor={cursor} />)}
-        <FlowerCore structure={structure} />
+        {(structure.blossoms ?? [{position:[0,0,0],rotation:[0,0,0],scale:1}]).map((blossom,b)=><group key={b}>
+          {structure.blossoms&&<Branch end={blossom.position} color={type==='cherry-blossom'?'#67503a':undefined}/>}
+          <group position={blossom.position} rotation={blossom.rotation} scale={blossom.scale}>
+            {structure.layers.map((layer,i)=><PetalWhorl key={i} layer={layer} seed={seed+i*127+b*721} color={color??getFlower(type).color} quality={quality} bloom={bloom} time={time} wind={wind} roughness={structure.roughness} sheen={structure.sheen} pulse={pulseValue} cursor={cursor}/>)}
+            <FlowerCore structure={structure}/>
+          </group>
+        </group>)}
         <mesh position={[0,-.10,0]} scale={[.13,.16,.13]} castShadow><sphereGeometry args={[1,16,12]} /><meshStandardMaterial color="#425932" roughness={.8} /></mesh>
       </group>
     </group>

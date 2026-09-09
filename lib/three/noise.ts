@@ -11,12 +11,32 @@ export function seededRandom(seed: number): () => number {
 
 export function hashString(value: string): number {
   let hash = 2166136261;
-  for (let i = 0; i < value.length; i++) hash = Math.imul(hash ^ value.charCodeAt(i), 16777619);
+  for (let i = 0; i < value.length; i++)
+    hash = Math.imul(hash ^ value.charCodeAt(i), 16777619);
   return hash >>> 0;
 }
 
 export const GOLDEN_ANGLE = Math.PI * (3 - Math.sqrt(5));
 
 export function layeredWind(time: number, phase: number): number {
-  return Math.sin(time * 0.63 + phase) * 0.55 + Math.sin(time * 1.17 + phase * 1.7) * 0.27 + Math.sin(time * 2.31 + phase * 0.8) * 0.12;
+  return (
+    Math.sin(time * 0.63 + phase) * 0.55 +
+    Math.sin(time * 1.17 + phase * 1.7) * 0.27 +
+    Math.sin(time * 2.31 + phase * 0.8) * 0.12
+  );
+}
+
+/** The stem and every attachment sample the same travelling bend. */
+export function stemBend(
+  time: number,
+  height: number,
+  strength: number,
+): number {
+  return (
+    layeredWind(time - (1 - height) * 0.35, 2.7) *
+    0.075 *
+    height *
+    height *
+    strength
+  );
 }

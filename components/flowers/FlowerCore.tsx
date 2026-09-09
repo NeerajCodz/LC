@@ -1,45 +1,151 @@
-import { useMemo, useEffect, useRef } from 'react';
-import { useFrame } from '@react-three/fiber';
-import { Color, InstancedMesh, Object3D } from 'three';
-import { GOLDEN_ANGLE, seededRandom } from '@/lib/three/noise';
-import type { FlowerStructure } from '@/lib/flowers/types';
+import { useMemo, useEffect, useRef, type RefObject } from "react";
+import { useFrame } from "@react-three/fiber";
+import { Color, Group, InstancedMesh, Object3D } from "three";
+import { GOLDEN_ANGLE, seededRandom } from "@/lib/three/noise";
+import type { FlowerStructure } from "@/lib/flowers/types";
 
-export function FlowerCore({ structure }: { structure: FlowerStructure }) {
+export function FlowerCore({
+  structure,
+  bloom,
+}: {
+  structure: FlowerStructure;
+  bloom: RefObject<number>;
+}) {
+  const group = useRef<Group>(null);
   const mesh = useRef<InstancedMesh>(null);
   const filaments = useRef<InstancedMesh>(null);
   const { center, centerRadius: r, centerHeight: h } = structure;
-  const count = center === 'seeds' ? 610 : center === 'florets' ? 230 : center === 'pod' ? 21 : center === 'column' ? 65 : center === 'stamens' ? (r > .23 ? 6 : 27) : 0;
-  const stamens = center === 'stamens' || center === 'column';
+  const count =
+    center === "seeds"
+      ? 610
+      : center === "florets"
+        ? 230
+        : center === "pod"
+          ? 21
+          : center === "column"
+            ? 65
+            : center === "stamens"
+              ? r > 0.23
+                ? 6
+                : 27
+              : 0;
+  const stamens = center === "stamens" || center === "column";
   const data = useMemo(() => {
-    const random = seededRandom(825); const dummy = new Object3D();
+    const random = seededRandom(825);
+    const dummy = new Object3D();
     return Array.from({ length: count }, (_, i) => {
-      const radius = Math.sqrt((i + .5) / count) * r, a = i * GOLDEN_ANGLE;
-      const y = center === 'column' ? h + i / count * .48 : h + (stamens ? .12 + random() * .34 : Math.sqrt(1 - radius * radius / (r * r)) * r * .31);
-      const x = Math.cos(a) * radius, z = Math.sin(a) * radius;
-      dummy.position.set(x, y, z); dummy.rotation.set(stamens ? .25 : radius * .5, a, 0);
-      const size = stamens ? .032 : r / Math.sqrt(count) * .83;
-      dummy.scale.set(size, size * (stamens ? 1.8 : .85 + random() * .5), size * .7); dummy.updateMatrix();
+      const radius = Math.sqrt((i + 0.5) / count) * r,
+        a = i * GOLDEN_ANGLE;
+      const y =
+        center === "column"
+          ? h + (i / count) * 0.48
+          : h +
+            (stamens
+              ? 0.12 + random() * 0.34
+              : Math.sqrt(1 - (radius * radius) / (r * r)) * r * 0.31);
+      const x = Math.cos(a) * radius,
+        z = Math.sin(a) * radius;
+      dummy.position.set(x, y, z);
+      dummy.rotation.set(stamens ? 0.25 : radius * 0.5, a, 0);
+      const size = stamens ? 0.032 : (r / Math.sqrt(count)) * 0.83;
+      dummy.scale.set(
+        size,
+        size * (stamens ? 1.8 : 0.85 + random() * 0.5),
+        size * 0.7,
+      );
+      dummy.updateMatrix();
       return { matrix: dummy.matrix.clone(), x, y, z, shade: random() };
     });
   }, [count, r, h, stamens, center]);
   useEffect(() => {
-    const dummy = new Object3D(), tint = new Color();
+    const dummy = new Object3D(),
+      tint = new Color();
     data.forEach((d, i) => {
       mesh.current?.setMatrixAt(i, d.matrix);
-      mesh.current?.setColorAt(i, tint.set(center === 'seeds' ? '#32201a' : center === 'pod' ? '#756837' : '#e8b951').multiplyScalar(.6 + d.shade * .6));
-      dummy.position.set(d.x * .5, d.y * .5, d.z * .5); dummy.rotation.set(Math.atan2(d.z, d.y), 0, -Math.atan2(d.x, d.y)); dummy.scale.set(.008, Math.sqrt(d.x*d.x+d.y*d.y+d.z*d.z), .008); dummy.updateMatrix(); filaments.current?.setMatrixAt(i, dummy.matrix);
+      mesh.current?.setColorAt(
+        i,
+        tint
+          .set(
+            center === "seeds"
+              ? "#32201a"
+              : center === "pod"
+                ? "#756837"
+                : "#e8b951",
+          )
+          .multiplyScalar(0.6 + d.shade * 0.6),
+      );
+      dummy.position.set(d.x * 0.5, d.y * 0.5, d.z * 0.5);
+      dummy.rotation.set(Math.atan2(d.z, d.y), 0, -Math.atan2(d.x, d.y));
+      dummy.scale.set(
+        0.008,
+        Math.sqrt(d.x * d.x + d.y * d.y + d.z * d.z),
+        0.008,
+      );
+      dummy.updateMatrix();
+      filaments.current?.setMatrixAt(i, dummy.matrix);
     });
-    if (mesh.current) { mesh.current.instanceMatrix.needsUpdate = true; if (mesh.current.instanceColor) mesh.current.instanceColor.needsUpdate = true; }
+    if (mesh.current) {
+      mesh.current.instanceMatrix.needsUpdate = true;
+      if (mesh.current.instanceColor)
+        mesh.current.instanceColor.needsUpdate = true;
+    }
     if (filaments.current) filaments.current.instanceMatrix.needsUpdate = true;
   }, [data, center]);
   // Keep instance bounds valid after initialization without allocating per frame.
-  useFrame(() => { if (mesh.current && !mesh.current.boundingSphere) mesh.current.computeBoundingSphere(); });
+  useFrame(() => {
+    if (mesh.current && !mesh.current.boundingSphere)
+      mesh.current.computeBoundingSphere();
+    if (group.current)
+      group.current.scale.set(
+        0.13 + 0.87 * bloom.current,
+        0.2 + 0.8 * bloom.current,
+        0.13 + 0.87 * bloom.current,
+      );
+  });
   if (!count) return null;
-  return <group>
-    {(center === 'seeds' || center === 'florets') && <mesh position={[0,h-.025,0]} scale={[r,.11,r]} castShadow receiveShadow><sphereGeometry args={[1,40,20]} /><meshStandardMaterial color={center === 'seeds' ? '#291d12' : '#b78720'} roughness={.92} /></mesh>}
-    {center === 'pod' && <mesh position={[0,h-.045,0]}><cylinderGeometry args={[r*1.08,r*.63,.16,40]} /><meshStandardMaterial color="#b5a748" roughness={.64} /></mesh>}
-    {center === 'column' && <mesh position={[0,h*.5+.15,0]}><cylinderGeometry args={[.025,.044,h+.3,12]} /><meshStandardMaterial color="#f0b5a2" roughness={.67} /></mesh>}
-    <instancedMesh ref={mesh} args={[undefined,undefined,count]} castShadow frustumCulled={false}><sphereGeometry args={[1,8,6]} /><meshStandardMaterial roughness={.86} /></instancedMesh>
-    {stamens && <instancedMesh ref={filaments} args={[undefined,undefined,count]}><cylinderGeometry args={[.65,1,1,6]} /><meshStandardMaterial color="#e4c8ad" roughness={.7} /></instancedMesh>}
-  </group>;
+  return (
+    <group ref={group}>
+      {(center === "seeds" || center === "florets") && (
+        <mesh
+          position={[0, h - 0.025, 0]}
+          scale={[r, 0.11, r]}
+          castShadow
+          receiveShadow
+        >
+          <sphereGeometry args={[1, 40, 20]} />
+          <meshStandardMaterial
+            color={center === "seeds" ? "#291d12" : "#b78720"}
+            roughness={0.92}
+          />
+        </mesh>
+      )}
+      {center === "pod" && (
+        <mesh position={[0, h - 0.045, 0]}>
+          <cylinderGeometry args={[r * 1.08, r * 0.63, 0.16, 40]} />
+          <meshStandardMaterial color="#b5a748" roughness={0.64} />
+        </mesh>
+      )}
+      {center === "column" && (
+        <mesh position={[0, h * 0.5 + 0.15, 0]}>
+          <cylinderGeometry args={[0.025, 0.044, h + 0.3, 12]} />
+          <meshStandardMaterial color="#f0b5a2" roughness={0.67} />
+        </mesh>
+      )}
+      <instancedMesh
+        ref={mesh}
+        args={[undefined, undefined, count]}
+        castShadow
+        frustumCulled={false}
+      >
+        <sphereGeometry args={[1, 8, 6]} />
+        <meshStandardMaterial roughness={0.86} />
+      </instancedMesh>
+      {stamens && (
+        <instancedMesh ref={filaments} args={[undefined, undefined, count]}>
+          <cylinderGeometry args={[0.65, 1, 1, 6]} />
+          <meshStandardMaterial color="#e4c8ad" roughness={0.7} />
+        </instancedMesh>
+      )}
+    </group>
+  );
 }

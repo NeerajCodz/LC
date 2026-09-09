@@ -34,6 +34,7 @@
     "@typescript/native": "npm:typescript@7.0.2",
     "eslint": "^9.39.5",
     "eslint-config-next": "16.3.4",
+    "prettier": "^3.9.6",
     "tsx": "latest",
     "typescript": "npm:@typescript/typescript6@^6.0.2"
   }

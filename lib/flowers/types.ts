@@ -1,6 +1,19 @@
 export const FLOWER_TYPES = [
-  "rose", "lotus", "marigold", "sunflower", "tulip", "lily", "jasmine", "orchid",
-  "hibiscus", "dahlia", "peony", "lavender", "chrysanthemum", "daisy", "cherry-blossom",
+  "rose",
+  "lotus",
+  "marigold",
+  "sunflower",
+  "tulip",
+  "lily",
+  "jasmine",
+  "orchid",
+  "hibiscus",
+  "dahlia",
+  "peony",
+  "lavender",
+  "chrysanthemum",
+  "daisy",
+  "cherry-blossom",
 ] as const;
 
 export type FlowerType = (typeof FLOWER_TYPES)[number];
@@ -11,6 +24,7 @@ export interface FlowerProps {
   type: FlowerType;
   color?: string;
   bloom?: number;
+  growth?: number;
   scale?: number;
   position?: Vec3;
   rotation?: Vec3;

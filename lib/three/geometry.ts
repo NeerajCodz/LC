@@ -78,12 +78,8 @@ export function createPetalGeometry(
         } else positions.push(x, y, z);
         uvs.push(column / columns, t);
         const veins = Math.cos(u * 24 + t * 3) * 0.018 * Math.sin(t * Math.PI);
-        const shade = 0.64 + 0.32 * Math.pow(t, 0.55) + edge * 0.035 + veins;
-        colors.push(
-          shade,
-          shade * (0.96 + 0.04 * t),
-          shade * (0.94 + 0.06 * t),
-        );
+        const shade = 0.83 + 0.13 * Math.pow(t, 0.55) + edge * 0.025 + veins;
+        colors.push(shade, shade, shade);
       }
     }
   }

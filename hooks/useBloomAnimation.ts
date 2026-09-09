@@ -7,8 +7,9 @@ export function useBloomAnimation(
   speed = 1,
   reducedMotion = false,
   paused = false,
+  animateEntrance = true,
 ) {
-  const bloom = useRef(reducedMotion ? clamp01(target) : 0);
+  const bloom = useRef(reducedMotion || !animateEntrance ? clamp01(target) : 0);
   useFrame((_, dt) => {
     if (!paused)
       bloom.current = reducedMotion

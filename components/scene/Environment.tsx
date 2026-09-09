@@ -1,11 +1,11 @@
 import { Environment as Studio, Lightformer } from "@react-three/drei";
-export function Environment() {
+export function Environment({ resolution = 128 }: { resolution?: number }) {
   return (
-    <Studio resolution={128} frames={1}>
+    <Studio resolution={resolution} frames={1}>
       <Lightformer
         form="rect"
-        intensity={1.3}
-        color="#ffe8d4"
+        intensity={0.85}
+        color="#fff6ee"
         position={[-3, 4, 2]}
         scale={[3, 5, 1]}
         rotation={[0, Math.PI / 3, 0]}
@@ -13,7 +13,7 @@ export function Environment() {
       <Lightformer
         form="rect"
         intensity={0.4}
-        color="#b9cad1"
+        color="#d8e2ed"
         position={[4, 2, 1]}
         scale={[2, 4, 1]}
         rotation={[0, -Math.PI / 3, 0]}

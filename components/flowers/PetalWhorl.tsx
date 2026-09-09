@@ -12,10 +12,13 @@ import { createPetalGeometry } from "@/lib/three/geometry";
 import { createPetalMaterial } from "@/lib/three/materials";
 import { seededRandom } from "@/lib/three/noise";
 import { petalOpenness } from "@/lib/three/easing";
+import type { PetalPalette } from "@/lib/flowers/palettes";
 
 interface Props {
   layer: PetalLayer;
   color: string;
+  palette?: PetalPalette;
+  layerDepth: number;
   seed: number;
   quality: Quality;
   bloom: RefObject<number>;
@@ -34,6 +37,8 @@ interface Props {
 export function PetalWhorl({
   layer,
   color,
+  palette,
+  layerDepth,
   seed,
   quality,
   bloom,
@@ -58,8 +63,18 @@ export function PetalWhorl({
         roughness,
         sheen,
         layer.profile.spots,
+        layer.color ? undefined : palette,
+        layerDepth,
       ),
-    [layer.color, color, roughness, sheen, layer.profile.spots],
+    [
+      layer.color,
+      color,
+      roughness,
+      sheen,
+      layer.profile.spots,
+      palette,
+      layerDepth,
+    ],
   );
   const morph = useMemo(
     () => new Mesh(geometry, material),

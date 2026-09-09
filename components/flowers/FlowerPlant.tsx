@@ -3,6 +3,7 @@ import { useFrame } from "@react-three/fiber";
 import { Group } from "three";
 import type { FlowerProps, FlowerStructure } from "@/lib/flowers/types";
 import { getFlower } from "@/lib/flowers/catalog";
+import { PETAL_PALETTES } from "@/lib/flowers/palettes";
 import { hashString, layeredWind, stemBend } from "@/lib/three/noise";
 import { damp, stepSpring } from "@/lib/three/easing";
 import { useBloomAnimation } from "@/hooks/useBloomAnimation";
@@ -23,6 +24,7 @@ export function FlowerPlant({
   rotation = [0, 0, 0],
   interactive = false,
   animationSpeed = 1,
+  animateEntrance = true,
   windStrength = 1,
   cursorStrength = 1,
   hovered = false,
@@ -38,7 +40,7 @@ export function FlowerPlant({
   const root = useRef<Group>(null),
     head = useRef<Group>(null);
   const time = useRef(0),
-    growth = useRef(reducedMotion ? 1 : 0.03),
+    growth = useRef(reducedMotion || !animateEntrance ? growthTarget : 0.03),
     pulseValue = useRef(0),
     cursor = useRef(0);
   const previousPulse = useRef(pulse),
@@ -52,6 +54,7 @@ export function FlowerPlant({
     animationSpeed,
     reducedMotion,
     paused,
+    animateEntrance,
   );
   const seed = useMemo(() => hashString(type), [type]);
   const wind = reducedMotion ? 0.04 : windStrength;
@@ -165,6 +168,8 @@ export function FlowerPlant({
                     layer={layer}
                     seed={seed + i * 127 + b * 721}
                     color={color ?? getFlower(type).color}
+                    palette={color ? undefined : PETAL_PALETTES[type]}
+                    layerDepth={i / Math.max(1, structure.layers.length - 1)}
                     quality={quality}
                     bloom={bloom}
                     time={time}

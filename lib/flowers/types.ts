@@ -30,6 +30,7 @@ export interface FlowerProps {
   rotation?: Vec3;
   interactive?: boolean;
   animationSpeed?: number;
+  animateEntrance?: boolean;
   windStrength?: number;
   cursorStrength?: number;
   hovered?: boolean;

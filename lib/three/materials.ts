@@ -1,4 +1,5 @@
 import { Color, MeshPhysicalMaterial, DoubleSide, FrontSide } from "three";
+import type { PetalPalette } from "../flowers/palettes";
 
 /** Veins and papillae are evaluated in petal UV space; no image assets are used. */
 export function createPetalMaterial(
@@ -6,22 +7,42 @@ export function createPetalMaterial(
   roughness: number,
   sheen: number,
   spots = 0,
+  palette?: PetalPalette,
+  layerDepth = 0,
 ) {
+  const body = new Color(palette?.body ?? color);
+  const root = palette
+    ? new Color(palette.root)
+    : body.clone().multiplyScalar(0.48);
+  const tip = palette
+    ? new Color(palette.tip)
+    : body.clone().lerp(new Color("#fff0e3"), 0.14);
+  const vein = palette
+    ? new Color(palette.vein)
+    : body.clone().multiplyScalar(0.7);
   const material = new MeshPhysicalMaterial({
-    color,
+    color: "#ffffff",
     roughness,
     metalness: 0,
-    sheen,
-    sheenColor: new Color(color).lerp(new Color("#fff1df"), 0.55),
+    sheen: sheen * 0.45,
+    sheenColor: body.clone().lerp(new Color("#fff1df"), 0.08),
     sheenRoughness: 0.75,
     side: DoubleSide,
     shadowSide: FrontSide,
     vertexColors: true,
-    clearcoat: 0.025,
+    clearcoat: 0.015,
     clearcoatRoughness: 0.65,
   });
   material.onBeforeCompile = (shader) => {
     shader.uniforms.uSpots = { value: spots };
+    shader.uniforms.uPigmentRoot = { value: root };
+    shader.uniforms.uPigmentBody = { value: body };
+    shader.uniforms.uPigmentTip = { value: tip };
+    shader.uniforms.uPigmentVein = { value: vein };
+    shader.uniforms.uRootFalloff = { value: palette?.rootFalloff ?? 0.5 };
+    shader.uniforms.uTipStart = { value: palette?.tipStart ?? 0.7 };
+    shader.uniforms.uVeinStrength = { value: palette?.veinStrength ?? 0.07 };
+    shader.uniforms.uLayerDepth = { value: layerDepth };
     shader.vertexShader = shader.vertexShader.replace(
       "#include <common>",
       "#include <common>\nvarying vec2 vPetalUv;",
@@ -34,15 +55,23 @@ export function createPetalMaterial(
       "#include <common>",
       `#include <common>
       varying vec2 vPetalUv; uniform float uSpots;
+      uniform vec3 uPigmentRoot, uPigmentBody, uPigmentTip, uPigmentVein;
+      uniform float uRootFalloff, uTipStart, uVeinStrength, uLayerDepth;
       float hash21(vec2 p) { return fract(sin(dot(p, vec2(127.1,311.7))) * 43758.5453); }`,
     );
     shader.fragmentShader = shader.fragmentShader.replace(
       "#include <color_fragment>",
       `#include <color_fragment>
       float v = vPetalUv.y;
-      float veins = pow(abs(sin((vPetalUv.x - .5) * 93.0 + sin(v * 7.0) * 1.8)), 16.0);
-      diffuseColor.rgb *= 1.0 - veins * .055 * sin(v * 3.14159);
-      diffuseColor.rgb = mix(diffuseColor.rgb * vec3(.72,.55,.61), diffuseColor.rgb, smoothstep(.0,.6,v));
+      float u = abs(vPetalUv.x-.5)*2.0;
+      float veins = pow(abs(sin((vPetalUv.x-.5)*93.0+sin(v*7.0)*1.8)),16.0);
+      float edgePigment = smoothstep(uTipStart,1.0,v) * (.8 + .2*u*u);
+      vec3 pigment = mix(uPigmentRoot,uPigmentBody,smoothstep(0.0,uRootFalloff,v));
+      pigment = mix(pigment,uPigmentTip,edgePigment);
+      pigment = mix(pigment,uPigmentVein,veins*uVeinStrength*sin(v*3.14159));
+      float mottling = sin(v*21.0+sin(vPetalUv.x*13.0))*sin(vPetalUv.x*34.0-v*8.0);
+      pigment *= (1.0 + mottling*.035) * (1.0-uLayerDepth*.15);
+      diffuseColor.rgb *= pigment;
       vec2 cell = vPetalUv * vec2(17., 22.);
       vec2 id = floor(cell);
       float speckle = smoothstep(.15,.07,length(fract(cell)-vec2(hash21(id),hash21(id+7.))));
@@ -75,6 +104,6 @@ export function createPetalMaterial(
       #define RE_Direct RE_Direct_Botanical`,
     );
   };
-  material.customProgramCacheKey = () => `botanical-surface-v2-${spots}`;
+  material.customProgramCacheKey = () => "botanical-pigment-v3";
   return material;
 }

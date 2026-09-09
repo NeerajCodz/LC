@@ -6,7 +6,7 @@ import {
   ContactShadows,
   PerformanceMonitor,
 } from "@react-three/drei";
-import { ACESFilmicToneMapping, PCFSoftShadowMap } from "three";
+import { ACESFilmicToneMapping, PCFShadowMap } from "three";
 import type { FlowerType } from "@/lib/flowers/types";
 import { useExperienceSettings } from "@/hooks/useExperienceSettings";
 import { Lighting } from "../scene/Lighting";
@@ -70,7 +70,7 @@ export default function FlowerScene({
         toneMappingExposure: 1.05,
       }}
       onCreated={({ gl }) => {
-        gl.shadowMap.type = PCFSoftShadowMap;
+        gl.shadowMap.type = PCFShadowMap;
         onReady?.();
       }}
     >

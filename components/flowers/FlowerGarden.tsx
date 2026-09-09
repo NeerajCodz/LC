@@ -2,6 +2,7 @@
 import { Suspense, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import { ContactShadows, PerformanceMonitor } from "@react-three/drei";
+import { PCFShadowMap } from "three";
 import { useRouter } from "next/navigation";
 import { Flower } from "./Flower";
 import { Lighting } from "../scene/Lighting";
@@ -89,6 +90,9 @@ export default function FlowerGarden({
       dpr={quality === "low" || degraded ? 1 : [1, 1.5]}
       camera={{ position: [0, 3.6, 11], fov: 39, near: 0.1, far: 50 }}
       gl={{ antialias: true, powerPreference: "high-performance" }}
+      onCreated={({ gl }) => {
+        gl.shadowMap.type = PCFShadowMap;
+      }}
     >
       <color attach="background" args={["#101713"]} />
       <fog attach="fog" args={["#101713", 13, 27]} />

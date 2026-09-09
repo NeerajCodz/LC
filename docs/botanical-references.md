@@ -1,6 +1,8 @@
 # Botanical reference notes
 
-Reviewed September 9, 2026. The collection uses authored procedural geometry rather than photographic textures or scanned plants. The references below guide organ arrangement, surface character, and foliage. Cultivar variation is substantial: the Rose, Peony, Dahlia, and Chrysanthemum represent ornamental double forms, not every form of their species.
+Botanical sources reviewed September 9, 2026; implementation notes updated September 10, 2026. The collection uses authored procedural geometry rather than photographic textures or scanned plants. The references below guide organ arrangement, surface character, and foliage. Cultivar variation is substantial: the Rose, Peony, Dahlia, and Chrysanthemum represent ornamental double forms, not every form of their species.
+
+See [README](../README.md) for architecture and the public Flower API, [development notes](development.md) for inspection steps, and [AGENTS.md](../AGENTS.md) for implementation requirements.
 
 | Specimen | Construction and foliage reference | Source |
 | --- | --- | --- |
@@ -24,10 +26,14 @@ Reviewed September 9, 2026. The collection uses authored procedural geometry rat
 
 The yellow structures around the receptacle are stamens, which carry pollen. A flower at anthesis should not have the conspicuous mature seed pattern of a dry seed head. The model now has shallow carpel sockets and small stigma tips on a continuous, tapered receptacle, surrounded by 156 individually posed stamens with paired anther chambers and pale connective appendages. The count and dimensions are artistic choices, not a species-wide anatomical constant.
 
-The lotus leaf is a curved, sealed, circular blade with radial veins and a separate petiole rising from the plant base. It replaces the previous generic leaf on the flower stalk.
+The lotus leaf is a curved, sealed, circular blade with radial veins and a separate petiole rising from the plant base, independent of the flower stalk.
 
 ## Rendering and interpretation
 
 Macro views keep high pixel density and use finer petal subdivisions. Depth-of-field and glow effects are omitted to preserve visible organ detail. Pigments, subtle papillae, vein relief, and back-light response remain real-time material approximations. Flowering is a reversible artistic animation, not a time-resolved biological simulation.
+
+WebGL 2 renders these structures and their physical materials. vgpu supplies procedural tissue data and studio HDR illumination when WebGPU is available; matching GLSL/CPU fallbacks preserve viewing on WebGL-only devices. These generated textures encode surface properties and light, not images of flowers.
+
+The header/favicon flower emblem and the blooming SVG loading ornament are interface graphics. The loader intentionally depicts a stylized flower rather than a particular species; it is separate from the modeled specimens and is not a botanical reference.
 
 The collection is a botanical art experience. It is not a scientific identification key, a measured anatomical reconstruction, or a claim of photographic equivalence.

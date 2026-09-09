@@ -2,6 +2,10 @@
 
 A standalone Next.js application with fifteen procedural botanical specimens. Every flower is built from curved, sealed 3D petal geometry; the collection contains no photographs, sprites, billboards, or imported flower models.
 
+The collection includes Rose, Lotus, Marigold, Sunflower, Tulip, Lily, Jasmine, Orchid, Hibiscus, Dahlia, Peony, Lavender, Chrysanthemum, Daisy, and Cherry Blossom.
+
+Project documentation: [agent brief and implementation rules](AGENTS.md), [development and verification](docs/development.md), and [botanical references](docs/botanical-references.md). `AGENTS.md` is the sole agent instruction file.
+
 ## Run locally
 
 Requires Node.js 22.12 or newer and a browser with WebGL 2 and hardware acceleration.
@@ -33,15 +37,21 @@ Deploy as a regular Next.js application on a Node.js host or a Next.js-compatibl
 ## Pages and interaction
 
 - `/` — cinematic Rose specimen, fifteen-species selector, previous/next, bloom slider, replay, pause, macro camera, and scroll-driven growth.
-- `/flower/lotus` (and all fifteen species slugs) — a dedicated specimen route with species metadata. Legacy `/?flower=lotus` links permanently redirect here. Repeated slashes are normalized by Next.js.
+- `/flower/lotus/` (and all fifteen species slugs) — a dedicated specimen route with species metadata. Legacy `/?flower=lotus` links permanently redirect here. Repeated slashes are normalized by Next.js.
 - `/flower/lotus/#angles` — four simultaneous live views of the selected flower: front, 45°, side, and macro, with a shared bloom control. Every specimen has this gallery section.
-- `/garden` — nine flowers in an asymmetric composition. A shared bloom slider controls the garden; select a flower to inspect it.
-- `/gallery` — all fifteen species, with visible previews rendered directly inside their page frames. Compare front, side, 45-degree and macro views, and control bloom across the collection.
-- `/dev/inspection` — development-only seven-view geometry fixture. It returns 404 in production. Select any species to inspect full bloom, multiple angles, macro, bud and half bloom side by side.
+- `/garden/` — nine flowers in an asymmetric composition. A shared bloom slider controls the garden; select a flower to inspect it.
+- `/gallery/` — all fifteen species, with visible previews rendered directly inside their page frames. Compare front, side, 45-degree and macro views, and control bloom across the collection.
+- `/dev/inspection/` — development-only seven-view geometry fixture. It returns 404 in production. Select any species to inspect full bloom, multiple angles, macro, bud and half bloom side by side.
 
 Move the pointer or drag on the flower to sway it. Click or tap for a bloom pulse and close-up. The equivalent macro, bloom and pause actions are available through keyboard-accessible DOM controls. Escape closes the collection selector. Reduced-motion preferences disable pulses and pollen, simplify camera movement and make bloom controls immediate.
 
-The original flower emblem sits beside **LC** in the header. One rounded toggle that cycles through **Current** (forest charcoal), **Black**, and **White** (warm ivory). Its sliding thumb and leaf/moon/sun icons show the active theme; its accessible label names the current and next theme. Themes update both the interface and the 3D background/fog. The choice persists locally and synchronizes between browser tabs; flower pigments stay consistent across themes. The footer carries the full **living colors** wordmark.
+The original Lucide `Flower2` emblem sits beside **LC** in the header and appears in the SVG favicon, on a forest-charcoal tile with ivory strokes. Next.js discovers `app/icon.svg` and adds its metadata on every route. One rounded toggle cycles through **Current** (forest charcoal), **Black**, and **White** (warm ivory). Its sliding thumb and leaf/moon/sun icons show the active theme; its accessible label names the current and next theme. Themes update both the interface and the 3D background/fog. The choice persists in local storage for the current origin and synchronizes between browser tabs; flower pigments stay consistent across themes. The footer carries the full **living colors** wordmark.
+
+### Loading
+
+`BloomLoader` draws a small SVG flower with staggered petal unfolding, a slowly rotating flower head, opening leaves, a traced stem, and restrained pollen. It uses theme colors and CSS animation, so it can appear before the 3D code loads. A single polite status message announces loading; the decorative SVG is hidden from assistive technology. Reduced-motion preferences show a still, open flower with no rotation or pollen.
+
+The shared loader covers route Suspense, collection/inspection code loading, and initial specimen/garden preparation. `SceneReady` removes the specimen and garden overlays after their first drawn frame, without an artificial minimum wait. vgpu bakes continue asynchronously with working material and lighting fallbacks. Scrolling back to an already visited preview resumes its retained scene without replaying loading. The SVG ornament is UI only; every specimen remains real 3D geometry.
 
 ## Flower API
 
@@ -73,15 +83,16 @@ import { Flower } from "@/components/flowers/Flower";
 ## Architecture
 
 ```text
-app/                         Next.js App Router pages and error boundaries
+app/                         App Router pages, route loading, errors, and icon.svg
 components/
   Experience.tsx             Specimen UI and closing/entry transitions
   Gallery.tsx                Collection layout and visible previews
   AngleGallery.tsx           Four simultaneous views of the selected species
   Garden.tsx                 Garden controls
+  ui/                        LC header, theme toggle, and SVG BloomLoader
   flowers/
     Flower.tsx               Exhaustive species dispatcher
-    BotanicalView.tsx         Reusable camera, lighting, and preview content
+    BotanicalView.tsx        Reusable camera, lighting, and preview content
     FlowerPreview.tsx        DOM preview registration; stable scene identity
     FlowerPlant.tsx          Reusable plant hierarchy and interaction
     PetalWhorl.tsx           Instanced petals with individual transforms/morphs
@@ -90,12 +101,14 @@ components/
     <species>/               Distinct botanical construction per species
   scene/                     Lights, studio environment, camera, pollen, effects
     PreviewStage.tsx         Shared in-flow WebGL renderer and retained scene portals
+    SceneReady.tsx           First-frame readiness for scene loading overlays
 hooks/                       Bloom damping, pointer projection, quality, interaction
 lib/
   flowers/                   Typed public API, metadata and whorl construction
   three/                     Parametric geometry, physical materials, seeded noise
-  gpu/                       vgpu tissue bake, WGSL source, shared WebGL texture
-tests/                       Geometry invariants and browser regression scenarios
+  gpu/                       vgpu tissue/HDR bakes, WGSL, and CPU reference field
+docs/                        Development guide and botanical source notes
+tests/                       Geometry, events, GPU pixels, and browser scenarios
 ```
 
 ### Geometry and animation
@@ -142,7 +155,7 @@ npm run test:gpu
 
 Geometry tests cover every species and every petal layer: closed topology, positive thickness, finite morph positions/normals, deterministic seeds, bloom endpoints, spring stability and characteristic organ counts. Lotus checks additionally cover sealed organ surfaces, outward normals, recessed sockets, and stable stamen variation.
 
-The event regression exercises null refs, reconnection, and listener cleanup using the actual R3F event manager. GPU checks require a working WebGPU adapter: `npx vgpu doctor --pretty` diagnoses it. `check:shaders` validates WGSL on a real device; `test:gpu` renders the production bake twice, checks determinism and RGBA readback, and compares all three channels against a numerical reference.
+The event regression exercises null refs, reconnection, and listener cleanup using the actual R3F event manager. GPU checks require a working WebGPU adapter: `npx vgpu doctor --pretty` diagnoses it. `check:shaders` validates both WGSL programs on a real device. `test:gpu` checks deterministic tissue atlas readback against a numerical reference and verifies the HDR studio field against its CPU fallback, including unclipped radiance above 1.
 
 Optional Playwright scenarios are included for desktop and mobile regression checks:
 
@@ -157,7 +170,7 @@ Lifecycle scenarios cover rapid preview teardown, gallery/specimen navigation, a
 
 Retention scenarios visit all fifteen species, scroll back, and assert unchanged scene identities with exactly one collection canvas. The home test verifies that its angle scenes, scroll-study canvas, and bloom control survive scrolling away and returning.
 
-Use `/dev/inspection` for the visual checks that numerical tests cannot establish. Confirm silhouettes, overlap, underside attachment and macro detail, then verify pointer/touch motion and the garden on the target GPU.
+Use `/dev/inspection/` for the visual checks that numerical tests cannot establish. Confirm silhouettes, overlap, underside attachment and macro detail, then verify pointer/touch motion and the garden on the target GPU. See the [development guide](docs/development.md) for loading, favicon, fallback, and scroll verification details.
 
 ## Toolchain compatibility
 

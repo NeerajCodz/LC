@@ -60,7 +60,7 @@ export const roseStructure: FlowerStructure = {
     {
       count: 8,
       radius: 0.09,
-      height: 0.135,
+      height: 0.1,
       angle: 0.58,
       delay: 0.13,
       offset: 0.42,
@@ -77,7 +77,7 @@ export const roseStructure: FlowerStructure = {
     {
       count: 7,
       radius: 0.065,
-      height: 0.2,
+      height: 0.16,
       angle: 0.34,
       delay: 0.18,
       offset: 0.04,
@@ -95,7 +95,7 @@ export const roseStructure: FlowerStructure = {
     {
       count: 5,
       radius: 0.035,
-      height: 0.235,
+      height: 0.2,
       angle: 0.1,
       delay: 0.21,
       offset: 0.3,

@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import '@fontsource/cormorant-garamond/300.css';
+import '@fontsource/cormorant-garamond/400-italic.css';
+import '@fontsource/manrope/400.css';
+import '@fontsource/manrope/500.css';
 
 export const metadata: Metadata = {
   title: { default: "Living Colors — A study in bloom", template: "%s — Living Colors" },

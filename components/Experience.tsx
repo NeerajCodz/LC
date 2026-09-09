@@ -1,0 +1,54 @@
+'use client';
+import dynamic from 'next/dynamic';
+import { useEffect, useRef, useState } from 'react';
+import { ArrowLeft, ArrowRight, ChevronDown, Maximize2, Minimize2, Pause, Play, RotateCcw, SlidersHorizontal, X, MoveUpRight } from 'lucide-react';
+import { FLOWERS, getFlower, isFlowerType } from '@/lib/flowers/catalog';
+import type { FlowerType } from '@/lib/flowers/types';
+import { Header } from './ui/Header';
+import { useExperienceSettings } from '@/hooks/useExperienceSettings';
+const Scene=dynamic(()=>import('./flowers/FlowerScene'),{ssr:false});
+
+export default function Experience(){
+  const [type,setType]=useState<FlowerType>('rose'),[target,setTarget]=useState(1),[bloom,setBloom]=useState(0),[switching,setSwitching]=useState(false),[picker,setPicker]=useState(false),[macro,setMacro]=useState(false),[paused,setPaused]=useState(false),[pulse,setPulse]=useState(0),[ready,setReady]=useState(false);
+  const timer=useRef<ReturnType<typeof setTimeout>|null>(null);
+  const {reducedMotion}=useExperienceSettings();
+  const info=getFlower(type),index=FLOWERS.findIndex(f=>f.type===type);
+  useEffect(()=>{const selected=new URLSearchParams(location.search).get('flower');if(isFlowerType(selected))setType(selected);},[]);
+  useEffect(()=>{if(!ready)return;const id=setTimeout(()=>setBloom(target),reducedMotion?0:900);return()=>clearTimeout(id);},[ready,reducedMotion,target]);
+  useEffect(()=>()=>{if(timer.current)clearTimeout(timer.current);},[]);
+  useEffect(()=>{document.body.style.overflow=picker?'hidden':'';return()=>{document.body.style.overflow='';};},[picker]);
+  function choose(next:FlowerType){
+    if(next===type||switching)return;setPicker(false);setSwitching(true);setPaused(false);setMacro(false);setBloom(0);
+    timer.current=setTimeout(()=>{setType(next);const url=new URL(location.href);url.searchParams.set('flower',next);history.replaceState(null,'',url);setBloom(target);setSwitching(false);},reducedMotion?0:1900);
+  }
+  function setAmount(value:number){setTarget(value);setBloom(value);setPaused(false);}
+  function replay(){setBloom(0);setPaused(false);if(timer.current)clearTimeout(timer.current);timer.current=setTimeout(()=>setBloom(target),reducedMotion?0:2000);}
+  return <main>
+    <section className="experience" aria-label="Interactive botanical specimen">
+      <div className="scene-wrap"><Scene type={type} bloom={bloom} macro={macro} paused={paused} pulse={pulse} onReady={()=>setReady(true)} onFlowerClick={()=>{if(!reducedMotion)setPulse(p=>p+1);setMacro(m=>!m);}} /></div>
+      {!ready&&<div className="growing"><span className="loading-orbit"/><p>Growing your garden<span>…</span></p></div>}
+      <Header />
+      <div className={`specimen-copy ${macro?'quiet':''}`}>
+        <div className="eyebrow"><span className="live-dot"/> THE LIVING COLLECTION <span className="copy-rule"/></div>
+        <div className="specimen-heading" key={type}><p className="specimen-number">SPECIMEN {String(index+1).padStart(2,'0')} / 15</p><h1 className={info.name.length>12?'long-name':''}>{info.name}<span>.</span></h1><p className="latin">{info.latin}</p><p className="description">{info.description}</p></div>
+        <button className="text-button" onClick={()=>setPicker(true)}>Explore the collection <MoveUpRight size={16}/></button>
+      </div>
+      <div className="right-annotation"><span>FORM, LIGHT & A LITTLE LIFE</span><i/><span>{info.family.toUpperCase()}</span></div>
+      <div className="view-controls"><button title={macro?'Return to full flower':'Explore close-up'} aria-label={macro?'Return to full flower':'Explore close-up'} onClick={()=>setMacro(!macro)}>{macro?<Minimize2 size={17}/>:<Maximize2 size={17}/>}</button><button title={paused?'Resume motion':'Pause motion'} aria-label={paused?'Resume motion':'Pause motion'} onClick={()=>setPaused(!paused)}>{paused?<Play size={17}/>:<Pause size={17}/>}</button></div>
+      <div className="specimen-pagination"><button aria-label="Previous flower" disabled={switching} onClick={()=>choose(FLOWERS[(index+14)%15].type)}><ArrowLeft size={18}/></button><span>{String(index+1).padStart(2,'0')} <i>/ 15</i></span><button aria-label="Next flower" disabled={switching} onClick={()=>choose(FLOWERS[(index+1)%15].type)}><ArrowRight size={18}/></button></div>
+      <div className="bloom-panel"><div className="bloom-label"><SlidersHorizontal size={15}/><label htmlFor="bloom">The art of unfolding</label><span>{Math.round(target*100)}%</span></div><input id="bloom" aria-label="Bloom amount" type="range" min="0" max="1" step=".01" value={target} disabled={switching} onChange={e=>setAmount(Number(e.target.value))}/><div className="bloom-endpoints"><span>Bud</span><button onClick={replay} disabled={switching}><RotateCcw size={11}/> Replay bloom</button><span>Full bloom</span></div></div>
+      <div className="interaction-hint"><span className="hint-cross">✧</span><span>Move to sway. Click to get closer.</span></div>
+      <footer className="experience-footer"><span>SCULPTED BY NATURE. REIMAGINED IN THREE DIMENSIONS.</span><a href="#unfold">Take a moment <ChevronDown size={13}/></a><span className="rendering-note"><span className="live-dot"/> REAL-TIME · EVER-CHANGING</span></footer>
+    </section>
+    <ScrollStudy type={type}/>
+    {picker&&<div className="collection-overlay" role="dialog" aria-modal="true" aria-label="Choose a flower" onKeyDown={e=>{if(e.key==='Escape')setPicker(false);if(e.key==='Tab'){const buttons=Array.from(e.currentTarget.querySelectorAll('button'));const current=buttons.indexOf(document.activeElement as HTMLButtonElement);if(e.shiftKey&&current===0){e.preventDefault();buttons.at(-1)?.focus();}else if(!e.shiftKey&&current===buttons.length-1){e.preventDefault();buttons[0]?.focus();}}}}><div className="overlay-header"><span className="eyebrow">FIFTEEN WAYS TO BLOOM</span><button autoFocus aria-label="Close collection" onClick={()=>setPicker(false)}><X size={25}/></button></div><h2>The living collection<span>.</span></h2><div className="species-list">{FLOWERS.map((flower,i)=><button key={flower.type} className={flower.type===type?'selected':''} onClick={()=>choose(flower.type)}><span className="species-index">{String(i+1).padStart(2,'0')}</span><span>{flower.name}<small>{flower.latin}</small></span><span className="species-color" style={{background:flower.color}}/><ArrowRight size={18}/></button>)}</div></div>}
+    <span className="sr-only" aria-live="polite">{switching?'Gently closing the flower':`${info.name}, specimen ${index+1} of 15`}</span>
+  </main>;
+}
+
+function ScrollStudy({type}:{type:FlowerType}){
+  const section=useRef<HTMLElement>(null),[progress,setProgress]=useState(0),[visible,setVisible]=useState(false);
+  useEffect(()=>{const node=section.current;if(!node)return;let frame=0;const observer=new IntersectionObserver(([entry])=>setVisible(entry.isIntersecting),{rootMargin:'100px'});observer.observe(node);
+    const update=()=>{cancelAnimationFrame(frame);frame=requestAnimationFrame(()=>{const r=node.getBoundingClientRect();setProgress(Math.min(1,Math.max(0,-r.top/(r.height-innerHeight))));});};addEventListener('scroll',update,{passive:true});update();return()=>{observer.disconnect();removeEventListener('scroll',update);cancelAnimationFrame(frame);};},[]);
+  return <section id="unfold" className="scroll-study" ref={section}><div className="scroll-sticky"><div className="scroll-copy"><span className="eyebrow">AN EXERCISE IN PATIENCE</span><h2>Beautiful things<br/>take their <em>time.</em></h2><p>Keep scrolling. Let nature set the pace.</p><div className="scroll-stages"><span className={progress<.4?'active':''}>01 — Becoming</span><span className={progress>=.4&&progress<.8?'active':''}>02 — Unfolding</span><span className={progress>=.8?'active':''}>03 — In full bloom</span></div></div><div className="scroll-scene">{visible&&<Scene type={type} bloom={Math.max(0,(progress-.2)/.65)}/>}</div><span className="scroll-progress">{Math.round(progress*100)} / 100</span></div></section>;
+}

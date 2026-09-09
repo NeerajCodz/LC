@@ -13,4 +13,118 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 ::selection { color: var(--background); background: var(--accent); }
 .loading-screen { min-height: 100svh; display: grid; place-content: center; gap: 1rem; text-align: center; color: var(--muted); letter-spacing: .06em; }
 .loading-screen strong { font: italic 48px Georgia, serif; color: var(--ink); }
+body { font-family: 'Manrope', Arial, sans-serif; }
+button { background: none; border: 0; }
+.experience { position: relative; min-height: 800px; height: 100svh; overflow: hidden; }
+.scene-wrap { position: absolute; inset: 0; }
+.flower-canvas { touch-action: pan-y; }
+.flower-canvas.is-hovered { cursor: zoom-in; }
+.site-header { position: relative; z-index: 5; display: flex; align-items: center; justify-content: space-between; margin: 0 4.4%; padding: 32px 0; border-bottom: 1px solid var(--line); }
+.wordmark { display: flex; gap: 11px; align-items: center; font-family: 'Cormorant Garamond', Georgia, serif; font-size: 28px; letter-spacing: -.8px; }
+.wordmark-dot { font-family: Arial, sans-serif; font-size: 10px; vertical-align: super; margin-left: 4px; }
+.site-header nav { display: flex; gap: 36px; font-size: 13px; color: var(--muted); }
+.site-header nav a { display: flex; align-items: center; gap: 6px; position: relative; padding: 8px 0; }
+.site-header nav a[aria-current=page] { color: var(--ink); }
+.site-header nav a[aria-current=page]::after { content: ''; position: absolute; bottom: -34px; left: 0; right: 0; height: 1px; background: var(--accent); }
+.header-caption,.eyebrow { font-size: 10px; letter-spacing: .18em; font-weight: 500; }
+.header-caption { color: #bdc4b7; }
+.specimen-copy { position: absolute; z-index: 2; top: 25%; left: 8%; max-width: 370px; pointer-events: none; transition: opacity .8s; }
+.specimen-copy.quiet { opacity: .12; }
+.eyebrow { display: flex; align-items: center; gap: 12px; color: #c5cdbb; }
+.live-dot { display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: #c5d3a5; flex-shrink: 0; }
+.copy-rule { width: 46px; height: 1px; background: #89957c66; }
+.specimen-number { margin: 47px 0 8px 4px; color: #929e8d; font-size: 10px; letter-spacing: .18em; }
+.specimen-heading { animation: text-in 1.1s ease both; }
+h1,h2,h3,p { margin-top: 0; }
+.specimen-heading h1 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 300; font-size: clamp(96px,9.3vw,156px); letter-spacing: -.055em; line-height: .98; margin: 0 0 12px -4px; }
+.specimen-heading h1.long-name { font-size: clamp(56px,5.8vw,95px); }
+.specimen-heading h1 span,.collection-overlay h2 span { color: #c2cf9f; }
+.latin { font: italic 24px 'Cormorant Garamond', Georgia, serif; color: #a8b29d; margin: 0 0 32px 3px; }
+.description { color: #c1c6bb; white-space: pre-line; font-size: 14px; line-height: 1.9; letter-spacing: .015em; margin-left: 4px; }
+.text-button { display: inline-flex; align-items: center; gap: 26px; padding: 10px 0; margin: 22px 0 0 4px; border-bottom: 1px solid #c5ceb35e; font-size: 12px; color: #e1e7d3; pointer-events: auto; }
+.right-annotation { position: absolute; right: 3.5%; top: 33%; writing-mode: vertical-rl; display: flex; align-items: center; gap: 23px; color: #949e8d; font-size: 9px; letter-spacing: .18em; }
+.right-annotation i { display: block; width: 1px; height: 60px; background: var(--line); }
+.view-controls { position: absolute; right: 4.5%; bottom: 24%; display: flex; flex-direction: column; gap: 12px; }
+.view-controls button,.specimen-pagination button { display: grid; place-items: center; border: 1px solid #b7c3a62f; border-radius: 50%; width: 43px; height: 43px; color: #c1ccb5; transition: background .2s; }
+.view-controls button:hover,.specimen-pagination button:hover { background: #c1ccb518; }
+.specimen-pagination { position: absolute; left: 8.2%; bottom: 19%; display: flex; align-items: center; gap: 22px; font-size: 12px; letter-spacing: .13em; }
+.specimen-pagination i { color: #73816c; font-style: normal; margin-left: 4px; }
+.bloom-panel { position: absolute; bottom: 13%; left: 56%; transform: translateX(-50%); width: 330px; padding: 20px 23px 16px; border: 1px solid #bbc6aa27; border-radius: 3px; background: #1b251bc2; backdrop-filter: blur(20px); }
+.bloom-label { display: flex; gap: 10px; align-items: center; font-size: 12px; color: #d0d9c4; margin-bottom: 13px; }
+.bloom-label span { margin-left: auto; font-size: 11px; color: #94a285; font-variant-numeric: tabular-nums; }
+input[type=range] { width: 100%; height: 3px; accent-color: var(--accent); cursor: pointer; margin: 10px 0; appearance: none; background: #5b694e; border-radius: 3px; }
+input[type=range]::-webkit-slider-thumb { appearance: none; width: 10px; height: 10px; background: #d6e2bc; border-radius: 50%; box-shadow: 0 0 0 5px #b6c59e11; }
+input[type=range]::-moz-range-thumb { width: 10px; height: 10px; background: #d6e2bc; border: 0; border-radius: 50%; }
+.bloom-endpoints { display: flex; align-items: center; justify-content: space-between; margin-top: 5px; font-size: 10px; color: #91a080; }
+.bloom-endpoints button { font-size: 10px; display: flex; gap: 5px; align-items: center; color: #b4c19e; }
+.interaction-hint { position: absolute; bottom: 7.8%; left: 56%; transform: translateX(-50%); display: flex; align-items: center; gap: 8px; color: #939e86; font-size: 11px; white-space: nowrap; }
+.hint-cross { font-size: 20px; color: #b7c6a3; }
+.experience-footer { position: absolute; inset: auto 4.4% 0; height: 58px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; color: #7e8c75; font-size: 8px; letter-spacing: .14em; }
+.experience-footer a { color: #b7c5a8; display: flex; align-items: center; gap: 8px; font-size: 10px; letter-spacing: .04em; }
+.rendering-note { display: flex; gap: 8px; align-items: center; }
+.rendering-note .live-dot { width: 3px; height: 3px; }
+.growing { position: absolute; inset: 0; z-index: 4; background: var(--background); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 24px; font: italic 23px 'Cormorant Garamond',Georgia,serif; color: #bdc5b0; }
+.loading-orbit { width: 35px; height: 35px; border: 1px solid #73836655; border-top-color: #ccd8b3; border-radius: 50%; animation: orbit 2s linear infinite; }
+.collection-overlay { position: fixed; inset: 0; z-index: 20; background: #111912f5; backdrop-filter: blur(30px); padding: 40px 8%; overflow-y: auto; animation: text-in .4s ease; }
+.overlay-header { display: flex; justify-content: space-between; align-items: center; }
+.collection-overlay h2 { font: 300 clamp(40px,6vw,80px) 'Cormorant Garamond',Georgia,serif; margin: 30px 0; }
+.species-list { display: grid; grid-template-columns: repeat(3,1fr); column-gap: 45px; }
+.species-list button { display: flex; text-align: left; align-items: center; gap: 18px; padding: 23px 0; border-bottom: 1px solid var(--line); font: 25px 'Cormorant Garamond',Georgia,serif; }
+.species-index { font: 10px 'Manrope',Arial,sans-serif; color: #8a9a7d; }
+.species-list small { display: block; font: italic 15px 'Cormorant Garamond',Georgia,serif; color: #8d9b82; margin-top: 3px; }
+.species-color { width: 7px; height: 7px; border-radius: 50%; margin-left: auto; }
+.species-list button>svg { opacity: 0; transition: opacity .2s; }
+.species-list button:hover>svg,.species-list button.selected>svg { opacity: 1; }
+.species-list button.selected { color: var(--accent); }
+.scroll-study { height: 250svh; border-top: 1px solid var(--line); }
+.scroll-sticky { position: sticky; top: 0; height: 100svh; min-height: 600px; overflow: hidden; }
+.scroll-copy { position: absolute; z-index: 2; top: 28%; left: 8%; pointer-events: none; }
+.scroll-copy h2 { font: 300 clamp(40px,5.3vw,80px)/1.04 'Cormorant Garamond',Georgia,serif; margin: 32px 0; letter-spacing: -.02em; }
+.scroll-copy h2 em { color: #c4d0ab; }
+.scroll-copy p { font-size: 13px; color: #8f9d82; }
+.scroll-stages { display: flex; flex-direction: column; gap: 15px; margin-top: 50px; font-size: 11px; color: #536149; }
+.scroll-stages .active { color: #d5dfc3; }
+.scroll-scene { position: absolute; inset: 0; }
+.scroll-progress { position: absolute; bottom: 5%; right: 5%; font-size: 11px; letter-spacing: .2em; color: #9cab8d; }
+.webgl-message { position: absolute; inset: 0; display: flex; justify-content: center; align-items: center; flex-direction: column; gap: 15px; background: var(--background); z-index: 8; }
+.webgl-message span { color: var(--muted); }
+.webgl-message button { border-bottom: 1px solid var(--line); padding: 12px; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+@keyframes orbit { to { transform: rotate(360deg); } }
+@keyframes text-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@media (min-width: 1600px) { .specimen-copy { top: 27%; } }
+@media (max-width: 1100px) { .header-caption { display: none; } .specimen-copy { left: 6%; } .specimen-heading h1 { font-size: 110px; } .bloom-panel,.interaction-hint { left: 61%; } .experience-footer>span:first-child { max-width: 240px; line-height: 1.8; } .species-list { grid-template-columns: repeat(2,1fr); } }
+@media (max-width: 700px) {
+  .experience { min-height: 780px; height: 100svh; }
+  .site-header { margin: 0 6%; padding: 22px 0; flex-wrap: wrap; gap: 20px; }
+  .wordmark { font-size: 26px; }
+  .site-header nav { gap: 19px; font-size: 11px; }
+  .site-header nav a[aria-current=page]::after { bottom: -22px; }
+  .specimen-copy { top: 150px; left: 7%; max-width: 85%; }
+  .specimen-copy>.eyebrow { font-size: 8px; }
+  .specimen-number { margin-top: 24px; font-size: 8px; }
+  .specimen-heading h1 { font-size: 77px; }
+  .specimen-heading h1.long-name { font-size: 49px; }
+  .latin { font-size: 20px; margin-bottom: 17px; }
+  .description,.specimen-copy>.text-button { display: none; }
+  .scene-wrap { top: 120px; bottom: 70px; }
+  .right-annotation { display: none; }
+  .bloom-panel { bottom: 105px; left: 50%; width: min(310px,80%); padding: 16px 20px; }
+  .interaction-hint { bottom: 68px; left: 50%; font-size: 10px; }
+  .specimen-pagination { bottom: 247px; left: 7%; gap: 12px; font-size: 10px; }
+  .view-controls { bottom: 240px; right: 7%; flex-direction: row; gap: 9px; }
+  .view-controls button,.specimen-pagination button { width: 36px; height: 36px; }
+  .experience-footer { height: 47px; }
+  .experience-footer>span:first-child { display: none; }
+  .experience-footer .rendering-note { font-size: 7px; }
+  .collection-overlay { padding: 30px 7%; }
+  .species-list { grid-template-columns: 1fr; }
+  .collection-overlay h2 { margin-bottom: 15px; }
+  .species-list button { padding: 15px 0; }
+  .scroll-copy { top: 12%; }
+  .scroll-copy h2 { font-size: 45px; }
+  .scroll-copy p { font-size: 11px; }
+  .scroll-stages { margin-top: 20px; }
+  .scroll-scene { top: 170px; }
+}
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }

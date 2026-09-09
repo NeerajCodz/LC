@@ -4,9 +4,9 @@
   "private": true,
   "packageManager": "pnpm@10.28.2",
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --port 1607",
     "build": "next build",
-    "start": "next start",
+    "start": "next start --port 1607",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "test": "tsx --test tests/*.test.ts",

@@ -11,7 +11,7 @@ npm install
 npm run dev
 ```
 
-Open [localhost:3000](http://localhost:3000).
+Open [localhost:1607](http://localhost:1607). Both development and production start scripts explicitly use port **1607**.
 
 The repository uses pnpm for its checked-in lockfile. For a reproducible installation with that lockfile:
 

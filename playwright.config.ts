@@ -2,7 +2,7 @@ import { defineConfig, devices } from "@playwright/test";
 export default defineConfig({
   testDir: "./tests/browser",
   timeout: 60000,
-  use: { baseURL: "http://localhost:3000", trace: "retain-on-failure" },
+  use: { baseURL: "http://localhost:1607", trace: "retain-on-failure" },
   projects: [
     {
       name: "desktop",
@@ -15,7 +15,7 @@ export default defineConfig({
   ],
   webServer: {
     command: "npm run dev",
-    url: "http://localhost:3000",
+    url: "http://localhost:1607",
     reuseExistingServer: !process.env.CI,
   },
 });

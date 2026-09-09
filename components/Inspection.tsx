@@ -1,6 +1,7 @@
 "use client";
 import { useRef, useState } from "react";
 import { Canvas } from "@react-three/fiber";
+import { botanicalEvents } from "@/lib/three/events";
 import { PerspectiveCamera, View } from "@react-three/drei";
 import { FLOWERS } from "@/lib/flowers/catalog";
 import type { FlowerType } from "@/lib/flowers/types";
@@ -85,7 +86,11 @@ export default function Inspection() {
         ))}
       </div>
       <div style={{ position: "fixed", inset: 0, pointerEvents: "none" }}>
-        <Canvas eventSource={container as React.RefObject<HTMLElement>} dpr={1}>
+        <Canvas
+          events={botanicalEvents}
+          eventSource={container as React.RefObject<HTMLElement>}
+          dpr={1}
+        >
           <View.Port />
         </Canvas>
       </div>

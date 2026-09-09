@@ -1,6 +1,7 @@
 "use client";
 import { Suspense, useState } from "react";
 import { Canvas } from "@react-three/fiber";
+import { botanicalEvents } from "@/lib/three/events";
 import { ContactShadows } from "@react-three/drei";
 import { ACESFilmicToneMapping, PCFShadowMap } from "three";
 import type { FlowerType } from "@/lib/flowers/types";
@@ -58,6 +59,7 @@ export default function FlowerScene({
     );
   return (
     <Canvas
+      events={botanicalEvents}
       className={hovered ? "flower-canvas is-hovered" : "flower-canvas"}
       frameloop={active ? "always" : "never"}
       resize={{ scroll: false }}

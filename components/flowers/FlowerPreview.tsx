@@ -1,6 +1,7 @@
 "use client";
 
 import { Canvas } from "@react-three/fiber";
+import { botanicalEvents } from "@/lib/three/events";
 import type { FlowerType } from "@/lib/flowers/types";
 import type { FlowerView } from "@/lib/flowers/views";
 import { BotanicalView } from "./BotanicalView";
@@ -27,6 +28,7 @@ export function FlowerPreview({
     <div className={`${className} flower-preview`} data-flower-preview={type}>
       {visible && (
         <Canvas
+          events={botanicalEvents}
           resize={{ scroll: false }}
           dpr={angle === "macro" ? [2, 2.5] : [1.5, 2]}
           gl={{

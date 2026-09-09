@@ -1,6 +1,7 @@
 "use client";
 import { Suspense, useState } from "react";
 import { Canvas } from "@react-three/fiber";
+import { botanicalEvents } from "@/lib/three/events";
 import { ContactShadows, PerformanceMonitor } from "@react-three/drei";
 import { PCFShadowMap } from "three";
 import { useRouter } from "next/navigation";
@@ -89,6 +90,7 @@ export default function FlowerGarden({
   const router = useRouter();
   return (
     <Canvas
+      events={botanicalEvents}
       shadows={quality !== "low"}
       dpr={quality === "low" || degraded ? 1 : [1, 1.5]}
       camera={{ position: [0, 3.6, 11], fov: 39, near: 0.1, far: 50 }}

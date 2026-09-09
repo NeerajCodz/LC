@@ -517,29 +517,129 @@ input[type="range"]::-moz-range-thumb {
   width: 3px;
   height: 3px;
 }
-.growing {
-  position: absolute;
-  inset: 0;
-  z-index: 4;
+.bloom-loader {
   background: var(--background);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 24px;
+  gap: 0;
+  color: var(--muted);
+  text-align: center;
+}
+.bloom-loader--page {
+  min-height: 100svh;
+}
+.bloom-loader--overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+}
+.bloom-loader-flower {
+  width: 120px;
+  height: 144px;
+  margin-bottom: 26px;
+  color: var(--accent);
+  overflow: visible;
+}
+.bloom-loader-label {
+  margin: 0;
   font:
-    italic 23px "Cormorant Garamond",
+    italic 26px "Cormorant Garamond",
     Georgia,
     serif;
-  color: var(--muted);
+  color: var(--ink);
 }
-.loading-orbit {
-  width: 35px;
-  height: 35px;
-  border: 1px solid var(--line);
-  border-top-color: var(--accent);
-  border-radius: 50%;
-  animation: orbit 2s linear infinite;
+.bloom-loader-signature {
+  margin-top: 17px;
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+.bloom-loader-corolla {
+  transform-origin: 60px 58px;
+  animation: loader-turn 18s linear infinite;
+}
+.bloom-loader-petal {
+  transform-origin: 60px 58px;
+  fill: currentColor;
+  fill-opacity: 0.035;
+  animation: loader-unfold 4.8s cubic-bezier(0.45, 0, 0.25, 1) infinite;
+  animation-delay: var(--petal-delay, 0s);
+}
+.bloom-loader-petal--inner {
+  fill-opacity: 0.06;
+  stroke-width: 1.2;
+}
+.bloom-loader-vein {
+  opacity: 0.25;
+}
+.bloom-loader-heart {
+  fill: var(--background);
+}
+.bloom-loader-stem {
+  stroke-dasharray: 1;
+  animation: loader-stem 1.8s ease-out both;
+}
+.bloom-loader-leaves {
+  transform-origin: 60px 114px;
+  fill: currentColor;
+  fill-opacity: 0.045;
+  animation: loader-leaves 4.8s ease-in-out infinite;
+}
+.bloom-loader-pollen {
+  fill: currentColor;
+  stroke: none;
+  animation: loader-pollen 4.8s ease-in-out infinite;
+}
+@keyframes loader-turn {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes loader-unfold {
+  0%,
+  100% {
+    transform: scale(0.32, 0.62);
+    opacity: 0.5;
+  }
+  40%,
+  65% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+@keyframes loader-stem {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes loader-leaves {
+  0%,
+  100% {
+    transform: scaleX(0.7);
+  }
+  45%,
+  65% {
+    transform: scaleX(1);
+  }
+}
+@keyframes loader-pollen {
+  0%,
+  100% {
+    opacity: 0;
+    transform: translateY(3px);
+  }
+  50% {
+    opacity: 0.65;
+  }
+  80% {
+    opacity: 0;
+    transform: translateY(-9px);
+  }
 }
 .collection-overlay {
   position: fixed;
@@ -697,11 +797,6 @@ input[type="range"]::-moz-range-thumb {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
-}
-@keyframes orbit {
-  to {
-    transform: rotate(360deg);
-  }
 }
 @keyframes text-in {
   from {
@@ -1336,6 +1431,12 @@ input[type="range"]::-moz-range-thumb {
   }
 }
 @media (prefers-reduced-motion: reduce) {
+  .bloom-loader svg * {
+    animation: none !important;
+  }
+  .bloom-loader-pollen {
+    display: none;
+  }
   html {
     scroll-behavior: auto;
   }

@@ -18,6 +18,7 @@ import {
 import { FLOWERS, getFlower } from "@/lib/flowers/catalog";
 import type { FlowerType } from "@/lib/flowers/types";
 import { Header } from "./ui/Header";
+import { BloomLoader } from "./ui/BloomLoader";
 import { useExperienceSettings } from "@/hooks/useExperienceSettings";
 import { useInView } from "@/hooks/useInView";
 import AngleGallery from "./AngleGallery";
@@ -128,14 +129,7 @@ export default function Experience({
             }}
           />
         </div>
-        {!ready && (
-          <div className="growing">
-            <span className="loading-orbit" />
-            <p>
-              Growing your garden<span>…</span>
-            </p>
-          </div>
-        )}
+        {!ready && <BloomLoader variant="overlay" />}
         <Header
           onNavigate={(href) => {
             if (href === window.location.pathname) {

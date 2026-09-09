@@ -15,12 +15,12 @@ test("all species are reachable through the collection", async ({ page }) => {
   await page.getByRole("link", { name: "Explore Orchid", exact: true }).click();
   await expect(page.getByRole("heading", { name: "Orchid." })).toBeVisible();
   await expect(page).toHaveURL(/\/flower\/orchid\/?$/);
-  await expect(page.locator(".growing")).toHaveCount(0);
+  await expect(page.locator(".bloom-loader")).toHaveCount(0);
   expect(errors).toEqual([]);
 });
 test("bloom, macro, pause, and switching remain operable", async ({ page }) => {
   await page.goto("/");
-  await expect(page.locator(".growing")).toHaveCount(0);
+  await expect(page.locator(".bloom-loader")).toHaveCount(0);
   const slider = page.getByRole("slider", { name: "Bloom amount" });
   await slider.focus();
   await slider.press("Home");
@@ -47,7 +47,7 @@ test("reduced motion and small screens keep viewing functional", async ({
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/flower/sunflower");
   await expect(page.getByRole("heading", { name: "Sunflower." })).toBeVisible();
-  await expect(page.locator(".growing")).toHaveCount(0);
+  await expect(page.locator(".bloom-loader")).toHaveCount(0);
   expect(
     await page.evaluate(
       () => document.documentElement.scrollWidth <= innerWidth,

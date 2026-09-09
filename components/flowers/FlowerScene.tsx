@@ -1,5 +1,5 @@
 "use client";
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import { botanicalEvents } from "@/lib/three/events";
 import { ContactShadows } from "@react-three/drei";
@@ -14,6 +14,7 @@ import { Pollen } from "../scene/Pollen";
 import { Flower } from "./Flower";
 import { RenderDiagnostics } from "../scene/RenderDiagnostics";
 import { SurfaceDetail } from "../scene/SurfaceDetail";
+import { SceneReady } from "../scene/SceneReady";
 import { useTheme } from "@/hooks/useTheme";
 import { THEME_BACKGROUNDS } from "@/lib/theme";
 
@@ -50,6 +51,10 @@ export default function FlowerScene({
     context?.getExtension("WEBGL_lose_context")?.loseContext();
     return supported;
   });
+  useEffect(() => {
+    // Remove the loading overlay so unsupported browsers can see the recovery UI.
+    if (!available) onReady?.();
+  }, [available, onReady]);
   if (!available)
     return (
       <div className="webgl-message">
@@ -76,13 +81,13 @@ export default function FlowerScene({
       }}
       onCreated={({ gl }) => {
         gl.shadowMap.type = PCFShadowMap;
-        onReady?.();
       }}
     >
       <SurfaceDetail />
       <color attach="background" args={[THEME_BACKGROUNDS[theme]]} />
       <fog attach="fog" args={[THEME_BACKGROUNDS[theme], 11, 25]} />
       <Suspense fallback={null}>
+        <SceneReady onReady={onReady} />
         <Lighting shadows={quality !== "low"} />
         <Environment />
         <Flower

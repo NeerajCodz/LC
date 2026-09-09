@@ -9,6 +9,7 @@ import { Flower } from "./Flower";
 import { Lighting } from "../scene/Lighting";
 import { Environment } from "../scene/Environment";
 import { SurfaceDetail } from "../scene/SurfaceDetail";
+import { SceneReady } from "../scene/SceneReady";
 import { CameraRig } from "../scene/CameraRig";
 import { Pollen } from "../scene/Pollen";
 import { useExperienceSettings } from "@/hooks/useExperienceSettings";
@@ -80,10 +81,12 @@ export default function FlowerGarden({
   bloom,
   paused,
   pulse,
+  onReady,
 }: {
   bloom: number;
   paused: boolean;
   pulse: number;
+  onReady?: () => void;
 }) {
   const { quality, reducedMotion } = useExperienceSettings();
   const { theme } = useTheme();
@@ -104,6 +107,7 @@ export default function FlowerGarden({
       <color attach="background" args={[THEME_BACKGROUNDS[theme]]} />
       <fog attach="fog" args={[THEME_BACKGROUNDS[theme], 13, 27]} />
       <Suspense fallback={null}>
+        <SceneReady onReady={onReady} />
         <Lighting shadows={quality !== "low"} />
         <Environment />
         {PLANTS.map((plant, i) => (

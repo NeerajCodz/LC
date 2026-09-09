@@ -4,18 +4,25 @@ import { useState } from "react";
 import Link from "next/link";
 import { Pause, Play, Wind, ArrowUpRight } from "lucide-react";
 import { Header } from "./ui/Header";
+import { BloomLoader } from "./ui/BloomLoader";
 const Scene = dynamic(() => import("./flowers/FlowerGarden"), {
   ssr: false,
-  loading: () => <div className="growing">Growing your garden…</div>,
 });
 export default function Garden() {
   const [bloom, setBloom] = useState(1),
     [paused, setPaused] = useState(false),
-    [pulse, setPulse] = useState(0);
+    [pulse, setPulse] = useState(0),
+    [ready, setReady] = useState(false);
   return (
     <main className="garden-page">
       <div className="garden-scene">
-        <Scene bloom={bloom} paused={paused} pulse={pulse} />
+        <Scene
+          bloom={bloom}
+          paused={paused}
+          pulse={pulse}
+          onReady={() => setReady(true)}
+        />
+        {!ready && <BloomLoader variant="overlay" />}
       </div>
       <Header active="garden" />
       <div className="garden-heading">

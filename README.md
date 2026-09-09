@@ -32,12 +32,16 @@ Deploy as a regular Next.js application on a Node.js host or a Next.js-compatibl
 
 ## Pages and interaction
 
-- `/` — cinematic specimen, fifteen-species selector, previous/next, bloom slider, replay, pause, macro camera, and scroll-driven growth. `/?flower=orchid` opens a particular species.
+- `/` — cinematic Rose specimen, fifteen-species selector, previous/next, bloom slider, replay, pause, macro camera, and scroll-driven growth.
+- `/flower/lotus` (and all fifteen species slugs) — a dedicated specimen route with species metadata. Legacy `/?flower=lotus` links permanently redirect here. Repeated slashes are normalized by Next.js.
+- `/flower/lotus/#angles` — four simultaneous live views of the selected flower: front, 45°, side, and macro, with a shared bloom control. Every specimen has this gallery section.
 - `/garden` — nine flowers in an asymmetric composition. A shared bloom slider controls the garden; select a flower to inspect it.
 - `/gallery` — all fifteen species, rendered through a single canvas with scissored viewports. Compare front, side, 45-degree and macro views, and control bloom across the collection.
 - `/dev/inspection` — development-only seven-view geometry fixture. It returns 404 in production. Select any species to inspect full bloom, multiple angles, macro, bud and half bloom side by side.
 
 Move the pointer or drag on the flower to sway it. Click or tap for a bloom pulse and close-up. The equivalent macro, bloom and pause actions are available through keyboard-accessible DOM controls. Escape closes the collection selector. Reduced-motion preferences disable pulses and pollen, simplify camera movement and make bloom controls immediate.
+
+The LC header includes three studio themes: **Current** (forest charcoal), **Black**, and **White** (warm ivory). Themes update both the interface and the 3D background/fog. The choice persists locally and synchronizes between browser tabs; flower pigments stay consistent across themes. The footer carries the full **living colors** wordmark.
 
 ## Flower API
 
@@ -48,7 +52,7 @@ import { Flower } from "@/components/flowers/Flower";
 
 <Flower
   type="rose"
-  color="#b8435c"
+  color="#b31e47"
   bloom={1}
   growth={1}
   scale={1}
@@ -64,7 +68,7 @@ import { Flower } from "@/components/flowers/Flower";
 />;
 ```
 
-`bloom` and `growth` are normalized to 0–1 by the UI. Bloom is clamped inside the animation hook. `growth` is optional and defaults to 1; it allows the scroll sequence to animate the rooted stem separately from the petals. `hovered`, `paused`, `reducedMotion`, `pulse`, `onHover`, and `onClick` support embedding and interaction. Increment `pulse` to trigger a secondary bloom. Color changes the main petal tissue; specialized organs such as sepals, seeds and the orchid lip retain their botanical colors.
+`bloom` and `growth` are normalized to 0–1 by the UI. Bloom is clamped inside the animation hook. `growth` is optional and defaults to 1; it allows the scroll sequence to animate the rooted stem separately from the petals. `hovered`, `paused`, `reducedMotion`, `pulse`, `onHover`, and `onClick` support embedding and interaction. Increment `pulse` to trigger a secondary bloom. Set `animateEntrance={false}` for immediately composed gallery previews while preserving subsequent bloom animation. Omit `color` to use the authored species pigment palette; a custom color generates a coordinated root-to-tip palette. Specialized organs such as sepals, seeds and the orchid lip retain their botanical colors.
 
 ## Architecture
 
@@ -73,9 +77,11 @@ app/                         Next.js App Router pages and error boundaries
 components/
   Experience.tsx             Specimen UI and closing/entry transitions
   Gallery.tsx                Scissored shared-canvas previews
+  AngleGallery.tsx           Four simultaneous views of the selected species
   Garden.tsx                 Garden controls
   flowers/
     Flower.tsx               Exhaustive species dispatcher
+    BotanicalView.tsx         Reusable camera, lighting, and preview content
     FlowerPlant.tsx          Reusable plant hierarchy and interaction
     PetalWhorl.tsx           Instanced petals with individual transforms/morphs
     FlowerCore.tsx           Phyllotaxis seeds, florets, pods and stamens
@@ -99,11 +105,11 @@ Stem vertices and their leaf/head attachments sample the same travelling wind be
 
 ### Materials and lighting
 
-Physical petal materials use seeded vertex tones, procedural veins, derivative-based micro-normal detail, roughness variation, sheen and a restrained back-scattering approximation. This is a real-time approximation of organic light transport, not volumetric subsurface scattering. A local Lightformer studio environment provides reflections without an HDR download. Desktop effects include restrained visual bloom, ambient occlusion, depth of field and a vignette.
+Physical petal materials use species-specific root, body, edge, and vein pigment zones in `lib/flowers/palettes.ts`. Shader uniforms are converted to linear color space by Three.js. Subtle mottling, darker inner layers, neutral vertex shading, restrained tinted sheen, and a balanced studio light preserve saturated pigments and clean ivory whites. Procedural veins, derivative-based micro-normal detail, roughness variation and restrained back scattering add surface detail. This is a real-time approximation of organic light transport, not volumetric subsurface scattering. A local Lightformer studio environment provides reflections without an HDR download. Desktop effects include restrained visual bloom, ambient occlusion, depth of field and a vignette.
 
 ### Performance
 
-Petals are instanced per whorl; seeds, anthers and pollen are instanced. Geometry/material construction is memoized and resources are disposed on replacement. Vector, matrix and color scratch objects are reused in frame callbacks. Mobile uses lower geometry resolution, lower DPR, fewer particles and no expensive postprocessing. A performance monitor can reduce desktop quality. Offscreen gallery specimens are unmounted while their layout is retained.
+Petals are instanced per whorl; seeds, anthers and pollen are instanced. Geometry/material construction is memoized and resources are disposed on replacement. Vector, matrix and color scratch objects are reused in frame callbacks. Mobile uses lower geometry resolution, lower DPR, fewer particles and no expensive postprocessing. A performance monitor can reduce desktop quality. Offscreen gallery specimens are unmounted while their layout is retained, the angle gallery shares one renderer, and the hero renderer pauses while offscreen.
 
 Frame rate depends on the browser, GPU, display resolution, active effects and selected species. The development hero exposes a screen-reader-hidden `#render-stats` output with a sampled `data-fps` value for local profiling. The seven-view inspection fixture is intentionally heavier than the public specimen view.
 

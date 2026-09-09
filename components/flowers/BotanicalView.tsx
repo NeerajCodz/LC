@@ -1,0 +1,61 @@
+import { PerspectiveCamera } from "@react-three/drei";
+import { Suspense } from "react";
+import { Flower } from "./Flower";
+import { Lighting } from "../scene/Lighting";
+import { Environment } from "../scene/Environment";
+import { useExperienceSettings } from "@/hooks/useExperienceSettings";
+import type { FlowerType } from "@/lib/flowers/types";
+import type { FlowerView } from "@/lib/flowers/views";
+
+/** A scissored view shares one renderer with its neighboring specimens. */
+export function BotanicalView({
+  type,
+  angle,
+  bloom = 1,
+  hovered = false,
+  detailed = false,
+}: {
+  type: FlowerType;
+  angle: FlowerView;
+  bloom?: number;
+  hovered?: boolean;
+  detailed?: boolean;
+}) {
+  const { reducedMotion, quality } = useExperienceSettings();
+  const macro = angle === "macro";
+  const distance = macro ? 2.8 : quality === "low" ? 6.6 : 5.5;
+  const azimuth =
+    angle === "side"
+      ? Math.PI / 2
+      : angle === "three-quarter"
+        ? Math.PI / 4
+        : 0;
+  return (
+    <Suspense fallback={null}>
+      <PerspectiveCamera
+        makeDefault
+        position={[
+          Math.sin(azimuth) * distance,
+          macro ? 1.4 : 1.7,
+          Math.cos(azimuth) * distance,
+        ]}
+        fov={36}
+        onUpdate={(camera) => camera.lookAt(0, macro ? 0.5 : 0.05, 0)}
+      />
+      <Lighting shadows={false} />
+      <Environment resolution={64} />
+      <Flower
+        type={type}
+        position={[0, 0.25, 0]}
+        bloom={bloom}
+        animateEntrance={false}
+        hovered={hovered}
+        interactive={detailed}
+        quality={detailed && quality !== "low" ? "medium" : "low"}
+        windStrength={0.25}
+        cursorStrength={0.35}
+        reducedMotion={reducedMotion}
+      />
+    </Suspense>
+  );
+}

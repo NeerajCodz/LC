@@ -27,6 +27,7 @@ export interface SceneProps {
   paused?: boolean;
   pulse?: number;
   angle?: ViewAngle;
+  active?: boolean;
   onFlowerClick?: () => void;
   onReady?: () => void;
 }
@@ -38,6 +39,7 @@ export default function FlowerScene({
   paused = false,
   pulse = 0,
   angle,
+  active = true,
   onFlowerClick,
   onReady,
 }: SceneProps) {
@@ -62,6 +64,7 @@ export default function FlowerScene({
   return (
     <Canvas
       className={hovered ? "flower-canvas is-hovered" : "flower-canvas"}
+      frameloop={active ? "always" : "never"}
       shadows={quality !== "low"}
       dpr={quality === "low" || degraded ? 1 : [1, 1.75]}
       camera={{ position: [0, 1.5, 7.5], fov: 38, near: 0.1, far: 45 }}

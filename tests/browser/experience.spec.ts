@@ -14,6 +14,7 @@ test("all species are reachable through the collection", async ({ page }) => {
   ).toHaveAttribute("aria-pressed", "true");
   await page.getByRole("link", { name: "Explore Orchid", exact: true }).click();
   await expect(page.getByRole("heading", { name: "Orchid." })).toBeVisible();
+  await expect(page).toHaveURL(/\/flower\/orchid\/?$/);
   await expect(page.locator(".growing")).toHaveCount(0);
   expect(errors).toEqual([]);
 });
@@ -38,12 +39,13 @@ test("bloom, macro, pause, and switching remain operable", async ({ page }) => {
   ).toBeVisible();
   await page.getByRole("button", { name: "Next flower" }).click();
   await expect(page.getByRole("heading", { name: "Lotus." })).toBeVisible();
+  await expect(page).toHaveURL(/\/flower\/lotus\/?$/);
 });
 test("reduced motion and small screens keep viewing functional", async ({
   page,
 }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto("/?flower=sunflower");
+  await page.goto("/flower/sunflower");
   await expect(page.getByRole("heading", { name: "Sunflower." })).toBeVisible();
   await expect(page.locator(".growing")).toHaveCount(0);
   expect(
@@ -58,4 +60,28 @@ test("reduced motion and small screens keep viewing functional", async ({
   await expect(
     page.getByRole("slider", { name: "Garden bloom amount" }),
   ).toBeVisible();
+});
+
+test("themes persist and the specimen gallery exposes four angles", async ({
+  page,
+}) => {
+  await page.goto("/flower/lotus");
+  await page.getByRole("button", { name: "White theme", exact: true }).click();
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "white");
+  await page.reload();
+  await expect(
+    page.getByRole("button", { name: "White theme", exact: true }),
+  ).toHaveAttribute("aria-pressed", "true");
+  await page
+    .getByRole("link", { name: "View every angle", exact: true })
+    .click();
+  await expect(page.locator("#angles .angle-frame")).toHaveCount(4);
+  const bloom = page.getByRole("slider", { name: "Angle gallery bloom" });
+  await bloom.focus();
+  await bloom.press("Home");
+  await expect(bloom).toHaveValue("0");
+  await bloom.press("End");
+  await expect(bloom).toHaveValue("1");
+  await page.goto("/?flower=lotus");
+  await expect(page).toHaveURL(/\/flower\/lotus\/?$/);
 });

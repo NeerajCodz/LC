@@ -316,6 +316,20 @@ p {
   color: var(--ink);
   pointer-events: auto;
 }
+.angle-gallery-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  margin: 18px 0 0 4px;
+  padding: 6px 0;
+  font-size: 11px;
+  color: var(--muted);
+  pointer-events: auto;
+}
+.angle-gallery-link:hover {
+  color: var(--ink);
+}
 .right-annotation {
   position: absolute;
   right: 3.5%;
@@ -763,6 +777,20 @@ input[type="range"]::-moz-range-thumb {
   position: relative;
   border-bottom: 1px solid var(--line);
 }
+.preview-angles-link {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  width: fit-content;
+  margin-bottom: 24px;
+  color: var(--muted);
+  font-size: 10px;
+}
+.preview-angles-link:hover {
+  color: var(--ink);
+}
 .preview-link {
   display: block;
   position: relative;
@@ -832,6 +860,127 @@ input[type="range"]::-moz-range-thumb {
   display: flex;
   align-items: center;
   gap: 18px;
+}
+.angle-gallery {
+  position: relative;
+  isolation: isolate;
+  padding: 100px 7% 50px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  scroll-margin-top: 0;
+  overflow: hidden;
+}
+.angle-gallery-heading {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 48px;
+  margin-bottom: 45px;
+}
+.angle-gallery-heading h2 {
+  max-width: 720px;
+  font:
+    300 clamp(42px, 5vw, 76px)/1.02 "Cormorant Garamond",
+    Georgia,
+    serif;
+  letter-spacing: -0.035em;
+  margin: 26px 0 0;
+}
+.angle-gallery-heading h2 em {
+  color: var(--accent);
+}
+.angle-gallery-heading > p {
+  max-width: 270px;
+  font-size: 12px;
+  line-height: 1.9;
+  color: var(--muted);
+  margin: 0;
+}
+.angle-gallery-tools {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 20px 0;
+  color: var(--muted);
+  font-size: 11px;
+}
+.angle-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 28px 40px;
+  margin-top: 32px;
+}
+.angle-frame {
+  position: relative;
+  min-width: 0;
+  margin: 0;
+  border-bottom: 1px solid var(--line);
+}
+.angle-frame-number {
+  position: absolute;
+  top: 14px;
+  left: 0;
+  z-index: 2;
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+}
+.angle-frame-view {
+  height: 390px;
+  touch-action: pan-y;
+}
+.angle-frame figcaption {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  padding: 14px 0 26px;
+}
+.angle-frame h3 {
+  font:
+    32px "Cormorant Garamond",
+    Georgia,
+    serif;
+  margin: 0;
+}
+.angle-frame h3 span {
+  color: var(--muted);
+}
+.angle-frame figcaption p {
+  font-size: 10px;
+  color: var(--muted);
+  margin: 0;
+}
+.angle-gallery-canvas {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+.angle-gallery-end {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 35px;
+  font-size: 11px;
+  color: var(--muted);
+}
+.angle-gallery-end a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--ink);
 }
 .garden-page {
   height: 100svh;
@@ -921,6 +1070,46 @@ input[type="range"]::-moz-range-thumb {
   }
 }
 @media (max-width: 700px) {
+  .angle-gallery {
+    padding: 65px 7% 35px;
+  }
+  .angle-gallery-heading {
+    display: block;
+    margin-bottom: 30px;
+  }
+  .angle-gallery-heading h2 {
+    font-size: 46px;
+  }
+  .angle-gallery-heading > p {
+    margin-top: 20px;
+  }
+  .angle-gallery-tools {
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+  .angle-gallery-grid {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+  .angle-frame-view {
+    height: 350px;
+  }
+  .angle-frame h3 {
+    font-size: 29px;
+  }
+  .angle-frame figcaption p {
+    max-width: 140px;
+    text-align: right;
+    line-height: 1.7;
+  }
+  .angle-gallery-end {
+    gap: 22px;
+    font-size: 10px;
+  }
+  .angle-gallery-end > span {
+    max-width: 105px;
+    line-height: 1.8;
+  }
   .collection-intro {
     margin: 50px 7% 30px;
     display: block;
@@ -1060,8 +1249,12 @@ input[type="range"]::-moz-range-thumb {
     font-size: 11px;
     padding: 5px 0;
   }
+  .angle-gallery-link {
+    margin-top: 6px;
+    padding: 5px 0;
+  }
   .scene-wrap {
-    top: 240px;
+    top: 270px;
     bottom: 70px;
   }
   .right-annotation {

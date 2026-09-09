@@ -1,14 +1,12 @@
 "use client";
-import { Suspense, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { Canvas } from "@react-three/fiber";
-import { PerspectiveCamera, View } from "@react-three/drei";
+import { View } from "@react-three/drei";
 import { ArrowUpRight } from "lucide-react";
 import { FLOWERS, type FlowerInfo } from "@/lib/flowers/catalog";
-import { Flower } from "./flowers/Flower";
-import { Lighting } from "./scene/Lighting";
+import { BotanicalView } from "./flowers/BotanicalView";
 import { Header } from "./ui/Header";
-import { useExperienceSettings } from "@/hooks/useExperienceSettings";
 
 type Angle = "front" | "side" | "45°" | "macro";
 export default function Gallery() {
@@ -100,7 +98,6 @@ function SpecimenPreview({
   const ref = useRef<HTMLElement>(null);
   const [visible, setVisible] = useState(false),
     [hover, setHover] = useState(false);
-  const { reducedMotion, quality } = useExperienceSettings();
   useEffect(() => {
     const node = ref.current;
     if (!node) return;
@@ -111,7 +108,6 @@ function SpecimenPreview({
     observer.observe(node);
     return () => observer.disconnect();
   }, []);
-  const macro = angle === "macro";
   return (
     <article
       ref={ref}
@@ -129,46 +125,12 @@ function SpecimenPreview({
         </span>
         <View className="gallery-preview" index={index + 1} visible={visible}>
           {visible && (
-            <Suspense fallback={null}>
-              <PerspectiveCamera
-                makeDefault
-                position={[
-                  0,
-                  macro ? 1.4 : 1.7,
-                  macro
-                    ? quality === "low"
-                      ? 3.5
-                      : 2.8
-                    : quality === "low"
-                      ? 7
-                      : 5.5,
-                ]}
-                fov={36}
-                onUpdate={(camera) => camera.lookAt(0, macro ? 0.5 : 0.05, 0)}
-              />
-              <Lighting shadows={false} />
-              <group
-                rotation={[
-                  0,
-                  angle === "side"
-                    ? Math.PI / 2
-                    : angle === "45°"
-                      ? Math.PI / 4
-                      : 0,
-                  0,
-                ]}
-              >
-                <Flower
-                  type={info.type}
-                  position={[0, 0.25, 0]}
-                  bloom={bloom}
-                  hovered={hover}
-                  quality="low"
-                  windStrength={0.3}
-                  reducedMotion={reducedMotion}
-                />
-              </group>
-            </Suspense>
+            <BotanicalView
+              type={info.type}
+              angle={angle === "45°" ? "three-quarter" : angle}
+              bloom={bloom}
+              hovered={hover}
+            />
           )}
         </View>
         <div className="preview-caption">
@@ -178,6 +140,13 @@ function SpecimenPreview({
           </div>
           <ArrowUpRight size={20} />
         </div>
+      </Link>
+      <Link
+        className="preview-angles-link"
+        href={`/flower/${info.type}/#angles`}
+        aria-label={`View ${info.name} from every angle`}
+      >
+        View every angle <ArrowUpRight size={12} />
       </Link>
     </article>
   );

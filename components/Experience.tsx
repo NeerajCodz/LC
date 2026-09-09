@@ -19,6 +19,8 @@ import { FLOWERS, getFlower } from "@/lib/flowers/catalog";
 import type { FlowerType } from "@/lib/flowers/types";
 import { Header } from "./ui/Header";
 import { useExperienceSettings } from "@/hooks/useExperienceSettings";
+import { useInView } from "@/hooks/useInView";
+import AngleGallery from "./AngleGallery";
 const Scene = dynamic(() => import("./flowers/FlowerScene"), { ssr: false });
 
 export default function Experience({
@@ -27,6 +29,7 @@ export default function Experience({
   initialType: FlowerType;
 }) {
   const router = useRouter();
+  const { ref: hero, visible: heroVisible } = useInView<HTMLElement>();
   const pickerTrigger = useRef<HTMLButtonElement>(null);
   const type = initialType;
   const [target, setTarget] = useState(1),
@@ -106,11 +109,13 @@ export default function Experience({
         <output id="render-stats" className="sr-only" />
       )}
       <section
+        ref={hero}
         className="experience"
         aria-label="Interactive botanical specimen"
       >
         <div className="scene-wrap">
           <Scene
+            active={heroVisible}
             type={type}
             bloom={bloom}
             macro={macro}
@@ -133,7 +138,7 @@ export default function Experience({
         )}
         <Header
           onNavigate={(href) => {
-            if (href === "/") {
+            if (href === window.location.pathname) {
               setMacro(false);
               return;
             }
@@ -171,6 +176,9 @@ export default function Experience({
           >
             Explore the collection <MoveUpRight size={16} />
           </button>
+          <a className="angle-gallery-link" href="#angles">
+            View every angle <ArrowRight size={13} />
+          </a>
         </div>
         <div className="right-annotation">
           <span>FORM, LIGHT & A LITTLE LIFE</span>
@@ -251,6 +259,7 @@ export default function Experience({
           </span>
         </footer>
       </section>
+      <AngleGallery type={type} />
       <ScrollStudy type={type} />
       {picker && (
         <div

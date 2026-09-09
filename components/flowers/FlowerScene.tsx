@@ -84,7 +84,7 @@ export default function FlowerScene({
       <fog attach="fog" args={[THEME_BACKGROUNDS[theme], 11, 25]} />
       <Suspense fallback={null}>
         <Lighting shadows={quality !== "low"} />
-        <Environment resolution={macro ? 512 : 256} />
+        <Environment />
         <Flower
           key={type}
           type={type}

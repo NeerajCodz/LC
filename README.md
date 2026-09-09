@@ -108,7 +108,7 @@ Stem vertices and their leaf/head attachments sample the same travelling wind be
 
 ### Materials and lighting
 
-Physical petal materials use species-specific root, body, edge, and vein pigment zones in `lib/flowers/palettes.ts`. Shader uniforms are converted to linear color space by Three.js. Subtle mottling, darker inner layers, neutral vertex shading, restrained tinted sheen, and a balanced studio light preserve saturated pigments and clean ivory whites. Procedural veins, derivative-based micro-normal detail, roughness variation and restrained back scattering add surface detail. This is a real-time approximation of organic light transport, not volumetric subsurface scattering. A local Lightformer studio environment provides reflections without an HDR download. Desktop effects include ambient occlusion, multisample antialiasing, and a subtle vignette. Depth-of-field and visual bloom are disabled so zooming preserves sharp petal and pollen detail. Procedural tissue noise is filtered at a distance to reduce shimmer.
+Physical petal materials use species-specific root, body, edge, and vein pigment zones in `lib/flowers/palettes.ts`. Shader uniforms are converted to linear color space by Three.js. Subtle mottling, darker inner layers, neutral vertex shading, restrained tinted sheen, and a balanced studio light preserve saturated pigments and clean ivory whites. Procedural veins, derivative-based micro-normal detail, roughness variation and restrained back scattering add surface detail. This is a real-time approximation of organic light transport, not volumetric subsurface scattering. A procedural HDR studio environment provides reflections without an external image download. Desktop effects include ambient occlusion, multisample antialiasing, and a subtle vignette. Depth-of-field and visual bloom are disabled so zooming preserves sharp petal and pollen detail. Procedural tissue noise is filtered at a distance to reduce shimmer.
 
 ### WebGL and vgpu
 
@@ -117,6 +117,8 @@ All flower geometry, morphs, PBR lighting, shadows, instancing, and interaction 
 On WebGPU-capable browsers, `SurfaceDetail` asynchronously starts a real vgpu render pass that generates a **1024 × 1024 linear tissue atlas**. Its three channels encode vein irregularity, pigment mottling, and cellular roughness/micro-height. The atlas is read back once, mipmapped, and shared by all species' WebGL materials. This avoids repeatedly evaluating those noise fields per fragment. The temporary WebGPU device and resources are disposed after the bake; there is no per-frame GPU readback or additional onscreen canvas. This is procedural material data, not a flower photograph or sprite.
 
 If WebGPU is missing, blocked, or initialization fails, the complete GLSL tissue field stays active. WebGPU preparation never suspends a flower canvas. `canvas[data-surface-detail]` reports `vgpu` or `webgl` for development inspection. Preview pointer events fall back to the renderer-owned canvas when Suspense clears the wrapper ref, preserving event cleanup during fast scrolling and route changes.
+
+Lighting also uses vgpu: `studio-lighting.wgsl` renders a **1024 × 512 RGBA16F HDR environment** containing warm key, cool fill, and rim emitters. WebGL's [PMREMGenerator](https://threejs.org/docs/pages/PMREMGenerator.html) prefilters that radiance for the actual material roughness, lighting curved petals, leaves, and anthers with diffuse irradiance and soft reflections. Direct WebGL lights still supply moving highlights and shadows. The HDR bake is shared application-wide; the filtered environment is cached once per WebGL renderer with reference-counted cleanup. No lighting render pass or readback runs every frame. WebGL-only devices use the same analytic studio field, generated at 512 × 256. `canvas[data-lighting-backend]` identifies the source. The GPU pixel test compares the complete HDR field against the fallback and verifies that highlights exceed 1 without clipping.
 
 ### Performance
 
@@ -152,6 +154,8 @@ npm run test:browser
 Browser scenarios also check that flower canvases and captions move by the same amount when scrolling down and back up on the collection, home hero, and home angle gallery.
 
 Lifecycle scenarios cover rapid preview teardown, gallery/specimen navigation, and macro viewing with WebGPU unavailable. To use an installed Google Chrome for desktop tests, set `PLAYWRIGHT_CHANNEL=chrome` in your shell. The default uses Playwright's bundled Chromium; the mobile project uses WebKit.
+
+Retention scenarios visit all fifteen species, scroll back, and assert unchanged scene identities with exactly one collection canvas. The home test verifies that its angle scenes, scroll-study canvas, and bloom control survive scrolling away and returning.
 
 Use `/dev/inspection` for the visual checks that numerical tests cannot establish. Confirm silhouettes, overlap, underside attachment and macro detail, then verify pointer/touch motion and the garden on the target GPU.
 

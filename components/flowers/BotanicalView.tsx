@@ -45,7 +45,7 @@ export function BotanicalView({
         onUpdate={(camera) => camera.lookAt(0, macro ? 0.5 : 0.05, 0)}
       />
       <Lighting shadows={false} />
-      <Environment resolution={macro ? 256 : 128} />
+      <Environment />
       <Flower
         type={type}
         position={[0, 0.25, 0]}

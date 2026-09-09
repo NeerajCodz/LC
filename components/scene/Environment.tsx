@@ -1,24 +1,35 @@
-import { Environment as Studio, Lightformer } from "@react-three/drei";
-export function Environment({ resolution = 128 }: { resolution?: number }) {
-  return (
-    <Studio resolution={resolution} frames={1}>
-      <Lightformer
-        form="rect"
-        intensity={0.85}
-        color="#fff6ee"
-        position={[-3, 4, 2]}
-        scale={[3, 5, 1]}
-        rotation={[0, Math.PI / 3, 0]}
-      />
-      <Lightformer
-        form="rect"
-        intensity={0.4}
-        color="#d8e2ed"
-        position={[4, 2, 1]}
-        scale={[2, 4, 1]}
-        rotation={[0, -Math.PI / 3, 0]}
-      />
-      <Lightformer form="ring" intensity={1} position={[0, 4, -4]} scale={3} />
-    </Studio>
-  );
+import { useEffect } from "react";
+import { useThree } from "@react-three/fiber";
+import { acquireStudioEnvironment } from "@/lib/three/studio-environment";
+
+export function Environment() {
+  const get = useThree((state) => state.get);
+  useEffect(() => {
+    const state = get(),
+      scene = state.scene;
+    const previous = scene.environment,
+      previousIntensity = scene.environmentIntensity;
+    const lease = acquireStudioEnvironment(state.gl);
+    let mounted = true;
+    void lease.ready.then(
+      ({ target, backend }) => {
+        if (!mounted) return;
+        scene.environment = target.texture;
+        scene.environmentIntensity = 0.35;
+        state.gl.domElement.dataset.lightingBackend = backend;
+        state.invalidate();
+      },
+      (error) => {
+        if (mounted)
+          console.error("Studio environment could not be prepared", error);
+      },
+    );
+    return () => {
+      mounted = false;
+      scene.environment = previous;
+      scene.environmentIntensity = previousIntensity;
+      lease.release();
+    };
+  }, [get]);
+  return null;
 }

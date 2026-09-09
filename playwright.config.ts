@@ -2,6 +2,8 @@ import { defineConfig, devices } from "@playwright/test";
 export default defineConfig({
   testDir: "./tests/browser",
   timeout: 60000,
+  // First-time WebGL shader compilation is slower in software-rendered CI.
+  expect: { timeout: 15000 },
   use: { baseURL: "http://localhost:1607", trace: "retain-on-failure" },
   projects: [
     {

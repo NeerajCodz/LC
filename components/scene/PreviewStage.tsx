@@ -1,6 +1,7 @@
 "use client";
 import {
   createContext,
+  memo,
   useCallback,
   useContext,
   useMemo,
@@ -81,7 +82,11 @@ export function PreviewStage({
               events={botanicalEvents}
               resize={{ scroll: false }}
               frameloop={active ? "always" : "never"}
-              dpr={[1.5, 2]}
+              dpr={
+                loaded.some(([, entry]) => entry.angle === "macro")
+                  ? [2, 2.5]
+                  : [1.5, 2]
+              }
               gl={{
                 antialias: true,
                 alpha: true,
@@ -131,13 +136,23 @@ function RetainedView({ entry }: { entry: PreviewEntry }) {
   }, [entry.node, scene]);
   return createPortal(
     <RenderActivity value={entry.visible}>
-      <BotanicalView {...entry} />
+      <RetainedFlower entry={entry} />
       <DrawView entry={entry} />
     </RenderActivity>,
     scene,
     { events: { compute } },
   );
 }
+
+// A global angle/bloom change should not rebuild fifteen offscreen specimens.
+// Apply their latest inputs when they become visible; activity context still
+// reaches the existing descendants immediately to pause their frame callbacks.
+const RetainedFlower = memo(
+  function RetainedFlower({ entry }: { entry: PreviewEntry }) {
+    return <BotanicalView {...entry} />;
+  },
+  (_, next) => !next.entry.visible,
+);
 
 function DrawView({ entry }: { entry: PreviewEntry }) {
   const getState = useThree((state) => state.get);

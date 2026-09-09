@@ -12,7 +12,7 @@
     "test": "tsx --test tests/*.test.ts",
     "test:browser": "playwright test",
     "test:gpu": "tsx --test tests/gpu/*.test.mts",
-    "check:shaders": "vgpu check lib/gpu/shaders/petal-tissue.wgsl --require-validation"
+    "check:shaders": "vgpu check lib/gpu/shaders/petal-tissue.wgsl --require-validation && vgpu check lib/gpu/shaders/studio-lighting.wgsl --require-validation"
   },
   "dependencies": {
     "@fontsource/cormorant-garamond": "^5.3.0",

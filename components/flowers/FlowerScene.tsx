@@ -1,11 +1,7 @@
 "use client";
 import { Suspense, useState } from "react";
 import { Canvas } from "@react-three/fiber";
-import {
-  AdaptiveDpr,
-  ContactShadows,
-  PerformanceMonitor,
-} from "@react-three/drei";
+import { ContactShadows } from "@react-three/drei";
 import { ACESFilmicToneMapping, PCFShadowMap } from "three";
 import type { FlowerType } from "@/lib/flowers/types";
 import { useExperienceSettings } from "@/hooks/useExperienceSettings";
@@ -45,8 +41,7 @@ export default function FlowerScene({
 }: SceneProps) {
   const { quality, reducedMotion } = useExperienceSettings();
   const { theme } = useTheme();
-  const [hovered, setHovered] = useState(false),
-    [degraded, setDegraded] = useState(false);
+  const [hovered, setHovered] = useState(false);
   const [available] = useState(() => {
     const context = document.createElement("canvas").getContext("webgl2");
     const supported = !!context;
@@ -66,7 +61,7 @@ export default function FlowerScene({
       className={hovered ? "flower-canvas is-hovered" : "flower-canvas"}
       frameloop={active ? "always" : "never"}
       shadows={quality !== "low"}
-      dpr={quality === "low" || degraded ? 1 : [1, 1.75]}
+      dpr={macro ? [2, 2.5] : [1.5, 2]}
       camera={{ position: [0, 1.5, 7.5], fov: 38, near: 0.1, far: 45 }}
       gl={{
         antialias: true,
@@ -84,14 +79,14 @@ export default function FlowerScene({
       <fog attach="fog" args={[THEME_BACKGROUNDS[theme], 11, 25]} />
       <Suspense fallback={null}>
         <Lighting shadows={quality !== "low"} />
-        <Environment />
+        <Environment resolution={macro ? 512 : 256} />
         <Flower
           key={type}
           type={type}
           position={[0, 0.5, 0]}
           bloom={bloom}
           growth={growth}
-          quality={degraded ? "medium" : quality}
+          quality={macro ? "ultra" : "high"}
           windStrength={0.8}
           interactive
           hovered={hovered}
@@ -118,7 +113,7 @@ export default function FlowerScene({
             paused={paused}
           />
         )}
-        {quality === "high" && !degraded && <PostProcessing macro={macro} />}
+        {quality !== "low" && <PostProcessing />}
       </Suspense>
       <CameraRig
         macro={macro}
@@ -126,9 +121,7 @@ export default function FlowerScene({
         paused={paused}
         angle={angle}
       />
-      <AdaptiveDpr pixelated />
       {process.env.NODE_ENV === "development" && <RenderDiagnostics />}
-      <PerformanceMonitor onDecline={() => setDegraded(true)} />
     </Canvas>
   );
 }

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import { Flower2, ArrowUpRight } from "lucide-react";
 import type { MouseEvent } from "react";
 import { ThemeSwitcher } from "./ThemeSwitcher";
 export function Header({
@@ -29,6 +29,7 @@ export function Header({
         aria-label="Living Colors home"
         onClick={(e) => navigate(e, "/")}
       >
+        <Flower2 size={27} strokeWidth={1} aria-hidden="true" />
         <span>LC</span>
       </Link>
       <nav aria-label="Main navigation">

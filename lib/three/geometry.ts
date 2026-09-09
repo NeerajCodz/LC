@@ -3,9 +3,10 @@ import type { PetalProfile, Quality } from "../flowers/types";
 import { seededRandom } from "./noise";
 
 const RESOLUTION: Record<Quality, [number, number]> = {
-  low: [16, 22],
-  medium: [22, 32],
-  high: [30, 44],
+  low: [20, 28],
+  medium: [30, 44],
+  high: [42, 64],
+  ultra: [56, 88],
 };
 
 /** A sealed, double-surface petal. Its front, back and perimeter are real triangles. */
@@ -14,7 +15,13 @@ export function createPetalGeometry(
   seed: number,
   quality: Quality = "high",
 ): BufferGeometry {
-  const [columns, rows] = RESOLUTION[quality];
+  const [maximumColumns, rows] = RESOLUTION[quality];
+  const columns = Math.max(
+    12,
+    Math.round(
+      maximumColumns * Math.min(1, Math.sqrt(profile.width / profile.length)),
+    ),
+  );
   const random = seededRandom(seed);
   const phase = random() * Math.PI * 2;
   const asymmetry = (random() - 0.5) * 0.09;

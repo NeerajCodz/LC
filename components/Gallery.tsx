@@ -69,7 +69,7 @@ export default function Gallery() {
       <div className="gallery-canvas">
         <Canvas
           eventSource={container as React.RefObject<HTMLElement>}
-          dpr={[1, 1.4]}
+          dpr={angle === "macro" ? [2, 2.5] : [1.5, 2]}
           gl={{ antialias: true, alpha: true }}
         >
           <View.Port />

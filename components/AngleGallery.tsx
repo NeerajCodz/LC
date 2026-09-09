@@ -9,12 +9,10 @@ import { FLOWER_VIEWS } from "@/lib/flowers/views";
 import { getFlower } from "@/lib/flowers/catalog";
 import type { FlowerType } from "@/lib/flowers/types";
 import { useInView } from "@/hooks/useInView";
-import { useExperienceSettings } from "@/hooks/useExperienceSettings";
 
 export default function AngleGallery({ type }: { type: FlowerType }) {
   const { ref, visible } = useInView<HTMLElement>();
   const [bloom, setBloom] = useState(1);
-  const { quality } = useExperienceSettings();
   const info = getFlower(type);
   return (
     <section
@@ -64,7 +62,7 @@ export default function AngleGallery({ type }: { type: FlowerType }) {
         <div className="angle-gallery-canvas" aria-hidden="true">
           <Canvas
             eventSource={ref as RefObject<HTMLElement>}
-            dpr={quality === "low" ? 1 : [1, 1.5]}
+            dpr={[1.5, 2]}
             gl={{ antialias: true, alpha: true }}
           >
             <View.Port />

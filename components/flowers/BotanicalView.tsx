@@ -43,7 +43,7 @@ export function BotanicalView({
         onUpdate={(camera) => camera.lookAt(0, macro ? 0.5 : 0.05, 0)}
       />
       <Lighting shadows={false} />
-      <Environment resolution={64} />
+      <Environment resolution={macro ? 256 : 128} />
       <Flower
         type={type}
         position={[0, 0.25, 0]}
@@ -51,7 +51,7 @@ export function BotanicalView({
         animateEntrance={false}
         hovered={hovered}
         interactive={detailed}
-        quality={detailed && quality !== "low" ? "medium" : "low"}
+        quality={macro ? "ultra" : detailed ? "high" : "medium"}
         windStrength={0.25}
         cursorStrength={0.35}
         reducedMotion={reducedMotion}

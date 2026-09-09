@@ -181,7 +181,11 @@ export function FlowerPlant({
                     interaction={interaction}
                   />
                 ))}
-                <FlowerCore structure={structure} bloom={bloom} />
+                <FlowerCore
+                  structure={structure}
+                  bloom={bloom}
+                  quality={quality}
+                />
               </group>
             </group>
           ))}

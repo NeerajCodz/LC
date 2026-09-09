@@ -9,6 +9,7 @@ import {
 import type { FlowerStructure, Quality } from "@/lib/flowers/types";
 import { createPetalGeometry, PETAL } from "@/lib/three/geometry";
 import { layeredWind, stemBend } from "@/lib/three/noise";
+import { LotusFoliage } from "./lotus/LotusFoliage";
 
 function stemGeometry(length: number, radius: number) {
   const p: number[] = [],
@@ -162,7 +163,17 @@ export function Stem({
       <mesh geometry={geometry} castShadow>
         <meshStandardMaterial color="#405335" roughness={0.88} />
       </mesh>
+      {leaves && structure.leafShape === "round" && (
+        <LotusFoliage
+          quality={quality}
+          length={structure.stemLength}
+          growth={growth}
+          time={time}
+          wind={wind}
+        />
+      )}
       {leaves &&
+        structure.leafShape !== "round" &&
         Array.from({ length: structure.leafCount }, (_, i) => (
           <group
             key={i}

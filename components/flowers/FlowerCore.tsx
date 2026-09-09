@@ -2,9 +2,31 @@ import { useMemo, useEffect, useRef, type RefObject } from "react";
 import { useFrame } from "@react-three/fiber";
 import { Color, Group, InstancedMesh, Object3D } from "three";
 import { GOLDEN_ANGLE, seededRandom } from "@/lib/three/noise";
-import type { FlowerStructure } from "@/lib/flowers/types";
+import type { FlowerStructure, Quality } from "@/lib/flowers/types";
+import { LotusHeart } from "./lotus/LotusHeart";
 
 export function FlowerCore({
+  structure,
+  bloom,
+  quality,
+}: {
+  structure: FlowerStructure;
+  bloom: RefObject<number>;
+  quality: Quality;
+}) {
+  if (structure.center === "pod")
+    return (
+      <LotusHeart
+        bloom={bloom}
+        radius={structure.centerRadius}
+        height={structure.centerHeight}
+        quality={quality}
+      />
+    );
+  return <StandardFlowerCore structure={structure} bloom={bloom} />;
+}
+
+function StandardFlowerCore({
   structure,
   bloom,
 }: {
@@ -27,13 +49,11 @@ export function FlowerCore({
       ? 610
       : center === "florets"
         ? 230
-        : center === "pod"
-          ? 21
-          : center === "column"
-            ? 65
-            : center === "stamens"
-              ? (stamenCount ?? (r > 0.23 ? 6 : 27))
-              : 0;
+        : center === "column"
+          ? 65
+          : center === "stamens"
+            ? (stamenCount ?? (r > 0.23 ? 6 : 27))
+            : 0;
   const stamens = center === "stamens" || center === "column";
   const data = useMemo(() => {
     const random = seededRandom(825);
@@ -72,13 +92,7 @@ export function FlowerCore({
       mesh.current?.setColorAt(
         i,
         tint
-          .set(
-            center === "seeds"
-              ? "#32201a"
-              : center === "pod"
-                ? "#756837"
-                : antherColor,
-          )
+          .set(center === "seeds" ? "#32201a" : antherColor)
           .multiplyScalar(0.6 + d.shade * 0.6),
       );
       dummy.position.set(d.x * 0.5, d.y * 0.5, d.z * 0.5);
@@ -124,12 +138,6 @@ export function FlowerCore({
             color={center === "seeds" ? "#291d12" : "#b78720"}
             roughness={0.92}
           />
-        </mesh>
-      )}
-      {center === "pod" && (
-        <mesh position={[0, h - 0.045, 0]}>
-          <cylinderGeometry args={[r * 1.08, r * 0.63, 0.16, 40]} />
-          <meshStandardMaterial color="#b5a748" roughness={0.64} />
         </mesh>
       )}
       {center === "column" && (

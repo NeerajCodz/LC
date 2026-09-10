@@ -26,6 +26,10 @@ See [README](../README.md) for architecture and the public Flower API, [developm
 
 Wind response research and implementation limits are documented in [wind and contact](wind-and-contact.md). Species parameters are authored from growth habit and structural cues, not measured elasticity. Mobile macro subdivision and pixel density follow explicit device budgets.
 
+## Additional floral forms
+
+The expanded collection includes Poppy, Daffodil, Bearded Iris, Calla Lily, Anthurium, Columbine, Bleeding Heart, and Bird of Paradise. See the [source-linked specimen dossier](specimens/expanded-forms.md) for anatomy, construction, opening behavior, and explicit modeling limitations.
+
 ## Lotus center revision
 
 The yellow structures around the receptacle are stamens, which carry pollen. A flower at anthesis should not have the conspicuous mature seed pattern of a dry seed head. The model now has shallow carpel sockets and small stigma tips on a continuous, tapered receptacle, surrounded by 156 individually posed stamens with paired anther chambers and pale connective appendages. The count and dimensions are artistic choices, not a species-wide anatomical constant.

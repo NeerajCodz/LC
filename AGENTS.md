@@ -33,6 +33,9 @@ Read [README.md](README.md) for the public API and architecture, [development no
 - Preserve anchored planting points: bend stems and attachments with the shared clamped curve, never rotate the entire plant around its head. Consult [wind and contact](docs/wind-and-contact.md); response constants are authored, not measured. Extend `FLOWER_STRUCTURES` and `WIND_PROFILES` when adding species.
 - Preserve `RenderBudget`, initial constrained-device quality, serialized optional GPU bakes, and inexpensive mobile interaction. Keep garden planting clearance separate from runtime head contact; never squeeze the desktop layout onto mobile or omit catalog species from the garden.
 
+- Non-radial flowers use the typed `Organs` slot and `FloralParts` shell/blade helpers. Preserve initialized morph targets, folded normals, explicit disposal, and quality-scaled small organs. Consult [expanded forms](docs/specimens/expanded-forms.md). Never replace these structures with radial placeholder whorls.
+- Use `headCenter` for asymmetric macro targets. Keep mobile garden controls outside the viewing surface, and enforce renderer budgets when Canvas configuration changes as well as on resize.
+
 ## Working and validation
 
 Inspect the current diff before editing and preserve unrelated user changes. Keep TypeScript fully typed, modules focused, and cleanup explicit. Read relevant bundled Next.js documentation before changing framework behavior.

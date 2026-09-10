@@ -97,6 +97,7 @@ components/
     BotanicalView.tsx        Reusable camera, lighting, and preview content
     FlowerPreview.tsx        DOM preview registration; stable scene identity
     FlowerPlant.tsx          Reusable plant hierarchy and interaction
+    FloralParts.tsx          Thick organ shells and individually posed tepals
     PetalWhorl.tsx           Instanced petals with individual transforms/morphs
     FlowerCore.tsx           Phyllotaxis seeds, florets, pods and stamens
     Stem.tsx, Branch.tsx      Tapered stem, leaves, veins and branches
@@ -123,6 +124,8 @@ Species vary in whorl structure, petal count, profile, opening angle, core organ
 
 Stem vertices and leaf/head attachments follow the same clamped bend, with zero displacement and slope at the planting point. Species-specific damped springs and delayed petal flutter keep the hierarchy from moving rigidly. Garden planting reserves mature head envelopes; lightweight contact constraints separate heads and let nearby petals yield. These authored responses approximate plant mechanics, not full cloth collision. See [wind and contact](docs/wind-and-contact.md). Pointer rays intersect a world-space plane; local proximity drives individual petal response. Camera motion is damped; flower switching closes the outgoing petals before mounting and opening the next specimen. No global state store is needed.
 
+The [expanded floral forms dossier](docs/specimens/expanded-forms.md) covers Poppy, Daffodil, Iris, Calla Lily, Anthurium, Columbine, Bleeding Heart, and Bird of Paradise. These introduce hollow coronas, wrapped spathes, nectar spurs, inflated pouches, and independently posed floral organs. `FlowerPlant` accepts an internal typed `Organs` component for structures beyond radial whorls. Custom surfaces retain physical thickness and matched folded normals. Garden framing grows with planted envelopes.
+
 ### Materials and lighting
 
 Physical petal materials use species-specific root, body, edge, and vein pigment zones in `lib/flowers/palettes.ts`. Shader uniforms are converted to linear color space by Three.js. Subtle mottling, darker inner layers, neutral vertex shading, restrained tinted sheen, and a balanced studio light preserve saturated pigments and clean ivory whites. Procedural veins, derivative-based micro-normal detail, roughness variation and restrained back scattering add surface detail. This is a real-time approximation of organic light transport, not volumetric subsurface scattering. A procedural HDR studio environment provides reflections without an external image download. Desktop effects include ambient occlusion, multisample antialiasing, and a subtle vignette. Depth-of-field and visual bloom are disabled so zooming preserves sharp petal and pollen detail. Procedural tissue noise is filtered at a distance to reduce shimmer.
@@ -139,7 +142,7 @@ Lighting also uses vgpu: `studio-lighting.wgsl` renders a **RGBA16F HDR environm
 
 ### Performance
 
-Petals are instanced per whorl; seeds, anthers and pollen are instanced. Geometry/material construction is memoized and resources are disposed on replacement. Vector, matrix and color scratch objects are reused in frame callbacks. Desktop hero geometry is high, upgrading to ultra in macro mode. Constrained devices start with low geometry and use medium in single-specimen macro mode; previews remain low. Touch interaction uses a simple hit envelope rather than raycasting every petal. Mobile skips expensive shadows/postprocessing and reduces pollen.
+Petals are instanced per whorl; dense reproductive organs use instancing or merged geometry, and pollen is batched. Geometry/material construction is memoized and resources are disposed on replacement. Vector, matrix and color scratch objects are reused in frame callbacks. Desktop hero geometry is high, upgrading to ultra in macro mode. Constrained devices start with low geometry and use medium in single-specimen macro mode; previews remain low. Touch interaction uses a simple hit envelope rather than raycasting every petal. Mobile skips expensive shadows/postprocessing and reduces pollen.
 
 `RenderBudget` limits constrained devices to 30 FPS, 1.5 million backing pixels and 4096 pixels per dimension, subject to GPU limits. Desktop allows 6 million pixels and 8192 per dimension, with requested DPR 2 (2.5 for macro). These bounds include tall gallery canvases; they do not represent total VRAM consumption. Hidden pages and inactive scenes stop advancing, and simulation deltas are bounded on resume.
 

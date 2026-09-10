@@ -24,6 +24,10 @@ Reviewed September 10, 2026. [de Langre, Effects of Wind on Plants](https://doi.
 | Daisy          | Slender flowering stalks rise from a rhizomatous base.                                                                                                                            |
 | Cherry Blossom | A stiff woody twig carries light blossom groups.                                                                                                                                  |
 
+Additional species response classes and construction limits are described in the [expanded forms dossier](specimens/expanded-forms.md). Garden framing follows the actual envelope extent as the catalog grows.
+
+On portrait screens, controls occupy their own space below the garden canvas. Camera framing accounts for the canvas aspect ratio. Macro targets include each non-radial head's authored center; the full garden returns without changing fixed planting points.
+
 ## Implementation
 
 `WIND_PROFILES` defines compliance, spring stiffness, damping, and petal flutter for each species. Spatially phased wind has moderated quadratic drag. Springs use bounded substeps. Stem displacement follows `h²(3-h)/2`: displacement and slope are both zero at the root. Stem normals are transformed with the bend, and leaf attachments and the flower head follow the same curve. Lotus foliage retains its own anchored petiole.

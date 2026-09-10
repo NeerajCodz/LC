@@ -68,6 +68,7 @@ pnpm exec playwright test --project=desktop --workers=1
 
 The mobile project still requires Playwright WebKit. The config starts the development server on 1607 when needed and reuses an existing server locally. First shader compilation can take longer under software rendering; assertions allow 15 seconds. Traces from failed tests are saved under the ignored `test-results/` directory.
 
+- `expanded-specimens.spec.ts`: new specimen routes, bloom and macro controls, and garden macro selection.
 - `viewer.spec.ts`: garden macro selection, orbit drag, wheel zoom, and return without leaving the route.
 - `experience.spec.ts`: all species links, bloom/macro/pause controls, navigation, reduced motion, themes, legacy redirects, and the four-angle section.
 - `scroll.spec.ts`: flower pixels and captions move together on the collection, hero, and angle gallery.
@@ -99,6 +100,10 @@ Useful runtime diagnostics:
 | `#render-stats[data-fps]`                 | Sampled development hero frame rate.                          |
 
 Wait for a fresh page to settle before comparing scene IDs; hot reloads during code edits can replace scenes. Offscreen retention lasts for the mounted route, not navigation away or a browser reload. The collection uses one WebGL context after every species is visited; home uses three after its angle gallery and scroll study initialize. The shared gallery backing buffer covers its finite grid but its DPR is bounded by pixel and dimension limits. Browser emulation does not establish performance on a physical phone. Use the Wind study toggle in the inspection fixture to check anchored bases and moving attachments.
+
+Custom organ geometry is tested in `floral-surfaces.test.ts`; the [specimen dossier](specimens/expanded-forms.md) records research and interpretation. Run the seven-view fixture after changing shell sampling or folds.
+
+Spadix checks include capped topology, normal direction and mobile tessellation bounds. When validating retained galleries, check the framebuffer after registering all previews as well as after resizing: Canvas configuration can reset DPR even when its DOM size does not change. `RenderBudget` subscribes to renderer-store changes to reapply its limit.
 
 ## Maintenance
 

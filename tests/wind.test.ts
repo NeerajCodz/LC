@@ -74,6 +74,10 @@ test("contact separates blooms, transfers more displacement to the flexible stem
 
 test("both garden layouts have fixed ground roots and room for the authored mature bloom envelopes", () => {
   for (const layout of [GARDEN_PLANTINGS, MOBILE_GARDEN_PLANTINGS]) {
+    assert.deepEqual(
+      layout.map((plant) => plant.type).sort(),
+      [...FLOWER_TYPES].sort(),
+    );
     for (let i = 0; i < layout.length; i++)
       for (let j = i + 1; j < layout.length; j++) {
         const a = layout[i],

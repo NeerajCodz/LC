@@ -1,4 +1,4 @@
-import type { FlowerType, Vec3 } from "./types";
+import { FLOWER_TYPES, type FlowerType, type Vec3 } from "./types";
 import { FLOWER_STRUCTURES } from "./structures";
 import { flowerEnvelope, resolvePlantContacts } from "./wind";
 
@@ -8,26 +8,27 @@ interface Planting {
   position: Vec3;
   scale: number;
 }
-// Coordinates are fixed planting points. Depth provides growing room, not just
-// projected separation; narrow screens get a smaller composition, never squeezed X.
-export const GARDEN_PLANTINGS: Planting[] = arrange([
-  { type: "lavender", position: [-3.5, GARDEN_GROUND, -1.9], scale: 1.05 },
-  { type: "sunflower", position: [-1.5, GARDEN_GROUND, -2.2], scale: 1.2 },
-  { type: "lily", position: [0.9, GARDEN_GROUND, -2.0], scale: 1 },
-  { type: "cherry-blossom", position: [3.2, GARDEN_GROUND, -1.5], scale: 0.9 },
-  { type: "peony", position: [2.0, GARDEN_GROUND, 0.6], scale: 0.82 },
-  { type: "rose", position: [-0.3, GARDEN_GROUND, 0.35], scale: 0.82 },
-  { type: "marigold", position: [-2.7, GARDEN_GROUND, 0.75], scale: 0.72 },
-  { type: "tulip", position: [-1.3, GARDEN_GROUND, 2.6], scale: 0.68 },
-  { type: "daisy", position: [1.0, GARDEN_GROUND, 2.65], scale: 0.64 },
-]);
-export const MOBILE_GARDEN_PLANTINGS: Planting[] = arrange([
-  { type: "sunflower", position: [0, GARDEN_GROUND, -2.1], scale: 1 },
-  { type: "lily", position: [-1.25, GARDEN_GROUND, -0.4], scale: 0.75 },
-  { type: "peony", position: [1.15, GARDEN_GROUND, -0.1], scale: 0.75 },
-  { type: "rose", position: [-0.95, GARDEN_GROUND, 1.65], scale: 0.68 },
-  { type: "daisy", position: [0.95, GARDEN_GROUND, 2.2], scale: 0.62 },
-]);
+// Every catalog species is planted on both layouts. A deterministic spiral
+// gives the collection room to grow without a separate hand-maintained subset.
+function collectionPlantings(mobile: boolean): Planting[] {
+  return arrange(
+    FLOWER_TYPES.map((type, index) => {
+      const angle = index * Math.PI * (3 - Math.sqrt(5));
+      const radius = Math.sqrt(index + 0.5);
+      return {
+        type,
+        position: [
+          Math.cos(angle) * radius * (mobile ? 0.58 : 1.05),
+          GARDEN_GROUND,
+          Math.sin(angle) * radius * (mobile ? 0.9 : 0.85),
+        ],
+        scale: (mobile ? 0.43 : 0.66) * (0.94 + (index % 3) * 0.06),
+      };
+    }),
+  );
+}
+export const GARDEN_PLANTINGS = collectionPlantings(false);
+export const MOBILE_GARDEN_PLANTINGS = collectionPlantings(true);
 
 function arrange(plants: Planting[]): Planting[] {
   const bounds = plants.map((plant) => ({

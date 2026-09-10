@@ -61,7 +61,7 @@ export function CameraRig({
     target.current.x = damp(target.current.x, tx, 2, dt);
     target.current.y = damp(
       target.current.y,
-      garden ? -0.3 : macro ? 0.55 : -0.14,
+      garden ? -0.9 : macro ? 0.55 : -0.14,
       2,
       dt,
     );

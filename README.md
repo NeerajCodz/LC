@@ -39,7 +39,7 @@ Deploy as a regular Next.js application on a Node.js host or a Next.js-compatibl
 - `/` — cinematic Rose specimen, catalog-driven selector, previous/next, bloom slider, replay, pause, macro camera, and scroll-driven growth.
 - `/flower/lotus/` (and each implemented species slug) — a dedicated specimen route with species metadata. Legacy `/?flower=lotus` links permanently redirect here. Repeated slashes are normalized by Next.js.
 - `/flower/lotus/#angles` — four simultaneous live views of the selected flower: front, 45°, side, and macro, with a shared bloom control. Every specimen has this gallery section.
-- `/garden/` — naturally spaced flowers with anchored stems and gentle head contact. Mobile uses a smaller composition with its own planting layout. A shared bloom slider controls the garden; select a flower to inspect it.
+- `/garden/` — naturally spaced flowers with anchored stems and gentle head contact. Every current catalog species appears on desktop and mobile, with a dedicated portrait planting layout. A shared bloom slider controls the garden; select a flower to inspect it.
 - `/gallery/` — the growing collection, with visible previews rendered directly inside their page frames. Compare front, side, 45-degree and macro views, and control bloom across the current catalog.
 - `/dev/inspection/` — development-only seven-view geometry fixture. It returns 404 in production. Select any species to inspect full bloom, multiple angles, macro, bud and half bloom side by side.
 

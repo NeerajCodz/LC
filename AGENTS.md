@@ -31,7 +31,7 @@ Read [README.md](README.md) for the public API and architecture, [development no
 - `BloomLoader` is the shared DOM loading state. It uses CSS-animated SVG petals and rotation, pauses entirely for reduced motion, and requires no 3D engine. `SceneReady` releases specimen/garden overlays after the first drawn scene frame. Do not add artificial delays or restart loaders when retained scenes re-enter view.
 
 - Preserve anchored planting points: bend stems and attachments with the shared clamped curve, never rotate the entire plant around its head. Consult [wind and contact](docs/wind-and-contact.md); response constants are authored, not measured. Extend `FLOWER_STRUCTURES` and `WIND_PROFILES` when adding species.
-- Preserve `RenderBudget`, initial constrained-device quality, serialized optional GPU bakes, and inexpensive mobile interaction. Keep garden planting clearance separate from runtime head contact; never squeeze the desktop layout onto mobile.
+- Preserve `RenderBudget`, initial constrained-device quality, serialized optional GPU bakes, and inexpensive mobile interaction. Keep garden planting clearance separate from runtime head contact; never squeeze the desktop layout onto mobile or omit catalog species from the garden.
 
 ## Working and validation
 

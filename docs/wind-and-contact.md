@@ -30,7 +30,7 @@ Reviewed September 10, 2026. [de Langre, Effects of Wind on Plants](https://doi.
 
 `<Flower rooted position={[x, ground, z]} />` treats position as the planting point. Without `rooted`, the existing head-origin API remains available for previews. `GardenDynamics` advances shared wind, then plant poses, then contact constraints before stem and petal updates. A passing breeze triggers a soft gust instead of synchronously pulsing every bloom.
 
-Garden placement reserves mature bloom envelopes before planting, with depth and height variation. During motion, conservative flattened bloom envelopes gently separate contacting heads according to compliance; nearby petals yield slightly and relax. Roots stay planted. This is lightweight head contact, not triangle-level cloth, leaf collision, crushing, or tearing. Mobile uses a smaller independently arranged composition rather than squeezing the desktop planting into a narrow screen.
+Garden placement reserves mature bloom envelopes before planting, with depth and height variation. During motion, conservative flattened bloom envelopes gently separate contacting heads according to compliance; nearby petals yield slightly and relax. Roots stay planted. This is lightweight head contact, not triangle-level cloth, leaf collision, crushing, or tearing. Both layouts derive from the full catalog. Mobile uses smaller specimens in its own portrait composition, retaining every species.
 
 ## Mobile budgets
 

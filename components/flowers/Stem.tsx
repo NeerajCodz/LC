@@ -4,7 +4,8 @@ import { BufferGeometry, Float32BufferAttribute, Group } from "three";
 import type { FlowerStructure, FlowerType, Quality } from "@/lib/flowers/types";
 import { FOLIAGE } from "@/lib/flowers/foliage";
 import { LeafSprig } from "./LeafSprig";
-import { layeredWind, stemBend } from "@/lib/three/noise";
+import { layeredWind } from "@/lib/three/noise";
+import { bendWeight, bendSlope, type PlantMotion } from "@/lib/flowers/wind";
 import { LotusFoliage } from "./lotus/LotusFoliage";
 
 function stemGeometry(length: number, radius: number) {
@@ -41,6 +42,7 @@ export function Stem({
   growth,
   time,
   wind,
+  motion,
   leaves,
 }: {
   type: FlowerType;
@@ -49,9 +51,9 @@ export function Stem({
   growth: RefObject<number>;
   time: RefObject<number>;
   wind: number;
+  motion: RefObject<PlantMotion>;
   leaves: boolean;
 }) {
-  const root = useRef<Group>(null);
   const leafRefs = useRef<(Group | null)[]>([]);
   const geometry = useMemo(
     () => stemGeometry(structure.stemLength, structure.stemRadius),
@@ -59,6 +61,10 @@ export function Stem({
   );
   const originalPositions = useMemo(
     () => Float32Array.from(geometry.getAttribute("position").array),
+    [geometry],
+  );
+  const originalNormals = useMemo(
+    () => Float32Array.from(geometry.getAttribute("normal").array),
     [geometry],
   );
   useEffect(() => () => geometry.dispose(), [geometry]);
@@ -74,22 +80,35 @@ export function Stem({
           ? 0.48 + i * 0.16
           : 0.32 + i * 0.19;
   useFrame(() => {
-    if (root.current) {
-      root.current.scale.y = 0.03 + 0.97 * growth.current;
-      root.current.position.y =
-        -(1 - root.current.scale.y) * structure.stemLength;
-    }
+    const length = structure.stemLength;
+    const g = Math.max(0.03, growth.current);
     const position = geometry.getAttribute("position");
+    const normal = geometry.getAttribute("normal");
     for (let i = 0; i < position.count; i++) {
       const t =
         (originalPositions[i * 3 + 1] + structure.stemLength) /
         structure.stemLength;
-      position.setX(
+      const weight = bendWeight(t),
+        slope = bendSlope(t) / length;
+      position.setXYZ(
         i,
-        originalPositions[i * 3] + stemBend(time.current, t, wind),
+        originalPositions[i * 3] + motion.current.x * weight,
+        -length +
+          (originalPositions[i * 3 + 1] + length) * g -
+          motion.current.drop * weight,
+        originalPositions[i * 3 + 2] + motion.current.z * weight,
       );
+      const nx = originalNormals[i * 3],
+        nz = originalNormals[i * 3 + 2];
+      const ny =
+        (originalNormals[i * 3 + 1] -
+          slope * (motion.current.x * nx + motion.current.z * nz)) /
+        Math.max(0.02, g - motion.current.drop * slope);
+      const inverse = 1 / Math.hypot(nx, ny, nz);
+      normal.setXYZ(i, nx * inverse, ny * inverse, nz * inverse);
     }
     position.needsUpdate = true;
+    normal.needsUpdate = true;
     leafRefs.current.forEach((group, i) => {
       if (!group) return;
       const unfold = Math.max(
@@ -99,18 +118,32 @@ export function Stem({
       group.rotation.x =
         0.22 +
         unfold * (basal ? 0.36 : 0.82) +
-        layeredWind(time.current - i * 0.2, i * 2) * 0.045 * wind;
+        layeredWind(time.current - i * 0.2, i * 2) *
+          0.045 *
+          wind *
+          (1 + motion.current.air);
       group.scale.setScalar(unfold);
-      if (group.parent)
-        group.parent.position.x = stemBend(
-          time.current,
-          1 - leafHeight(nodeIndex(i)),
-          wind,
+      if (group.parent) {
+        const t = 1 - leafHeight(nodeIndex(i)),
+          weight = bendWeight(t);
+        group.parent.position.set(
+          Math.sin(t * 3.14) * 0.07 + motion.current.x * weight,
+          -length + length * t * g - motion.current.drop * weight,
+          motion.current.z * weight,
         );
+        group.parent.rotation.z = -Math.atan2(
+          motion.current.x * bendSlope(t),
+          length * g,
+        );
+        group.parent.rotation.x = Math.atan2(
+          motion.current.z * bendSlope(t),
+          length * g,
+        );
+      }
     });
   });
   return (
-    <group ref={root}>
+    <group>
       <mesh geometry={geometry} castShadow>
         <meshStandardMaterial color="#405335" roughness={0.88} />
       </mesh>

@@ -3,41 +3,8 @@ import test from "node:test";
 import { createPetalGeometry, PETAL } from "../lib/three/geometry";
 import { petalOpenness, stepSpring } from "../lib/three/easing";
 import { seededRandom } from "../lib/three/noise";
-import { roseStructure } from "../components/flowers/rose/roseStructure";
-import { lotusStructure } from "../components/flowers/lotus/Lotus";
-import { marigoldStructure } from "../components/flowers/marigold/Marigold";
-import { sunflowerStructure } from "../components/flowers/sunflower/Sunflower";
-import { tulipStructure } from "../components/flowers/tulip/Tulip";
-import { lilyStructure } from "../components/flowers/lily/Lily";
-import { jasmineStructure } from "../components/flowers/jasmine/Jasmine";
-import { orchidStructure } from "../components/flowers/orchid/Orchid";
-import { hibiscusStructure } from "../components/flowers/hibiscus/Hibiscus";
-import { dahliaStructure } from "../components/flowers/dahlia/Dahlia";
-import { peonyStructure } from "../components/flowers/peony/Peony";
-import { lavenderStructure } from "../components/flowers/lavender/Lavender";
-import { chrysanthemumStructure } from "../components/flowers/chrysanthemum/Chrysanthemum";
-import { daisyStructure } from "../components/flowers/daisy/Daisy";
-import { cherryBlossomStructure } from "../components/flowers/cherry-blossom/CherryBlossom";
-import { FLOWER_TYPES } from "../lib/flowers/types";
-import type { FlowerStructure, FlowerType } from "../lib/flowers/types";
-
-const structures: Record<FlowerType, FlowerStructure> = {
-  rose: roseStructure,
-  lotus: lotusStructure,
-  marigold: marigoldStructure,
-  sunflower: sunflowerStructure,
-  tulip: tulipStructure,
-  lily: lilyStructure,
-  jasmine: jasmineStructure,
-  orchid: orchidStructure,
-  hibiscus: hibiscusStructure,
-  dahlia: dahliaStructure,
-  peony: peonyStructure,
-  lavender: lavenderStructure,
-  chrysanthemum: chrysanthemumStructure,
-  daisy: daisyStructure,
-  "cherry-blossom": cherryBlossomStructure,
-};
+import { FLOWER_TYPES, type FlowerStructure } from "../lib/flowers/types";
+import { FLOWER_STRUCTURES as structures } from "../lib/flowers/structures";
 
 test("all species have distinct construction and finite, sealed petal shells", () => {
   assert.equal(
@@ -133,13 +100,13 @@ test("spring remains stable after a background-tab time jump and reverses smooth
 test("species preserve their defining organ counts", () => {
   const count = (s: FlowerStructure) =>
     s.layers.reduce((sum, layer) => sum + layer.count, 0);
-  assert.equal(count(tulipStructure), 6);
-  assert.equal(count(lilyStructure), 6);
-  assert.equal(count(hibiscusStructure), 5);
-  assert.equal(count(cherryBlossomStructure), 5);
-  assert.ok(count(dahliaStructure) > 200);
-  assert.ok(count(chrysanthemumStructure) > 200);
-  assert.equal(sunflowerStructure.center, "seeds");
-  assert.equal(lotusStructure.center, "pod");
-  assert.ok(jasmineStructure.blossoms!.length > 1);
+  assert.equal(count(structures.tulip), 6);
+  assert.equal(count(structures.lily), 6);
+  assert.equal(count(structures.hibiscus), 5);
+  assert.equal(count(structures["cherry-blossom"]), 5);
+  assert.ok(count(structures.dahlia) > 200);
+  assert.ok(count(structures.chrysanthemum) > 200);
+  assert.equal(structures.sunflower.center, "seeds");
+  assert.equal(structures.lotus.center, "pod");
+  assert.ok(structures.jasmine.blossoms!.length > 1);
 });

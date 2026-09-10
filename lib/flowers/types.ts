@@ -27,6 +27,8 @@ export interface FlowerProps {
   growth?: number;
   scale?: number;
   position?: Vec3;
+  /** Interpret position as the fixed planting point instead of the flower head. */
+  rooted?: boolean;
   rotation?: Vec3;
   interactive?: boolean;
   animationSpeed?: number;

@@ -4,7 +4,7 @@
 
 Explore the flowers currently available through the collection page. The source of truth for implemented specimens is `lib/flowers/catalog.ts`; new flowers join the collection as their geometry, materials, and behavior are developed and reviewed.
 
-Project documentation: [agent brief and implementation rules](AGENTS.md), [development and verification](docs/development.md), and [botanical references](docs/botanical-references.md). `AGENTS.md` is the sole agent instruction file.
+Project documentation: [agent brief and implementation rules](AGENTS.md), [development and verification](docs/development.md), [botanical references](docs/botanical-references.md), and [wind/contact and mobile budgets](docs/wind-and-contact.md). `AGENTS.md` is the sole agent instruction file.
 
 ## Run locally
 
@@ -39,7 +39,7 @@ Deploy as a regular Next.js application on a Node.js host or a Next.js-compatibl
 - `/` — cinematic Rose specimen, catalog-driven selector, previous/next, bloom slider, replay, pause, macro camera, and scroll-driven growth.
 - `/flower/lotus/` (and each implemented species slug) — a dedicated specimen route with species metadata. Legacy `/?flower=lotus` links permanently redirect here. Repeated slashes are normalized by Next.js.
 - `/flower/lotus/#angles` — four simultaneous live views of the selected flower: front, 45°, side, and macro, with a shared bloom control. Every specimen has this gallery section.
-- `/garden/` — nine flowers in an asymmetric composition. A shared bloom slider controls the garden; select a flower to inspect it.
+- `/garden/` — naturally spaced flowers with anchored stems and gentle head contact. Mobile uses a smaller composition with its own planting layout. A shared bloom slider controls the garden; select a flower to inspect it.
 - `/gallery/` — the growing collection, with visible previews rendered directly inside their page frames. Compare front, side, 45-degree and macro views, and control bloom across the current catalog.
 - `/dev/inspection/` — development-only seven-view geometry fixture. It returns 404 in production. Select any species to inspect full bloom, multiple angles, macro, bud and half bloom side by side.
 
@@ -78,6 +78,8 @@ import { Flower } from "@/components/flowers/Flower";
 />;
 ```
 
+Set `rooted` to interpret `position` as the fixed planting point; otherwise it remains the head origin for compatibility with previews.
+
 `bloom` and `growth` are normalized to 0–1 by the UI. Bloom is clamped inside the animation hook. `growth` is optional and defaults to 1; it allows the scroll sequence to animate the rooted stem separately from the petals. `hovered`, `paused`, `reducedMotion`, `pulse`, `onHover`, and `onClick` support embedding and interaction. Increment `pulse` to trigger a secondary bloom. Set `animateEntrance={false}` for immediately composed gallery previews while preserving subsequent bloom animation. Omit `color` to use the authored species pigment palette; a custom color generates a coordinated root-to-tip palette. Specialized organs such as sepals, seeds and the orchid lip retain their botanical colors.
 
 ## Architecture
@@ -102,6 +104,8 @@ components/
   scene/                     Lights, studio environment, camera, pollen, effects
     PreviewStage.tsx         Shared in-flow WebGL renderer and retained scene portals
     SceneReady.tsx           First-frame readiness for scene loading overlays
+    RenderBudget.tsx         Bounded buffers and visibility-aware frame scheduling
+    GardenDynamics.tsx      Shared wind and compliant head contacts
 hooks/                       Bloom damping, pointer projection, quality, interaction
 lib/
   flowers/                   Typed public API, metadata and whorl construction
@@ -117,7 +121,7 @@ Petals have indexed front and back surfaces joined around their perimeter. Thick
 
 Species vary in whorl structure, petal count, profile, opening angle, core organs and branching. The Rose uses nested spiral whorls; Dahlia and Chrysanthemum use hundreds of different-sized florets; Sunflower uses 610 phyllotaxis seeds; Jasmine and Cherry Blossom form branch groups; Lavender uses tiered florets on multiple spikes. The Lotus has a dedicated tapered receptacle, recessed carpel sockets, 156 curved stamens, and a peltate leaf on its own petiole. Lily and Tulip have six filaments with paired anthers and separate pistils; Hibiscus has a curved column with five stigma tips. Species-specific foliage includes compound leaflets, actual toothed/lobed margins, and basal strap leaves. These are artist-directed procedural specimens, not scans of individual plants. See [botanical references and interpretation notes](docs/botanical-references.md).
 
-Stem vertices and their leaf/head attachments sample the same travelling wind bend. Secondary head movement and delayed petal flutter keep the hierarchy from moving rigidly. Pointer rays intersect a world-space plane; local proximity drives individual petal response. Camera motion is damped; flower switching closes the outgoing petals before mounting and opening the next specimen. No global state store is needed.
+Stem vertices and leaf/head attachments follow the same clamped bend, with zero displacement and slope at the planting point. Species-specific damped springs and delayed petal flutter keep the hierarchy from moving rigidly. Garden planting reserves mature head envelopes; lightweight contact constraints separate heads and let nearby petals yield. These authored responses approximate plant mechanics, not full cloth collision. See [wind and contact](docs/wind-and-contact.md). Pointer rays intersect a world-space plane; local proximity drives individual petal response. Camera motion is damped; flower switching closes the outgoing petals before mounting and opening the next specimen. No global state store is needed.
 
 ### Materials and lighting
 
@@ -127,15 +131,17 @@ Physical petal materials use species-specific root, body, edge, and vein pigment
 
 All flower geometry, morphs, PBR lighting, shadows, instancing, and interaction render through Three.js / React Three Fiber in **WebGL 2**. [vgpu](https://vgpu.sh/docs/get-started/web) is a WebGPU library; its `Surface` requires a WebGPU canvas context and cannot replace an existing WebGL canvas directly.
 
-On WebGPU-capable browsers, `SurfaceDetail` asynchronously starts a real vgpu render pass that generates a **1024 × 1024 linear tissue atlas**. Its three channels encode vein irregularity, pigment mottling, and cellular roughness/micro-height. The atlas is read back once, mipmapped, and shared by all species' WebGL materials. This avoids repeatedly evaluating those noise fields per fragment. The temporary WebGPU device and resources are disposed after the bake; there is no per-frame GPU readback or additional onscreen canvas. This is procedural material data, not a flower photograph or sprite.
+On WebGPU-capable browsers, `SurfaceDetail` asynchronously starts a real vgpu render pass that generates a **linear tissue atlas (1024² desktop, 512² mobile)**. Its three channels encode vein irregularity, pigment mottling, and cellular roughness/micro-height. The atlas is read back once, mipmapped, and shared by all species' WebGL materials. This avoids repeatedly evaluating those noise fields per fragment. The temporary WebGPU device and resources are disposed after the bake; there is no per-frame GPU readback or additional onscreen canvas. This is procedural material data, not a flower photograph or sprite.
 
 If WebGPU is missing, blocked, or initialization fails, the complete GLSL tissue field stays active. WebGPU preparation never suspends a flower canvas. `canvas[data-surface-detail]` reports `vgpu` or `webgl` for development inspection. Preview pointer events fall back to the renderer-owned canvas when Suspense clears the wrapper ref, preserving event cleanup during fast scrolling and route changes.
 
-Lighting also uses vgpu: `studio-lighting.wgsl` renders a **1024 × 512 RGBA16F HDR environment** containing warm key, cool fill, and rim emitters. WebGL's [PMREMGenerator](https://threejs.org/docs/pages/PMREMGenerator.html) prefilters that radiance for the actual material roughness, lighting curved petals, leaves, and anthers with diffuse irradiance and soft reflections. Direct WebGL lights still supply moving highlights and shadows. The HDR bake is shared application-wide; the filtered environment is cached once per WebGL renderer with reference-counted cleanup. No lighting render pass or readback runs every frame. WebGL-only devices use the same analytic studio field, generated at 512 × 256. `canvas[data-lighting-backend]` identifies the source. The GPU pixel test compares the complete HDR field against the fallback and verifies that highlights exceed 1 without clipping.
+Lighting also uses vgpu: `studio-lighting.wgsl` renders a **RGBA16F HDR environment (1024 × 512 desktop, 256 × 128 mobile)** containing warm key, cool fill, and rim emitters. WebGL's [PMREMGenerator](https://threejs.org/docs/pages/PMREMGenerator.html) prefilters that radiance for the actual material roughness, lighting curved petals, leaves, and anthers with diffuse irradiance and soft reflections. Direct WebGL lights still supply moving highlights and shadows. The HDR bake is shared application-wide; the filtered environment is cached once per WebGL renderer with reference-counted cleanup. No lighting render pass or readback runs every frame. WebGL-only devices use the same analytic studio field, generated at 512 × 256 on desktop and 256 × 128 on mobile. Tissue and studio jobs are serialized to avoid simultaneous temporary GPU allocations. `canvas[data-lighting-backend]` identifies the source. The GPU pixel test compares the complete HDR field against the fallback and verifies that highlights exceed 1 without clipping.
 
 ### Performance
 
-Petals are instanced per whorl; seeds, anthers and pollen are instanced. Geometry/material construction is memoized and resources are disposed on replacement. Vector, matrix and color scratch objects are reused in frame callbacks. The hero keeps high geometry quality, upgrading to **ultra** in macro mode; macro pixel density is 2–2.5 and normal views use 1.5–2. There is no automatic hero resolution downgrade. Mobile reduces particles and skips expensive postprocessing while retaining detailed specimen geometry. Garden and collection previews use separate lighter quality settings.
+Petals are instanced per whorl; seeds, anthers and pollen are instanced. Geometry/material construction is memoized and resources are disposed on replacement. Vector, matrix and color scratch objects are reused in frame callbacks. Desktop hero geometry is high, upgrading to ultra in macro mode. Constrained devices start with low geometry and use medium in single-specimen macro mode; previews remain low. Touch interaction uses a simple hit envelope rather than raycasting every petal. Mobile skips expensive shadows/postprocessing and reduces pollen.
+
+`RenderBudget` limits constrained devices to 30 FPS, 1.5 million backing pixels and 4096 pixels per dimension, subject to GPU limits. Desktop allows 6 million pixels and 8192 per dimension, with requested DPR 2 (2.5 for macro). These bounds include tall gallery canvases; they do not represent total VRAM consumption. Hidden pages and inactive scenes stop advancing, and simulation deltas are bounded on resume.
 
 Each gallery uses **one WebGL context** and a separate retained scene per visited preview. Intersection visibility initializes each scene once, then pauses/resumes it. `useActiveFrame` skips offscreen bloom, wind, petal matrices and interaction updates while retaining their refs, geometries, materials, and GPU buffers. Unvisited scenes remain lazy; leaving the route releases them. The home scroll study also stays mounted after its first visit, with its render loop paused offscreen. The collection therefore uses one context after visiting the entire current catalog; the complete home page uses three (hero, angle gallery, scroll study).
 
@@ -152,6 +158,8 @@ npm test
 npm run check:shaders
 npm run test:gpu
 ```
+
+Wind tests cover fixed roots, spring recovery, head contact, and mature garden clearance. Performance tests cover backing-buffer limits and bake queue recovery. The mobile browser regression visits specimen, macro, collection, and garden, checking bounded buffers and live frames. Physical-device performance still needs measurement.
 
 Geometry tests cover every species and every petal layer: closed topology, positive thickness, finite morph positions/normals, deterministic seeds, bloom endpoints, spring stability and characteristic organ counts. Lotus checks additionally cover sealed organ surfaces, outward normals, recessed sockets, and stable stamen variation.
 

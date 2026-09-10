@@ -13,6 +13,7 @@ import { createPetalMaterial } from "@/lib/three/materials";
 import { seededRandom } from "@/lib/three/noise";
 import { petalOpenness } from "@/lib/three/easing";
 import type { PetalPalette } from "@/lib/flowers/palettes";
+import type { PlantMotion } from "@/lib/flowers/wind";
 
 interface Props {
   layer: PetalLayer;
@@ -24,6 +25,7 @@ interface Props {
   bloom: RefObject<number>;
   time: RefObject<number>;
   wind: number;
+  motion: RefObject<PlantMotion>;
   roughness: number;
   sheen: number;
   pulse: RefObject<number>;
@@ -44,6 +46,7 @@ export function PetalWhorl({
   bloom,
   time,
   wind,
+  motion,
   roughness,
   sheen,
   pulse,
@@ -119,7 +122,15 @@ export function PetalWhorl({
     petals.forEach((p, i) => {
       const open = petalOpenness(bloom.current, layer.delay ?? 0, p.phase);
       const flutter =
-        Math.sin(time.current * 1.6 + p.phase) * 0.012 * wind * open;
+        Math.sin(time.current * 1.6 + p.phase) *
+        0.012 *
+        wind *
+        open *
+        (1 + motion.current.air);
+      const contact =
+        Math.max(0, Math.cos(p.theta - motion.current.contactAngle)) *
+        motion.current.contact *
+        open;
       const response =
         Math.max(0, Math.cos(p.theta - cursor.current)) *
         0.055 *
@@ -135,13 +146,14 @@ export function PetalWhorl({
         -0.12 +
           (layer.angle + 0.12 + p.tilt) * open +
           flutter +
-          response +
+          response -
+          contact * 0.09 +
           pulse.current * 0.075 * open,
       );
       dummy.rotateZ(p.twist * (0.2 + 0.8 * open));
       dummy.scale.set(
         p.width * (0.6 + 0.4 * open),
-        p.length * (0.9 + 0.1 * open),
+        p.length * (0.9 + 0.1 * open) * (1 - contact * 0.035),
         0.65 + 0.35 * open,
       );
       dummy.updateMatrix();

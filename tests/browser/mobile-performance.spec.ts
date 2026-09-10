@@ -20,7 +20,10 @@ test("mobile specimen, macro, collection and garden keep bounded buffers and liv
       "mobile",
     );
     for (const buffer of await canvases.evaluateAll((nodes) =>
-      nodes.map((node) => ({ width: node.width, height: node.height })),
+      nodes.map((node) => ({
+        width: (node as HTMLCanvasElement).width,
+        height: (node as HTMLCanvasElement).height,
+      })),
     )) {
       expect(buffer.width * buffer.height).toBeLessThanOrEqual(1_500_000);
       expect(Math.max(buffer.width, buffer.height)).toBeLessThanOrEqual(4096);

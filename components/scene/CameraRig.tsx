@@ -24,8 +24,8 @@ export function CameraRig({
     const mobile = size.width < 700;
     const distance = garden
       ? mobile
-        ? 14
-        : 10
+        ? 15
+        : 14
       : macro
         ? 3.0
         : mobile
@@ -47,7 +47,7 @@ export function CameraRig({
     );
     camera.position.y = damp(
       camera.position.y,
-      (garden ? 3.6 : macro ? 1.55 : 1.5) + pointer.y * parallax,
+      (garden ? 5 : macro ? 1.55 : 1.5) + pointer.y * parallax,
       2,
       dt,
     );

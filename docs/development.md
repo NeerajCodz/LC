@@ -1,6 +1,6 @@
 # Development and verification
 
-Project LC's mission is to bring every single flower in the world to life in 3D. Living Colors is its standalone Next.js App Router application, with a catalog that grows as specimens are developed. [README](../README.md) documents the rendering architecture and Flower API; [AGENTS.md](../AGENTS.md) holds the project brief and coding requirements. Botanical changes should follow the [reference notes](botanical-references.md).
+Project LC's mission is to bring every single flower in the world to life in 3D. Living Colors is its standalone Next.js App Router application, with a catalog that grows as specimens are developed. [README](../README.md) documents the rendering architecture and Flower API; [AGENTS.md](../AGENTS.md) holds the project brief and coding requirements. Botanical changes should follow the [reference notes](botanical-references.md) and [wind/contact model](wind-and-contact.md).
 
 ## Local setup
 
@@ -30,15 +30,15 @@ npm start
 
 ## Commands
 
-| Command | Purpose |
-| --- | --- |
-| `npm run typecheck` | TypeScript checks, including GPU `.mts` test sources. |
-| `npm run lint` | Next.js / React / TypeScript lint rules. |
-| `npm test` | Deterministic geometry, Lotus anatomy, bloom/spring invariants, and Canvas event lifecycle. |
-| `npm run check:shaders` | Real-device WGSL validation for tissue and HDR studio programs. |
-| `npm run test:gpu` | Render/readback tests comparing tissue and HDR output to numerical references. |
-| `npm run test:browser` | Playwright desktop Chromium and mobile WebKit scenarios. |
-| `npm run build` | Production compilation and route generation. |
+| Command                 | Purpose                                                                                     |
+| ----------------------- | ------------------------------------------------------------------------------------------- |
+| `npm run typecheck`     | TypeScript checks, including GPU `.mts` test sources.                                       |
+| `npm run lint`          | Next.js / React / TypeScript lint rules.                                                    |
+| `npm test`              | Deterministic geometry, Lotus anatomy, bloom/spring invariants, and Canvas event lifecycle. |
+| `npm run check:shaders` | Real-device WGSL validation for tissue and HDR studio programs.                             |
+| `npm run test:gpu`      | Render/readback tests comparing tissue and HDR output to numerical references.              |
+| `npm run test:browser`  | Playwright desktop Chromium and mobile WebKit scenarios.                                    |
+| `npm run build`         | Production compilation and route generation.                                                |
 
 For GPU diagnostics and the installed vgpu API:
 
@@ -71,6 +71,7 @@ The mobile project still requires Playwright WebKit. The config starts the devel
 - `experience.spec.ts`: all species links, bloom/macro/pause controls, navigation, reduced motion, themes, legacy redirects, and the four-angle section.
 - `scroll.spec.ts`: flower pixels and captions move together on the collection, hero, and angle gallery.
 - `retention.spec.ts`: every catalog scene ID survives return scrolling; home angle scenes, scroll-study Canvas, and bloom controls retain their state.
+- `mobile-performance.spec.ts`: constrained buffers and continuing frames across specimen, macro, collection, and garden.
 - `lifecycle.spec.ts`: rapid scrolling/navigation without null event-target crashes; macro rendering with WebGPU unavailable.
 
 For manual loading inspection, disable browser cache and throttle JavaScript requests. Inspect the initial home/specimen overlay, collection code fallback, and garden overlay. The SVG should unfold and rotate while loading, then disappear when the scene draws. In all three themes, text and ornament must remain legible. With reduced motion enabled, verify a still flower, no pollen, and a readable status. Do not add a fake delay solely to make the loader visible on fast connections.
@@ -85,20 +86,22 @@ Check a narrow viewport and actual touch interaction when available. Keep the ma
 
 Useful runtime diagnostics:
 
-| Attribute / element | Meaning |
-| --- | --- |
-| `canvas[data-surface-detail]` | Tissue source: `vgpu` or the `webgl` shader fallback. |
-| `canvas[data-lighting-backend]` | HDR studio source: `vgpu` or the `webgl` CPU fallback. |
-| `.preview-stage[data-retained-scenes]` | Number of lazily initialized scenes retained in this gallery. |
-| `[data-flower-preview][data-scene-id]` | Stable scene identity across offscreen pauses. |
-| `[data-flower-preview][data-render-rect]` | Preview scissor rectangle relative to its shared canvas. |
-| `#render-stats[data-fps]` | Sampled development hero frame rate. |
+| Attribute / element                       | Meaning                                                       |
+| ----------------------------------------- | ------------------------------------------------------------- |
+| `canvas[data-surface-detail]`             | Tissue source: `vgpu` or the `webgl` shader fallback.         |
+| `canvas[data-lighting-backend]`           | HDR studio source: `vgpu` or the `webgl` CPU fallback.        |
+| `.preview-stage[data-retained-scenes]`    | Number of lazily initialized scenes retained in this gallery. |
+| `[data-flower-preview][data-scene-id]`    | Stable scene identity across offscreen pauses.                |
+| `[data-flower-preview][data-render-rect]` | Preview scissor rectangle relative to its shared canvas.      |
+| `canvas[data-render-budget]`              | Mobile or desktop rendering budget.                           |
+| `canvas[data-render-frames]`              | Draw count sampled every 30 frames.                           |
+| `#render-stats[data-fps]`                 | Sampled development hero frame rate.                          |
 
-Wait for a fresh page to settle before comparing scene IDs; hot reloads during code edits can replace scenes. Offscreen retention lasts for the mounted route, not navigation away or a browser reload. The collection uses one WebGL context after every species is visited; home uses three after its angle gallery and scroll study initialize. The shared gallery backing buffer covers its finite grid, so memory still depends on viewport dimensions and DPR.
+Wait for a fresh page to settle before comparing scene IDs; hot reloads during code edits can replace scenes. Offscreen retention lasts for the mounted route, not navigation away or a browser reload. The collection uses one WebGL context after every species is visited; home uses three after its angle gallery and scroll study initialize. The shared gallery backing buffer covers its finite grid but its DPR is bounded by pixel and dimension limits. Browser emulation does not establish performance on a physical phone. Use the Wind study toggle in the inspection fixture to check anchored bases and moving attachments.
 
 ## Maintenance
 
-Keep collection copy open-ended and aligned with the mission to create every flower. Use `FLOWERS` / `FLOWER_TYPES` for navigation bounds and test coverage. When adding a species, extend its type, catalog entry, palette, botanical construction, exhaustive dispatcher, and geometry test structure map; verify all derived routes and previews. Add botanical sources and inspect the specimen before presenting it as available. The current implementation list does not define the project's final scope.
+Keep collection copy open-ended and aligned with the mission to create every flower. Use `FLOWERS` / `FLOWER_TYPES` for navigation bounds and test coverage. When adding a species, extend its type, catalog entry, palette, botanical construction, exhaustive dispatcher, and `FLOWER_STRUCTURES` registry and `WIND_PROFILES` response; verify all derived routes and previews. Add botanical sources and inspect the specimen before presenting it as available. The current implementation list does not define the project's final scope.
 
 Keep `AGENTS.md` as the only agent instruction file. Its managed Next.js documentation block should remain intact; the installed Next generator recognizes the existing guide without requiring `CLAUDE.md`. Read framework docs under `node_modules/next/dist/docs/` before changing App Router conventions.
 

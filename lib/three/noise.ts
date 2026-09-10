@@ -25,18 +25,3 @@ export function layeredWind(time: number, phase: number): number {
     Math.sin(time * 2.31 + phase * 0.8) * 0.12
   );
 }
-
-/** The stem and every attachment sample the same travelling bend. */
-export function stemBend(
-  time: number,
-  height: number,
-  strength: number,
-): number {
-  return (
-    layeredWind(time - (1 - height) * 0.35, 2.7) *
-    0.075 *
-    height *
-    height *
-    strength
-  );
-}

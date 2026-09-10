@@ -21,6 +21,7 @@ const VIEWS = [
 export default function Inspection() {
   const container = useRef<HTMLDivElement>(null);
   const [type, setType] = useState<FlowerType>("rose");
+  const [wind, setWind] = useState(false);
   return (
     <div ref={container} style={{ padding: 20 }}>
       <div
@@ -47,6 +48,9 @@ export default function Inspection() {
             ))}
           </select>
         </label>
+        <button aria-pressed={wind} onClick={() => setWind(!wind)}>
+          Wind study
+        </button>
       </div>
       <div
         style={{
@@ -77,8 +81,9 @@ export default function Inspection() {
                   bloom={v.bloom}
                   position={[0, 0.25, 0]}
                   quality={v.macro ? "ultra" : "high"}
-                  windStrength={0}
-                  reducedMotion
+                  windStrength={wind ? 2 : 0}
+                  animateEntrance={false}
+                  reducedMotion={!wind}
                 />
               </group>
             </View>

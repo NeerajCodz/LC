@@ -30,6 +30,9 @@ Read [README.md](README.md) for the public API and architecture, [development no
 - Share the tissue atlas and raw HDR bake application-wide. Share PMREM output per renderer with reference-counted cleanup. Do not bake or read back textures every frame.
 - `BloomLoader` is the shared DOM loading state. It uses CSS-animated SVG petals and rotation, pauses entirely for reduced motion, and requires no 3D engine. `SceneReady` releases specimen/garden overlays after the first drawn scene frame. Do not add artificial delays or restart loaders when retained scenes re-enter view.
 
+- Preserve anchored planting points: bend stems and attachments with the shared clamped curve, never rotate the entire plant around its head. Consult [wind and contact](docs/wind-and-contact.md); response constants are authored, not measured. Extend `FLOWER_STRUCTURES` and `WIND_PROFILES` when adding species.
+- Preserve `RenderBudget`, initial constrained-device quality, serialized optional GPU bakes, and inexpensive mobile interaction. Keep garden planting clearance separate from runtime head contact; never squeeze the desktop layout onto mobile.
+
 ## Working and validation
 
 Inspect the current diff before editing and preserve unrelated user changes. Keep TypeScript fully typed, modules focused, and cleanup explicit. Read relevant bundled Next.js documentation before changing framework behavior.

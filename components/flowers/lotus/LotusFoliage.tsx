@@ -5,6 +5,7 @@ import type { Quality } from "@/lib/flowers/types";
 import { createOrganicTube } from "@/lib/three/organicTube";
 import { layeredWind } from "@/lib/three/noise";
 import { createLotusLeaf } from "./lotusLeafGeometry";
+import { bendWeight, bendSlope } from "@/lib/flowers/wind";
 
 export function LotusFoliage({
   quality,
@@ -19,8 +20,7 @@ export function LotusFoliage({
   time: RefObject<number>;
   wind: number;
 }) {
-  const blade = useRef<Group>(null),
-    root = useRef<Group>(null);
+  const blade = useRef<Group>(null);
   const leaf = useMemo(() => createLotusLeaf(quality), [quality]);
   const petiole = useMemo(
     () =>
@@ -35,10 +35,18 @@ export function LotusFoliage({
         endRadius: 0.013,
         color: "#466b4a",
         tipColor: "#5c8060",
-        segments: 48,
-        sides: 16,
+        segments: quality === "low" ? 24 : 48,
+        sides: quality === "low" ? 8 : 16,
       }),
-    [length],
+    [length, quality],
+  );
+  const original = useMemo(
+    () => Float32Array.from(petiole.getAttribute("position").array),
+    [petiole],
+  );
+  const originalNormals = useMemo(
+    () => Float32Array.from(petiole.getAttribute("normal").array),
+    [petiole],
   );
   useEffect(
     () => () => {
@@ -49,8 +57,36 @@ export function LotusFoliage({
   );
   useFrame(() => {
     const sway = layeredWind(time.current - 0.35, 2.6) * wind;
-    if (root.current) root.current.rotation.z = sway * 0.015;
+    const g = Math.max(0.03, growth.current);
+    const tip = sway * 0.085;
+    const positions = petiole.getAttribute("position"),
+      normals = petiole.getAttribute("normal");
+    for (let i = 0; i < positions.count; i++) {
+      const t = Math.max(
+        0,
+        Math.min(1, (original[i * 3 + 1] + length) / (length - 0.72)),
+      );
+      const weight = bendWeight(t),
+        slope = bendSlope(t) / (length - 0.72);
+      positions.setXYZ(
+        i,
+        original[i * 3] + tip * weight,
+        -length + (original[i * 3 + 1] + length) * g,
+        original[i * 3 + 2],
+      );
+      const nx = originalNormals[i * 3],
+        nz = originalNormals[i * 3 + 2];
+      const ny = (originalNormals[i * 3 + 1] - tip * slope * nx) / g;
+      const inverse = 1 / Math.hypot(nx, ny, nz);
+      normals.setXYZ(i, nx * inverse, ny * inverse, nz * inverse);
+    }
+    positions.needsUpdate = normals.needsUpdate = true;
     if (blade.current) {
+      blade.current.position.set(
+        -0.78 + tip,
+        -length + (length - 0.72) * g,
+        -0.32,
+      );
       const unfold = Math.max(0.015, Math.min(1, (growth.current - 0.2) / 0.8));
       blade.current.scale.set(unfold, 0.25 + 0.75 * unfold, unfold);
       blade.current.rotation.set(
@@ -61,7 +97,7 @@ export function LotusFoliage({
     }
   });
   return (
-    <group ref={root}>
+    <group>
       <mesh geometry={petiole} castShadow>
         <meshStandardMaterial vertexColors roughness={0.82} />
       </mesh>

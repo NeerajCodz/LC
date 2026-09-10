@@ -1,4 +1,10 @@
-export function Lighting({ shadows = true }: { shadows?: boolean }) {
+export function Lighting({
+  shadows = true,
+  extent = 4,
+}: {
+  shadows?: boolean;
+  extent?: number;
+}) {
   return (
     <>
       <ambientLight intensity={0.24} color="#e6e8e3" />
@@ -14,10 +20,10 @@ export function Lighting({ shadows = true }: { shadows?: boolean }) {
         shadow-normalBias={0.012}
         shadow-camera-near={0.5}
         shadow-camera-far={18}
-        shadow-camera-left={-4}
-        shadow-camera-right={4}
-        shadow-camera-top={4}
-        shadow-camera-bottom={-4}
+        shadow-camera-left={-extent}
+        shadow-camera-right={extent}
+        shadow-camera-top={extent}
+        shadow-camera-bottom={-extent}
       />
       <directionalLight
         position={[3, 1.5, 1]}

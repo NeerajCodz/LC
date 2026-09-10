@@ -95,7 +95,8 @@ export default function FlowerScene({
         <Flower
           key={type}
           type={type}
-          position={[0, 0.5, 0]}
+          position={[0, -1.78, 0]}
+          rooted
           bloom={bloom}
           growth={growth}
           quality={

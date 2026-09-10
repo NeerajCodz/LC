@@ -1,8 +1,10 @@
 "use client";
 import dynamic from "next/dynamic";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Pause, Play, Wind, ArrowUpRight } from "lucide-react";
+import { FLOWERS, getFlower } from "@/lib/flowers/catalog";
+import type { FlowerType } from "@/lib/flowers/types";
 import { Header } from "./ui/Header";
 import { BloomLoader } from "./ui/BloomLoader";
 const Scene = dynamic(() => import("./flowers/FlowerGarden"), {
@@ -13,10 +15,25 @@ export default function Garden() {
     [paused, setPaused] = useState(false),
     [pulse, setPulse] = useState(0),
     [ready, setReady] = useState(false);
+  const [selected, setSelected] = useState<FlowerType | null>(null);
+  const [reset, setReset] = useState(0);
+  useEffect(() => {
+    const escape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setSelected(null);
+        setReset((v) => v + 1);
+      }
+    };
+    window.addEventListener("keydown", escape);
+    return () => window.removeEventListener("keydown", escape);
+  }, []);
   return (
     <main className="garden-page">
       <div className="garden-scene">
         <Scene
+          selected={selected}
+          onSelect={setSelected}
+          reset={reset}
           bloom={bloom}
           paused={paused}
           pulse={pulse}
@@ -28,11 +45,50 @@ export default function Garden() {
       <div className="garden-heading">
         <span className="eyebrow">A SMALL PLACE TO GET LOST</span>
         <h1>
-          Let it <em>grow.</em>
+          {selected ? (
+            getFlower(selected).name
+          ) : (
+            <>
+              Let it <em>grow.</em>
+            </>
+          )}
         </h1>
-        <p>Different forms. A shared rhythm.</p>
+        <p>
+          {selected
+            ? "A closer look, within the garden."
+            : "Different forms. A shared rhythm."}
+        </p>
       </div>
       <div className="garden-tools">
+        <select
+          aria-label="Explore a garden flower"
+          value={selected ?? ""}
+          onChange={(event) =>
+            setSelected(
+              event.target.value ? (event.target.value as FlowerType) : null,
+            )
+          }
+        >
+          <option value="">Full garden</option>
+          {FLOWERS.map((flower) => (
+            <option key={flower.type} value={flower.type}>
+              {flower.name}
+            </option>
+          ))}
+        </select>
+        <button
+          onClick={() => {
+            setSelected(null);
+            setReset((v) => v + 1);
+          }}
+        >
+          {selected ? "Return to garden" : "Reset view"}
+        </button>
+        {selected && (
+          <Link href={`/flower/${selected}/`}>
+            Specimen <ArrowUpRight size={13} />
+          </Link>
+        )}
         <button
           onClick={() => {
             setPaused(false);
@@ -69,7 +125,7 @@ export default function Garden() {
         </div>
       </div>
       <div className="garden-hint">
-        Move gently through the garden. Select a flower to meet it.
+        Drag to rotate / Scroll or pinch to zoom / Tap for macro
       </div>
       <footer className="experience-footer">
         <span className="footer-wordmark">living colors</span>

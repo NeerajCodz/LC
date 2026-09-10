@@ -33,7 +33,7 @@ export function FlowerInteraction({
         onPointerOut: () => onHover?.(false),
         onClick: (event: ThreeEvent<MouseEvent>) => {
           event.stopPropagation();
-          onClick?.();
+          if (event.delta <= 5) onClick?.();
         },
       }
     : {};

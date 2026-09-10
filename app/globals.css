@@ -1448,3 +1448,41 @@ input[type="range"]::-moz-range-thumb {
     transition-duration: 0.01ms !important;
   }
 }
+
+.garden-tools {
+  flex-wrap: wrap;
+  max-width: 44%;
+  justify-content: flex-end;
+}
+.garden-tools select {
+  max-width: 160px;
+  padding: 10px;
+  color: var(--ink);
+  background: var(--background);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  font: inherit;
+  font-size: 11px;
+}
+.garden-tools a {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+}
+@media (max-width: 700px) {
+  .garden-tools {
+    max-width: 92%;
+    width: 92%;
+    justify-content: center;
+  }
+  .garden-hint {
+    font-size: 8px;
+  }
+}
+
+.garden-tools {
+  background: var(--panel);
+  padding: 8px;
+  border-radius: 6px;
+}

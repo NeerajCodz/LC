@@ -243,7 +243,7 @@ export default function Experience({
         </div>
         <div className="interaction-hint">
           <span className="hint-cross">✧</span>
-          <span>Move to sway. Click to get closer.</span>
+          <span>Drag to rotate. Scroll or pinch to zoom. Click for macro.</span>
         </div>
         <footer className="experience-footer">
           <span className="footer-wordmark">living colors</span>

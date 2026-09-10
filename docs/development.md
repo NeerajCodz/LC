@@ -68,6 +68,7 @@ pnpm exec playwright test --project=desktop --workers=1
 
 The mobile project still requires Playwright WebKit. The config starts the development server on 1607 when needed and reuses an existing server locally. First shader compilation can take longer under software rendering; assertions allow 15 seconds. Traces from failed tests are saved under the ignored `test-results/` directory.
 
+- `viewer.spec.ts`: garden macro selection, orbit drag, wheel zoom, and return without leaving the route.
 - `experience.spec.ts`: all species links, bloom/macro/pause controls, navigation, reduced motion, themes, legacy redirects, and the four-angle section.
 - `scroll.spec.ts`: flower pixels and captions move together on the collection, hero, and angle gallery.
 - `retention.spec.ts`: every catalog scene ID survives return scrolling; home angle scenes, scroll-study Canvas, and bloom controls retain their state.

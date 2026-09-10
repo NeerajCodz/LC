@@ -1,10 +1,11 @@
 "use client";
-import { Suspense, useState } from "react";
+import { Suspense, useState, useMemo } from "react";
 import { Canvas } from "@react-three/fiber";
 import { botanicalEvents } from "@/lib/three/events";
 import { PerformanceMonitor } from "@react-three/drei";
 import { PCFShadowMap } from "three";
-import { useRouter } from "next/navigation";
+import type { FlowerType, Vec3 } from "@/lib/flowers/types";
+import { FLOWER_STRUCTURES } from "@/lib/flowers/structures";
 import { Flower } from "./Flower";
 import { Lighting } from "../scene/Lighting";
 import { Environment } from "../scene/Environment";
@@ -27,16 +28,35 @@ export default function FlowerGarden({
   paused,
   pulse,
   onReady,
+  selected,
+  onSelect,
+  reset,
 }: {
   bloom: number;
   paused: boolean;
   pulse: number;
   onReady?: () => void;
+  selected: FlowerType | null;
+  onSelect: (type: FlowerType) => void;
+  reset: number;
 }) {
   const { quality, reducedMotion, constrained } = useExperienceSettings();
   const { theme } = useTheme();
   const [degraded, setDegraded] = useState(false);
-  const router = useRouter();
+  const plantings = constrained ? MOBILE_GARDEN_PLANTINGS : GARDEN_PLANTINGS;
+  const chosen = plantings.find((plant) => plant.type === selected);
+  const focus = useMemo<Vec3 | undefined>(
+    () =>
+      chosen
+        ? [
+            chosen.position[0],
+            chosen.position[1] +
+              FLOWER_STRUCTURES[chosen.type].stemLength * chosen.scale,
+            chosen.position[2],
+          ]
+        : undefined,
+    [chosen],
+  );
   return (
     <Canvas
       events={botanicalEvents}
@@ -52,7 +72,7 @@ export default function FlowerGarden({
         gl.shadowMap.type = PCFShadowMap;
       }}
     >
-      <RenderBudget constrained={constrained || degraded} />
+      <RenderBudget constrained={constrained || degraded} macro={!!selected} />
       <SurfaceDetail />
       <color attach="background" args={[THEME_BACKGROUNDS[theme]]} />
       <fog attach="fog" args={[THEME_BACKGROUNDS[theme], 13, 27]} />
@@ -76,24 +96,34 @@ export default function FlowerGarden({
           paused={paused}
           reducedMotion={reducedMotion}
         >
-          {(constrained ? MOBILE_GARDEN_PLANTINGS : GARDEN_PLANTINGS).map(
-            (plant, i) => (
+          {plantings.map((plant, i) => (
+            <group
+              key={plant.type}
+              visible={!selected || selected === plant.type}
+            >
               <Flower
-                key={plant.type}
                 {...plant}
                 rooted
                 bloom={Math.max(0, Math.min(1, bloom + i * 0.018 - 0.06))}
-                quality={quality === "low" || degraded ? "low" : "medium"}
+                quality={
+                  selected === plant.type
+                    ? constrained
+                      ? "medium"
+                      : "high"
+                    : quality === "low" || degraded
+                      ? "low"
+                      : "medium"
+                }
                 animationSpeed={0.85 + i * 0.055}
                 windStrength={0.85}
                 cursorStrength={0.8}
-                interactive
+                interactive={!selected || selected === plant.type}
                 reducedMotion={reducedMotion}
                 paused={paused}
-                onClick={() => router.push(`/flower/${plant.type}`)}
+                onClick={() => onSelect(plant.type)}
               />
-            ),
-          )}
+            </group>
+          ))}
         </GardenDynamics>
         {!reducedMotion && (
           <Pollen
@@ -104,7 +134,14 @@ export default function FlowerGarden({
           />
         )}
       </Suspense>
-      <CameraRig garden reducedMotion={reducedMotion} paused={paused} />
+      <CameraRig
+        garden
+        focus={focus}
+        focusScale={chosen?.scale}
+        reset={reset}
+        reducedMotion={reducedMotion}
+        paused={paused}
+      />
       {!constrained && (
         <PerformanceMonitor onDecline={() => setDegraded(true)} />
       )}

@@ -53,7 +53,15 @@ export function BotanicalView({
         animateEntrance={false}
         hovered={hovered}
         interactive={detailed}
-        quality={macro ? "ultra" : detailed ? "high" : "medium"}
+        quality={
+          quality === "low"
+            ? "low"
+            : macro
+              ? "ultra"
+              : detailed
+                ? "high"
+                : "medium"
+        }
         windStrength={0.25}
         cursorStrength={0.35}
         reducedMotion={reducedMotion}

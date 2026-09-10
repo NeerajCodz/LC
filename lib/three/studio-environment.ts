@@ -10,6 +10,8 @@ import {
   type WebGLRenderTarget,
 } from "three";
 import { studioRadiance } from "../gpu/studio-field";
+import { isConstrainedDevice } from "../performance";
+import { queueBake } from "../gpu/bake-queue";
 
 type Studio = { texture: DataTexture; backend: "vgpu" | "webgl" };
 let studio: Promise<Studio> | undefined;
@@ -28,6 +30,7 @@ function textureFrom(data: Uint16Array, width: number, height: number) {
   return texture;
 }
 async function prepareStudio(): Promise<Studio> {
+  const constrained = isConstrainedDevice();
   if (typeof navigator !== "undefined" && navigator.gpu) {
     try {
       const [{ init }, { default: source }, { renderStudio }] =
@@ -38,8 +41,12 @@ async function prepareStudio(): Promise<Studio> {
         ]);
       const gpu = await init({ powerPreference: "low-power" });
       try {
-        const data = await renderStudio(gpu, source);
-        return { texture: textureFrom(data, 1024, 512), backend: "vgpu" };
+        const width = constrained ? 256 : 1024;
+        const data = await renderStudio(gpu, source, width, width / 2);
+        return {
+          texture: textureFrom(data, width, width / 2),
+          backend: "vgpu",
+        };
       } finally {
         gpu.dispose();
       }
@@ -49,8 +56,8 @@ async function prepareStudio(): Promise<Studio> {
     }
   }
   // Preserve the same light positions, colors, and HDR range without WebGPU.
-  const width = 512,
-    height = 256,
+  const width = constrained ? 256 : 512,
+    height = width / 2,
     data = new Uint16Array(width * height * 4);
   for (let y = 0; y < height; y++)
     for (let x = 0; x < width; x++) {
@@ -74,14 +81,16 @@ export function acquireStudioEnvironment(gl: WebGLRenderer) {
   if (!cached) {
     cached = {
       users: 0,
-      ready: (studio ??= prepareStudio()).then(({ texture, backend }) => {
-        const pmrem = new PMREMGenerator(gl);
-        try {
-          return { target: pmrem.fromEquirectangular(texture), backend };
-        } finally {
-          pmrem.dispose();
-        }
-      }),
+      ready: (studio ??= queueBake(prepareStudio)).then(
+        ({ texture, backend }) => {
+          const pmrem = new PMREMGenerator(gl);
+          try {
+            return { target: pmrem.fromEquirectangular(texture), backend };
+          } finally {
+            pmrem.dispose();
+          }
+        },
+      ),
     };
     environments.set(gl, cached);
   }

@@ -1,27 +1,27 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
+import { isConstrainedDevice } from "@/lib/performance";
 import type { Quality } from "@/lib/flowers/types";
 
+function subscribe(callback: () => void) {
+  const media = [
+    matchMedia("(max-width: 768px), (pointer: coarse)"),
+    matchMedia("(prefers-reduced-motion: reduce)"),
+  ];
+  media.forEach((query) => query.addEventListener("change", callback));
+  return () =>
+    media.forEach((query) => query.removeEventListener("change", callback));
+}
+const server = () => true;
+const reduced = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
+
 export function useExperienceSettings() {
-  const [settings, setSettings] = useState<{
-    quality: Quality;
-    reducedMotion: boolean;
-  }>({ quality: "medium", reducedMotion: false });
-  useEffect(() => {
-    const small = matchMedia("(max-width: 768px)");
-    const reduced = matchMedia("(prefers-reduced-motion: reduce)");
-    const update = () =>
-      setSettings({
-        quality: small.matches ? "low" : "high",
-        reducedMotion: reduced.matches,
-      });
-    update();
-    small.addEventListener("change", update);
-    reduced.addEventListener("change", update);
-    return () => {
-      small.removeEventListener("change", update);
-      reduced.removeEventListener("change", update);
-    };
-  }, []);
-  return settings;
+  const constrained = useSyncExternalStore(
+    subscribe,
+    isConstrainedDevice,
+    server,
+  );
+  const reducedMotion = useSyncExternalStore(subscribe, reduced, server);
+  const quality: Quality = constrained ? "low" : "high";
+  return { quality, reducedMotion, constrained };
 }

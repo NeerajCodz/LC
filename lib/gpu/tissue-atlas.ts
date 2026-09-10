@@ -1,4 +1,6 @@
 import { DataTexture, LinearFilter, LinearMipmapLinearFilter } from "three";
+import { isConstrainedDevice } from "../performance";
+import { queueBake } from "./bake-queue";
 
 export type TissueBackend = "vgpu" | "webgl";
 export const TISSUE_SIZE = 1024;
@@ -29,10 +31,11 @@ async function bake(): Promise<TissueBackend> {
   ]);
   const gpu = await init({ powerPreference: "low-power" });
   try {
-    const pixels = await renderTissue(gpu, source, TISSUE_SIZE);
+    const size = isConstrainedDevice() ? 512 : TISSUE_SIZE;
+    const pixels = await renderTissue(gpu, source, size);
     // DataTexture does not flip rows. Row zero is sampled at v=0, preserving
     // the numeric UV field produced by vgpu's top-origin effect coordinates.
-    texture.image = { data: pixels, width: TISSUE_SIZE, height: TISSUE_SIZE };
+    texture.image = { data: pixels, width: size, height: size };
     texture.needsUpdate = true;
     tissueUniforms.uTissueReady.value = true;
     return "vgpu";
@@ -42,7 +45,7 @@ async function bake(): Promise<TissueBackend> {
 }
 
 export function prepareTissueAtlas(): Promise<TissueBackend> {
-  return (pending ??= bake().catch((error: unknown) => {
+  return (pending ??= queueBake(bake).catch((error: unknown) => {
     // WebGPU may be disabled, unavailable, or lose its device. The complete
     // procedural GLSL material remains active; flower viewing never suspends.
     if (process.env.NODE_ENV === "development")

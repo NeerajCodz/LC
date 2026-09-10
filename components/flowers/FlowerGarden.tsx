@@ -10,6 +10,7 @@ import { Lighting } from "../scene/Lighting";
 import { Environment } from "../scene/Environment";
 import { SurfaceDetail } from "../scene/SurfaceDetail";
 import { SceneReady } from "../scene/SceneReady";
+import { RenderBudget } from "../scene/RenderBudget";
 import { CameraRig } from "../scene/CameraRig";
 import { Pollen } from "../scene/Pollen";
 import { useExperienceSettings } from "@/hooks/useExperienceSettings";
@@ -88,21 +89,26 @@ export default function FlowerGarden({
   pulse: number;
   onReady?: () => void;
 }) {
-  const { quality, reducedMotion } = useExperienceSettings();
+  const { quality, reducedMotion, constrained } = useExperienceSettings();
   const { theme } = useTheme();
   const [degraded, setDegraded] = useState(false);
   const router = useRouter();
   return (
     <Canvas
       events={botanicalEvents}
+      frameloop="never"
       shadows={quality !== "low"}
-      dpr={quality === "low" || degraded ? 1 : [1, 1.5]}
+      dpr={1}
       camera={{ position: [0, 3.6, 11], fov: 39, near: 0.1, far: 50 }}
-      gl={{ antialias: true, powerPreference: "high-performance" }}
+      gl={{
+        antialias: true,
+        powerPreference: constrained ? "low-power" : "high-performance",
+      }}
       onCreated={({ gl }) => {
         gl.shadowMap.type = PCFShadowMap;
       }}
     >
+      <RenderBudget constrained={constrained || degraded} />
       <SurfaceDetail />
       <color attach="background" args={[THEME_BACKGROUNDS[theme]]} />
       <fog attach="fog" args={[THEME_BACKGROUNDS[theme], 13, 27]} />
@@ -135,18 +141,20 @@ export default function FlowerGarden({
             onClick={() => router.push(`/flower/${plant.type}`)}
           />
         ))}
-        <ContactShadows
-          position={[0, -1.8, 0]}
-          opacity={0.28}
-          scale={15}
-          blur={3.5}
-          far={5}
-          resolution={256}
-          frames={1}
-        />
+        {!constrained && (
+          <ContactShadows
+            position={[0, -1.8, 0]}
+            opacity={0.28}
+            scale={15}
+            blur={3.5}
+            far={5}
+            resolution={256}
+            frames={1}
+          />
+        )}
         {!reducedMotion && (
           <Pollen
-            count={quality === "low" ? 30 : 90}
+            count={constrained ? 12 : 90}
             bloom={bloom}
             pulse={pulse}
             paused={paused}

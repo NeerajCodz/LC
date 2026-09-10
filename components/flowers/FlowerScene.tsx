@@ -15,6 +15,7 @@ import { Flower } from "./Flower";
 import { RenderDiagnostics } from "../scene/RenderDiagnostics";
 import { SurfaceDetail } from "../scene/SurfaceDetail";
 import { SceneReady } from "../scene/SceneReady";
+import { RenderBudget } from "../scene/RenderBudget";
 import { useTheme } from "@/hooks/useTheme";
 import { THEME_BACKGROUNDS } from "@/lib/theme";
 
@@ -42,7 +43,7 @@ export default function FlowerScene({
   onFlowerClick,
   onReady,
 }: SceneProps) {
-  const { quality, reducedMotion } = useExperienceSettings();
+  const { quality, reducedMotion, constrained } = useExperienceSettings();
   const { theme } = useTheme();
   const [hovered, setHovered] = useState(false);
   const [available] = useState(() => {
@@ -67,15 +68,15 @@ export default function FlowerScene({
     <Canvas
       events={botanicalEvents}
       className={hovered ? "flower-canvas is-hovered" : "flower-canvas"}
-      frameloop={active ? "always" : "never"}
+      frameloop="never"
       resize={{ scroll: false }}
       shadows={quality !== "low"}
-      dpr={macro ? [2, 2.5] : [1.5, 2]}
+      dpr={1}
       camera={{ position: [0, 1.5, 7.5], fov: 38, near: 0.1, far: 45 }}
       gl={{
         antialias: true,
         alpha: false,
-        powerPreference: "high-performance",
+        powerPreference: constrained ? "low-power" : "high-performance",
         toneMapping: ACESFilmicToneMapping,
         toneMappingExposure: 1.05,
       }}
@@ -83,6 +84,7 @@ export default function FlowerScene({
         gl.shadowMap.type = PCFShadowMap;
       }}
     >
+      <RenderBudget active={active} constrained={constrained} macro={macro} />
       <SurfaceDetail />
       <color attach="background" args={[THEME_BACKGROUNDS[theme]]} />
       <fog attach="fog" args={[THEME_BACKGROUNDS[theme], 11, 25]} />
@@ -96,7 +98,9 @@ export default function FlowerScene({
           position={[0, 0.5, 0]}
           bloom={bloom}
           growth={growth}
-          quality={macro ? "ultra" : "high"}
+          quality={
+            constrained ? (macro ? "medium" : "low") : macro ? "ultra" : "high"
+          }
           windStrength={0.8}
           interactive
           hovered={hovered}
@@ -106,18 +110,20 @@ export default function FlowerScene({
           onHover={setHovered}
           onClick={onFlowerClick}
         />
-        <ContactShadows
-          position={[0, -1.78, 0]}
-          opacity={0.22}
-          scale={14}
-          blur={3.5}
-          far={5}
-          resolution={256}
-          frames={1}
-        />
+        {!constrained && (
+          <ContactShadows
+            position={[0, -1.78, 0]}
+            opacity={0.22}
+            scale={14}
+            blur={3.5}
+            far={5}
+            resolution={256}
+            frames={1}
+          />
+        )}
         {!reducedMotion && (
           <Pollen
-            count={quality === "low" ? 22 : 80}
+            count={constrained ? 8 : 80}
             bloom={bloom}
             pulse={pulse}
             paused={paused}

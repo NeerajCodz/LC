@@ -23,6 +23,8 @@ import { RenderActivity } from "@/hooks/useActiveFrame";
 import { BotanicalView } from "../flowers/BotanicalView";
 import type { FlowerType } from "@/lib/flowers/types";
 import type { FlowerView } from "@/lib/flowers/views";
+import { useExperienceSettings } from "@/hooks/useExperienceSettings";
+import { RenderBudget } from "./RenderBudget";
 
 export interface PreviewEntry {
   node: HTMLDivElement;
@@ -52,6 +54,7 @@ export function PreviewStage({
   className: string;
 }) {
   const [entries, setEntries] = useState<Record<string, PreviewEntry>>({});
+  const { constrained } = useExperienceSettings();
   const update = useCallback((id: string, entry: PreviewEntry) => {
     setEntries((current) => {
       // Lazy initialization is one-way: hide pauses a scene; it never deletes it.
@@ -81,18 +84,21 @@ export function PreviewStage({
             <Canvas
               events={botanicalEvents}
               resize={{ scroll: false }}
-              frameloop={active ? "always" : "never"}
-              dpr={
-                loaded.some(([, entry]) => entry.angle === "macro")
-                  ? [2, 2.5]
-                  : [1.5, 2]
-              }
+              frameloop="never"
+              dpr={1}
               gl={{
                 antialias: true,
                 alpha: true,
-                powerPreference: "high-performance",
+                powerPreference: constrained ? "low-power" : "high-performance",
               }}
             >
+              <RenderBudget
+                active={active}
+                constrained={constrained}
+                macro={loaded.some(
+                  ([, entry]) => entry.visible && entry.angle === "macro",
+                )}
+              />
               <ClearStage />
               {loaded.map(([id, entry]) => (
                 <RetainedView key={id} entry={entry} />

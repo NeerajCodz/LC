@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useLayoutEffect, useRef } from "react";
-import { useThree } from "@react-three/fiber";
+import { useStore, useThree } from "@react-three/fiber";
 import { boundedDpr } from "@/lib/performance";
 
 /** One capped clock per Canvas. Offscreen/background scenes retain state at zero FPS. */
@@ -14,7 +14,7 @@ export function RenderBudget({
   macro?: boolean;
 }) {
   const get = useThree((state) => state.get);
-  const size = useThree((state) => state.size);
+  const { subscribe } = useStore();
   const simulation = useRef(0);
   useLayoutEffect(() => {
     const state = get();
@@ -25,13 +25,25 @@ export function RenderBudget({
       context.getParameter(context.MAX_RENDERBUFFER_SIZE) as number,
       constrained ? 4096 : 8192,
     );
-    state.setDpr(
-      boundedDpr(size.width, size.height, requested, constrained, limit),
-    );
+    const applyBudget = () => {
+      const current = get();
+      const dpr = boundedDpr(
+        current.size.width,
+        current.size.height,
+        requested,
+        constrained,
+        limit,
+      );
+      if (current.viewport.dpr !== dpr) current.setDpr(dpr);
+    };
+    // Canvas can reconfigure DPR when retained portals register. Enforce the
+    // budget on store changes too, before the next render allocates a buffer.
+    applyBudget();
     state.gl.domElement.dataset.renderBudget = constrained
       ? "mobile"
       : "desktop";
-  }, [get, size.width, size.height, constrained, macro]);
+    return subscribe(applyBudget);
+  }, [get, subscribe, constrained, macro]);
   useEffect(() => {
     const state = get();
     const canvas = state.gl.domElement;

@@ -12,8 +12,76 @@ export interface FlowerInfo {
 }
 
 export const FLOWERS: FlowerInfo[] = [
-{"type": "iris", "name": "Bearded Iris", "latin": "Iris \u00d7 germanica", "family": "Iridaceae", "color": "#6f419b", "description": "Three rise. Three fall.\nA violet architecture.", "detail": "Upright standards shelter the center while broad falls curl beneath golden beards."},
-{"type": "daffodil", "name": "Daffodil", "latin": "Narcissus pseudonarcissus", "family": "Amaryllidaceae", "color": "#eed36f", "description": "A trumpet of light.\nThe first warmth.", "detail": "Six golden tepals frame a hollow, softly fluted corona and sheltered stamens."},
+  {
+    type: "bird-of-paradise",
+    name: "Bird of Paradise",
+    latin: "Strelitzia reginae",
+    family: "Strelitziaceae",
+    color: "#e98720",
+    description: "A bright crest.\nPoised for flight.",
+    detail:
+      "Orange sepals and blue petals emerge in sequence from a substantial boat-shaped bract.",
+  },
+  {
+    type: "bleeding-heart",
+    name: "Bleeding Heart",
+    latin: "Lamprocapnos spectabilis",
+    family: "Papaveraceae",
+    color: "#d45380",
+    description: "Small suspended hearts.\nAn arch of spring.",
+    detail:
+      "Pendant pink pouches and pale inner petals hang from an arching flower stalk.",
+  },
+  {
+    type: "columbine",
+    name: "Columbine",
+    latin: "Aquilegia canadensis",
+    family: "Ranunculaceae",
+    color: "#c95143",
+    description: "A downward glance.\nFive hidden wells.",
+    detail:
+      "Nodding red sepals frame yellow petal cups, long nectar spurs and projecting stamens.",
+  },
+  {
+    type: "anthurium",
+    name: "Anthurium",
+    latin: "Anthurium andraeanum",
+    family: "Araceae",
+    color: "#b5273b",
+    description: "A lacquered heart.\nQuietly luminous.",
+    detail:
+      "A waxy crimson spathe backs a gently tapered spadix, its tiny flowers individually modeled.",
+  },
+  {
+    type: "calla-lily",
+    name: "Calla Lily",
+    latin: "Zantedeschia aethiopica",
+    family: "Araceae",
+    color: "#f5eee1",
+    description: "Ivory, unfurling.\nOne continuous curve.",
+    detail:
+      "A rolled, thick-walled spathe opens around a yellow spadix of tiny flowers.",
+  },
+  {
+    type: "iris",
+    name: "Bearded Iris",
+    latin: "Iris \u00d7 germanica",
+    family: "Iridaceae",
+    color: "#6f419b",
+    description: "Three rise. Three fall.\nA violet architecture.",
+    detail:
+      "Upright standards shelter the center while broad falls curl beneath golden beards.",
+  },
+  {
+    type: "daffodil",
+    name: "Daffodil",
+    latin: "Narcissus pseudonarcissus",
+    family: "Amaryllidaceae",
+    color: "#eed36f",
+    description: "A trumpet of light.\nThe first warmth.",
+    detail:
+      "Six golden tepals frame a hollow, softly fluted corona and sheltered stamens.",
+  },
   {
     type: "poppy",
     name: "Red Poppy",
@@ -168,6 +236,10 @@ export const FLOWERS: FlowerInfo[] = [
       "Five softly notched petals open around a delicate spray of stamens.",
   },
 ];
+
+FLOWERS.sort(
+  (a, b) => FLOWER_TYPES.indexOf(a.type) - FLOWER_TYPES.indexOf(b.type),
+);
 
 export function getFlower(type: FlowerType): FlowerInfo {
   return FLOWERS.find((flower) => flower.type === type)!;

@@ -1,5 +1,6 @@
 import { PerspectiveCamera } from "@react-three/drei";
 import { Suspense } from "react";
+import { FLOWER_STRUCTURES } from "@/lib/flowers/structures";
 import { Flower } from "./Flower";
 import { Lighting } from "../scene/Lighting";
 import { Environment } from "../scene/Environment";
@@ -24,6 +25,16 @@ export function BotanicalView({
 }) {
   const { reducedMotion, quality } = useExperienceSettings();
   const macro = angle === "macro";
+  const structure = FLOWER_STRUCTURES[type],
+    center = structure.headCenter ?? [0, 0.25, 0];
+  const cx = center[0],
+    cy =
+      0.25 +
+      center[1] * Math.cos(structure.headTilt) -
+      center[2] * Math.sin(structure.headTilt),
+    cz =
+      center[1] * Math.sin(structure.headTilt) +
+      center[2] * Math.cos(structure.headTilt);
   const distance = macro ? 2.8 : quality === "low" ? 6.6 : 5.5;
   const azimuth =
     angle === "side"
@@ -37,12 +48,14 @@ export function BotanicalView({
       <PerspectiveCamera
         makeDefault
         position={[
-          Math.sin(azimuth) * distance,
-          macro ? 1.4 : 1.7,
-          Math.cos(azimuth) * distance,
+          Math.sin(azimuth) * distance + (macro ? cx : 0),
+          macro ? cy + 0.9 : 1.7,
+          Math.cos(azimuth) * distance + (macro ? cz : 0),
         ]}
         fov={36}
-        onUpdate={(camera) => camera.lookAt(0, macro ? 0.5 : 0.05, 0)}
+        onUpdate={(camera) =>
+          camera.lookAt(macro ? cx : 0, macro ? cy : 0.05, macro ? cz : 0)
+        }
       />
       <Lighting shadows={false} />
       <Environment />

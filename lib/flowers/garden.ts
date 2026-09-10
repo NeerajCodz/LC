@@ -48,3 +48,18 @@ function arrange(plants: Planting[]): Planting[] {
     position: [bounds[i].x, GARDEN_GROUND, bounds[i].z],
   }));
 }
+
+/** Framing grows with the actual planted envelopes, not a catalog-size constant. */
+export function gardenDistance(mobile: boolean): number {
+  const plants = mobile ? MOBILE_GARDEN_PLANTINGS : GARDEN_PLANTINGS;
+  const extent = plants.reduce(
+    (max, plant) =>
+      Math.max(
+        max,
+        Math.abs(plant.position[0]) +
+          flowerEnvelope(FLOWER_STRUCTURES[plant.type]) * plant.scale,
+      ),
+    0,
+  );
+  return Math.max(mobile ? 15 : 14, extent * (mobile ? 5.2 : 2.35));
+}

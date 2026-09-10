@@ -9,8 +9,10 @@ export function CameraRig({
   reducedMotion = false,
   angle = "portrait",
   garden = false,
+  gardenDistance,
   focus,
   focusScale = 1,
+  specimenTarget,
   reset = 0,
 }: {
   macro?: boolean;
@@ -18,8 +20,10 @@ export function CameraRig({
   paused?: boolean;
   angle?: ViewAngle;
   garden?: boolean;
+  gardenDistance?: number;
   focus?: Vec3;
   focusScale?: number;
+  specimenTarget?: Vec3;
   reset?: number;
 }) {
   const controls = useRef<ComponentRef<typeof OrbitControls>>(null);
@@ -27,17 +31,17 @@ export function CameraRig({
   const lookAt = useRef(new Vector3());
   const transitioning = useRef(true);
   const { size, gl } = useThree();
-  const x = focus?.[0],
-    y = focus?.[1],
-    z = focus?.[2];
+  const target = focus ?? (macro ? specimenTarget : undefined);
+  const x = target?.[0],
+    y = target?.[1],
+    z = target?.[2];
   useEffect(() => {
     const mobile = size.width < 700;
     const distance = focus
       ? focusScale * (mobile ? 7 : 4.2)
       : garden
-        ? mobile
-          ? 15
-          : 14
+        ? (gardenDistance ?? (mobile ? 15 : 14)) *
+          (mobile ? Math.min(1, (0.57 * size.height) / size.width) : 1)
         : macro
           ? 3
           : mobile
@@ -56,11 +60,28 @@ export function CameraRig({
     );
     destination.current.set(
       (x ?? 0) + Math.sin(azimuth) * distance,
-      y !== undefined ? y + distance * 0.32 : garden ? 5 : 1.5,
+      y !== undefined
+        ? y + distance * 0.32
+        : garden
+          ? Math.max(5, distance * 0.37)
+          : 1.5,
       (z ?? 0) + Math.cos(azimuth) * distance,
     );
     transitioning.current = true;
-  }, [macro, garden, angle, size.width, x, y, z, focusScale, reset, focus]);
+  }, [
+    macro,
+    garden,
+    angle,
+    size.width,
+    size.height,
+    x,
+    y,
+    z,
+    focusScale,
+    reset,
+    focus,
+    gardenDistance,
+  ]);
   useFrame(({ camera }, dt) => {
     if (!transitioning.current || !controls.current) return;
     const alpha = reducedMotion ? 1 : 1 - Math.exp(-4 * Math.min(dt, 0.05));
@@ -80,7 +101,7 @@ export function CameraRig({
       rotateSpeed={0.65}
       zoomSpeed={0.7}
       minDistance={focus ? focusScale * 1.4 : 1.2}
-      maxDistance={garden ? 30 : 15}
+      maxDistance={garden ? Math.max(30, (gardenDistance ?? 14) * 1.8) : 15}
       minPolarAngle={0.08}
       maxPolarAngle={Math.PI * 0.87}
       onStart={() => {

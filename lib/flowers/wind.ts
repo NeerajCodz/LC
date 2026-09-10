@@ -10,8 +10,28 @@ export interface WindProfile {
 // Art-directed response classes informed by habit, stem construction and head load.
 // These are not measured species-specific elastic constants. See wind-and-contact.md.
 export const WIND_PROFILES: Record<FlowerType, WindProfile> = {
-  "iris": {"compliance": 0.14, "stiffness": 36, "damping": 0.78, "flutter": 0.85},
-  "daffodil": {"compliance": 0.19, "stiffness": 29, "damping": 0.78, "flutter": 0.55},
+  "bird-of-paradise": {
+    compliance: 0.1,
+    stiffness: 49,
+    damping: 0.84,
+    flutter: 0.6,
+  },
+  "bleeding-heart": {
+    compliance: 0.2,
+    stiffness: 25,
+    damping: 0.77,
+    flutter: 0.7,
+  },
+  columbine: { compliance: 0.27, stiffness: 23, damping: 0.74, flutter: 1.2 },
+  anthurium: { compliance: 0.12, stiffness: 40, damping: 0.84, flutter: 0.35 },
+  "calla-lily": {
+    compliance: 0.16,
+    stiffness: 33,
+    damping: 0.8,
+    flutter: 0.45,
+  },
+  iris: { compliance: 0.14, stiffness: 36, damping: 0.78, flutter: 0.85 },
+  daffodil: { compliance: 0.19, stiffness: 29, damping: 0.78, flutter: 0.55 },
   poppy: { compliance: 0.29, stiffness: 25, damping: 0.7, flutter: 1.6 },
   rose: { compliance: 0.12, stiffness: 48, damping: 0.75, flutter: 0.65 },
   lotus: { compliance: 0.24, stiffness: 20, damping: 0.78, flutter: 0.55 },

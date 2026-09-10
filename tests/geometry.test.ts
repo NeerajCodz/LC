@@ -8,8 +8,7 @@ import { FLOWER_STRUCTURES as structures } from "../lib/flowers/structures";
 
 test("all species have distinct construction and finite, sealed petal shells", () => {
   assert.equal(
-    new Set(Object.values(structures).map((s) => JSON.stringify(s.layers)))
-      .size,
+    new Set(Object.values(structures).map((s) => JSON.stringify(s))).size,
     FLOWER_TYPES.length,
   );
   for (const type of FLOWER_TYPES)

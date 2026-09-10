@@ -84,6 +84,7 @@ test("specialized stamens and all species leaf margins remain sealed", () => {
         marginTeeth: profile.teeth,
         marginDepth: profile.depth,
         lobes: profile.lobes,
+        basalLobes: profile.basalLobes,
       },
       73,
       "high",

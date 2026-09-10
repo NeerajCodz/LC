@@ -18,9 +18,19 @@ import { CherryBlossom } from "./cherry-blossom/CherryBlossom";
 import { Poppy } from "./poppy/Poppy";
 import { Daffodil } from "./daffodil/Daffodil";
 import { Iris } from "./iris/Iris";
+import { CallaLily } from "./calla-lily/CallaLily";
+import { Anthurium } from "./anthurium/Anthurium";
+import { Columbine } from "./columbine/Columbine";
+import { BleedingHeart } from "./bleeding-heart/BleedingHeart";
+import { BirdOfParadise } from "./bird-of-paradise/BirdOfParadise";
 const SPECIES = {
-  "iris": Iris,
-  "daffodil": Daffodil,
+  "bird-of-paradise": BirdOfParadise,
+  "bleeding-heart": BleedingHeart,
+  columbine: Columbine,
+  anthurium: Anthurium,
+  "calla-lily": CallaLily,
+  iris: Iris,
+  daffodil: Daffodil,
   poppy: Poppy,
   rose: Rose,
   lotus: Lotus,

@@ -115,3 +115,5 @@ export function createPoppyHeart(quality: Quality) {
   }
   return joinOrgans(parts);
 }
+
+export { createSpadix } from "./spadixGeometry";

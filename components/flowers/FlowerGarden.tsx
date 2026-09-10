@@ -3,7 +3,7 @@ import { Suspense, useState, useMemo } from "react";
 import { Canvas } from "@react-three/fiber";
 import { botanicalEvents } from "@/lib/three/events";
 import { PerformanceMonitor } from "@react-three/drei";
-import { PCFShadowMap } from "three";
+import { PCFShadowMap, Vector3, Euler } from "three";
 import type { FlowerType, Vec3 } from "@/lib/flowers/types";
 import { FLOWER_STRUCTURES } from "@/lib/flowers/structures";
 import { Flower } from "./Flower";
@@ -16,6 +16,7 @@ import { CameraRig } from "../scene/CameraRig";
 import { Pollen } from "../scene/Pollen";
 import { useExperienceSettings } from "@/hooks/useExperienceSettings";
 import {
+  gardenDistance,
   GARDEN_GROUND,
   GARDEN_PLANTINGS,
   MOBILE_GARDEN_PLANTINGS,
@@ -45,18 +46,18 @@ export default function FlowerGarden({
   const [degraded, setDegraded] = useState(false);
   const plantings = constrained ? MOBILE_GARDEN_PLANTINGS : GARDEN_PLANTINGS;
   const chosen = plantings.find((plant) => plant.type === selected);
-  const focus = useMemo<Vec3 | undefined>(
-    () =>
-      chosen
-        ? [
-            chosen.position[0],
-            chosen.position[1] +
-              FLOWER_STRUCTURES[chosen.type].stemLength * chosen.scale,
-            chosen.position[2],
-          ]
-        : undefined,
-    [chosen],
-  );
+  const focus = useMemo<Vec3 | undefined>(() => {
+    if (!chosen) return undefined;
+    const structure = FLOWER_STRUCTURES[chosen.type];
+    const center = new Vector3(...(structure.headCenter ?? [0, 0, 0]))
+      .applyEuler(new Euler(structure.headTilt, 0, 0))
+      .multiplyScalar(chosen.scale);
+    return [
+      chosen.position[0] + center.x,
+      chosen.position[1] + structure.stemLength * chosen.scale + center.y,
+      chosen.position[2] + center.z,
+    ];
+  }, [chosen]);
   return (
     <Canvas
       events={botanicalEvents}
@@ -75,7 +76,14 @@ export default function FlowerGarden({
       <RenderBudget constrained={constrained || degraded} macro={!!selected} />
       <SurfaceDetail />
       <color attach="background" args={[THEME_BACKGROUNDS[theme]]} />
-      <fog attach="fog" args={[THEME_BACKGROUNDS[theme], 13, 27]} />
+      <fog
+        attach="fog"
+        args={[
+          THEME_BACKGROUNDS[theme],
+          gardenDistance(constrained) + 3,
+          gardenDistance(constrained) + 20,
+        ]}
+      />
       <Suspense fallback={null}>
         <SceneReady onReady={onReady} />
         <Lighting shadows={!constrained && !degraded} extent={6} />
@@ -104,7 +112,7 @@ export default function FlowerGarden({
               <Flower
                 {...plant}
                 rooted
-                bloom={Math.max(0, Math.min(1, bloom + i * 0.018 - 0.06))}
+                bloom={bloom}
                 quality={
                   selected === plant.type
                     ? constrained
@@ -114,7 +122,7 @@ export default function FlowerGarden({
                       ? "low"
                       : "medium"
                 }
-                animationSpeed={0.85 + i * 0.055}
+                animationSpeed={0.85 + (i % 7) * 0.055}
                 windStrength={0.85}
                 cursorStrength={0.8}
                 interactive={!selected || selected === plant.type}
@@ -136,6 +144,7 @@ export default function FlowerGarden({
       </Suspense>
       <CameraRig
         garden
+        gardenDistance={gardenDistance(constrained)}
         focus={focus}
         focusScale={chosen?.scale}
         reset={reset}

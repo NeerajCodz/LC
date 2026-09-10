@@ -42,7 +42,11 @@ export function createPetalGeometry(
         Math.pow(
           Math.max(
             0,
-            Math.sin(Math.PI * Math.pow(t, 0.83) * (1 - rounded * 0.43)),
+            Math.sin(
+              Math.PI *
+                (profile.basalLobes ? 0.16 + 0.84 * t : Math.pow(t, 0.83)) *
+                (1 - rounded * 0.43),
+            ),
           ),
           profile.taper,
         );
@@ -65,7 +69,10 @@ export function createPetalGeometry(
         const y =
           profile.length *
             (t * (1 - rounded * 0.3 * (1 - Math.sqrt(Math.max(0, 1 - u * u)))) -
-              notch) +
+              notch -
+              (profile.basalLobes
+                ? 0.18 * (1 - Math.exp(-u * u * 16)) * (1 - t) ** 3
+                : 0)) +
           Math.sin(u * 4.8 + phase) * profile.ripple * ruffle * ruffleEnvelope;
         const z =
           profile.length *
@@ -76,7 +83,10 @@ export function createPetalGeometry(
             ruffle *
             ruffleEnvelope +
           profile.twist * u * t * t * envelope +
-          (profile.crinkle ?? 0) * Math.sin(u * 39 + t * 13 + phase) * Math.sin(Math.PI * t) * (0.35 + 0.65 * Math.abs(u));
+          (profile.crinkle ?? 0) *
+            Math.sin(u * 39 + t * 13 + phase) *
+            Math.sin(Math.PI * t) *
+            (0.35 + 0.65 * Math.abs(u));
         if (profile.wrapAngle) {
           // A tulip tepal is a section of a cup, rather than a radial blade.
           const radius =
@@ -138,10 +148,12 @@ export function createPetalGeometry(
     const u = uvs[i * 2] * 2 - 1;
     // Wrap around the bud envelope; tips approach the axis without crossing it.
     const radius = 0.028 + profile.length * 0.235 * Math.sin(Math.PI * t);
-    folded[i * 3] = Math.sin(u * 1.13) * radius;
+    folded[i * 3] = Math.sin(u * (profile.foldWrap ?? 1.13)) * radius;
     folded[i * 3 + 1] = profile.length * t * (1 - 0.12 * u * u);
     folded[i * 3 + 2] =
-      Math.cos(u * 1.13) * radius + profile.length * 0.125 * t - 0.028;
+      Math.cos(u * (profile.foldWrap ?? 1.13)) * radius +
+      profile.length * 0.125 * t -
+      0.028;
   }
   const closed = new BufferGeometry();
   closed.setAttribute("position", new Float32BufferAttribute(folded, 3));

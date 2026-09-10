@@ -1,7 +1,4 @@
 export const FLOWER_TYPES = [
-  "iris",
-  "daffodil",
-  "poppy",
   "rose",
   "lotus",
   "marigold",
@@ -17,6 +14,14 @@ export const FLOWER_TYPES = [
   "chrysanthemum",
   "daisy",
   "cherry-blossom",
+  "poppy",
+  "daffodil",
+  "iris",
+  "calla-lily",
+  "anthurium",
+  "columbine",
+  "bleeding-heart",
+  "bird-of-paradise",
 ] as const;
 
 export type FlowerType = (typeof FLOWER_TYPES)[number];
@@ -64,6 +69,8 @@ export interface PetalProfile {
   roundness?: number;
   wrapAngle?: number;
   crinkle?: number;
+  foldWrap?: number;
+  basalLobes?: boolean;
   marginTeeth?: number;
   marginDepth?: number;
   lobes?: number;
@@ -85,6 +92,7 @@ export interface FlowerStructure {
   layers: PetalLayer[];
   /** Conservative head bounds for non-radial organs. */
   headRadius?: number;
+  headCenter?: Vec3;
   center: "none" | "seeds" | "pod" | "stamens" | "column" | "florets";
   centerRadius: number;
   centerHeight: number;

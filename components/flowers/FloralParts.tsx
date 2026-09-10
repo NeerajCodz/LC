@@ -1,11 +1,12 @@
 import { useEffect, useMemo, useRef, type RefObject } from "react";
 import { Group, Mesh, BufferGeometry } from "three";
 import { useActiveFrame } from "@/hooks/useActiveFrame";
-import type { Quality, Vec3 } from "@/lib/flowers/types";
+import type { Quality, Vec3, PetalProfile } from "@/lib/flowers/types";
 import {
   createFloralSurface,
   type FloralSurface,
 } from "@/lib/three/floralSurfaces";
+import { createPetalGeometry } from "@/lib/three/geometry";
 import { createPetalMaterial } from "@/lib/three/materials";
 import { createOrganicTube } from "@/lib/three/organicTube";
 import { petalOpenness } from "@/lib/three/easing";
@@ -43,10 +44,12 @@ export function FloralSurfacePart({
     () => createFloralSurface(kind, quality),
     [kind, quality],
   );
-  const material = useMemo(
-    () => createPetalMaterial(color, roughness, 0.55),
-    [color, roughness],
-  );
+  const material = useMemo(() => {
+    const material = createPetalMaterial(color, roughness, 0.55);
+    material.clearcoat = kind === "anthurium" ? 0.16 : 0.025;
+    material.clearcoatRoughness = kind === "anthurium" ? 0.36 : 0.65;
+    return material;
+  }, [color, roughness, kind]);
   useEffect(
     () => () => {
       geometry.dispose();
@@ -139,6 +142,71 @@ export function OrganAssembly({
       <mesh geometry={geometry} castShadow receiveShadow>
         <meshStandardMaterial vertexColors roughness={roughness} />
       </mesh>
+    </group>
+  );
+}
+
+/** Independently posed tepals for bilateral and sequential inflorescences. */
+export function BladePart({
+  profile,
+  color,
+  quality,
+  bloom,
+  time,
+  wind,
+  position,
+  rotation,
+  delay = 0,
+}: FlowerOrgansProps & {
+  profile: PetalProfile;
+  color: string;
+  position: Vec3;
+  rotation: Vec3;
+  delay?: number;
+}) {
+  const geometry = useMemo(
+    () => createPetalGeometry(profile, Math.round(delay * 1000) + 173, quality),
+    [profile, delay, quality],
+  );
+  const material = useMemo(
+    () => createPetalMaterial(color, 0.55, 0.45),
+    [color],
+  );
+  const mesh = useRef<Mesh>(null),
+    group = useRef<Group>(null);
+  useEffect(
+    () => () => {
+      geometry.dispose();
+      material.dispose();
+    },
+    [geometry, material],
+  );
+  useActiveFrame(() => {
+    const open = petalOpenness(bloom.current, delay, delay * 10);
+    if (mesh.current?.morphTargetInfluences)
+      mesh.current.morphTargetInfluences[0] = 1 - open;
+    if (group.current) {
+      group.current.scale.set(
+        0.35 + 0.65 * open,
+        0.4 + 0.6 * open,
+        0.45 + 0.55 * open,
+      );
+      group.current.rotation.z =
+        rotation[2] * open +
+        (1 - open) * (-Math.PI / 2) +
+        Math.sin(time.current + delay * 8) * 0.01 * wind * open;
+    }
+  });
+  return (
+    <group ref={group} position={position} rotation={rotation}>
+      <mesh
+        ref={mesh}
+        geometry={geometry}
+        material={material}
+        onUpdate={(m) => m.updateMorphTargets()}
+        castShadow
+        receiveShadow
+      />
     </group>
   );
 }

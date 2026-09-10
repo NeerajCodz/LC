@@ -30,8 +30,13 @@ const palette = (
 });
 
 export const PETAL_PALETTES: Record<FlowerType, PetalPalette> = {
-  "iris": palette("#f2d993","#6f419b","#b89ed1","#4b286c"),
-  "daffodil": palette("#bd941f","#eed36f","#fff0a4","#c49e36"),
+  "bird-of-paradise": palette("#a3420f", "#e98720", "#ffb14e", "#bb6018"),
+  "bleeding-heart": palette("#943752", "#d45380", "#ef9bb4", "#a84468"),
+  columbine: palette("#8a292e", "#c95143", "#e77c5e", "#a33233"),
+  anthurium: palette("#61232b", "#b5273b", "#d74d55", "#7b1c2e"),
+  "calla-lily": palette("#bac48a", "#f5eee1", "#fff9eb", "#d3d0ac"),
+  iris: palette("#f2d993", "#6f419b", "#b89ed1", "#4b286c"),
+  daffodil: palette("#bd941f", "#eed36f", "#fff0a4", "#c49e36"),
   poppy: palette("#301827", "#c93131", "#ec5949", "#ad242a"),
   rose: palette("#540921", "#b31e47", "#db536c", "#800d31", 0.58, 0.8),
   lotus: palette("#ebe6bc", "#f0c2d3", "#ca3a79", "#be658b", 0.3, 0.42, 0.13),

@@ -3,6 +3,7 @@ import type { FlowerProps, FlowerStructure } from "@/lib/flowers/types";
 import { BASE_STRUCTURE, whorl } from "@/lib/flowers/structure";
 import { FlowerPlant } from "../FlowerPlant";
 import { OrganAssembly, type FlowerOrgansProps } from "../FloralParts";
+import { PoppySepals } from "./PoppySepals";
 import { createPoppyHeart } from "@/lib/three/floralOrgans";
 export const poppyStructure: FlowerStructure = {
   ...BASE_STRUCTURE,
@@ -52,7 +53,12 @@ export const poppyStructure: FlowerStructure = {
 };
 function PoppyHeart({ quality, bloom }: FlowerOrgansProps) {
   const geometry = useMemo(() => createPoppyHeart(quality), [quality]);
-  return <OrganAssembly geometry={geometry} bloom={bloom} />;
+  return (
+    <>
+      <OrganAssembly geometry={geometry} bloom={bloom} />
+      <PoppySepals quality={quality} bloom={bloom} />
+    </>
+  );
 }
 export function Poppy(props: Omit<FlowerProps, "type">) {
   return (

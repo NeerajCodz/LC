@@ -1,10 +1,11 @@
 "use client";
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import { botanicalEvents } from "@/lib/three/events";
 import { ContactShadows } from "@react-three/drei";
 import { ACESFilmicToneMapping, PCFShadowMap } from "three";
-import type { FlowerType } from "@/lib/flowers/types";
+import type { FlowerType, Vec3 } from "@/lib/flowers/types";
+import { FLOWER_STRUCTURES } from "@/lib/flowers/structures";
 import { useExperienceSettings } from "@/hooks/useExperienceSettings";
 import { Lighting } from "../scene/Lighting";
 import { Environment } from "../scene/Environment";
@@ -46,6 +47,18 @@ export default function FlowerScene({
   const { quality, reducedMotion, constrained } = useExperienceSettings();
   const { theme } = useTheme();
   const [hovered, setHovered] = useState(false);
+  const specimenTarget = useMemo<Vec3 | undefined>(() => {
+    const structure = FLOWER_STRUCTURES[type],
+      center = structure.headCenter;
+    if (!center) return undefined;
+    const c = Math.cos(structure.headTilt),
+      s = Math.sin(structure.headTilt);
+    return [
+      center[0],
+      -1.78 + structure.stemLength + center[1] * c - center[2] * s,
+      center[1] * s + center[2] * c,
+    ];
+  }, [type]);
   const [available] = useState(() => {
     const context = document.createElement("canvas").getContext("webgl2");
     const supported = !!context;
@@ -133,6 +146,7 @@ export default function FlowerScene({
         {quality !== "low" && <PostProcessing />}
       </Suspense>
       <CameraRig
+        specimenTarget={specimenTarget}
         macro={macro}
         reducedMotion={reducedMotion}
         paused={paused}

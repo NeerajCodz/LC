@@ -1,6 +1,7 @@
 import type { FlowerType } from "./types";
 
 export interface FoliageProfile {
+  basalLobes?: boolean;
   length: number;
   width: number;
   color: string;
@@ -17,8 +18,61 @@ export interface FoliageProfile {
 
 /** Cultivar-independent leaf traits; lotus has its own peltate blade generator. */
 export const FOLIAGE: Record<FlowerType, FoliageProfile> = {
-  "iris": {"length": 1.85, "width": 0.18, "color": "#627b62", "parallel": true, "basal": true},
-  "daffodil": {"length": 1.65, "width": 0.13, "color": "#637b53", "parallel": true, "basal": true},
+  "bird-of-paradise": {
+    length: 1.7,
+    width: 0.64,
+    color: "#577b66",
+    parallel: true,
+    basal: true,
+    roughness: 0.48,
+  },
+  "bleeding-heart": {
+    length: 0.48,
+    width: 0.31,
+    color: "#648453",
+    leaflets: 3,
+    rachis: 0.46,
+    lobes: 0.4,
+  },
+  columbine: {
+    length: 0.4,
+    width: 0.32,
+    color: "#587b52",
+    leaflets: 3,
+    rachis: 0.38,
+    lobes: 0.3,
+  },
+  anthurium: {
+    basalLobes: true,
+    length: 1.1,
+    width: 0.82,
+    color: "#315d3a",
+    basal: true,
+    roughness: 0.42,
+  },
+  "calla-lily": {
+    basalLobes: true,
+    length: 1.35,
+    width: 0.75,
+    color: "#42643c",
+    basal: true,
+    lobes: 0.1,
+    roughness: 0.5,
+  },
+  iris: {
+    length: 1.85,
+    width: 0.18,
+    color: "#627b62",
+    parallel: true,
+    basal: true,
+  },
+  daffodil: {
+    length: 1.65,
+    width: 0.13,
+    color: "#637b53",
+    parallel: true,
+    basal: true,
+  },
   poppy: {
     length: 0.75,
     width: 0.3,

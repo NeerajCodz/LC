@@ -29,6 +29,7 @@ export function LeafSprig({
           marginTeeth: profile.teeth,
           marginDepth: profile.depth,
           lobes: profile.lobes,
+          basalLobes: profile.basalLobes,
         },
         73,
         quality,

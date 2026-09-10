@@ -7,6 +7,7 @@ import { joinOrgans, organTube } from "@/lib/three/floralOrgans";
 export const irisStructure: FlowerStructure = {
   ...BASE_STRUCTURE,
   headTilt: 0.15,
+  headCenter: [0, 0.35, 0],
   headRadius: 1.5,
   leafCount: 4,
   roughness: 0.65,

@@ -1486,3 +1486,62 @@ input[type="range"]::-moz-range-thumb {
   padding: 8px;
   border-radius: 6px;
 }
+
+@media (max-width: 700px) {
+  .garden-page {
+    display: grid;
+    grid-template-areas: "header" "heading" "scene" "tools" "bloom" "hint" "footer";
+    height: auto;
+    min-height: 100svh;
+    overflow: clip;
+  }
+  .garden-page .site-header {
+    grid-area: header;
+    position: relative;
+  }
+  .garden-heading {
+    grid-area: heading;
+    position: relative;
+    inset: auto;
+    margin: 30px 7% 0;
+  }
+  .garden-heading h1 {
+    font-size: clamp(42px, 12vw, 62px);
+  }
+  .garden-scene {
+    grid-area: scene;
+    position: relative;
+    inset: auto;
+    height: 440px;
+    min-width: 0;
+  }
+  .garden-tools {
+    grid-area: tools;
+    position: relative;
+    inset: auto;
+    transform: none;
+    margin: 0 auto;
+  }
+  .garden-page .bloom-panel {
+    grid-area: bloom;
+    position: relative;
+    inset: auto;
+    transform: none;
+    margin: 16px auto;
+  }
+  .garden-hint {
+    grid-area: hint;
+    position: relative;
+    inset: auto;
+    transform: none;
+    text-align: center;
+    margin: 12px 0 28px;
+  }
+  .garden-page .experience-footer {
+    grid-area: footer;
+    position: relative;
+    inset: auto;
+    margin: 0 6%;
+    padding: 20px 0;
+  }
+}

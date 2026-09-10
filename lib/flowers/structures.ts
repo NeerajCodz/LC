@@ -1,3 +1,8 @@
+import { birdOfParadiseStructure } from "../../components/flowers/bird-of-paradise/BirdOfParadise";
+import { bleedingHeartStructure } from "../../components/flowers/bleeding-heart/BleedingHeart";
+import { columbineStructure } from "../../components/flowers/columbine/Columbine";
+import { anthuriumStructure } from "../../components/flowers/anthurium/Anthurium";
+import { callaLilyStructure } from "../../components/flowers/calla-lily/CallaLily";
 import { irisStructure } from "../../components/flowers/iris/Iris";
 import { daffodilStructure } from "../../components/flowers/daffodil/Daffodil";
 import { poppyStructure } from "../../components/flowers/poppy/Poppy";
@@ -20,8 +25,13 @@ import type { FlowerStructure, FlowerType } from "./types";
 
 /** Authored anatomy shared by planting layout and geometry verification. */
 export const FLOWER_STRUCTURES: Record<FlowerType, FlowerStructure> = {
-  "iris": irisStructure,
-  "daffodil": daffodilStructure,
+  "bird-of-paradise": birdOfParadiseStructure,
+  "bleeding-heart": bleedingHeartStructure,
+  columbine: columbineStructure,
+  anthurium: anthuriumStructure,
+  "calla-lily": callaLilyStructure,
+  iris: irisStructure,
+  daffodil: daffodilStructure,
   poppy: poppyStructure,
   rose: roseStructure,
   lotus: lotusStructure,

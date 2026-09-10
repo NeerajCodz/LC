@@ -11,7 +11,8 @@ export function sampleFloralSurface(
 ): Vec3 {
   const a = (u - 0.5) * Math.PI * 2;
   if (kind === "corona") {
-    const r = 0.04 + 0.12 * open + (0.025 + 0.095 * open) * v + 0.14 * v ** 5 * open;
+    const r =
+      0.04 + 0.12 * open + (0.025 + 0.095 * open) * v + 0.14 * v ** 5 * open;
     return [
       Math.sin(a) * r,
       v * (0.38 + 0.46 * open) + 0.028 * Math.sin(a * 10) * v ** 8 * open,
@@ -24,7 +25,8 @@ export function sampleFloralSurface(
   }
   if (kind === "pouch") {
     const t = (u - 0.5) * Math.PI * 2;
-    const width = 0.035 + Math.sin(Math.PI * v) ** 0.7 * (0.28 + 0.14 * open);
+    const width =
+      0.035 + Math.sin(Math.PI * v ** 0.55) ** 0.7 * (0.07 + 0.35 * open);
     const cleft = 0.14 * Math.exp(-(Math.sin(t) ** 2) * 25) * (1 - v) ** 3;
     return [Math.sin(t) * width, -0.8 * v - cleft, Math.cos(t) * width * 0.6];
   }
@@ -39,14 +41,14 @@ export function sampleFloralSurface(
   }
   if (kind === "anthurium") {
     const x = (u - 0.5) * 2;
-    const width = 0.015 + 0.87 * Math.sin(Math.PI * v) ** 0.65;
-    const heart = 0.17 * Math.exp(-x * x * 28) * (1 - v) ** 2;
+    const width = 0.015 + 0.87 * Math.sin(Math.PI * (0.22 + 0.78 * v)) ** 0.65;
+    const heart = -0.32 * (1 - Math.exp(-x * x * 18)) * (1 - v) ** 2;
     const angle = x * (open * 0.85 + (1 - open) * 2.7);
     const radial = width / 0.85;
     return [
       Math.sin(angle) * radial * (0.28 + 0.72 * open),
       v * 1.65 + heart,
-      (Math.cos(angle) - 1) * radial +
+      (Math.cos(angle) - 1) * radial * (0.16 + 0.84 * open) +
         0.22 * Math.sin(Math.PI * v) +
         0.025 * Math.sin(v * 22 + x * 8) * Math.abs(x),
     ];

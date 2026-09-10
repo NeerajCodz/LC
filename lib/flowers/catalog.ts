@@ -12,6 +12,18 @@ export interface FlowerInfo {
 }
 
 export const FLOWERS: FlowerInfo[] = [
+{"type": "iris", "name": "Bearded Iris", "latin": "Iris \u00d7 germanica", "family": "Iridaceae", "color": "#6f419b", "description": "Three rise. Three fall.\nA violet architecture.", "detail": "Upright standards shelter the center while broad falls curl beneath golden beards."},
+{"type": "daffodil", "name": "Daffodil", "latin": "Narcissus pseudonarcissus", "family": "Amaryllidaceae", "color": "#eed36f", "description": "A trumpet of light.\nThe first warmth.", "detail": "Six golden tepals frame a hollow, softly fluted corona and sheltered stamens."},
+  {
+    type: "poppy",
+    name: "Red Poppy",
+    latin: "Papaver rhoeas",
+    family: "Papaveraceae",
+    color: "#c93131",
+    description: "Paper-thin folds.\nA vivid moment.",
+    detail:
+      "Four crinkled petals surround dark anthers and a radiating stigma disk.",
+  },
   {
     type: "rose",
     name: "Rose",

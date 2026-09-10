@@ -1,3 +1,6 @@
+import { irisStructure } from "../../components/flowers/iris/Iris";
+import { daffodilStructure } from "../../components/flowers/daffodil/Daffodil";
+import { poppyStructure } from "../../components/flowers/poppy/Poppy";
 import { roseStructure } from "../../components/flowers/rose/roseStructure";
 import { lotusStructure } from "../../components/flowers/lotus/Lotus";
 import { marigoldStructure } from "../../components/flowers/marigold/Marigold";
@@ -17,6 +20,9 @@ import type { FlowerStructure, FlowerType } from "./types";
 
 /** Authored anatomy shared by planting layout and geometry verification. */
 export const FLOWER_STRUCTURES: Record<FlowerType, FlowerStructure> = {
+  "iris": irisStructure,
+  "daffodil": daffodilStructure,
+  poppy: poppyStructure,
   rose: roseStructure,
   lotus: lotusStructure,
   marigold: marigoldStructure,

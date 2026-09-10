@@ -75,7 +75,8 @@ export function createPetalGeometry(
             Math.sin(u * 13 + t * 18 + phase) *
             ruffle *
             ruffleEnvelope +
-          profile.twist * u * t * t * envelope;
+          profile.twist * u * t * t * envelope +
+          (profile.crinkle ?? 0) * Math.sin(u * 39 + t * 13 + phase) * Math.sin(Math.PI * t) * (0.35 + 0.65 * Math.abs(u));
         if (profile.wrapAngle) {
           // A tulip tepal is a section of a cup, rather than a radial blade.
           const radius =

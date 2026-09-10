@@ -15,7 +15,13 @@ import { Lavender } from "./lavender/Lavender";
 import { Chrysanthemum } from "./chrysanthemum/Chrysanthemum";
 import { Daisy } from "./daisy/Daisy";
 import { CherryBlossom } from "./cherry-blossom/CherryBlossom";
+import { Poppy } from "./poppy/Poppy";
+import { Daffodil } from "./daffodil/Daffodil";
+import { Iris } from "./iris/Iris";
 const SPECIES = {
+  "iris": Iris,
+  "daffodil": Daffodil,
+  poppy: Poppy,
   rose: Rose,
   lotus: Lotus,
   tulip: Tulip,

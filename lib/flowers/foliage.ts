@@ -17,6 +17,16 @@ export interface FoliageProfile {
 
 /** Cultivar-independent leaf traits; lotus has its own peltate blade generator. */
 export const FOLIAGE: Record<FlowerType, FoliageProfile> = {
+  "iris": {"length": 1.85, "width": 0.18, "color": "#627b62", "parallel": true, "basal": true},
+  "daffodil": {"length": 1.65, "width": 0.13, "color": "#637b53", "parallel": true, "basal": true},
+  poppy: {
+    length: 0.75,
+    width: 0.3,
+    color: "#607846",
+    teeth: 10,
+    depth: 0.16,
+    lobes: 0.5,
+  },
   rose: {
     length: 0.43,
     width: 0.26,

@@ -10,6 +10,9 @@ export interface WindProfile {
 // Art-directed response classes informed by habit, stem construction and head load.
 // These are not measured species-specific elastic constants. See wind-and-contact.md.
 export const WIND_PROFILES: Record<FlowerType, WindProfile> = {
+  "iris": {"compliance": 0.14, "stiffness": 36, "damping": 0.78, "flutter": 0.85},
+  "daffodil": {"compliance": 0.19, "stiffness": 29, "damping": 0.78, "flutter": 0.55},
+  poppy: { compliance: 0.29, stiffness: 25, damping: 0.7, flutter: 1.6 },
   rose: { compliance: 0.12, stiffness: 48, damping: 0.75, flutter: 0.65 },
   lotus: { compliance: 0.24, stiffness: 20, damping: 0.78, flutter: 0.55 },
   marigold: { compliance: 0.18, stiffness: 26, damping: 0.8, flutter: 0.65 },
@@ -48,6 +51,7 @@ export interface PlantMotion {
 
 export function flowerEnvelope(structure: FlowerStructure): number {
   const radius = Math.max(
+    structure.headRadius ?? 0,
     ...structure.layers.map(
       (layer) =>
         layer.radius +

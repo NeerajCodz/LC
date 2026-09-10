@@ -1,4 +1,10 @@
-import { useContext, useLayoutEffect, useMemo, useRef } from "react";
+import {
+  useContext,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  type ComponentType,
+} from "react";
 import { useActiveFrame as useFrame } from "@/hooks/useActiveFrame";
 import { Group, Vector3 } from "three";
 import type { FlowerProps, FlowerStructure } from "@/lib/flowers/types";
@@ -21,10 +27,12 @@ import { Stem } from "./Stem";
 import { FlowerCore } from "./FlowerCore";
 import { Branch } from "./Branch";
 import { Calyx } from "./Calyx";
+import type { FlowerOrgansProps } from "./FloralParts";
 import { FlowerInteraction } from "./FlowerInteraction";
 
 export function FlowerPlant({
   structure,
+  Organs,
   type,
   color,
   bloom: target = 1,
@@ -47,7 +55,10 @@ export function FlowerPlant({
   pulse = 0,
   onHover,
   onClick,
-}: FlowerProps & { structure: FlowerStructure }) {
+}: FlowerProps & {
+  structure: FlowerStructure;
+  Organs?: ComponentType<FlowerOrgansProps>;
+}) {
   const head = useRef<Group>(null);
   const garden = useContext(GardenEnvironment);
   const profile = WIND_PROFILES[type];
@@ -268,6 +279,15 @@ export function FlowerPlant({
                         motion={motion}
                       />
                     ))}
+                    {Organs && (
+                      <Organs
+                        bloom={bloom}
+                        time={time}
+                        wind={wind}
+                        quality={quality}
+                        color={color}
+                      />
+                    )}
                     <FlowerCore
                       type={type}
                       structure={structure}

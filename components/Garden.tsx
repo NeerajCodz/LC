@@ -7,6 +7,7 @@ import { FLOWERS, getFlower } from "@/lib/flowers/catalog";
 import type { FlowerType } from "@/lib/flowers/types";
 import { Header } from "./ui/Header";
 import { BloomLoader } from "./ui/BloomLoader";
+import { useWebGL2Support, WebGLUnavailable } from "./scene/WebGLSupport";
 const Scene = dynamic(() => import("./flowers/FlowerGarden"), {
   ssr: false,
 });
@@ -17,6 +18,7 @@ export default function Garden() {
     [ready, setReady] = useState(false);
   const [selected, setSelected] = useState<FlowerType | null>(null);
   const [reset, setReset] = useState(0);
+  const webGL2 = useWebGL2Support();
   useEffect(() => {
     const escape = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
@@ -30,16 +32,20 @@ export default function Garden() {
   return (
     <main className="garden-page">
       <div className="garden-scene">
-        <Scene
-          selected={selected}
-          onSelect={setSelected}
-          reset={reset}
-          bloom={bloom}
-          paused={paused}
-          pulse={pulse}
-          onReady={() => setReady(true)}
-        />
-        {!ready && <BloomLoader variant="overlay" />}
+        {webGL2 === true ? (
+          <Scene
+            selected={selected}
+            onSelect={setSelected}
+            reset={reset}
+            bloom={bloom}
+            paused={paused}
+            pulse={pulse}
+            onReady={() => setReady(true)}
+          />
+        ) : (
+          <WebGLUnavailable />
+        )}
+        {webGL2 === true && !ready && <BloomLoader variant="overlay" />}
       </div>
       <Header active="garden" />
       <div className="garden-heading">

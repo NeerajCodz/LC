@@ -10,7 +10,7 @@ Project documentation: [agent brief and implementation rules](AGENTS.md), [devel
 
 ## Run locally
 
-Requires Node.js 22.12 or newer and a browser with WebGL 2 and hardware acceleration.
+Requires Node.js 22.12 or newer. WebGL 2 enables the interactive 3D specimens when available; browsers without it retain the catalog, navigation, and botanical content without attempting to mount a renderer.
 
 ```bash
 npm install
@@ -138,7 +138,7 @@ Physical petal materials use species-specific root, body, edge, and vein pigment
 
 ### WebGL and vgpu
 
-All flower geometry, morphs, PBR lighting, shadows, instancing, and interaction render through Three.js / React Three Fiber in **WebGL 2**. [vgpu](https://vgpu.sh/docs/get-started/web) is a WebGPU library; its `Surface` requires a WebGPU canvas context and cannot replace an existing WebGL canvas directly.
+All flower geometry, morphs, PBR lighting, shadows, instancing, and interaction render through Three.js / React Three Fiber in **WebGL 2** when the browser can create a context. Hardware acceleration is not required: software WebGL 2 remains valid, and unavailable or lost contexts fall back to non-interactive DOM content instead of failing the route. [vgpu](https://vgpu.sh/docs/get-started/web) is a WebGPU library; its `Surface` requires a WebGPU canvas context and cannot replace an existing WebGL canvas directly.
 
 On WebGPU-capable browsers, `SurfaceDetail` asynchronously starts a real vgpu render pass that generates a **linear tissue atlas (1024² desktop, 512² mobile)**. Its three channels encode vein irregularity, pigment mottling, and cellular roughness/micro-height. The atlas is read back once, mipmapped, and shared by all species' WebGL materials. This avoids repeatedly evaluating those noise fields per fragment. The temporary WebGPU device and resources are disposed after the bake; there is no per-frame GPU readback or additional onscreen canvas. This is procedural material data, not a flower photograph or sprite.
 

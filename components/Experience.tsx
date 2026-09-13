@@ -22,6 +22,7 @@ import { BloomLoader } from "./ui/BloomLoader";
 import { useExperienceSettings } from "@/hooks/useExperienceSettings";
 import { useInView } from "@/hooks/useInView";
 import AngleGallery from "./AngleGallery";
+import { useWebGL2Support, WebGLUnavailable } from "./scene/WebGLSupport";
 const Scene = dynamic(() => import("./flowers/FlowerScene"), { ssr: false });
 
 export default function Experience({
@@ -44,6 +45,7 @@ export default function Experience({
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const introTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const { reducedMotion } = useExperienceSettings();
+  const webGL2 = useWebGL2Support();
   const info = getFlower(type),
     index = FLOWERS.findIndex((f) => f.type === type);
   useEffect(() => {
@@ -115,21 +117,25 @@ export default function Experience({
         aria-label="Interactive botanical specimen"
       >
         <div className="scene-wrap">
-          <Scene
-            active={heroVisible}
-            type={type}
-            bloom={bloom}
-            macro={macro}
-            paused={paused}
-            pulse={pulse}
-            onReady={() => setReady(true)}
-            onFlowerClick={() => {
-              if (!reducedMotion) setPulse((p) => p + 1);
-              setMacro((m) => !m);
-            }}
-          />
+          {webGL2 === true ? (
+            <Scene
+              active={heroVisible}
+              type={type}
+              bloom={bloom}
+              macro={macro}
+              paused={paused}
+              pulse={pulse}
+              onReady={() => setReady(true)}
+              onFlowerClick={() => {
+                if (!reducedMotion) setPulse((p) => p + 1);
+                setMacro((m) => !m);
+              }}
+            />
+          ) : (
+            <WebGLUnavailable />
+          )}
         </div>
-        {!ready && <BloomLoader variant="overlay" />}
+        {webGL2 === true && !ready && <BloomLoader variant="overlay" />}
         <Header
           onNavigate={(href) => {
             if (href === window.location.pathname) {
@@ -333,6 +339,7 @@ export default function Experience({
 
 function ScrollStudy({ type }: { type: FlowerType }) {
   const { ref: section, visible, visited } = useInView<HTMLElement>();
+  const webGL2 = useWebGL2Support();
   const [progress, setProgress] = useState(0);
   useEffect(() => {
     const node = section.current;
@@ -378,13 +385,17 @@ function ScrollStudy({ type }: { type: FlowerType }) {
           </div>
         </div>
         <div className="scroll-scene">
-          {visited && (
-            <Scene
-              active={visible}
-              type={type}
-              bloom={Math.max(0, (progress - 0.4) / 0.4)}
-              growth={Math.min(1, progress / 0.35)}
-            />
+          {webGL2 === true ? (
+            visited && (
+              <Scene
+                active={visible}
+                type={type}
+                bloom={Math.max(0, (progress - 0.4) / 0.4)}
+                growth={Math.min(1, progress / 0.35)}
+              />
+            )
+          ) : (
+            <WebGLUnavailable />
           )}
         </div>
         <span className="scroll-progress">

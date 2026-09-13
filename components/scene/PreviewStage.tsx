@@ -11,7 +11,6 @@ import {
   type ReactNode,
 } from "react";
 import {
-  Canvas,
   createPortal,
   useFrame,
   useThree,
@@ -25,6 +24,8 @@ import type { FlowerType } from "@/lib/flowers/types";
 import type { FlowerView } from "@/lib/flowers/views";
 import { useExperienceSettings } from "@/hooks/useExperienceSettings";
 import { RenderBudget } from "./RenderBudget";
+import { SafeCanvas } from "./SafeCanvas";
+import { useWebGL2Support } from "./WebGLSupport";
 
 export interface PreviewEntry {
   node: HTMLDivElement;
@@ -38,6 +39,7 @@ export interface PreviewEntry {
 const Registry = createContext<{
   update: (id: string, entry: PreviewEntry) => void;
   remove: (id: string) => void;
+  unavailable: boolean;
 } | null>(null);
 export function usePreviewStage() {
   const stage = useContext(Registry);
@@ -54,6 +56,8 @@ export function PreviewStage({
   className: string;
 }) {
   const [entries, setEntries] = useState<Record<string, PreviewEntry>>({});
+  const webGL2 = useWebGL2Support();
+  const unavailable = webGL2 !== true;
   const { constrained } = useExperienceSettings();
   const update = useCallback((id: string, entry: PreviewEntry) => {
     setEntries((current) => {
@@ -70,7 +74,10 @@ export function PreviewStage({
       return next;
     });
   }, []);
-  const registry = useMemo(() => ({ update, remove }), [update, remove]);
+  const registry = useMemo(
+    () => ({ update, remove, unavailable }),
+    [update, remove, unavailable],
+  );
   const loaded = Object.entries(entries);
   const active = loaded.some(([, entry]) => entry.visible);
   return (
@@ -79,9 +86,9 @@ export function PreviewStage({
         className={`${className} preview-stage`}
         data-retained-scenes={loaded.length}
       >
-        {loaded.length > 0 && (
+        {webGL2 === true && loaded.length > 0 && (
           <div className="preview-stage-surface" aria-hidden="true">
-            <Canvas
+            <SafeCanvas
               events={botanicalEvents}
               resize={{ scroll: false }}
               frameloop="never"
@@ -91,6 +98,7 @@ export function PreviewStage({
                 alpha: true,
                 powerPreference: constrained ? "low-power" : "high-performance",
               }}
+              unavailableFallback={null}
             >
               <RenderBudget
                 active={active}
@@ -103,7 +111,7 @@ export function PreviewStage({
               {loaded.map(([id, entry]) => (
                 <RetainedView key={id} entry={entry} />
               ))}
-            </Canvas>
+            </SafeCanvas>
           </div>
         )}
         {children}

@@ -25,7 +25,7 @@ export function FlowerPreview({
 }) {
   const id = useId();
   const ref = useRef<HTMLDivElement>(null);
-  const { update, remove } = usePreviewStage();
+  const { update, remove, unavailable } = usePreviewStage();
   useLayoutEffect(() => {
     if (ref.current)
       update(id, {
@@ -44,6 +44,12 @@ export function FlowerPreview({
       ref={ref}
       className={`${className} flower-preview`}
       data-flower-preview={type}
-    />
+    >
+      {unavailable && (
+        <span className="flower-preview-unavailable">
+          3D preview unavailable
+        </span>
+      )}
+    </div>
   );
 }

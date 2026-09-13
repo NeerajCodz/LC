@@ -1,6 +1,5 @@
 "use client";
-import { Suspense, useEffect, useMemo, useState } from "react";
-import { Canvas } from "@react-three/fiber";
+import { Suspense, useMemo, useState } from "react";
 import { botanicalEvents } from "@/lib/three/events";
 import { ContactShadows } from "@react-three/drei";
 import { ACESFilmicToneMapping, PCFShadowMap } from "three";
@@ -17,6 +16,7 @@ import { RenderDiagnostics } from "../scene/RenderDiagnostics";
 import { SurfaceDetail } from "../scene/SurfaceDetail";
 import { SceneReady } from "../scene/SceneReady";
 import { RenderBudget } from "../scene/RenderBudget";
+import { SafeCanvas } from "../scene/SafeCanvas";
 import { useTheme } from "@/hooks/useTheme";
 import { THEME_BACKGROUNDS } from "@/lib/theme";
 
@@ -59,26 +59,8 @@ export default function FlowerScene({
       center[1] * s + center[2] * c,
     ];
   }, [type]);
-  const [available] = useState(() => {
-    const context = document.createElement("canvas").getContext("webgl2");
-    const supported = !!context;
-    context?.getExtension("WEBGL_lose_context")?.loseContext();
-    return supported;
-  });
-  useEffect(() => {
-    // Remove the loading overlay so unsupported browsers can see the recovery UI.
-    if (!available) onReady?.();
-  }, [available, onReady]);
-  if (!available)
-    return (
-      <div className="webgl-message">
-        <p>This collection needs WebGL 2.</p>
-        <span>Enable hardware acceleration in your browser, then reload.</span>
-        <button onClick={() => location.reload()}>Try again</button>
-      </div>
-    );
   return (
-    <Canvas
+    <SafeCanvas
       events={botanicalEvents}
       className={hovered ? "flower-canvas is-hovered" : "flower-canvas"}
       frameloop="never"
@@ -93,6 +75,7 @@ export default function FlowerScene({
         toneMapping: ACESFilmicToneMapping,
         toneMappingExposure: 1.05,
       }}
+      onUnavailable={onReady}
       onCreated={({ gl }) => {
         gl.shadowMap.type = PCFShadowMap;
       }}
@@ -153,6 +136,6 @@ export default function FlowerScene({
         angle={angle}
       />
       {process.env.NODE_ENV === "development" && <RenderDiagnostics />}
-    </Canvas>
+    </SafeCanvas>
   );
 }

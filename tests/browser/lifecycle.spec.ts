@@ -50,3 +50,48 @@ test("complete flower viewing works when WebGPU is unavailable", async ({
   ).toBeVisible();
   expect(errors).toEqual([]);
 });
+
+test("catalog routes stay usable when WebGL 2 is unavailable", async ({
+  page,
+}) => {
+  await page.addInitScript(() => {
+    const getContext = HTMLCanvasElement.prototype.getContext;
+    Object.defineProperty(HTMLCanvasElement.prototype, "getContext", {
+      configurable: true,
+      value(type: string, ...args: unknown[]) {
+        if (type === "webgl2") return null;
+        return Reflect.apply(getContext, this, [type, ...args]);
+      },
+    });
+  });
+  const errors: string[] = [];
+  page.on("pageerror", (error) => errors.push(error.message));
+
+  await page.goto("/garden/");
+  await expect(
+    page.locator('.garden-scene [data-renderer="unavailable"]'),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Let it grow.", exact: true }),
+  ).toBeVisible();
+  await expect(page.locator(".bloom-loader--overlay")).toHaveCount(0);
+
+  await page.goto("/flower/lotus/");
+  await expect(
+    page.locator('.experience [data-renderer="unavailable"]'),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Lotus.", exact: true }),
+  ).toBeVisible();
+  await expect(page.locator(".bloom-loader--overlay")).toHaveCount(0);
+
+  await page.goto("/gallery/");
+  await expect(page.locator(".preview-stage canvas")).toHaveCount(0);
+  await expect(
+    page.locator(".flower-preview-unavailable").first(),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: "Explore Lotus", exact: true }),
+  ).toBeVisible();
+  expect(errors).toEqual([]);
+});

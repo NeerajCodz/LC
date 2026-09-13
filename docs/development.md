@@ -26,7 +26,7 @@ npm run build
 npm start
 ```
 
-`next start` requires a completed build. Production excludes `/dev/inspection/`. The app needs no secrets, database, external font request, or downloaded flower asset. Use a browser with WebGL 2 and hardware acceleration. WebGPU is optional at runtime.
+`next start` requires a completed build. Production excludes `/dev/inspection/`. The app needs no secrets, database, external font request, or downloaded flower asset. WebGL 2 enables interactive specimens when available, including software-rendered contexts; unavailable contexts retain the non-interactive catalog and route content. WebGPU is optional at runtime.
 
 ## Commands
 

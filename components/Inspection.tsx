@@ -1,12 +1,12 @@
 "use client";
 import { useRef, useState } from "react";
-import { Canvas } from "@react-three/fiber";
 import { botanicalEvents } from "@/lib/three/events";
 import { PerspectiveCamera, View } from "@react-three/drei";
 import { FLOWERS } from "@/lib/flowers/catalog";
 import type { FlowerType } from "@/lib/flowers/types";
 import { Flower } from "./flowers/Flower";
 import { Lighting } from "./scene/Lighting";
+import { SafeCanvas } from "./scene/SafeCanvas";
 
 const VIEWS = [
   { name: "Front · full", angle: 0, bloom: 1, macro: false },
@@ -91,13 +91,13 @@ export default function Inspection() {
         ))}
       </div>
       <div style={{ position: "fixed", inset: 0, pointerEvents: "none" }}>
-        <Canvas
+        <SafeCanvas
           events={botanicalEvents}
           eventSource={container as React.RefObject<HTMLElement>}
           dpr={1}
         >
           <View.Port />
-        </Canvas>
+        </SafeCanvas>
       </div>
     </div>
   );

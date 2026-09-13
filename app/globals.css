@@ -777,16 +777,23 @@ input[type="range"]::-moz-range-thumb {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  gap: 15px;
-  background: var(--background);
-  z-index: 8;
+  gap: 8px;
+  padding: 24px;
+  text-align: center;
+  pointer-events: none;
+}
+.webgl-message p {
+  margin: 0;
+  font:
+    italic 24px "Cormorant Garamond",
+    Georgia,
+    serif;
 }
 .webgl-message span {
+  max-width: 340px;
   color: var(--muted);
-}
-.webgl-message button {
-  border-bottom: 1px solid var(--line);
-  padding: 12px;
+  font-size: 11px;
+  line-height: 1.6;
 }
 .sr-only {
   position: absolute;
@@ -939,6 +946,19 @@ input[type="range"]::-moz-range-thumb {
 }
 .preview-link:hover .preview-caption > svg {
   transform: translate(3px, -3px);
+}
+.flower-preview-unavailable {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-align: center;
+  text-transform: uppercase;
+  pointer-events: none;
 }
 .flower-preview {
   position: relative;

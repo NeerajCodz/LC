@@ -1,6 +1,5 @@
 "use client";
 import { Suspense, useState, useMemo } from "react";
-import { Canvas } from "@react-three/fiber";
 import { botanicalEvents } from "@/lib/three/events";
 import { PerformanceMonitor } from "@react-three/drei";
 import { PCFShadowMap, Vector3, Euler } from "three";
@@ -12,6 +11,7 @@ import { Environment } from "../scene/Environment";
 import { SurfaceDetail } from "../scene/SurfaceDetail";
 import { SceneReady } from "../scene/SceneReady";
 import { RenderBudget } from "../scene/RenderBudget";
+import { SafeCanvas } from "../scene/SafeCanvas";
 import { CameraRig } from "../scene/CameraRig";
 import { Pollen } from "../scene/Pollen";
 import { useExperienceSettings } from "@/hooks/useExperienceSettings";
@@ -59,7 +59,7 @@ export default function FlowerGarden({
     ];
   }, [chosen]);
   return (
-    <Canvas
+    <SafeCanvas
       events={botanicalEvents}
       frameloop="never"
       shadows={!constrained && !degraded}
@@ -69,6 +69,7 @@ export default function FlowerGarden({
         antialias: true,
         powerPreference: constrained ? "low-power" : "high-performance",
       }}
+      onUnavailable={onReady}
       onCreated={({ gl }) => {
         gl.shadowMap.type = PCFShadowMap;
       }}
@@ -154,6 +155,6 @@ export default function FlowerGarden({
       {!constrained && (
         <PerformanceMonitor onDecline={() => setDegraded(true)} />
       )}
-    </Canvas>
+    </SafeCanvas>
   );
 }

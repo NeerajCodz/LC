@@ -23,7 +23,9 @@ import { Anthurium } from "./anthurium/Anthurium";
 import { Columbine } from "./columbine/Columbine";
 import { BleedingHeart } from "./bleeding-heart/BleedingHeart";
 import { BirdOfParadise } from "./bird-of-paradise/BirdOfParadise";
+import { Passionflower } from "./passionflower/Passionflower";
 const SPECIES = {
+  passionflower: Passionflower,
   "bird-of-paradise": BirdOfParadise,
   "bleeding-heart": BleedingHeart,
   columbine: Columbine,

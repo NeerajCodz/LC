@@ -16,6 +16,12 @@ export interface FlowerOrgansProps {
   wind: number;
   quality: Quality;
   color?: string;
+  pulse?: RefObject<number>;
+  interaction?: RefObject<{
+    angle: number;
+    proximity: number;
+    velocity: number;
+  }>;
 }
 export function FloralSurfacePart({
   kind,

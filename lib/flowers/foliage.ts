@@ -18,6 +18,14 @@ export interface FoliageProfile {
 
 /** Cultivar-independent leaf traits; lotus has its own peltate blade generator. */
 export const FOLIAGE: Record<FlowerType, FoliageProfile> = {
+  // Rendered by the dedicated continuous palmate blade in PassionVine.
+  passionflower: {
+    length: 1.05,
+    width: 1.4,
+    color: "#37643b",
+    lobes: 0.8,
+    roughness: 0.48,
+  },
   "bird-of-paradise": {
     length: 1.7,
     width: 0.64,

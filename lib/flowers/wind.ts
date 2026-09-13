@@ -10,6 +10,12 @@ export interface WindProfile {
 // Art-directed response classes informed by habit, stem construction and head load.
 // These are not measured species-specific elastic constants. See wind-and-contact.md.
 export const WIND_PROFILES: Record<FlowerType, WindProfile> = {
+  passionflower: {
+    compliance: 0.075,
+    stiffness: 42,
+    damping: 0.82,
+    flutter: 0.8,
+  },
   "bird-of-paradise": {
     compliance: 0.1,
     stiffness: 49,
@@ -95,6 +101,21 @@ export function flowerEnvelope(structure: FlowerStructure): number {
 export const bendWeight = (height: number) =>
   (height * height * (3 - height)) / 2;
 export const bendSlope = (height: number) => 3 * height - 1.5 * height * height;
+
+/** A tendril-supported vine has a second fixed boundary above its planting point. */
+export function supportedBendWeight(height: number, support = 0) {
+  const free = Math.max(0.05, 1 - support);
+  return bendWeight(Math.max(0, Math.min(1, (height - support) / free)));
+}
+export function supportedBendSlope(height: number, support = 0) {
+  const free = Math.max(0.05, 1 - support);
+  return bendSlope(Math.max(0, Math.min(1, (height - support) / free))) / free;
+}
+export function freeStemLength(structure: FlowerStructure) {
+  return (
+    structure.stemLength * Math.max(0.05, 1 - (structure.supportHeight ?? 0))
+  );
+}
 
 export function windLoad(time: number, x: number, z: number, gust = 0) {
   const phase = time - x * 0.16 - z * 0.24;

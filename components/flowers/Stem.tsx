@@ -35,6 +35,17 @@ function stemGeometry(length: number, radius: number) {
   g.computeVertexNormals();
   return g;
 }
+export interface StemProps {
+  type: FlowerType;
+  structure: FlowerStructure;
+  quality: Quality;
+  growth: RefObject<number>;
+  time: RefObject<number>;
+  wind: number;
+  motion: RefObject<PlantMotion>;
+  leaves: boolean;
+}
+
 export function Stem({
   type,
   structure,
@@ -44,16 +55,7 @@ export function Stem({
   wind,
   motion,
   leaves,
-}: {
-  type: FlowerType;
-  structure: FlowerStructure;
-  quality: Quality;
-  growth: RefObject<number>;
-  time: RefObject<number>;
-  wind: number;
-  motion: RefObject<PlantMotion>;
-  leaves: boolean;
-}) {
+}: StemProps) {
   const leafRefs = useRef<(Group | null)[]>([]);
   const geometry = useMemo(
     () => stemGeometry(structure.stemLength, structure.stemRadius),

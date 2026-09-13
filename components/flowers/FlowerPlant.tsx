@@ -17,13 +17,14 @@ import {
   stepPlantSpring,
   windLoad,
   flowerEnvelope,
+  freeStemLength,
   type PlantMotion,
 } from "@/lib/flowers/wind";
 import { GardenEnvironment, type GardenBody } from "../scene/GardenDynamics";
 import { useBloomAnimation } from "@/hooks/useBloomAnimation";
 import { useFlowerInteraction } from "@/hooks/useFlowerInteraction";
 import { PetalWhorl } from "./PetalWhorl";
-import { Stem } from "./Stem";
+import { Stem, type StemProps } from "./Stem";
 import { FlowerCore } from "./FlowerCore";
 import { Branch } from "./Branch";
 import { Calyx } from "./Calyx";
@@ -33,6 +34,7 @@ import { FlowerInteraction } from "./FlowerInteraction";
 export function FlowerPlant({
   structure,
   Organs,
+  StemComponent = Stem,
   type,
   color,
   bloom: target = 1,
@@ -58,10 +60,12 @@ export function FlowerPlant({
 }: FlowerProps & {
   structure: FlowerStructure;
   Organs?: ComponentType<FlowerOrgansProps>;
+  StemComponent?: ComponentType<StemProps>;
 }) {
   const head = useRef<Group>(null);
   const garden = useContext(GardenEnvironment);
   const profile = WIND_PROFILES[type];
+  const bendingLength = freeStemLength(structure);
   const motion = useRef<PlantMotion>({
     x: 0,
     z: 0,
@@ -127,11 +131,10 @@ export function FlowerPlant({
       head.current.position.x = world.x;
       head.current.position.z = world.z;
       head.current.rotation.x =
-        structure.headTilt +
-        Math.atan2(motion.current.z * 1.5, structure.stemLength);
+        structure.headTilt + Math.atan2(motion.current.z * 1.5, bendingLength);
       head.current.rotation.z = -Math.atan2(
         motion.current.x * 1.5,
-        structure.stemLength,
+        bendingLength,
       );
     };
     const entries = garden.current.bodies;
@@ -140,7 +143,7 @@ export function FlowerPlant({
       const index = entries.indexOf(entry);
       if (index !== -1) entries.splice(index, 1);
     };
-  }, [garden, world, structure]);
+  }, [garden, world, structure, bendingLength]);
   useFrame(({ pointer }, dt) => {
     if (paused) return;
     const delta = Math.min(dt, 0.05);
@@ -162,7 +165,7 @@ export function FlowerPlant({
     const airTime = garden?.current.time ?? time.current;
     const gust = garden?.current.gust ?? 0;
     const air = windLoad(airTime, position[0], position[2], gust);
-    const limit = structure.stemLength * 0.2;
+    const limit = bendingLength * 0.2;
     const amplitude = reducedMotion
       ? 0
       : profile.compliance * windStrength * growth.current ** 2;
@@ -186,19 +189,18 @@ export function FlowerPlant({
     motion.current.x = springs.current.x.value;
     motion.current.z = springs.current.z.value;
     motion.current.drop =
-      (0.6 * (motion.current.x ** 2 + motion.current.z ** 2)) /
-      structure.stemLength;
+      (0.6 * (motion.current.x ** 2 + motion.current.z ** 2)) / bendingLength;
     motion.current.contact = damp(motion.current.contact, 0, 5, delta);
     motion.current.air = Math.abs(air);
     cursor.current = interaction.current.angle;
     if (head.current) {
       head.current.rotation.x =
         structure.headTilt +
-        Math.atan2(motion.current.z * 1.5, structure.stemLength) +
+        Math.atan2(motion.current.z * 1.5, bendingLength) +
         layeredWind(time.current - 0.3, 1) * 0.016 * wind;
       head.current.rotation.z = -Math.atan2(
         motion.current.x * 1.5,
-        structure.stemLength,
+        bendingLength,
       );
       head.current.position.set(
         motion.current.x,
@@ -222,7 +224,7 @@ export function FlowerPlant({
       <group position={rooted ? [0, structure.stemLength, 0] : undefined}>
         <group>
           {stem && (
-            <Stem
+            <StemComponent
               type={type}
               structure={structure}
               quality={quality}
@@ -286,6 +288,8 @@ export function FlowerPlant({
                         wind={wind}
                         quality={quality}
                         color={color}
+                        pulse={pulseValue}
+                        interaction={interaction}
                       />
                     )}
                     <FlowerCore
@@ -297,7 +301,9 @@ export function FlowerPlant({
                   </group>
                 </group>
               ))}
-              {!structure.blossoms && <Calyx type={type} quality={quality} />}
+              {!structure.blossoms && structure.calyx !== false && (
+                <Calyx type={type} quality={quality} />
+              )}
             </FlowerInteraction>
           </group>
         </group>

@@ -13,6 +13,16 @@ export interface FlowerInfo {
 
 export const FLOWERS: FlowerInfo[] = [
   {
+    type: "passionflower",
+    name: "Blue Passionflower",
+    latin: "Passiflora caerulea",
+    family: "Passifloraceae",
+    color: "#6262ba",
+    description: "Fine threads of blue.\nA world within a flower.",
+    detail:
+      "A banded filament corona surrounds raised anthers and three spreading styles, above a climbing shoot with deeply lobed leaves.",
+  },
+  {
     type: "bird-of-paradise",
     name: "Bird of Paradise",
     latin: "Strelitzia reginae",

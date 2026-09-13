@@ -22,6 +22,7 @@ export const FLOWER_TYPES = [
   "columbine",
   "bleeding-heart",
   "bird-of-paradise",
+  "passionflower",
 ] as const;
 
 export type FlowerType = (typeof FLOWER_TYPES)[number];
@@ -101,6 +102,10 @@ export interface FlowerStructure {
   antherColor?: string;
   stemLength: number;
   stemRadius: number;
+  /** Fixed support along a climbing stem, measured from root (0) to head (1). */
+  supportHeight?: number;
+  /** Species with dedicated bracts/calyx supply these through their organ component. */
+  calyx?: boolean;
   leafShape: "serrated" | "broad" | "lance" | "round" | "needle";
   leafCount: number;
   headTilt: number;

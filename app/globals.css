@@ -529,6 +529,8 @@ input[type="range"]::-moz-range-thumb {
   gap: 0;
   color: var(--muted);
   text-align: center;
+  contain: layout paint;
+  isolation: isolate;
 }
 .bloom-loader--page {
   min-height: 100svh;
@@ -562,13 +564,16 @@ input[type="range"]::-moz-range-thumb {
 .bloom-loader-corolla {
   transform-origin: 60px 58px;
   animation: loader-turn 18s linear infinite;
+  will-change: transform;
+}
+.bloom-loader-bloom {
+  transform-origin: 60px 58px;
+  animation: loader-unfold 4.8s cubic-bezier(0.45, 0, 0.25, 1) infinite;
+  will-change: transform, opacity;
 }
 .bloom-loader-petal {
-  transform-origin: 60px 58px;
   fill: currentColor;
   fill-opacity: 0.035;
-  animation: loader-unfold 4.8s cubic-bezier(0.45, 0, 0.25, 1) infinite;
-  animation-delay: var(--petal-delay, 0s);
 }
 .bloom-loader-petal--inner {
   fill-opacity: 0.06;
@@ -589,11 +594,13 @@ input[type="range"]::-moz-range-thumb {
   fill: currentColor;
   fill-opacity: 0.045;
   animation: loader-leaves 4.8s ease-in-out infinite;
+  will-change: transform;
 }
 .bloom-loader-pollen {
   fill: currentColor;
   stroke: none;
   animation: loader-pollen 4.8s ease-in-out infinite;
+  will-change: transform, opacity;
 }
 @keyframes loader-turn {
   to {

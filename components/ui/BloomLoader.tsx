@@ -1,5 +1,3 @@
-import type { CSSProperties } from "react";
-
 interface BloomLoaderProps {
   label?: string;
   variant?: "page" | "overlay";
@@ -39,38 +37,30 @@ export function BloomLoader({
           <path d="m59 114-18-12m19 2 16-12" />
         </g>
         <g className="bloom-loader-corolla">
-          {Array.from({ length: 8 }, (_, index) => (
-            <g key={index} transform={`rotate(${index * 45} 60 58)`}>
-              <g
-                className="bloom-loader-petal"
-                style={
-                  { "--petal-delay": `${index * -0.13}s` } as CSSProperties
-                }
-              >
-                <path d="M60 58C43 47 41 26 60 15C77 26 78 46 60 58Z" />
-                <path
-                  className="bloom-loader-vein"
-                  d="M60 58C57 43 62 31 60 22"
-                />
-              </g>
-            </g>
-          ))}
-          <g transform="translate(60 58) scale(.62) rotate(22.5) translate(-60 -58)">
+          <g className="bloom-loader-bloom">
             {Array.from({ length: 8 }, (_, index) => (
               <g key={index} transform={`rotate(${index * 45} 60 58)`}>
-                <path
-                  className="bloom-loader-petal bloom-loader-petal--inner"
-                  style={
-                    {
-                      "--petal-delay": `${-0.65 - index * 0.1}s`,
-                    } as CSSProperties
-                  }
-                  d="M60 58C43 47 41 26 60 15C77 26 78 46 60 58Z"
-                />
+                <g className="bloom-loader-petal">
+                  <path d="M60 58C43 47 41 26 60 15C77 26 78 46 60 58Z" />
+                  <path
+                    className="bloom-loader-vein"
+                    d="M60 58C57 43 62 31 60 22"
+                  />
+                </g>
               </g>
             ))}
+            <g transform="translate(60 58) scale(.62) rotate(22.5) translate(-60 -58)">
+              {Array.from({ length: 8 }, (_, index) => (
+                <g key={index} transform={`rotate(${index * 45} 60 58)`}>
+                  <path
+                    className="bloom-loader-petal bloom-loader-petal--inner"
+                    d="M60 58C43 47 41 26 60 15C77 26 78 46 60 58Z"
+                  />
+                </g>
+              ))}
+            </g>
+            <circle className="bloom-loader-heart" cx="60" cy="58" r="4" />
           </g>
-          <circle className="bloom-loader-heart" cx="60" cy="58" r="4" />
         </g>
         <g className="bloom-loader-pollen">
           <circle cx="21" cy="28" r="1" />

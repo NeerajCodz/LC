@@ -3,7 +3,7 @@ import { useEffect, useLayoutEffect, useRef } from "react";
 import { useStore, useThree } from "@react-three/fiber";
 import { boundedDpr } from "@/lib/performance";
 
-/** One capped clock per Canvas. Offscreen/background scenes retain state at zero FPS. */
+/** One capped clock per Canvas. Two startup frames release readiness; inactive scenes then stay at zero FPS. */
 export function RenderBudget({
   active = true,
   constrained,
@@ -16,6 +16,7 @@ export function RenderBudget({
   const get = useThree((state) => state.get);
   const { subscribe } = useStore();
   const simulation = useRef(0);
+  const startupFrames = useRef(0);
   useLayoutEffect(() => {
     const state = get();
     // Keep mobile at CSS-pixel resolution in both modes. Fractional upscaling
@@ -56,7 +57,8 @@ export function RenderBudget({
       rendered = 0;
     const interval = 1000 / (constrained ? 30 : 60);
     const tick = (now: number) => {
-      if (!active || document.hidden || lost) {
+      const starting = startupFrames.current < 2;
+      if ((!active && !starting) || document.hidden || lost) {
         frame = 0;
         return;
       }
@@ -66,6 +68,7 @@ export function RenderBudget({
           : 1 / 60;
         last = now;
         state.advance(simulation.current, false);
+        startupFrames.current += 1;
         if (++rendered % 30 === 0)
           canvas.dataset.renderFrames = String(rendered);
       }
@@ -75,7 +78,7 @@ export function RenderBudget({
       cancelAnimationFrame(frame);
       frame = 0;
       last = 0;
-      if (active && !document.hidden && !lost)
+      if ((active || startupFrames.current < 2) && !document.hidden && !lost)
         frame = requestAnimationFrame(tick);
     };
     const onLost = (event: Event) => {

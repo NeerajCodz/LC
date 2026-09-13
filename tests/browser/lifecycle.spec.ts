@@ -20,6 +20,32 @@ test("gallery preview teardown and route changes keep Canvas providers alive", a
   expect(errors).toEqual([]);
 });
 
+test("specimen loader releases before the visibility observer responds", async ({
+  page,
+}) => {
+  await page.addInitScript(() => {
+    const NativeIntersectionObserver = window.IntersectionObserver;
+    Object.defineProperty(window, "IntersectionObserver", {
+      configurable: true,
+      value: class extends NativeIntersectionObserver {
+        constructor(
+          _callback: IntersectionObserverCallback,
+          options?: IntersectionObserverInit,
+        ) {
+          super(() => {}, options);
+        }
+      },
+    });
+  });
+  const errors: string[] = [];
+  page.on("pageerror", (error) => errors.push(error.message));
+
+  await page.goto("/flower/lotus/");
+  await expect(page.locator(".flower-canvas canvas")).toBeVisible();
+  await expect(page.locator(".bloom-loader--overlay")).toHaveCount(0);
+  expect(errors).toEqual([]);
+});
+
 test("complete flower viewing works when WebGPU is unavailable", async ({
   page,
 }) => {

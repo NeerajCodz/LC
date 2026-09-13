@@ -107,6 +107,10 @@ Spadix checks include capped topology, normal direction and mobile tessellation 
 
 ## Maintenance
 
+The global target inventory is [FLOWERS.md](FLOWERS.md); the interactive catalog is still `lib/flowers/catalog.ts`. After adding or renaming a specimen, run `npm run flowers:inventory` and `npm run flowers:check` so its mapping does not drift. These optional commands require Python 3.10+. Source metadata and checksums live in `data/taxonomy/source.json`; the generated audit manifest is `data/taxonomy/inventory.json`. Never relabel inventory entries as completed models just because a binomial matches.
+
+The WFO archive's sole missing parent is its nomenclatural Code record above kingdom Plantae. The importer permits only that pinned, source-verified boundary and requires it to attach solely to the expected Plantae kingdom. All other missing parents, duplicate IDs, missing accepted names, malformed rows and cycles fail before the document is written. `npm run test:taxonomy` exercises those boundaries. The importer preserves all accepted descendants of species, including uncommon infraspecific ranks, rather than silently dropping unfamiliar ranks.
+
 Keep collection copy open-ended and aligned with the mission to create every flower. Use `FLOWERS` / `FLOWER_TYPES` for navigation bounds and test coverage. When adding a species, extend its type, catalog entry, palette, botanical construction, exhaustive dispatcher, and `FLOWER_STRUCTURES` registry and `WIND_PROFILES` response; verify all derived routes and previews. Add botanical sources and inspect the specimen before presenting it as available. The current implementation list does not define the project's final scope.
 
 Keep `AGENTS.md` as the only agent instruction file. Its managed Next.js documentation block should remain intact; the installed Next generator recognizes the existing guide without requiring `CLAUDE.md`. Read framework docs under `node_modules/next/dist/docs/` before changing App Router conventions.

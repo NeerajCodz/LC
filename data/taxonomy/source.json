@@ -1,0 +1,15 @@
+{
+  "title": "World Flora Online Plant List June 2026",
+  "version": "2026-06",
+  "record": "https://zenodo.org/records/20782718",
+  "doi": "10.5281/zenodo.20782718",
+  "license": "CC0-1.0",
+  "archive": "wfo_plantlist_2026-06.zip",
+  "url": "https://zenodo.org/api/records/20782718/files/wfo_plantlist_2026-06.zip/content",
+  "bytes": 132643291,
+  "md5": "02f989b01b8eb142ec5934bd634b3876",
+  "angiospermRoot": "wfo-9949999999",
+  "externalRoots": { "wfo-9971000003": "wfo-4100001250" },
+  "externalRootEvidence": "https://www.worldfloraonline.org/taxon/wfo-9971000003",
+  "externalRootNote": "The archive omits the nomenclatural Code record above kingdom Plantae. Only this explicitly verified boundary is permitted."
+}

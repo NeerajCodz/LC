@@ -2,6 +2,8 @@
 
 Project LC aims to bring every single flower in the world to life in 3D. These notes cover the specimens developed so far and expand with the collection; they do not define the limits of the project.
 
+The source-backed global target list is [FLOWERS.md](FLOWERS.md), derived from the [World Flora Online June 2026 release](https://zenodo.org/records/20782718), licensed CC0. Its names and ancestry provide a taxonomic inventory, not morphology or measured mechanical parameters. Existing study mappings are exact-name candidates for review; ornamental Rose and Lily concepts currently require taxonomic clarification. The next vine-form research record is [blue passionflower](specimens/passionflower-research.md); it is not yet a public specimen.
+
 Botanical sources reviewed September 9, 2026; implementation notes updated September 10, 2026. The collection uses authored procedural geometry rather than photographic textures or scanned plants. The references below guide organ arrangement, surface character, and foliage. Cultivar variation is substantial: the Rose, Peony, Dahlia, and Chrysanthemum represent ornamental double forms, not every form of their species.
 
 See [README](../README.md) for architecture and the public Flower API, [development notes](development.md) for inspection steps, and [AGENTS.md](../AGENTS.md) for implementation requirements.

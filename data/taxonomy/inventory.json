@@ -1,0 +1,37 @@
+{
+  "source": {
+    "title": "World Flora Online Plant List June 2026",
+    "version": "2026-06",
+    "record": "https://zenodo.org/records/20782718",
+    "doi": "10.5281/zenodo.20782718",
+    "license": "CC0-1.0",
+    "archive": "wfo_plantlist_2026-06.zip",
+    "url": "https://zenodo.org/api/records/20782718/files/wfo_plantlist_2026-06.zip/content",
+    "bytes": 132643291,
+    "md5": "02f989b01b8eb142ec5934bd634b3876",
+    "angiospermRoot": "wfo-9949999999",
+    "externalRoots": {
+      "wfo-9971000003": "wfo-4100001250"
+    },
+    "externalRootEvidence": "https://www.worldfloraonline.org/taxon/wfo-9971000003",
+    "externalRootNote": "The archive omits the nomenclatural Code record above kingdom Plantae. Only this explicitly verified boundary is permitted."
+  },
+  "acceptedTaxaInArchive": 454688,
+  "inventoryTaxa": 396788,
+  "ranks": {
+    "form": 679,
+    "prole": 1,
+    "species": 347476,
+    "subform": 1,
+    "subspecies": 25475,
+    "subvariety": 9,
+    "variety": 23147
+  },
+  "familyHeadings": 430,
+  "matchedAuthoredStudies": 21,
+  "catalogStudies": 23,
+  "exactBiologicalSimulationVerified": false,
+  "documentSha256": "1d98ff9e1253b9b279c210bc15d30ebbb8a52d449d0131487e87effaf1ff27cf",
+  "catalogSha256": "2a13fe343c368a6ac94381b9e32635da06eba522a618129962cc72946d0e4bf4",
+  "archiveSha256": "75f1ad1f371978c9e46f3044152c07ed276fe57be9fb9a15b3621b19cf231987"
+}

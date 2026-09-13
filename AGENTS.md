@@ -6,6 +6,8 @@ Project LC's mission is to bring every single flower in the world to life as an 
 
 Read [README.md](README.md) for the public API and architecture, [development notes](docs/development.md) for commands and verification, and [botanical references](docs/botanical-references.md) before changing a species. Check `package.json` and the lockfile for installed versions; do not assume APIs from a different release.
 
+The global target inventory is [docs/FLOWERS.md](docs/FLOWERS.md). It is generated and large: search specific names with `rg`, rather than reading it into context in full. Inventory presence is not implementation or scientific validation. After catalog changes, regenerate with `npm run flowers:inventory` and audit with `npm run flowers:check`; keep source provenance and coverage gaps explicit. Do not hand-edit generated rows or substitute a recolored generic model for an unimplemented taxon.
+
 ## Established project requirements
 
 - Describe Project LC as an ever-growing collection with a mission to create every flower. Do not define the project by a fixed species count or imply that the current catalog completes the mission. Derive navigation bounds and test coverage from `FLOWERS` / `FLOWER_TYPES`; avoid hardcoded collection sizes in code or copy.

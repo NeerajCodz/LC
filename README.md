@@ -4,6 +4,8 @@
 
 Explore the flowers currently available through the collection page. The source of truth for implemented specimens is `lib/flowers/catalog.ts`; new flowers join the collection as their geometry, materials, and behavior are developed and reviewed.
 
+[FLOWERS.md](docs/FLOWERS.md) is the global implementation inventory, generated from the checksum-pinned World Flora Online June 2026 release. It lists accepted flowering-plant species and their accepted infraspecific taxa, including grasses, trees and inconspicuous flowers. Inventory entries are targets, not automatically generated models or claims of calibrated biological simulation. The current app catalog remains separate. Unresolved names, absent cultivars and unrecorded species remain explicit coverage gaps.
+
 Project documentation: [agent brief and implementation rules](AGENTS.md), [development and verification](docs/development.md), [botanical references](docs/botanical-references.md), and [wind/contact and mobile budgets](docs/wind-and-contact.md). `AGENTS.md` is the sole agent instruction file.
 
 ## Run locally
@@ -153,6 +155,8 @@ The shared gallery canvas is positioned inside the document-flow grid. Scissor r
 Frame rate depends on the browser, GPU, display resolution, active effects and selected species. The development hero exposes a screen-reader-hidden `#render-stats` output with a sampled `data-fps` value for local profiling. The seven-view inspection fixture is intentionally heavier than the public specimen view.
 
 ## Validation
+
+The optional taxonomy tooling requires Python 3.10+ in addition to the normal Node.js setup. `npm run flowers:inventory` downloads the pinned CC0 source once to ignored `dist/taxonomy/`, checks its publisher checksum and generates the complete searchable `docs/FLOWERS.md` plus provenance metadata. `npm run flowers:check` audits reproducibility against the current catalog; `npm run test:taxonomy` checks classification boundaries and failure handling. The large inventory is not imported into the site or browser bundle.
 
 ```bash
 npm run typecheck

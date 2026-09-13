@@ -12,6 +12,9 @@
     "test": "tsx --test tests/*.test.ts",
     "test:browser": "playwright test",
     "test:gpu": "tsx --test tests/gpu/*.test.mts",
+    "flowers:inventory": "tsx scripts/export-flower-catalog.ts && python scripts/flower_inventory.py",
+    "flowers:check": "tsx scripts/export-flower-catalog.ts && python scripts/flower_inventory.py --check",
+    "test:taxonomy": "python -m unittest discover -s tests/taxonomy -p test_*.py",
     "check:shaders": "vgpu check lib/gpu/shaders/petal-tissue.wgsl --require-validation && vgpu check lib/gpu/shaders/studio-lighting.wgsl --require-validation"
   },
   "dependencies": {

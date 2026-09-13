@@ -1,16 +1,44 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, ArrowUpRight, Search } from "lucide-react";
 import { FLOWERS, type FlowerInfo } from "@/lib/flowers/catalog";
 import { FlowerPreview } from "./flowers/FlowerPreview";
 import { Header } from "./ui/Header";
 import { PreviewStage } from "./scene/PreviewStage";
 
 type Angle = "front" | "side" | "45°" | "macro";
+
+const PAGE_SIZE = 20;
 export default function Gallery() {
   const [angle, setAngle] = useState<Angle>("front"),
-    [bloom, setBloom] = useState(1);
+    [bloom, setBloom] = useState(1),
+    [query, setQuery] = useState(""),
+    [page, setPage] = useState(1);
+  const resultsStart = useRef<HTMLDivElement>(null);
+  const matches = useMemo(() => {
+    const search = query.trim().toLocaleLowerCase();
+    return FLOWERS.filter(
+      (info) =>
+        !search ||
+        [info.name, info.latin, info.family].some((value) =>
+          value.toLocaleLowerCase().includes(search),
+        ),
+    );
+  }, [query]);
+  const totalPages = Math.max(1, Math.ceil(matches.length / PAGE_SIZE));
+  const visibleTypes = new Set(
+    matches
+      .slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE)
+      .map((info) => info.type),
+  );
+  const showPage = (nextPage: number) => {
+    setPage(nextPage);
+    requestAnimationFrame(() =>
+      resultsStart.current?.scrollIntoView({ block: "start" }),
+    );
+  };
+
   return (
     <div className="gallery-page">
       <Header active="gallery" />
@@ -21,11 +49,27 @@ export default function Gallery() {
             A world in <em>bloom.</em>
           </h1>
         </div>
-        <p>
-          Our mission: bring every flower in the world to life in 3D.
-          <br />
-          An ever-growing collection, one bloom at a time.
-        </p>
+        <div className="gallery-search">
+          <label htmlFor="collection-search">Search the collection</label>
+          <div className="gallery-search-field">
+            <Search size={16} aria-hidden="true" />
+            <input
+              id="collection-search"
+              type="search"
+              value={query}
+              placeholder="Name, family, or Latin name"
+              autoComplete="off"
+              spellCheck="false"
+              onChange={(event) => {
+                setQuery(event.target.value);
+                setPage(1);
+              }}
+            />
+            <span aria-live="polite">
+              {matches.length} {matches.length === 1 ? "flower" : "flowers"}
+            </span>
+          </div>
+        </div>
       </div>
       <div className="gallery-toolbar">
         <div className="angle-picker" role="group" aria-label="Viewing angle">
@@ -48,22 +92,66 @@ export default function Gallery() {
             max="1"
             step=".01"
             value={bloom}
-            onChange={(e) => setBloom(Number(e.target.value))}
+            onChange={(event) => setBloom(Number(event.target.value))}
           />
           <span>{Math.round(bloom * 100)}%</span>
         </div>
       </div>
+      <div ref={resultsStart} className="gallery-results-start" />
       <PreviewStage className="gallery-grid">
-        {FLOWERS.map((info, i) => (
+        {/* Retain visited preview portals when filtering or changing pages. */}
+        {FLOWERS.map((info, index) => (
           <SpecimenPreview
             key={info.type}
             info={info}
-            index={i}
+            index={index}
             angle={angle}
             bloom={bloom}
+            shown={visibleTypes.has(info.type)}
           />
         ))}
+        {matches.length === 0 && (
+          <p className="gallery-empty">
+            No flowers found for &ldquo;{query.trim()}&rdquo;.
+          </p>
+        )}
       </PreviewStage>
+      {matches.length > 0 && totalPages > 1 && (
+        <nav className="gallery-pagination" aria-label="Collection pages">
+          <button
+            type="button"
+            disabled={page === 1}
+            onClick={() => showPage(page - 1)}
+          >
+            <ArrowLeft size={14} aria-hidden="true" />
+            Previous
+          </button>
+          <div>
+            {Array.from({ length: totalPages }, (_, index) => {
+              const pageNumber = index + 1;
+              return (
+                <button
+                  key={pageNumber}
+                  type="button"
+                  aria-label={`Page ${pageNumber}`}
+                  aria-current={pageNumber === page ? "page" : undefined}
+                  onClick={() => showPage(pageNumber)}
+                >
+                  {pageNumber}
+                </button>
+              );
+            })}
+          </div>
+          <button
+            type="button"
+            disabled={page === totalPages}
+            onClick={() => showPage(page + 1)}
+          >
+            Next
+            <ArrowRight size={14} aria-hidden="true" />
+          </button>
+        </nav>
+      )}
       <footer className="collection-footer">
         <span className="footer-wordmark">living colors</span>
         <Link href="/garden">
@@ -78,11 +166,13 @@ function SpecimenPreview({
   index,
   angle,
   bloom,
+  shown,
 }: {
   info: FlowerInfo;
   index: number;
   angle: Angle;
   bloom: number;
+  shown: boolean;
 }) {
   const ref = useRef<HTMLElement>(null);
   const [visible, setVisible] = useState(false),
@@ -101,6 +191,7 @@ function SpecimenPreview({
     <article
       ref={ref}
       className="gallery-specimen"
+      hidden={!shown}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
@@ -118,7 +209,7 @@ function SpecimenPreview({
           angle={angle === "45°" ? "three-quarter" : angle}
           bloom={bloom}
           hovered={hover}
-          visible={visible}
+          visible={shown && visible}
         />
         <div className="preview-caption">
           <div>

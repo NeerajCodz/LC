@@ -12,6 +12,7 @@ test.use({
 test("mobile specimen, macro, collection and garden keep bounded buffers and live frames", async ({
   page,
 }) => {
+  test.setTimeout(120_000);
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
   async function checkBuffers() {
@@ -78,12 +79,26 @@ test("mobile specimen, macro, collection and garden keep bounded buffers and liv
   await expectRenderedFlower(page.locator("canvas").first());
   await page.goto("/gallery/");
   const previews = page.locator(".flower-preview");
+  const visiblePreviews = page.locator(
+    ".gallery-specimen:not([hidden]) .flower-preview",
+  );
   await expect(previews).toHaveCount(FLOWER_TYPES.length);
-  for (let i = 0; i < FLOWER_TYPES.length; i++) {
-    await previews.nth(i).scrollIntoViewIfNeeded();
-    await expect(previews.nth(i)).toHaveAttribute("data-render-rect", /,/);
+  const pageCount = Math.ceil(FLOWER_TYPES.length / 20);
+  for (let pageNumber = 1; pageNumber <= pageCount; pageNumber++) {
+    if (pageNumber > 1)
+      await page.getByRole("button", { name: `Page ${pageNumber}` }).click();
+    const pageSize = Math.min(20, FLOWER_TYPES.length - (pageNumber - 1) * 20);
+    await expect(visiblePreviews).toHaveCount(pageSize);
+    for (let i = 0; i < pageSize; i++) {
+      await visiblePreviews.nth(i).scrollIntoViewIfNeeded();
+      await expect(visiblePreviews.nth(i)).toHaveAttribute(
+        "data-render-rect",
+        /,/,
+      );
+    }
   }
-  await previews.first().scrollIntoViewIfNeeded();
+  if (pageCount > 1) await page.getByRole("button", { name: "Page 1" }).click();
+  await visiblePreviews.first().scrollIntoViewIfNeeded();
   await expect(page.locator("canvas")).toHaveCount(1);
   await checkBuffers();
   await checkLive();

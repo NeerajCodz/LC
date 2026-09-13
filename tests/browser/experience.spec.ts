@@ -1,14 +1,43 @@
 import { expect, test } from "@playwright/test";
 import { FLOWER_TYPES } from "../../lib/flowers/types";
-test("all species are reachable through the collection", async ({ page }) => {
+test("collection search and pagination expose every species", async ({
+  page,
+}) => {
   const errors: string[] = [];
-  page.on("pageerror", (e) => errors.push(e.message));
+  page.on("pageerror", (error) => errors.push(error.message));
   await page.goto("/");
   await expect(
     page.getByRole("heading", { name: "A world in bloom." }),
   ).toBeVisible();
-  const previews = page.locator(".preview-link");
-  await expect(previews).toHaveCount(FLOWER_TYPES.length);
+
+  const visiblePreviews = page.locator(
+    ".gallery-specimen:not([hidden]) .preview-link",
+  );
+  const pageCount = Math.ceil(FLOWER_TYPES.length / 20);
+  await expect(visiblePreviews).toHaveCount(Math.min(20, FLOWER_TYPES.length));
+  await expect(page.locator(".gallery-pagination > div button")).toHaveCount(
+    pageCount,
+  );
+  await expect(page.getByRole("button", { name: "Page 1" })).toHaveAttribute(
+    "aria-current",
+    "page",
+  );
+  if (pageCount > 1) {
+    await page.getByRole("button", { name: "Page 2" }).click();
+    await expect(visiblePreviews).toHaveCount(
+      Math.min(20, FLOWER_TYPES.length - 20),
+    );
+    await expect(page.getByRole("button", { name: "Page 2" })).toHaveAttribute(
+      "aria-current",
+      "page",
+    );
+  }
+
+  const search = page.getByRole("searchbox", {
+    name: "Search the collection",
+  });
+  await search.fill("Phalaenopsis");
+  await expect(visiblePreviews).toHaveCount(1);
   await page.getByRole("button", { name: "Side", exact: true }).click();
   await expect(
     page.getByRole("button", { name: "Side", exact: true }),

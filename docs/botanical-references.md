@@ -2,7 +2,7 @@
 
 Project LC aims to bring every single flower in the world to life in 3D. These notes cover the specimens developed so far and expand with the collection; they do not define the limits of the project.
 
-The source-backed global target list is [FLOWERS.md](FLOWERS.md), derived from the [World Flora Online June 2026 release](https://zenodo.org/records/20782718), licensed CC0. Its names and ancestry provide a taxonomic inventory, not morphology or measured mechanical parameters. Existing study mappings are exact-name candidates for review; ornamental Rose and Lily concepts currently require taxonomic clarification. The next vine-form research record is [blue passionflower](specimens/passionflower-research.md); it is not yet a public specimen.
+The source-backed global target list is [FLOWERS.md](FLOWERS.md), derived from the [World Flora Online June 2026 release](https://zenodo.org/records/20782718), licensed CC0. Its names and ancestry provide a taxonomic inventory, not morphology or measured mechanical parameters. Existing study mappings are exact-name candidates for review; ornamental Rose and Lily concepts currently require taxonomic clarification. The [blue passionflower dossier](specimens/passionflower-research.md) documents the supported vine specimen, organ construction and remaining evidence gaps.
 
 Botanical sources reviewed September 9, 2026; implementation notes updated September 10, 2026. The collection uses authored procedural geometry rather than photographic textures or scanned plants. The references below guide organ arrangement, surface character, and foliage. Cultivar variation is substantial: the Rose, Peony, Dahlia, and Chrysanthemum represent ornamental double forms, not every form of their species.
 
@@ -31,6 +31,8 @@ Wind response research and implementation limits are documented in [wind and con
 ## Additional floral forms
 
 The expanded collection includes Poppy, Daffodil, Bearded Iris, Calla Lily, Anthurium, Columbine, Bleeding Heart, and Bird of Paradise. See the [source-linked specimen dossier](specimens/expanded-forms.md) for anatomy, construction, opening behavior, and explicit modeling limitations.
+
+Blue Passionflower adds a supported climbing shoot and a banded, multiseries filament corona. Its [dedicated dossier](specimens/passionflower-research.md) links the Passiflora Society and NC State references and records the modeled form, material treatment and uncalibrated motion.
 
 ## Lotus center revision
 

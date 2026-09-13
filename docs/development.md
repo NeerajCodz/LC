@@ -103,6 +103,10 @@ Wait for a fresh page to settle before comparing scene IDs; hot reloads during c
 
 Custom organ geometry is tested in `floral-surfaces.test.ts`; the [specimen dossier](specimens/expanded-forms.md) records research and interpretation. Run the seven-view fixture after changing shell sampling or folds.
 
+`passionflower.test.ts` adds continuous palmate-leaf topology, corona pigment zones, finite folded normals, low-quality geometry bounds and fixed-support derivative checks. The [passionflower dossier](specimens/passionflower-research.md) describes its modular corolla, reproductive organs and climbing stem. Its canonical route and garden macro selection are included in `expanded-specimens.spec.ts`. Preserve optional organ interaction refs and the custom stem slot when extending these systems; no existing flower should acquire the vine's support constraint by default.
+
+`passionflower.spec.ts` disables WebGPU to exercise the GLSL material fallback through bloom, macro and all themes. It rejects runtime/shader errors and samples actual canvas pixels. Driver informational warnings are not compile failures. `mobile-performance.spec.ts` also checks that entering macro keeps the mobile framebuffer size stable and the flower drawn; frame counters alone cannot establish visible rendering. Inspect a composited screenshot as well as pixel readback when checking WebKit behavior.
+
 Spadix checks include capped topology, normal direction and mobile tessellation bounds. When validating retained galleries, check the framebuffer after registering all previews as well as after resizing: Canvas configuration can reset DPR even when its DOM size does not change. `RenderBudget` subscribes to renderer-store changes to reapply its limit.
 
 ## Maintenance

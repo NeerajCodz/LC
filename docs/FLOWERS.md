@@ -43,6 +43,7 @@ Generated from `lib/flowers/catalog.ts`; genus or ornamental studies never mark 
 | [Columbine](http://localhost:1607/flower/columbine/) | Aquilegia canadensis | Exact accepted-name match: `wfo-0000541210` |
 | [Bleeding Heart](http://localhost:1607/flower/bleeding-heart/) | Lamprocapnos spectabilis | Exact accepted-name match: `wfo-0000443459` |
 | [Bird of Paradise](http://localhost:1607/flower/bird-of-paradise/) | Strelitzia reginae | Exact accepted-name match: `wfo-0000562066` |
+| [Blue Passionflower](http://localhost:1607/flower/passionflower/) | Passiflora caerulea | Exact accepted-name match: `wfo-0000479867` |
 
 ## Reproduce and audit
 
@@ -299908,7 +299909,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Passiflora bucaramangensis — `wfo-0001091080`
 - Passiflora buchtienii — `wfo-0001091070`
 - Passiflora cacao — `wfo-0001319287`
-- Passiflora caerulea — `wfo-0000479867`
+- Passiflora caerulea — `wfo-0000479867` · authored study: `passionflower`
 - Passiflora calcicola — `wfo-0000480002`
 - Passiflora calicicalyx — `wfo-1000030792`
 - Passiflora callacallensis — `wfo-0000480003`

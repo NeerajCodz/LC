@@ -37,6 +37,7 @@ The global target inventory is [docs/FLOWERS.md](docs/FLOWERS.md). It is generat
 
 - Non-radial flowers use the typed `Organs` slot and `FloralParts` shell/blade helpers. Preserve initialized morph targets, folded normals, explicit disposal, and quality-scaled small organs. Consult [expanded forms](docs/specimens/expanded-forms.md). Never replace these structures with radial placeholder whorls.
 - Use `headCenter` for asymmetric macro targets. Keep mobile garden controls outside the viewing surface, and enforce renderer budgets when Canvas configuration changes as well as on resize.
+- Climbing specimens may supply `StemComponent` and `supportHeight`. Preserve the fixed support's zero displacement/slope and use the free stem length for head deformation. Blue Passionflower's dedicated organs, continuous palmate leaves and instanced corona are documented in [its dossier](docs/specimens/passionflower-research.md). Do not replace them with generic radial petals or compound leaflets.
 
 ## Working and validation
 

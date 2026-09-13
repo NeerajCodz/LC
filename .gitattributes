@@ -1,0 +1,3 @@
+# Keep generated inventory fingerprints identical on Windows and Unix checkouts.
+docs/FLOWERS.md text eol=lf
+data/taxonomy/*.json text eol=lf

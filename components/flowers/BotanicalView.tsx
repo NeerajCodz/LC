@@ -57,7 +57,7 @@ export function BotanicalView({
           camera.lookAt(macro ? cx : 0, macro ? cy : 0.05, macro ? cz : 0)
         }
       />
-      <Lighting shadows={false} />
+      <Lighting shadows={false} cursor={!reducedMotion} />
       <Environment />
       <Flower
         type={type}

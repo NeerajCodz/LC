@@ -1,9 +1,16 @@
+import { useRef } from "react";
+import type { SpotLight } from "three";
+import { useActiveFrame } from "@/hooks/useActiveFrame";
+import { damp } from "@/lib/three/easing";
+
 export function Lighting({
   shadows = true,
   extent = 4,
+  cursor = true,
 }: {
   shadows?: boolean;
   extent?: number;
+  cursor?: boolean;
 }) {
   return (
     <>
@@ -30,13 +37,38 @@ export function Lighting({
         intensity={0.9}
         color="#e1e9f0"
       />
-      <spotLight
-        position={[1, 4, -3]}
-        intensity={18}
-        angle={0.65}
-        penumbra={1}
-        color="#f4e4d5"
-      />
+      <CursorLight extent={extent} enabled={cursor} />
     </>
+  );
+}
+
+function CursorLight({
+  extent,
+  enabled,
+}: {
+  extent: number;
+  enabled: boolean;
+}) {
+  const light = useRef<SpotLight>(null);
+  useActiveFrame(({ pointer }, dt) => {
+    if (!enabled || !light.current) return;
+    const range = Math.min(extent, 4);
+    const x = pointer.x * range;
+    const y = 2.5 + pointer.y * range * 0.65;
+    light.current.position.x = damp(light.current.position.x, x, 7, dt);
+    light.current.position.y = damp(light.current.position.y, y, 7, dt);
+    light.current.target.position.x = light.current.position.x;
+    light.current.target.position.y = light.current.position.y;
+    light.current.target.updateMatrixWorld();
+  });
+  return (
+    <spotLight
+      ref={light}
+      position={[1, 4, 4]}
+      intensity={14}
+      angle={0.65}
+      penumbra={1}
+      color="#f4e4d5"
+    />
   );
 }

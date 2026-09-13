@@ -87,7 +87,11 @@ export default function FlowerGarden({
       />
       <Suspense fallback={null}>
         <SceneReady onReady={onReady} />
-        <Lighting shadows={!constrained && !degraded} extent={6} />
+        <Lighting
+          shadows={!constrained && !degraded}
+          extent={6}
+          cursor={!reducedMotion && !paused}
+        />
         <Environment />
         <mesh
           position={[0, GARDEN_GROUND - 0.015, 0]}

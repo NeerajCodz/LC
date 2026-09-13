@@ -86,7 +86,10 @@ export default function FlowerScene({
       <fog attach="fog" args={[THEME_BACKGROUNDS[theme], 11, 25]} />
       <Suspense fallback={null}>
         <SceneReady onReady={onReady} />
-        <Lighting shadows={quality !== "low"} />
+        <Lighting
+          shadows={quality !== "low"}
+          cursor={!reducedMotion && !paused}
+        />
         <Environment />
         <Flower
           key={type}

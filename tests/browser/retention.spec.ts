@@ -7,7 +7,7 @@ test("all catalog scenes survive a round-trip scroll in one WebGL context", asyn
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto("/gallery/");
+  await page.goto("/");
   const previews = page.locator(".flower-preview");
   const sceneIds: string[] = [];
   await expect(previews).toHaveCount(FLOWER_TYPES.length);
@@ -30,11 +30,11 @@ test("all catalog scenes survive a round-trip scroll in one WebGL context", asyn
   expect(errors).toEqual([]);
 });
 
-test("home angle views and the scroll study retain their canvases and bloom control", async ({
+test("specimen angle views and scroll study retain canvases and bloom", async ({
   page,
 }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto("/");
+  await page.goto("/flower/rose/");
   await page
     .getByRole("link", { name: "View every angle", exact: true })
     .click();

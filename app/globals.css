@@ -380,6 +380,14 @@ p {
 .specimen-pagination button:hover {
   background: var(--hover);
 }
+.view-controls button[aria-pressed="true"] {
+  background: var(--ink);
+  color: var(--background);
+}
+.view-controls button:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
 .specimen-pagination {
   position: absolute;
   left: 8.2%;

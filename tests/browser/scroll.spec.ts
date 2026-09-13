@@ -3,21 +3,21 @@ import { expect, test } from "@playwright/test";
 for (const scenario of [
   {
     name: "collection",
-    route: "/gallery/",
+    route: "/",
     frame: ".gallery-preview",
     caption: ".preview-caption h2",
     anchor: null,
   },
   {
-    name: "home hero",
-    route: "/",
+    name: "specimen hero",
+    route: "/flower/rose/",
     frame: ".scene-wrap",
     caption: ".specimen-copy h1",
     anchor: null,
   },
   {
-    name: "home angle gallery",
-    route: "/",
+    name: "specimen angle gallery",
+    route: "/flower/rose/",
     frame: ".angle-frame-view",
     caption: ".angle-frame figcaption",
     anchor: "View every angle",
@@ -34,7 +34,7 @@ for (const scenario of [
         .click();
     const frame = page.locator(scenario.frame).first();
     await expect(frame).toBeVisible();
-    if (scenario.name !== "home hero")
+    if (scenario.name !== "specimen hero")
       await expect(frame).toHaveAttribute("data-render-rect", /,/);
     else await expect(frame.locator("canvas")).toBeVisible();
     await page.evaluate(() => document.fonts.ready.then(() => undefined));

@@ -90,7 +90,7 @@ export default function FlowerGarden({
         <Lighting
           shadows={!constrained && !degraded}
           extent={6}
-          cursor={!reducedMotion && !paused}
+          followCursor={!reducedMotion && !paused}
         />
         <Environment />
         <mesh

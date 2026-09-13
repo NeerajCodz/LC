@@ -1,4 +1,4 @@
-import Experience from "@/components/Experience";
+import GalleryLoader from "@/components/GalleryLoader";
 import { permanentRedirect } from "next/navigation";
 import { isFlowerType } from "@/lib/flowers/catalog";
 export default async function Home({
@@ -8,5 +8,5 @@ export default async function Home({
 }) {
   const { flower } = await searchParams;
   if (isFlowerType(flower)) permanentRedirect(`/flower/${flower}`);
-  return <Experience initialType="rose" />;
+  return <GalleryLoader />;
 }

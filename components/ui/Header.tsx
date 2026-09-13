@@ -2,12 +2,15 @@ import Link from "next/link";
 import { Flower2, ArrowUpRight } from "lucide-react";
 import type { MouseEvent } from "react";
 import { ThemeSwitcher } from "./ThemeSwitcher";
+import { FLOWERS } from "@/lib/flowers/catalog";
 export function Header({
   active = "specimen",
   onNavigate,
+  specimenHref = `/flower/${FLOWERS[0].type}/`,
 }: {
   active?: "specimen" | "garden" | "gallery";
   onNavigate?: (href: string) => void;
+  specimenHref?: string;
 }) {
   const navigate = (event: MouseEvent<HTMLAnchorElement>, href: string) => {
     if (
@@ -34,8 +37,8 @@ export function Header({
       </Link>
       <nav aria-label="Main navigation">
         <Link
-          href="/"
-          onClick={(e) => navigate(e, "/")}
+          href={specimenHref}
+          onClick={(e) => navigate(e, specimenHref)}
           aria-current={active === "specimen" ? "page" : undefined}
         >
           The specimen
@@ -48,8 +51,8 @@ export function Header({
           The garden
         </Link>
         <Link
-          href="/gallery"
-          onClick={(e) => navigate(e, "/gallery")}
+          href="/"
+          onClick={(e) => navigate(e, "/")}
           aria-current={active === "gallery" ? "page" : undefined}
         >
           The collection <ArrowUpRight size={13} />

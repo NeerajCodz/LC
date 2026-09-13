@@ -73,7 +73,7 @@ export default function Inspection() {
                 fov={36}
                 onUpdate={(c) => c.lookAt(0, v.macro ? 0.65 : 0.15, 0)}
               />
-              <Lighting shadows={false} cursor={false} />
+              <Lighting shadows={false} followCursor={false} />
               <group rotation={[0, v.angle, 0]}>
                 <Flower
                   key={type}

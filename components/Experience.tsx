@@ -14,6 +14,7 @@ import {
   SlidersHorizontal,
   X,
   MoveUpRight,
+  Lightbulb,
 } from "lucide-react";
 import { FLOWERS, getFlower } from "@/lib/flowers/catalog";
 import type { FlowerType } from "@/lib/flowers/types";
@@ -41,6 +42,7 @@ export default function Experience({
     [macro, setMacro] = useState(false),
     [paused, setPaused] = useState(false),
     [pulse, setPulse] = useState(0),
+    [lightLocked, setLightLocked] = useState(false),
     [ready, setReady] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const introTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -125,6 +127,7 @@ export default function Experience({
               macro={macro}
               paused={paused}
               pulse={pulse}
+              lightLocked={lightLocked}
               onReady={() => setReady(true)}
               onFlowerClick={() => {
                 if (!reducedMotion) setPulse((p) => p + 1);
@@ -137,6 +140,7 @@ export default function Experience({
         </div>
         {webGL2 === true && !ready && <BloomLoader variant="overlay" />}
         <Header
+          specimenHref={`/flower/${type}/`}
           onNavigate={(href) => {
             if (href === window.location.pathname) {
               setMacro(false);
@@ -192,6 +196,15 @@ export default function Experience({
             onClick={() => setMacro(!macro)}
           >
             {macro ? <Minimize2 size={17} /> : <Maximize2 size={17} />}
+          </button>
+          <button
+            title={lightLocked ? "Unlock light" : "Lock light here"}
+            aria-label={lightLocked ? "Unlock light" : "Lock light here"}
+            aria-pressed={lightLocked}
+            disabled={webGL2 !== true || reducedMotion}
+            onClick={() => setLightLocked((locked) => !locked)}
+          >
+            <Lightbulb size={17} />
           </button>
           <button
             title={paused ? "Resume motion" : "Pause motion"}

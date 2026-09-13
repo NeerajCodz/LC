@@ -27,6 +27,7 @@ export interface SceneProps {
   macro?: boolean;
   paused?: boolean;
   pulse?: number;
+  lightLocked?: boolean;
   angle?: ViewAngle;
   active?: boolean;
   onFlowerClick?: () => void;
@@ -39,6 +40,7 @@ export default function FlowerScene({
   macro = false,
   paused = false,
   pulse = 0,
+  lightLocked = false,
   angle,
   active = true,
   onFlowerClick,
@@ -88,7 +90,7 @@ export default function FlowerScene({
         <SceneReady onReady={onReady} />
         <Lighting
           shadows={quality !== "low"}
-          cursor={!reducedMotion && !paused}
+          followCursor={!reducedMotion && !paused && !lightLocked}
         />
         <Environment />
         <Flower

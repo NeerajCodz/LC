@@ -38,14 +38,14 @@ Deploy as a regular Next.js application on a Node.js host or a Next.js-compatibl
 
 ## Pages and interaction
 
-- `/` — cinematic Rose specimen, catalog-driven selector, previous/next, bloom slider, replay, pause, macro camera, and scroll-driven growth.
-- `/flower/lotus/` (and each implemented species slug) — a dedicated specimen route with species metadata. Legacy `/?flower=lotus` links permanently redirect here. Repeated slashes are normalized by Next.js.
+- `/` — the growing collection, with visible previews rendered directly inside their page frames. Compare front, side, 45-degree and macro views, and control bloom across the current catalog.
+- `/flower/lotus/` (and each implemented species slug) — a dedicated cinematic specimen route with species metadata, catalog-driven selector, previous/next, bloom slider, replay, pause, lockable cursor lighting, macro camera, and scroll-driven growth. Legacy `/?flower=lotus` links permanently redirect here. Repeated slashes are normalized by Next.js.
 - `/flower/lotus/#angles` — four simultaneous live views of the selected flower: front, 45°, side, and macro, with a shared bloom control. Every specimen has this gallery section.
 - `/garden/` — naturally spaced flowers with anchored stems and gentle head contact. Every current catalog species appears on desktop and mobile, with a dedicated portrait planting layout. A shared bloom slider controls the garden. Click/tap a flower or use the accessible species selector for an in-place macro view; Return to garden or Escape restores the composition. Other plants stay mounted but hidden during macro viewing so they cannot obscure the selected bloom. The specimen link opens its dedicated page.
-- `/gallery/` — the growing collection, with visible previews rendered directly inside their page frames. Compare front, side, 45-degree and macro views, and control bloom across the current catalog.
+- `/gallery/` — an alternate route to the same growing collection shown at `/`.
 - `/dev/inspection/` — development-only seven-view geometry fixture. It returns 404 in production. Select any species to inspect full bloom, multiple angles, macro, bud and half bloom side by side.
 
-Drag the specimen or garden to orbit; use the wheel or a two-finger pinch to zoom. Camera presets transition smoothly and yield immediately to manual gestures. Click or tap for a bloom pulse and close-up. The equivalent macro, bloom and pause actions are available through keyboard-accessible DOM controls. Escape closes the collection selector. Reduced-motion preferences disable pulses and pollen, simplify camera movement and make bloom controls immediate.
+Drag the specimen or garden to orbit; use the wheel or a two-finger pinch to zoom. Camera presets transition smoothly and yield immediately to manual gestures. Click or tap for a bloom pulse and close-up. On specimen routes, the light follows the cursor by default; move it into place and use the light button to lock or release it. The equivalent macro, bloom, lighting and pause actions are available through keyboard-accessible DOM controls. Escape closes the collection selector. Reduced-motion preferences disable pulses, pollen and cursor-light movement, simplify camera movement and make bloom controls immediate.
 
 The original Lucide `Flower2` emblem sits beside **LC** in the header and appears in the SVG favicon, on a forest-charcoal tile with ivory strokes. Next.js discovers `app/icon.svg` and adds its metadata on every route. One rounded toggle cycles through **Current** (forest charcoal), **Black**, and **White** (warm ivory). Its sliding thumb and leaf/moon/sun icons show the active theme; its accessible label names the current and next theme. Themes update both the interface and the 3D background/fog. The choice persists in local storage for the current origin and synchronizes between browser tabs; flower pigments stay consistent across themes. The footer carries the full **living colors** wordmark.
 
@@ -152,7 +152,7 @@ Petals are instanced per whorl; dense reproductive organs use instancing or merg
 
 `RenderBudget` limits constrained devices to 30 FPS, 1.5 million backing pixels and 4096 pixels per dimension, subject to GPU limits. Desktop allows 6 million pixels and 8192 per dimension, with requested DPR 2 (2.5 for macro). These bounds include tall gallery canvases; they do not represent total VRAM consumption. Hidden pages and inactive scenes stop advancing, and simulation deltas are bounded on resume.
 
-Each gallery uses **one WebGL context** and a separate retained scene per visited preview. Intersection visibility initializes each scene once, then pauses/resumes it. `useActiveFrame` skips offscreen bloom, wind, petal matrices and interaction updates while retaining their refs, geometries, materials, and GPU buffers. Unvisited scenes remain lazy; leaving the route releases them. The home scroll study also stays mounted after its first visit, with its render loop paused offscreen. The collection therefore uses one context after visiting the entire current catalog; the complete home page uses three (hero, angle gallery, scroll study).
+Each gallery uses **one WebGL context** and a separate retained scene per visited preview. Intersection visibility initializes each scene once, then pauses/resumes it. `useActiveFrame` skips offscreen bloom, wind, petal matrices and interaction updates while retaining their refs, geometries, materials, and GPU buffers. Unvisited scenes remain lazy; leaving the route releases them. A specimen route's scroll study also stays mounted after its first visit, with its render loop paused offscreen. The collection uses one context after visiting the entire current catalog; a complete specimen page uses three (hero, angle gallery, scroll study).
 
 The shared gallery canvas is positioned inside the document-flow grid. Scissor rectangles are computed from the canvas and preview bounds sampled together, so native scrolling moves the flower pixels and captions together. This avoids both fixed-overlay scroll drift and one-renderer-per-flower context limits. The canvas backing buffer covers the finite gallery grid; only nearby scene rectangles are drawn. The implementation follows [R3F's guidance on avoiding repeated mounts](https://r3f.docs.pmnd.rs/advanced/pitfalls).
 
@@ -183,11 +183,11 @@ npx playwright install chromium webkit
 npm run test:browser
 ```
 
-Browser scenarios also check that flower canvases and captions move by the same amount when scrolling down and back up on the collection, home hero, and home angle gallery.
+Browser scenarios also check that flower canvases and captions move by the same amount when scrolling down and back up on the collection, specimen hero, and specimen angle gallery.
 
 Lifecycle scenarios cover rapid preview teardown, gallery/specimen navigation, and macro viewing with WebGPU unavailable. To use an installed Google Chrome for desktop tests, set `PLAYWRIGHT_CHANNEL=chrome` in your shell. The default uses Playwright's bundled Chromium; the mobile project uses WebKit.
 
-Retention scenarios visit every implemented species, scroll back, and assert unchanged scene identities with exactly one collection canvas. Coverage and navigation derive from the catalog rather than a fixed collection size. The home test verifies that its angle scenes, scroll-study canvas, and bloom control survive scrolling away and returning.
+Retention scenarios visit every implemented species, scroll back, and assert unchanged scene identities with exactly one collection canvas. Coverage and navigation derive from the catalog rather than a fixed collection size. The specimen test verifies that its angle scenes, scroll-study canvas, and bloom control survive scrolling away and returning.
 
 Use `/dev/inspection/` for the visual checks that numerical tests cannot establish. Confirm silhouettes, overlap, underside attachment and macro detail, then verify pointer/touch motion and the garden on the target GPU. See the [development guide](docs/development.md) for loading, favicon, fallback, and scroll verification details.
 

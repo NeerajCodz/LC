@@ -6,11 +6,11 @@ import { damp } from "@/lib/three/easing";
 export function Lighting({
   shadows = true,
   extent = 4,
-  cursor = true,
+  followCursor = true,
 }: {
   shadows?: boolean;
   extent?: number;
-  cursor?: boolean;
+  followCursor?: boolean;
 }) {
   return (
     <>
@@ -37,7 +37,7 @@ export function Lighting({
         intensity={0.9}
         color="#e1e9f0"
       />
-      <CursorLight extent={extent} enabled={cursor} />
+      <CursorLight extent={extent} enabled={followCursor} />
     </>
   );
 }

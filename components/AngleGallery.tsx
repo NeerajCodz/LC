@@ -51,7 +51,7 @@ export default function AngleGallery({ type }: { type: FlowerType }) {
       </PreviewStage>
       <div className="angle-gallery-end">
         <span>Move gently to explore the form.</span>
-        <Link href="/gallery">
+        <Link href="/">
           Explore the growing collection <ArrowUpRight size={15} />
         </Link>
       </div>

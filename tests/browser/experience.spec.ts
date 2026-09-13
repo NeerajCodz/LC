@@ -3,7 +3,7 @@ import { FLOWER_TYPES } from "../../lib/flowers/types";
 test("all species are reachable through the collection", async ({ page }) => {
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
-  await page.goto("/gallery");
+  await page.goto("/");
   await expect(
     page.getByRole("heading", { name: "A world in bloom." }),
   ).toBeVisible();
@@ -19,8 +19,10 @@ test("all species are reachable through the collection", async ({ page }) => {
   await expect(page.locator(".bloom-loader")).toHaveCount(0);
   expect(errors).toEqual([]);
 });
-test("bloom, macro, pause, and switching remain operable", async ({ page }) => {
-  await page.goto("/");
+test("bloom, macro, lighting, pause, and switching remain operable", async ({
+  page,
+}) => {
+  await page.goto("/flower/rose/");
   await expect(page.locator(".bloom-loader")).toHaveCount(0);
   const slider = page.getByRole("slider", { name: "Bloom amount" });
   await slider.focus();
@@ -34,6 +36,13 @@ test("bloom, macro, pause, and switching remain operable", async ({ page }) => {
   await expect(
     page.getByRole("button", { name: "Return to full flower" }),
   ).toBeVisible();
+  const light = page.getByRole("button", { name: "Lock light here" });
+  await light.click();
+  await expect(
+    page.getByRole("button", { name: "Unlock light" }),
+  ).toHaveAttribute("aria-pressed", "true");
+  await page.getByRole("button", { name: "Unlock light" }).click();
+  await expect(light).toHaveAttribute("aria-pressed", "false");
   await page.getByRole("button", { name: "Pause motion" }).click();
   await expect(
     page.getByRole("button", { name: "Resume motion" }),

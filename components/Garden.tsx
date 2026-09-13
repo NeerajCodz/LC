@@ -135,7 +135,7 @@ export default function Garden() {
       </div>
       <footer className="experience-footer">
         <span className="footer-wordmark">living colors</span>
-        <Link href="/gallery">
+        <Link href="/">
           Meet every species <ArrowUpRight size={13} />
         </Link>
         <span>PROJECT LC · ALWAYS GROWING</span>

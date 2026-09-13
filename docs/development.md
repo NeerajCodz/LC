@@ -70,13 +70,13 @@ The mobile project still requires Playwright WebKit. The config starts the devel
 
 - `expanded-specimens.spec.ts`: new specimen routes, bloom and macro controls, and garden macro selection.
 - `viewer.spec.ts`: garden macro selection, orbit drag, wheel zoom, and return without leaving the route.
-- `experience.spec.ts`: all species links, bloom/macro/pause controls, navigation, reduced motion, themes, legacy redirects, and the four-angle section.
-- `scroll.spec.ts`: flower pixels and captions move together on the collection, hero, and angle gallery.
-- `retention.spec.ts`: every catalog scene ID survives return scrolling; home angle scenes, scroll-study Canvas, and bloom controls retain their state.
+- `experience.spec.ts`: home collection links, bloom/macro/lighting/pause controls, navigation, reduced motion, themes, legacy redirects, and the four-angle section.
+- `scroll.spec.ts`: flower pixels and captions move together on the collection, specimen hero, and specimen angle gallery.
+- `retention.spec.ts`: every catalog scene ID survives return scrolling; specimen angle scenes, scroll-study Canvas, and bloom controls retain their state.
 - `mobile-performance.spec.ts`: constrained buffers and continuing frames across specimen, macro, collection, and garden.
 - `lifecycle.spec.ts`: rapid scrolling/navigation without null event-target crashes; macro rendering with WebGPU unavailable.
 
-For manual loading inspection, disable browser cache and throttle JavaScript requests. Inspect the initial home/specimen overlay, collection code fallback, and garden overlay. The SVG should unfold and rotate while loading, then disappear when the scene draws. In all three themes, text and ornament must remain legible. With reduced motion enabled, verify a still flower, no pollen, and a readable status. Do not add a fake delay solely to make the loader visible on fast connections.
+For manual loading inspection, disable browser cache and throttle JavaScript requests. Inspect the specimen overlay, collection code fallback, and garden overlay. The SVG should unfold and rotate while loading, then disappear when the scene draws. In all three themes, text and ornament must remain legible. With reduced motion enabled, verify a still flower, fixed light, no pollen, and a readable status. Do not add a fake delay solely to make the loader visible on fast connections.
 
 Confirm that each route's `rel="icon"` link resolves to `app/icon.svg` and that its emblem matches the header. Next.js fingerprints this metadata asset; a browser may retain an older favicon until the page/tab refreshes.
 
@@ -84,7 +84,7 @@ Confirm that each route's `rel="icon"` link resolves to `app/icon.svg` and that 
 
 Use [the development inspection fixture](http://localhost:1607/dev/inspection/) for every affected species at front, side, 45 degrees, macro, bud, half bloom, and full bloom. Inspect petal edge thickness, folded normals, underside attachments, foliage, stamens, shadows, gaps, and intersections. The fixture is heavier than the public single-specimen page; use the public page for representative performance measurements.
 
-Check a narrow viewport and actual touch interaction when available. Keep the main flower sharp in macro mode. Test pointer motion, tap/click pulses, reverse bloom, theme changes, and pause/reduced-motion behavior. No automated pixel or geometry test establishes botanical realism on its own.
+Check a narrow viewport and actual touch interaction when available. Keep the main flower sharp in macro mode. Test pointer motion, cursor-light locking, tap/click pulses, reverse bloom, theme changes, and pause/reduced-motion behavior. No automated pixel or geometry test establishes botanical realism on its own.
 
 Useful runtime diagnostics:
 
@@ -99,7 +99,7 @@ Useful runtime diagnostics:
 | `canvas[data-render-frames]`              | Draw count sampled every 30 frames.                           |
 | `#render-stats[data-fps]`                 | Sampled development hero frame rate.                          |
 
-Wait for a fresh page to settle before comparing scene IDs; hot reloads during code edits can replace scenes. Offscreen retention lasts for the mounted route, not navigation away or a browser reload. The collection uses one WebGL context after every species is visited; home uses three after its angle gallery and scroll study initialize. The shared gallery backing buffer covers its finite grid but its DPR is bounded by pixel and dimension limits. Browser emulation does not establish performance on a physical phone. Use the Wind study toggle in the inspection fixture to check anchored bases and moving attachments.
+Wait for a fresh page to settle before comparing scene IDs; hot reloads during code edits can replace scenes. Offscreen retention lasts for the mounted route, not navigation away or a browser reload. The collection uses one WebGL context after every species is visited; a complete specimen page uses three after its angle gallery and scroll study initialize. The shared gallery backing buffer covers its finite grid but its DPR is bounded by pixel and dimension limits. Browser emulation does not establish performance on a physical phone. Use the Wind study toggle in the inspection fixture to check anchored bases and moving attachments.
 
 Custom organ geometry is tested in `floral-surfaces.test.ts`; the [specimen dossier](specimens/expanded-forms.md) records research and interpretation. Run the seven-view fixture after changing shell sampling or folds.
 

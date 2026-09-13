@@ -18,7 +18,10 @@ export function RenderBudget({
   const simulation = useRef(0);
   useLayoutEffect(() => {
     const state = get();
-    const requested = constrained ? (macro ? 1.25 : 1) : macro ? 2.5 : 2;
+    // Keep mobile at CSS-pixel resolution in both modes. Fractional upscaling
+    // produced blank composited WebKit macro views despite valid draw calls.
+    // Macro still upgrades the geometry; MSAA and the pixel budget stay enabled.
+    const requested = constrained ? 1 : macro ? 2.5 : 2;
     const context = state.gl.getContext();
     const limit = Math.min(
       state.gl.capabilities.maxTextureSize,

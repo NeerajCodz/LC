@@ -1,5 +1,6 @@
 import { expect, test } from "@playwright/test";
 import { FLOWER_TYPES } from "../../lib/flowers/types";
+import { expectRenderedFlower } from "./pixel-content";
 
 test.use({
   viewport: { width: 390, height: 844 },
@@ -49,6 +50,14 @@ test("mobile specimen, macro, collection and garden keep bounded buffers and liv
   await expect(page.locator(".bloom-loader")).toHaveCount(0);
   await checkBuffers();
   await checkLive();
+  await expectRenderedFlower(page.locator("canvas").first());
+  const initialBuffer = await page
+    .locator("canvas")
+    .first()
+    .evaluate((c) => [
+      (c as HTMLCanvasElement).width,
+      (c as HTMLCanvasElement).height,
+    ]);
   await page
     .getByRole("button", { name: "Explore close-up", exact: true })
     .tap();
@@ -57,6 +66,16 @@ test("mobile specimen, macro, collection and garden keep bounded buffers and liv
   ).toBeVisible();
   await checkBuffers();
   await checkLive();
+  expect(
+    await page
+      .locator("canvas")
+      .first()
+      .evaluate((c) => [
+        (c as HTMLCanvasElement).width,
+        (c as HTMLCanvasElement).height,
+      ]),
+  ).toEqual(initialBuffer);
+  await expectRenderedFlower(page.locator("canvas").first());
   await page.goto("/gallery/");
   const previews = page.locator(".flower-preview");
   await expect(previews).toHaveCount(FLOWER_TYPES.length);

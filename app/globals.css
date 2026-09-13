@@ -569,7 +569,7 @@ input[type="range"]::-moz-range-thumb {
 .bloom-loader-bloom {
   transform-origin: 60px 58px;
   animation: loader-unfold 4.8s cubic-bezier(0.45, 0, 0.25, 1) infinite;
-  will-change: transform, opacity;
+  will-change: opacity;
 }
 .bloom-loader-petal {
   fill: currentColor;
@@ -610,12 +610,10 @@ input[type="range"]::-moz-range-thumb {
 @keyframes loader-unfold {
   0%,
   100% {
-    transform: scale(0.32, 0.62);
-    opacity: 0.5;
+    opacity: 0.55;
   }
   40%,
   65% {
-    transform: scale(1);
     opacity: 1;
   }
 }

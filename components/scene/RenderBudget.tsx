@@ -2,6 +2,7 @@
 import { useEffect, useLayoutEffect, useRef } from "react";
 import { useStore, useThree } from "@react-three/fiber";
 import { boundedDpr } from "@/lib/performance";
+import { markWebGL2Unavailable } from "./WebGLSupport";
 
 /** One capped clock per Canvas. Two startup frames release readiness; inactive scenes then stay at zero FPS. */
 export function RenderBudget({
@@ -67,7 +68,17 @@ export function RenderBudget({
           ? Math.min((now - last) / 1000, 0.05)
           : 1 / 60;
         last = now;
-        state.advance(simulation.current, false);
+        // RAF exceptions are outside React error boundaries. Stop this clock
+        // before notifying the DOM so a broken renderer cannot keep throwing.
+        try {
+          state.advance(simulation.current, false);
+        } catch (error) {
+          lost = true;
+          frame = 0;
+          console.warn("Project LC stopped a failed render loop.", error);
+          markWebGL2Unavailable();
+          return;
+        }
         startupFrames.current += 1;
         if (++rendered % 30 === 0)
           canvas.dataset.renderFrames = String(rendered);

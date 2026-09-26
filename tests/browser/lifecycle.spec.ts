@@ -2,14 +2,20 @@ import { expect, test } from "@playwright/test";
 
 test("gallery preview teardown and route changes keep Canvas providers alive", async ({
   page,
+  isMobile,
 }) => {
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
   await page.goto("/gallery/");
   await expect(page.locator(".preview-stage canvas")).toBeVisible();
   for (let i = 0; i < 3; i++) {
-    await page.mouse.wheel(0, 1500);
-    await page.mouse.wheel(0, -1500);
+    if (isMobile) {
+      await page.evaluate(() => window.scrollBy(0, 1500));
+      await page.evaluate(() => window.scrollBy(0, -1500));
+    } else {
+      await page.mouse.wheel(0, 1500);
+      await page.mouse.wheel(0, -1500);
+    }
   }
   await page.getByRole("link", { name: "Explore Lotus", exact: true }).click();
   await expect(

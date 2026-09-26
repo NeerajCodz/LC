@@ -2,6 +2,7 @@
 
 import { Canvas, type CanvasProps } from "@react-three/fiber";
 import { useEffect, useRef, type ReactNode } from "react";
+import { SceneBoundary } from "./SceneBoundary";
 import {
   markWebGL2Unavailable,
   useWebGL2Support,
@@ -46,5 +47,9 @@ export function SafeCanvas({
   if (available === null) return null;
   if (!available) return unavailableFallback;
 
-  return <Canvas ref={canvasRef} {...props} />;
+  return (
+    <SceneBoundary fallback={unavailableFallback}>
+      <Canvas ref={canvasRef} {...props} />
+    </SceneBoundary>
+  );
 }

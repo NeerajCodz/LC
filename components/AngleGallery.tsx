@@ -8,8 +8,10 @@ import { getFlower } from "@/lib/flowers/catalog";
 import type { FlowerType } from "@/lib/flowers/types";
 import { useInView } from "@/hooks/useInView";
 import { PreviewStage } from "./scene/PreviewStage";
+import { useWebGL2Support } from "./scene/WebGLSupport";
 
 export default function AngleGallery({ type }: { type: FlowerType }) {
+  const webGL2 = useWebGL2Support();
   const [bloom, setBloom] = useState(1);
   const info = getFlower(type);
   return (
@@ -33,6 +35,7 @@ export default function AngleGallery({ type }: { type: FlowerType }) {
           <label htmlFor="angle-bloom">Unfold all views</label>
           <input
             id="angle-bloom"
+            disabled={webGL2 !== true}
             aria-label="Angle gallery bloom"
             type="range"
             min="0"

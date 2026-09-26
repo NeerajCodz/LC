@@ -6,11 +6,13 @@ import { FLOWERS, type FlowerInfo } from "@/lib/flowers/catalog";
 import { FlowerPreview } from "./flowers/FlowerPreview";
 import { Header } from "./ui/Header";
 import { PreviewStage } from "./scene/PreviewStage";
+import { useWebGL2Support, WebGLUnavailable } from "./scene/WebGLSupport";
 
 type Angle = "front" | "side" | "45°" | "macro";
 
 const PAGE_SIZE = 20;
 export default function Gallery() {
+  const webGL2 = useWebGL2Support();
   const [angle, setAngle] = useState<Angle>("front"),
     [bloom, setBloom] = useState(1),
     [query, setQuery] = useState(""),
@@ -71,12 +73,14 @@ export default function Gallery() {
           </div>
         </div>
       </div>
+      {webGL2 === false && <WebGLUnavailable inline />}
       <div className="gallery-toolbar">
         <div className="angle-picker" role="group" aria-label="Viewing angle">
           {(["front", "side", "45°", "macro"] as const).map((a) => (
             <button
               key={a}
               aria-pressed={a === angle}
+              disabled={webGL2 !== true}
               onClick={() => setAngle(a)}
             >
               {a === "45°" ? "45° view" : a[0].toUpperCase() + a.slice(1)}
@@ -87,6 +91,7 @@ export default function Gallery() {
           <label htmlFor="collection-bloom">Bloom</label>
           <input
             id="collection-bloom"
+            disabled={webGL2 !== true}
             type="range"
             min="0"
             max="1"

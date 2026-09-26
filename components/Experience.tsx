@@ -88,7 +88,7 @@ export default function Experience({
       () => {
         router.push(`/flower/${next}`, { scroll: false });
       },
-      reducedMotion ? 0 : 1900,
+      reducedMotion || webGL2 !== true ? 0 : 1900,
     );
   }
   function setAmount(value: number) {
@@ -134,11 +134,11 @@ export default function Experience({
                 setMacro((m) => !m);
               }}
             />
-          ) : (
+          ) : webGL2 === false ? (
             <WebGLUnavailable />
-          )}
+          ) : null}
         </div>
-        {webGL2 === true && !ready && <BloomLoader variant="overlay" />}
+        {webGL2 !== false && !ready && <BloomLoader variant="overlay" />}
         <Header
           specimenHref={`/flower/${type}/`}
           onNavigate={(href) => {
@@ -153,7 +153,7 @@ export default function Experience({
             setSwitching(true);
             timer.current = setTimeout(
               () => router.push(href),
-              reducedMotion ? 0 : 1500,
+              reducedMotion || webGL2 !== true ? 0 : 1500,
             );
           }}
         />
@@ -192,6 +192,7 @@ export default function Experience({
         <div className="view-controls">
           <button
             title={macro ? "Return to full flower" : "Explore close-up"}
+            disabled={webGL2 !== true}
             aria-label={macro ? "Return to full flower" : "Explore close-up"}
             onClick={() => setMacro(!macro)}
           >
@@ -208,6 +209,7 @@ export default function Experience({
           </button>
           <button
             title={paused ? "Resume motion" : "Pause motion"}
+            disabled={webGL2 !== true}
             aria-label={paused ? "Resume motion" : "Pause motion"}
             onClick={() => setPaused(!paused)}
           >
@@ -249,12 +251,12 @@ export default function Experience({
             max="1"
             step=".01"
             value={target}
-            disabled={switching}
+            disabled={switching || webGL2 !== true}
             onChange={(e) => setAmount(Number(e.target.value))}
           />
           <div className="bloom-endpoints">
             <span>Bud</span>
-            <button onClick={replay} disabled={switching}>
+            <button onClick={replay} disabled={switching || webGL2 !== true}>
               <RotateCcw size={11} /> Replay bloom
             </button>
             <span>Full bloom</span>
@@ -262,7 +264,11 @@ export default function Experience({
         </div>
         <div className="interaction-hint">
           <span className="hint-cross">✧</span>
-          <span>Drag to rotate. Scroll or pinch to zoom. Click for macro.</span>
+          <span>
+            {webGL2 === false
+              ? "Explore the collection and botanical notes."
+              : "Drag to rotate. Scroll or pinch to zoom. Click for macro."}
+          </span>
         </div>
         <footer className="experience-footer">
           <span className="footer-wordmark">living colors</span>
@@ -270,7 +276,8 @@ export default function Experience({
             Take a moment <ChevronDown size={13} />
           </a>
           <span className="rendering-note">
-            <span className="live-dot" /> REAL-TIME · EVER-CHANGING
+            <span className="live-dot" />{" "}
+            {webGL2 === false ? "BOTANICAL NOTES" : "REAL-TIME · EVER-CHANGING"}
           </span>
         </footer>
       </section>
@@ -407,9 +414,9 @@ function ScrollStudy({ type }: { type: FlowerType }) {
                 growth={Math.min(1, progress / 0.35)}
               />
             )
-          ) : (
+          ) : webGL2 === false ? (
             <WebGLUnavailable />
-          )}
+          ) : null}
         </div>
         <span className="scroll-progress">
           {Math.round(progress * 100)} / 100

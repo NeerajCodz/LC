@@ -57,7 +57,7 @@ export function PreviewStage({
 }) {
   const [entries, setEntries] = useState<Record<string, PreviewEntry>>({});
   const webGL2 = useWebGL2Support();
-  const unavailable = webGL2 !== true;
+  const unavailable = webGL2 === false;
   const { constrained } = useExperienceSettings();
   const update = useCallback((id: string, entry: PreviewEntry) => {
     setEntries((current) => {

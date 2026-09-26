@@ -42,10 +42,10 @@ export default function Garden() {
             pulse={pulse}
             onReady={() => setReady(true)}
           />
-        ) : (
+        ) : webGL2 === false ? (
           <WebGLUnavailable />
-        )}
-        {webGL2 === true && !ready && <BloomLoader variant="overlay" />}
+        ) : null}
+        {webGL2 !== false && !ready && <BloomLoader variant="overlay" />}
       </div>
       <Header active="garden" />
       <div className="garden-heading">
@@ -83,6 +83,7 @@ export default function Garden() {
           ))}
         </select>
         <button
+          disabled={webGL2 !== true}
           onClick={() => {
             setSelected(null);
             setReset((v) => v + 1);
@@ -96,6 +97,7 @@ export default function Garden() {
           </Link>
         )}
         <button
+          disabled={webGL2 !== true}
           onClick={() => {
             setPaused(false);
             setPulse((p) => p + 1);
@@ -105,6 +107,7 @@ export default function Garden() {
         </button>
         <button
           aria-label={paused ? "Resume garden" : "Pause garden"}
+          disabled={webGL2 !== true}
           onClick={() => setPaused(!paused)}
         >
           {paused ? <Play size={16} /> : <Pause size={16} />}
@@ -117,6 +120,7 @@ export default function Garden() {
         </div>
         <input
           id="garden-bloom"
+          disabled={webGL2 !== true}
           aria-label="Garden bloom amount"
           type="range"
           min="0"
@@ -131,7 +135,9 @@ export default function Garden() {
         </div>
       </div>
       <div className="garden-hint">
-        Drag to rotate / Scroll or pinch to zoom / Tap for macro
+        {webGL2 === false
+          ? "Choose a flower to explore its botanical notes"
+          : "Drag to rotate / Scroll or pinch to zoom / Tap for macro"}
       </div>
       <footer className="experience-footer">
         <span className="footer-wordmark">living colors</span>

@@ -75,6 +75,11 @@ The mobile project still requires Playwright WebKit. The config starts the devel
 - `retention.spec.ts`: every catalog scene ID survives return scrolling; specimen angle scenes, scroll-study Canvas, and bloom controls retain their state.
 - `mobile-performance.spec.ts`: constrained buffers and continuing frames across specimen, macro, collection, and garden.
 - `lifecycle.spec.ts`: rapid scrolling/navigation without null event-target crashes; macro rendering with WebGPU unavailable.
+- `rendering-fallback.spec.ts`: null/throwing capability probes across all public routes, actual renderer initialization failure after a successful probe, real context loss and retry with retained bloom state, and a thrown draw call. Recovery checks actual flower pixels as well as frames. Runs on desktop Chromium and mobile WebKit.
+
+Renderer failures are contained at three boundaries: the shared capability probe, `SceneBoundary` around R3F, and the manually scheduled `RenderBudget` frame. All public canvases must remain behind `SafeCanvas`. Keep unsupported and pending capability states distinct. Retry is user initiated and must preserve DOM controls/selection; it creates fresh GPU resources instead of reusing a lost context. Do not suppress global errors or hide unrelated route errors.
+
+Both npm and pnpm installs run `scripts/patch-fiber.mjs` to forward R3F 9.7.0's rejected async Canvas setup to its error state. It verifies and patches the ESM and both CJS bundles. On dependency upgrades, inspect the installed Canvas startup before updating/removing this compatibility fix, then run the renderer-rejection browser case. Installations using `--ignore-scripts` must run this script explicitly. `dist/` holds ignored research/test artifacts and is excluded from lint/type checking.
 
 For manual loading inspection, disable browser cache and throttle JavaScript requests. Inspect the specimen overlay, collection code fallback, and garden overlay. The SVG should unfold and rotate while loading, then disappear when the scene draws. In all three themes, text and ornament must remain legible. With reduced motion enabled, verify a still flower, fixed light, no pollen, and a readable status. Do not add a fake delay solely to make the loader visible on fast connections.
 

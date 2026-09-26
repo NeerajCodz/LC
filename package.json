@@ -4,6 +4,7 @@
   "private": true,
   "packageManager": "pnpm@10.28.2",
   "scripts": {
+    "postinstall": "node scripts/patch-fiber.mjs",
     "dev": "next dev --port 1607",
     "build": "next build",
     "start": "next start --port 1607",

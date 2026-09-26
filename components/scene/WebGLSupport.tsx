@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 
 let webGL2Support: boolean | null = null;
 let supportProbeScheduled = false;
-const subscribers = new Set<(available: boolean) => void>();
+const subscribers = new Set<() => void>();
 
 function detectWebGL2() {
   try {
@@ -21,41 +21,59 @@ function detectWebGL2() {
   }
 }
 
-function publishWebGL2Support(available: boolean) {
+function publishWebGL2Support(available: boolean | null) {
   if (webGL2Support === available) return;
   webGL2Support = available;
-  subscribers.forEach((notify) => notify(available));
+  subscribers.forEach((notify) => notify());
 }
 
 export function markWebGL2Unavailable() {
   publishWebGL2Support(false);
 }
 
-export function useWebGL2Support() {
-  const [available, setAvailable] = useState(webGL2Support);
-  useEffect(() => {
-    subscribers.add(setAvailable);
-    if (webGL2Support === null && !supportProbeScheduled) {
-      supportProbeScheduled = true;
-      setTimeout(() => publishWebGL2Support(detectWebGL2()), 0);
-    }
-    return () => {
-      subscribers.delete(setAvailable);
-    };
-  }, []);
-  return available;
+function subscribe(notify: () => void) {
+  subscribers.add(notify);
+  scheduleProbe();
+  return () => {
+    subscribers.delete(notify);
+  };
 }
 
-export function WebGLUnavailable() {
+function scheduleProbe() {
+  if (webGL2Support !== null || supportProbeScheduled) return;
+  supportProbeScheduled = true;
+  setTimeout(() => {
+    supportProbeScheduled = false;
+    publishWebGL2Support(detectWebGL2());
+  }, 0);
+}
+
+export function retryWebGL2() {
+  publishWebGL2Support(null);
+  scheduleProbe();
+}
+
+export function useWebGL2Support() {
+  return useSyncExternalStore(
+    subscribe,
+    () => webGL2Support,
+    () => null,
+  );
+}
+
+export function WebGLUnavailable({ inline = false }: { inline?: boolean }) {
   return (
     <div
-      className="webgl-message"
+      className={`webgl-message${inline ? " webgl-message--inline" : ""}`}
       role="status"
       aria-label="Interactive 3D is unavailable"
       data-renderer="unavailable"
     >
       <p>Interactive 3D is unavailable.</p>
       <span>You can still browse every flower and its botanical notes.</span>
+      <button type="button" onClick={retryWebGL2}>
+        Try 3D again
+      </button>
     </div>
   );
 }

@@ -24,7 +24,9 @@ import { Columbine } from "./columbine/Columbine";
 import { BleedingHeart } from "./bleeding-heart/BleedingHeart";
 import { BirdOfParadise } from "./bird-of-paradise/BirdOfParadise";
 import { Passionflower } from "./passionflower/Passionflower";
+import { MorningGlory } from "./morning-glory/MorningGlory";
 const SPECIES = {
+  "morning-glory": MorningGlory,
   passionflower: Passionflower,
   "bird-of-paradise": BirdOfParadise,
   "bleeding-heart": BleedingHeart,

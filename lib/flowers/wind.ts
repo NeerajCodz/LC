@@ -10,6 +10,12 @@ export interface WindProfile {
 // Art-directed response classes informed by habit, stem construction and head load.
 // These are not measured species-specific elastic constants. See wind-and-contact.md.
 export const WIND_PROFILES: Record<FlowerType, WindProfile> = {
+  "morning-glory": {
+    compliance: 0.085,
+    stiffness: 38,
+    damping: 0.8,
+    flutter: 1.15,
+  },
   passionflower: {
     compliance: 0.075,
     stiffness: 42,

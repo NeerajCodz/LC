@@ -25,7 +25,7 @@ for (const failure of ["null", "throw"] as const) {
       page.getByRole("button", { name: "Try 3D again" }),
     ).toBeVisible();
     await page
-        .getByRole("searchbox", { name: "Search the collection" })
+      .getByRole("searchbox", { name: "Search the collection" })
       .fill("lotus");
     await page
       .getByRole("link", { name: "Explore Lotus", exact: true })

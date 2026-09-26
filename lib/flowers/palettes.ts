@@ -30,6 +30,7 @@ const palette = (
 });
 
 export const PETAL_PALETTES: Record<FlowerType, PetalPalette> = {
+  "morning-glory": palette("#eee8dd", "#7650af", "#8d68bd", "#74395c", 0.78),
   passionflower: palette("#d6d8b9", "#eeecdf", "#faf7eb", "#c9ccb3"),
   "bird-of-paradise": palette("#a3420f", "#e98720", "#ffb14e", "#bb6018"),
   "bleeding-heart": palette("#943752", "#d45380", "#ef9bb4", "#a84468"),

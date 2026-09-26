@@ -13,6 +13,7 @@ export function CameraRig({
   focus,
   focusScale = 1,
   specimenTarget,
+  specimenScale = 1,
   reset = 0,
 }: {
   macro?: boolean;
@@ -24,6 +25,7 @@ export function CameraRig({
   focus?: Vec3;
   focusScale?: number;
   specimenTarget?: Vec3;
+  specimenScale?: number;
   reset?: number;
 }) {
   const controls = useRef<ComponentRef<typeof OrbitControls>>(null);
@@ -43,10 +45,10 @@ export function CameraRig({
         ? (gardenDistance ?? (mobile ? 15 : 14)) *
           (mobile ? Math.min(1, (0.57 * size.height) / size.width) : 1)
         : macro
-          ? 3
+          ? 3 * Math.sqrt(specimenScale)
           : mobile
-            ? 6.8
-            : 6.15;
+            ? 6.8 * specimenScale
+            : 6.15 * specimenScale;
     const azimuth =
       angle === "side"
         ? Math.PI / 2
@@ -78,6 +80,7 @@ export function CameraRig({
     y,
     z,
     focusScale,
+    specimenScale,
     reset,
     focus,
     gardenDistance,

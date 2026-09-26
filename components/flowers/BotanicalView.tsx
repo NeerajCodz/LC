@@ -35,7 +35,9 @@ export function BotanicalView({
     cz =
       center[1] * Math.sin(structure.headTilt) +
       center[2] * Math.cos(structure.headTilt);
-  const distance = macro ? 2.8 : quality === "low" ? 6.6 : 5.5;
+  const distance = macro
+    ? 2.8
+    : (quality === "low" ? 6.6 : 5.5) * (structure.previewScale ?? 1);
   const azimuth =
     angle === "side"
       ? Math.PI / 2

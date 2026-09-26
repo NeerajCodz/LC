@@ -42,6 +42,8 @@ The global target inventory is [docs/FLOWERS.md](docs/FLOWERS.md). It is generat
 
 ## Working and validation
 
+Morning Glory uses a continuous periodic corolla and a twining shoot, not separate petals or tendrils. Preserve its folded normals, included organs, cordate leaves and quality-scaled pubescence. See [its dossier](docs/specimens/morning-glory-research.md); reverse UI bloom is not biological reopening. `previewScale` adjusts framing for projecting specimens, not their geometry.
+
 Inspect the current diff before editing and preserve unrelated user changes. Keep TypeScript fully typed, modules focused, and cleanup explicit. Read relevant bundled Next.js documentation before changing framework behavior.
 
 Run type checking and lint for code changes, plus the checks appropriate to the changed system. Geometry changes require geometry tests and visual front/side/45°/macro/bud/half/full-bloom inspection of affected species. WGSL changes require device validation and GPU reference tests when a working adapter is available. Renderer, loading, scrolling, and lifecycle changes require the corresponding browser scenarios. Check a production build for routing or framework integration changes. Report unrun or unavailable checks accurately; do not claim photorealism or 60 FPS without evidence.

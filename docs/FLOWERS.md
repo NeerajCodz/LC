@@ -44,6 +44,7 @@ Generated from `lib/flowers/catalog.ts`; genus or ornamental studies never mark 
 | [Bleeding Heart](http://localhost:1607/flower/bleeding-heart/) | Lamprocapnos spectabilis | Exact accepted-name match: `wfo-0000443459` |
 | [Bird of Paradise](http://localhost:1607/flower/bird-of-paradise/) | Strelitzia reginae | Exact accepted-name match: `wfo-0000562066` |
 | [Blue Passionflower](http://localhost:1607/flower/passionflower/) | Passiflora caerulea | Exact accepted-name match: `wfo-0000479867` |
+| [Morning Glory](http://localhost:1607/flower/morning-glory/) | Ipomoea purpurea | Exact accepted-name match: `wfo-0001296676` |
 
 ## Reproduce and audit
 
@@ -129697,7 +129698,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Ipomoea puncticulata — `wfo-0001251483`
 - Ipomoea punicea — `wfo-0000156957`
 - Ipomoea purga — `wfo-0001296675`
-- Ipomoea purpurea — `wfo-0001296676`
+- Ipomoea purpurea — `wfo-0001296676` · authored study: `morning-glory`
 - Ipomoea pyramidalis — `wfo-0000156958`
 - Ipomoea pyrenea — `wfo-0001297015`
 - Ipomoea pyrophila — `wfo-0001243691`

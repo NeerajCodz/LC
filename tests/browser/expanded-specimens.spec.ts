@@ -9,6 +9,7 @@ const additions = [
   "bleeding-heart",
   "bird-of-paradise",
   "passionflower",
+  "morning-glory",
 ];
 test("expanded specimens render on their routes and remain operable in garden macro", async ({
   page,

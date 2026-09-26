@@ -4,6 +4,7 @@ import type { FlowerType, Quality } from "@/lib/flowers/types";
 import { FOLIAGE } from "@/lib/flowers/foliage";
 import { createPetalGeometry, PETAL } from "@/lib/three/geometry";
 import { createOrganicTube } from "@/lib/three/organicTube";
+import { createPubescence } from "@/lib/three/pubescence";
 
 export function LeafSprig({
   type,
@@ -53,6 +54,14 @@ export function LeafSprig({
         : null,
     [profile],
   );
+  const hairs = useMemo(
+    () =>
+      profile.pubescence
+        ? createPubescence(geometry, quality, profile.pubescence, 173)
+        : null,
+    [geometry, quality, profile.pubescence],
+  );
+  useEffect(() => () => hairs?.dispose(), [hairs]);
   const material = useMemo(() => {
     const m = new MeshPhysicalMaterial({
       color: profile.color,
@@ -131,7 +140,13 @@ export function LeafSprig({
           scale={leaf.scale}
           castShadow
           receiveShadow
-        />
+        >
+          {hairs && (
+            <mesh geometry={hairs}>
+              <meshStandardMaterial vertexColors roughness={0.92} />
+            </mesh>
+          )}
+        </mesh>
       ))}
     </group>
   );

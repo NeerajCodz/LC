@@ -1,6 +1,7 @@
 import type { FlowerType } from "./types";
 
 export interface FoliageProfile {
+  pubescence?: number;
   basalLobes?: boolean;
   length: number;
   width: number;
@@ -18,6 +19,14 @@ export interface FoliageProfile {
 
 /** Cultivar-independent leaf traits; lotus has its own peltate blade generator. */
 export const FOLIAGE: Record<FlowerType, FoliageProfile> = {
+  "morning-glory": {
+    pubescence: 0.016,
+    length: 1.08,
+    width: 1.03,
+    color: "#5f8245",
+    basalLobes: true,
+    roughness: 0.83,
+  },
   // Rendered by the dedicated continuous palmate blade in PassionVine.
   passionflower: {
     length: 1.05,

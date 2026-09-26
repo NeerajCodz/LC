@@ -13,6 +13,16 @@ export interface FlowerInfo {
 
 export const FLOWERS: FlowerInfo[] = [
   {
+    type: "morning-glory",
+    name: "Morning Glory",
+    latin: "Ipomoea purpurea",
+    family: "Convolvulaceae",
+    color: "#7650af",
+    description: "A trumpet for the morning.\nViolet folds, an ivory heart.",
+    detail:
+      "A continuous, pleated corolla opens above a twining shoot. Pale included stamens, dark midpetaline bands and heart-shaped leaves distinguish this morning glory.",
+  },
+  {
     type: "passionflower",
     name: "Blue Passionflower",
     latin: "Passiflora caerulea",

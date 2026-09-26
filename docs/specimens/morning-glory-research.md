@@ -1,15 +1,28 @@
-# Common morning glory research
+# Common morning glory
 
-Target: _Ipomoea purpurea_ (L.) Roth. Research only; this species is not yet an implemented public specimen. Sources reviewed September 13, 2026.
+Modeled taxon: _Ipomoea purpurea_ (L.) Roth. Public route: `/flower/morning-glory/`. Sources reviewed September 26, 2026. This is an authored specimen of a violet form, not a scan, cultivar identification or calibrated biomechanical simulation.
 
-## Anatomy and implementation direction
+## Botanical evidence
 
-[NC State](https://plants.ces.ncsu.edu/plants/ipomoea-purpurea/) describes a twining annual with a fused, flared corolla, pale throat, alternate cordate leaves and pubescent stems. Its plant and side-view photographs are useful for checking the attachment and funnel depth. Build the corolla as a continuous thick shell with a narrow tube, expanded limb and independently shaped midpetaline regions. A radial set of separate petals would misrepresent the fused flower. Represent the vine by a stem winding around support; do not reuse Passionflower's tendrils or palmate foliage.
+- [Flora of North America](https://www.efloras.org/florataxon.aspx?flora_id=1&taxon_id=210000743) describes a twining annual, variable cordate leaves and a funnel-shaped corolla, commonly 40–60 mm long, with a pale inner tube. Its recorded limb-width range is broad; one shape cannot represent every plant.
+- [Flora of New Zealand](https://www.nzflora.info/factsheet/taxon/Ipomoea-purpurea.html) describes violet-purple flowers with darker midpetaline bands, stamens enclosed in the corolla, a longer style, and hairy stems, petioles, leaves and sepals. Its treatment supplies the main reference for this specimen's organ placement and pigmentation.
+- [NC State Extension](https://plants.ces.ncsu.edu/plants/ipomoea-purpurea/) documents fused petals, alternate cordate foliage and stem twining. The model uses a single fused surface and a climbing shoot, without Passionflower tendrils.
+- [The 2021 closure study](https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2021.697764/full) observes inward curling initiated at the midribs and subsequent folding of the corolla. Mature closure and bud opening are different processes. The reversible UI unfold is an inspection control, not simulated senescence or a claim that one mature flower repeatedly reopens.
 
-[Flora of North America](https://efloras.org/florataxon.aspx?flora_id=1&taxon_id=210000743) provides sepal and corolla dimensions, while [Kew's compiled descriptions](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A30043043-2/general-information) record variation in leaf lobing, flower color and inflorescence. Review the full descriptions and select a documented form before authoring proportions; do not equate every horticultural morning glory with this species.
+## Geometry and materials
 
-## Optical evidence to evaluate
+`morningGloryGeometry.ts` builds a periodic, sealed shell around the complete funnel. It has inner and outer surfaces joined at the narrow basal opening and the limb, with physical thickness tapered from 0.009 to 0.005 scene units. A five-region twisted bud supplies matched morph positions and normals. The mature limb radius is about 1.12 units and corolla length about 1.59; these proportions and thickness are authored within a stylized scene scale, not measured tissue data. No individual petal cards, cone primitives or photographs form the flower.
 
-Bei et al., [Light Adaptations of Ipomoea purpurea](https://doi.org/10.3390/plants14060862), _Plants_ 14(6), 862 (2025), reports surface morphology and optical observations. The [PubMed abstract](https://pubmed.ncbi.nlm.nih.gov/40265780/) is available; review full methods, specimen identity and figure scales before deriving shader parameters. The abstract's tendril terminology conflicts with the botanical description of stem twining, so it must not determine climbing anatomy without clarification. No numeric material or mechanical parameter has been imported from this paper.
+Five unequal stamens have paired anther chambers inside the throat, alongside a style with three stigma lobes and a basal ovary. Five separately sampled sepals surround the tube. The flower's limb remains continuous through every bloom state. Tiny asynchronous rim displacement responds to wind, cursor proximity and pulse without splitting its fused sectors.
 
-Opening trajectories, elastic constants, drag, damping and tissue thickness remain uncalibrated. Investigate a continuous folded/expanded shell with matched normals, actual enclosed reproductive organs, a supported twining shoot and quality-scaled pubescence. Require geometry tests, all inspection angles/states, mobile pixel checks and normal/macro transitions before catalog registration.
+`morningGloryMaterial.ts` supplies an ivory throat, violet limb, darker fivefold bands, filtered fine veins, cellular roughness and restrained sheen. Angular shader coordinates interpolate direction vectors to avoid a UV seam across the periodic surface. The existing vgpu atlas is reused when available, with a complete procedural GLSL fallback. There is no glow, depth-of-field or extra per-frame bake/readback. Optical constants and scattering are artistic approximations.
+
+`MorningVine` winds the main shoot around a woody support, tapering into a free peduncle. Only the segment above the support boundary responds to the shared clamped wind curve. Alternate long-petioled leaves use a continuous cordate blade profile. Seeded tapered trichomes grow from actual stem, leaf and sepal geometry; the mobile setting reduces their density. Fixed support contacts do not slide in the breeze. Growth is an illustrative reveal, not a time-lapse of circumnutation.
+
+## Verification and limits
+
+`morning-glory.test.ts` checks closed winding, thickness, deterministic geometry, finite unit normals, nondegenerate triangles at several bloom values, corolla proportions, included reproductive organs and bounded low-quality geometry. Visual review uses front, side, 45-degree, macro, bud, half-bloom and full-bloom views. Browser checks cover real pixels, reverse/forward bloom, macro, themes and garden selection on desktop and mobile emulation.
+
+Opening trajectories, elastic constants, aerodynamic drag, vein stiffness and tissue optics remain uncalibrated. The supported stem and soft rim response are species-informed approximations, not an exact physical reproduction. Full membrane self-contact and mature corolla senescence are not implemented.
+
+Bei et al., [Light Adaptations of Ipomoea purpurea](https://doi.org/10.3390/plants14060862), _Plants_ 14(6), 862 (2025), remains a source to investigate further. The [abstract](https://pubmed.ncbi.nlm.nih.gov/40265780/) uses tendril terminology that conflicts with botanical descriptions of stem twining. No numeric material or mechanical parameter from that paper has been adopted; the full methods were not available during this review.

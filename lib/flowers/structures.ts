@@ -23,9 +23,11 @@ import { daisyStructure } from "../../components/flowers/daisy/Daisy";
 import { cherryBlossomStructure } from "../../components/flowers/cherry-blossom/CherryBlossom";
 import type { FlowerStructure, FlowerType } from "./types";
 import { passionflowerStructure } from "../../components/flowers/passionflower/Passionflower";
+import { morningGloryStructure } from "../../components/flowers/morning-glory/MorningGlory";
 
 /** Authored anatomy shared by planting layout and geometry verification. */
 export const FLOWER_STRUCTURES: Record<FlowerType, FlowerStructure> = {
+  "morning-glory": morningGloryStructure,
   passionflower: passionflowerStructure,
   "bird-of-paradise": birdOfParadiseStructure,
   "bleeding-heart": bleedingHeartStructure,

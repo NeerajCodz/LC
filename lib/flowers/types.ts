@@ -23,6 +23,7 @@ export const FLOWER_TYPES = [
   "bleeding-heart",
   "bird-of-paradise",
   "passionflower",
+  "morning-glory",
 ] as const;
 
 export type FlowerType = (typeof FLOWER_TYPES)[number];
@@ -94,6 +95,8 @@ export interface FlowerStructure {
   /** Conservative head bounds for non-radial organs. */
   headRadius?: number;
   headCenter?: Vec3;
+  /** Extra camera distance for tall or forward-projecting preview silhouettes. */
+  previewScale?: number;
   center: "none" | "seeds" | "pod" | "stamens" | "column" | "florets";
   centerRadius: number;
   centerHeight: number;

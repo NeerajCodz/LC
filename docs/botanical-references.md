@@ -34,6 +34,8 @@ The expanded collection includes Poppy, Daffodil, Bearded Iris, Calla Lily, Anth
 
 Blue Passionflower adds a supported climbing shoot and a banded, multiseries filament corona. Its [dedicated dossier](specimens/passionflower-research.md) links the Passiflora Society and NC State references and records the modeled form, material treatment and uncalibrated motion.
 
+Common Morning Glory adds a single fused funnel with twisted bud geometry, included stamens, cordate leaves and a hairy twining shoot. Its [dossier](specimens/morning-glory-research.md) distinguishes the reversible inspection animation from the different biological processes of opening and mature closure.
+
 ## Lotus center revision
 
 The yellow structures around the receptacle are stamens, which carry pollen. A flower at anthesis should not have the conspicuous mature seed pattern of a dry seed head. The model now has shallow carpel sockets and small stigma tips on a continuous, tapered receptacle, surrounded by 156 individually posed stamens with paired anther chambers and pale connective appendages. The count and dimensions are artistic choices, not a species-wide anatomical constant.

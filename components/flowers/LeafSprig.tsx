@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from "react";
-import { MeshPhysicalMaterial } from "three";
+import { Color, MeshPhysicalMaterial } from "three";
 import type { FlowerType, Quality } from "@/lib/flowers/types";
 import { FOLIAGE } from "@/lib/flowers/foliage";
 import { createPetalGeometry, PETAL } from "@/lib/three/geometry";
@@ -71,6 +71,10 @@ export function LeafSprig({
       sheenRoughness: 0.85,
     });
     m.onBeforeCompile = (s) => {
+      s.uniforms.uVeinColor = {
+        value: new Color(profile.veinColor ?? profile.color),
+      };
+      s.uniforms.uColoredVeins = { value: profile.veinColor ? 1 : 0 };
       s.uniforms.uParallel = { value: profile.parallel ? 1 : 0 };
       s.vertexShader = s.vertexShader
         .replace(
@@ -84,7 +88,7 @@ export function LeafSprig({
       s.fragmentShader = s.fragmentShader
         .replace(
           "#include <common>",
-          "#include <common>\nvarying vec2 vLeafUv; uniform float uParallel;",
+          "#include <common>\nvarying vec2 vLeafUv; uniform float uParallel, uColoredVeins; uniform vec3 uVeinColor;",
         )
         .replace(
           "#include <color_fragment>",
@@ -92,10 +96,11 @@ export function LeafSprig({
           float midrib=exp(-abs(vLeafUv.x-.5)*150.);
           float branchPhase=mix((vLeafUv.y-abs(vLeafUv.x-.5)*.62)*92.,vLeafUv.x*100.,uParallel);
           float veins=pow(.5+.5*cos(branchPhase),24.);
-          diffuseColor.rgb*=.92+midrib*.3+veins*.085;`,
+          diffuseColor.rgb*=.92+midrib*.3+veins*.085;
+          diffuseColor.rgb=mix(diffuseColor.rgb,uVeinColor,(midrib*.65+veins*.12)*uColoredVeins);`,
         );
     };
-    m.customProgramCacheKey = () => "botanical-leaf-v2";
+    m.customProgramCacheKey = () => "botanical-leaf-v3";
     return m;
   }, [profile]);
   useEffect(

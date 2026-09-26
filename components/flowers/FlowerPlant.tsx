@@ -283,6 +283,7 @@ export function FlowerPlant({
                     ))}
                     {Organs && (
                       <Organs
+                        leaves={leaves}
                         bloom={bloom}
                         time={time}
                         wind={wind}

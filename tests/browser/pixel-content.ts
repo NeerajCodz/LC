@@ -1,7 +1,10 @@
 import { expect, type Locator } from "@playwright/test";
 
 /** Read a tiny copy immediately after drawing; UI text cannot satisfy this check. */
-export async function expectRenderedFlower(canvas: Locator) {
+export async function expectRenderedFlower(
+  canvas: Locator,
+  minimumCoverage = 0.04,
+) {
   await expect
     .poll(
       async () =>
@@ -41,5 +44,5 @@ export async function expectRenderedFlower(canvas: Locator) {
           "The canvas must contain rendered flower pixels, not just a live frame counter",
       },
     )
-    .toBeGreaterThan(0.04);
+    .toBeGreaterThan(minimumCoverage);
 }

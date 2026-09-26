@@ -45,6 +45,7 @@ Generated from `lib/flowers/catalog.ts`; genus or ornamental studies never mark 
 | [Bird of Paradise](http://localhost:1607/flower/bird-of-paradise/) | Strelitzia reginae | Exact accepted-name match: `wfo-0000562066` |
 | [Blue Passionflower](http://localhost:1607/flower/passionflower/) | Passiflora caerulea | Exact accepted-name match: `wfo-0000479867` |
 | [Morning Glory](http://localhost:1607/flower/morning-glory/) | Ipomoea purpurea | Exact accepted-name match: `wfo-0001296676` |
+| [Hardy Fuchsia](http://localhost:1607/flower/fuchsia/) | Fuchsia magellanica | Exact accepted-name match: `wfo-0000692791` |
 
 ## Reproduce and audit
 
@@ -259667,7 +259668,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Fuchsia macrophylla — `wfo-0000692777`
 - Fuchsia macrostigma — `wfo-0000692787`
 - Fuchsia magdalenae — `wfo-0000692789`
-- Fuchsia magellanica — `wfo-0000692791`
+- Fuchsia magellanica — `wfo-0000692791` · authored study: `fuchsia`
 - Fuchsia mathewsii — `wfo-0000692803`
 - Fuchsia membranacea — `wfo-0000692805`
 - Fuchsia mezae — `wfo-0000692808`

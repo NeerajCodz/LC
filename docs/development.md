@@ -116,6 +116,8 @@ Spadix checks include capped topology, normal direction and mobile tessellation 
 
 `morning-glory.test.ts` verifies its periodic sealed shell, matched bud normals, thickness and nondegenerate unfolding triangles. `morning-glory.spec.ts` covers visible pixels, bloom, macro, themes, collection search and garden selection. Its [dossier](specimens/morning-glory-research.md) records the distinction between artistic reverse bloom and biological mature closure. `previewScale` is optional authored camera framing; it must not change geometry scale or existing species framing by default.
 
+`fuchsia.test.ts` checks sealed parametric shells, intermediate triangles, valvate bud seams, two stamen lengths and pendant stability. `fuchsia.spec.ts` checks real rendering, reverse bloom, macro, themes, collection search and garden selection with WebGPU disabled. Its [dossier](specimens/fuchsia-research.md) documents source proportions and uncalibrated mechanics. Custom `Organs` now receive the optional `leaves` flag so upper-branch foliage honors the public API. Shared leaf shaders support an optional `veinColor`; absent values preserve the original appearance.
+
 ## Maintenance
 
 The global target inventory is [FLOWERS.md](FLOWERS.md); the interactive catalog is still `lib/flowers/catalog.ts`. After adding or renaming a specimen, run `npm run flowers:inventory` and `npm run flowers:check` so its mapping does not drift. These optional commands require Python 3.10+. Source metadata and checksums live in `data/taxonomy/source.json`; the generated audit manifest is `data/taxonomy/inventory.json`. Never relabel inventory entries as completed models just because a binomial matches.

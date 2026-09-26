@@ -1,6 +1,7 @@
 import type { FlowerType } from "./types";
 
 export interface FoliageProfile {
+  veinColor?: string;
   pubescence?: number;
   basalLobes?: boolean;
   length: number;
@@ -19,6 +20,16 @@ export interface FoliageProfile {
 
 /** Cultivar-independent leaf traits; lotus has its own peltate blade generator. */
 export const FOLIAGE: Record<FlowerType, FoliageProfile> = {
+  fuchsia: {
+    length: 0.94,
+    width: 0.39,
+    color: "#365c38",
+    veinColor: "#93546d",
+    teeth: 18,
+    depth: 0.024,
+    opposite: true,
+    roughness: 0.68,
+  },
   "morning-glory": {
     pubescence: 0.016,
     length: 1.08,

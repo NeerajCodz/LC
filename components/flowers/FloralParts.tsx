@@ -11,6 +11,7 @@ import { createPetalMaterial } from "@/lib/three/materials";
 import { createOrganicTube } from "@/lib/three/organicTube";
 import { petalOpenness } from "@/lib/three/easing";
 export interface FlowerOrgansProps {
+  leaves?: boolean;
   bloom: RefObject<number>;
   time: RefObject<number>;
   wind: number;

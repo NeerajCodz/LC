@@ -51,3 +51,5 @@ WebGL 2 renders these structures and their physical materials. vgpu supplies pro
 The header/favicon flower emblem and the blooming SVG loading ornament are interface graphics. The loader intentionally depicts a stylized flower rather than a particular species; it is separate from the modeled specimens and is not a botanical reference.
 
 The collection is a botanical art experience. It is not a scientific identification key, a measured anatomical reconstruction, or a claim of photographic equivalence.
+
+Hardy Fuchsia uses narrow spreading sepals and short purple petals of *Fuchsia magellanica*, rather than the broad, reflexed or ruffled forms of ornamental hybrids. Its [research dossier](specimens/fuchsia-research.md) records authoritative floras, organ counts, proportions and the limits of its authored hanging-flower mechanics.

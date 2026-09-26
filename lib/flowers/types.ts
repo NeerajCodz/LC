@@ -24,6 +24,7 @@ export const FLOWER_TYPES = [
   "bird-of-paradise",
   "passionflower",
   "morning-glory",
+  "fuchsia",
 ] as const;
 
 export type FlowerType = (typeof FLOWER_TYPES)[number];

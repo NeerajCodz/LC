@@ -13,6 +13,16 @@ export interface FlowerInfo {
 
 export const FLOWERS: FlowerInfo[] = [
   {
+    type: "fuchsia",
+    name: "Hardy Fuchsia",
+    latin: "Fuchsia magellanica",
+    family: "Onagraceae",
+    color: "#c42b59",
+    description: "Crimson, suspended.\nViolet beneath the bell.",
+    detail:
+      "Pendant flowers hang from a fine woody shoot. Four crimson sepals spread around overlapping purple petals, with paired tiers of stamens and a long, rose-colored style.",
+  },
+  {
     type: "morning-glory",
     name: "Morning Glory",
     latin: "Ipomoea purpurea",

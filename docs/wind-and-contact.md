@@ -38,6 +38,8 @@ Blue Passionflower introduces an ideal fixed vine support. `supportedBendWeight`
 
 Garden placement reserves mature bloom envelopes before planting, with depth and height variation. During motion, conservative flattened bloom envelopes gently separate contacting heads according to compliance; nearby petals yield slightly and relax. Roots stay planted. This is lightweight head contact, not triangle-level cloth, leaf collision, crushing, or tearing. Both layouts derive from the full catalog. Mobile uses smaller specimens in its own portrait composition, retaining every species.
 
+Hardy Fuchsia adds independently suspended flowers beneath its woody shoot. `stepFuchsiaPendant` uses a bounded gravity-restored angular response, substepped to 1/240 second, driven by scene time so pauses do not accumulate a large step. Effective length, damping and forcing are authored; a published stem bending-failure study does not calibrate flower-stalk or petal dynamics. Root and leaf attachments continue to follow the shared clamped curve. See the [fuchsia dossier](specimens/fuchsia-research.md).
+
 ## Mobile budgets
 
 Device constraints are resolved before detailed geometry mounts. Mobile uses low geometry, medium for the single-specimen macro view, and low for gallery previews. A simple invisible interaction envelope avoids touch raycasts through all petal triangles. Heavy shadow and postprocessing passes are omitted and pollen density is reduced.

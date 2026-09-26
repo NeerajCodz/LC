@@ -1,0 +1,30 @@
+# Hardy fuchsia
+
+Modeled taxon: _Fuchsia magellanica_ Lam., Onagraceae. Route: `/flower/fuchsia/`. Sources reviewed September 26, 2026. This is a species-informed reconstruction of a flowering shoot, not a scan or a measured simulation of a particular plant.
+
+## Evidence and interpretation
+
+- [Flora of New Zealand](https://floraseries.landcareresearch.co.nz/taxa/58578bb1-6ada-4320-94d2-824a2825e826) describes pendant flowers on slender pedicels, a cylindrical red tube, narrow spreading sepals that do not reflex, short overlapping purple petals, unequal stamen series and a long style with a four-lobed stigma. Its distinction from larger, broader ornamental hybrids guides the silhouette. The model does not use the ruffled double flowers often sold as fuchsias.
+- [Flora del Cono Sur](https://app.floraargentina.edu.ar/new-app/cono-sur/especie.php?id=1708) records a 5–12 mm floral tube, 12–25 mm sepals and 7–20 mm petals, with long and short filament series. These ranges inform relative proportions, rather than a universal size. It also describes opposite or three-whorled toothed leaves and reddish young shoots on a woody shrub.
+- [Oregon State University](https://landscapeplants.oregonstate.edu/plants/fuchsia-magellanica) supplies the arching habit, thin red-brown branches, solitary or paired axillary flowers, paler leaf undersides and purple veins. This specimen selects an opposite-leaved shoot with two independently suspended flowers; it is not the entire mature shrub.
+- [Bishop Museum, Plants of Hawaii](https://plantsofhawaii.org/detail/%7BE889C532-E06A-4DF5-A0A2-2AA5AFA9CFC3%7D) describes eight stamens in two series, paired anther thecae, an inferior ovary and a four-lobed stigma. These are distinct modeled organs. Exact pollen exine, live pollen release and fertilization are not simulated.
+
+## Construction
+
+`FuchsiaOrgans` builds the branch junctions, fine hanging pedicels and separate flowers. A green-to-red inferior ovary sits above the cylindrical hypanthium. Four closed, thick sepals meet edge-to-edge around the bud and spread down and outward. Four shorter, curved purple petals overlap inside them. Eight pink filaments terminate in paired pale anther chambers at alternating heights; the central style projects beyond them and ends in four stigma lobes.
+
+`createParametricShell` samples two offset surfaces and joins the perimeter, or both end rings for a periodic tube. Every floral blade has matching folded positions and normals. Bloom changes the shape of each organ, with small timing offsets, while filaments remain attached. Fine geometric asymmetry, physical material roughness, separate sepal/petal pigment zones and filtered tissue detail remain visible in macro. Materials reuse the shared optional vgpu atlas with the existing GLSL fallback; no new GPU bake or per-frame texture readback is introduced.
+
+`FuchsiaStem` grows a tapered woody shoot with brown-to-red coloration and opposite serrate leaves. Nodes and normals follow the same clamped bend as the head. Optional leaf vein color gives fuchsia its reddish midrib and secondary veins without recoloring unrelated species. The `leaves` API also controls foliage on the upper branch. Pedicels and floral parts share memoized resources between the two flowers; small reproductive organs are merged to reduce draw calls, with reduced tessellation on mobile.
+
+## Motion and limits
+
+The branch follows the shared wind/contact hierarchy. Each pendant uses a bounded, gravity-restored angular response with its own phase, effective length and damping. Integration uses small substeps, and suspended/offscreen scene time does not accumulate motion. Wind, pointer proximity and bloom pulses produce small motions rather than moving the planting point. The effective length, drag, damping, forcing and opening trajectories are authored parameters, not measured species constants. Reverse bloom is an inspection animation, not a claim that a mature flower returns to a viable bud.
+
+Hone et al., [Failure mechanisms and bending strength of Fuchsia magellanica var. gracilis stems](https://doi.org/10.1098/rsif.2020.1023), _Journal of the Royal Society Interface_ (2021), studies stem bending failure. That work does not establish the pedicel damping, petal membrane mechanics or optical properties used here. No numerical material parameter was adopted from inaccessible full methods. Exact aerodynamics, membrane self-contact, leaf collisions, tissue growth and fracture remain outside this model. Leaf underside pigmentation and microscopic pollen structure remain refinement opportunities.
+
+## Verification
+
+`tests/fuchsia.test.ts` checks sealed winding, positive thickness, deterministic surfaces, finite unit folded normals, nondegenerate intermediate triangles, valvate bud edges, non-reflexed sepals, alternating stamen lengths, enclosed bud style and stable pendant recovery across frame rates. Shared tests check the garden's mature planting clearance. `tests/browser/fuchsia.spec.ts` exercises actual rendered pixels, bloom, macro, themes, search and garden selection with WebGPU unavailable, on desktop and mobile emulation. Review front, side, 45-degree and macro views at bud, half and full bloom before accepting geometry changes. Browser emulation is not a physical-device frame-rate measurement.
+
+Validation on September 27, 2026: production build, TypeScript, ESLint, geometry/motion tests, taxonomy tests and inventory audit passed. Desktop Chrome and mobile WebKit rendered the public specimen, macro, themes and selected garden flower with WebGPU disabled. Desktop angle screenshots were reviewed at bud, half and full bloom; mobile specimen/macro screenshots were also inspected. Windows reserved TCP port 1607 during this run, so browser requests retained the canonical localhost:1607 URL while an isolated test transport forwarded them to a production server over a Windows named pipe. This does not establish that a normal TCP server was running on the reserved port. No WGSL programs changed and no physical-phone performance claim is made.

@@ -18,6 +18,8 @@ export function RenderBudget({
   const { subscribe } = useStore();
   const simulation = useRef(0);
   const startupFrames = useRef(0);
+  // Activity changes restart the RAF clock, not this Canvas's draw history.
+  const rendered = useRef(0);
   useLayoutEffect(() => {
     const state = get();
     // Keep mobile at CSS-pixel resolution in both modes. Fractional upscaling
@@ -54,8 +56,7 @@ export function RenderBudget({
     const canvas = state.gl.domElement;
     let frame = 0,
       last = 0,
-      lost = false,
-      rendered = 0;
+      lost = false;
     const interval = 1000 / (constrained ? 30 : 60);
     const tick = (now: number) => {
       const starting = startupFrames.current < 2;
@@ -80,8 +81,8 @@ export function RenderBudget({
           return;
         }
         startupFrames.current += 1;
-        if (++rendered % 30 === 0)
-          canvas.dataset.renderFrames = String(rendered);
+        if (++rendered.current % 30 === 0)
+          canvas.dataset.renderFrames = String(rendered.current);
       }
       frame = requestAnimationFrame(tick);
     };

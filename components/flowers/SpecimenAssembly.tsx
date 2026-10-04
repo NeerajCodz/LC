@@ -290,13 +290,8 @@ function Surface({
     if (resources && surface.flexible) resources.deformation.attach(m);
     return m;
   }, [type, surface, color, resources]);
-  useEffect(
-    () => () => {
-      geometry.dispose();
-      material.dispose();
-    },
-    [geometry, material],
-  );
+  useEffect(() => () => geometry.dispose(), [geometry]);
+  useEffect(() => () => material.dispose(), [material]);
   return (
     <mesh
       ref={assign}

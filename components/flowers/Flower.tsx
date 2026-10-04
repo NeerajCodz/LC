@@ -28,7 +28,9 @@ import { MorningGlory } from "./morning-glory/MorningGlory";
 import { Fuchsia } from "./fuchsia/Fuchsia";
 import { Carnation } from "./carnation/Carnation";
 import { Plumeria } from "./plumeria/Plumeria";
+import { Foxglove } from "./foxglove/Foxglove";
 const SPECIES = {
+  foxglove: Foxglove,
   plumeria: Plumeria,
   carnation: Carnation,
   fuchsia: Fuchsia,

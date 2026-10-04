@@ -25,6 +25,33 @@ export function createSpecimenMaterial(
   }
   m.onBeforeCompile = (s, r) => {
     previous.call(m, s, r);
+    s.vertexShader = s.vertexShader
+      .replace(
+        "#include <common>",
+        "#include <common>\nattribute float tissueSide; varying float vTissueSide;",
+      )
+      .replace(
+        "#include <begin_vertex>",
+        "#include <begin_vertex>\nvTissueSide=tissueSide;",
+      );
+    s.fragmentShader = s.fragmentShader.replace(
+      "#include <common>",
+      "#include <common>\nvarying float vTissueSide;",
+    );
+    if (type === "foxglove" && !green)
+      s.fragmentShader = s.fragmentShader.replace(
+        "#include <roughnessmap_fragment>",
+        `float inside=step(vTissueSide,0.);
+      vec2 cells=vPetalUv*vec2(15.,16.),id=floor(cells);
+      vec2 jitter=vec2(hash21(id),hash21(id+12.));
+      float spot=1.-smoothstep(.10,.19,length(fract(cells)-.25-jitter*.5));
+      float halo=1.-smoothstep(.20,.28,length(fract(cells)-.25-jitter*.5));
+      float mouth=smoothstep(.4,.72,vPetalUv.y)*inside;
+      diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.75,.51,.60),mouth*.62);
+      diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.92,.79,.79),halo*mouth*.6);
+      diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.15,.035,.075),spot*mouth*.8);
+      #include <roughnessmap_fragment>`,
+      );
     if (type === "plumeria" && !green)
       s.fragmentShader = s.fragmentShader
         .replace(

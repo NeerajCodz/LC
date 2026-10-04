@@ -1,6 +1,7 @@
 import type { Quality, Vec3 } from "../flowers/types";
 import { createParametricShell } from "./parametricShell";
 import { createOrganicTube } from "./organicTube";
+import { Float32BufferAttribute } from "three";
 export interface SpecimenSurface {
   name: string;
   cluster: number;
@@ -22,6 +23,7 @@ export interface SpecimenCluster {
   nod: number;
 }
 export interface SpecimenOrgan {
+  fine?: boolean;
   cluster: number;
   name: string;
   points: Vec3[];
@@ -42,11 +44,15 @@ export function specimenGeometry(surface: SpecimenSurface, quality: Quality) {
     high: [32, 32],
     ultra: [48, 44],
   }[quality];
-  return createParametricShell({
+  const g = createParametricShell({
     columns: resolution[0],
     rows: resolution[1],
     ...surface,
   });
+  const side = new Float32Array(g.getAttribute("position").count);
+  for (let i = 0; i < side.length; i++) side[i] = i < side.length / 2 ? 1 : -1;
+  g.setAttribute("tissueSide", new Float32BufferAttribute(side, 1));
+  return g;
 }
 export function specimenOrganGeometry(organ: SpecimenOrgan, quality: Quality) {
   return createOrganicTube({

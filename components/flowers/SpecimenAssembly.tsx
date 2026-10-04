@@ -22,6 +22,7 @@ import { petalOpenness } from "@/lib/three/easing";
 import type { FlowerOrgansProps } from "./FloralParts";
 import type { FlowerType } from "@/lib/flowers/types";
 import { createSpecimenMaterial } from "@/lib/three/specimenMaterials";
+import { joinOrgans } from "@/lib/three/floralOrgans";
 
 /** Dedicated anatomy shares only rendering and cage transfer, not its shape. */
 export function SpecimenAssembly({
@@ -101,6 +102,11 @@ export function SpecimenAssembly({
     model.clusters.forEach((c, i) => {
       const group = groups.current[i];
       if (!group) return;
+      group.rotation.x =
+        c.rotation[0] +
+        (reducedMotion
+          ? 0
+          : Math.sin(time.current * 1.3 + i * 0.9) * c.nod * 0.4 * wind);
       group.rotation.z =
         c.rotation[2] +
         (reducedMotion
@@ -179,11 +185,7 @@ export function SpecimenAssembly({
               />
             ) : null,
           )}
-          {model.organs
-            .filter((o) => o.cluster === k)
-            .map((o, i) => (
-              <Organ key={i} organ={o} quality={quality} />
-            ))}
+          <Organs model={model} cluster={k} quality={quality} />
         </group>
       ))}
     </group>
@@ -248,18 +250,27 @@ function Surface({
     />
   );
 }
-function Organ({
-  organ,
+function Organs({
+  model,
+  cluster,
   quality,
 }: {
-  organ: SpecimenModel["organs"][number];
+  model: SpecimenModel;
+  cluster: number;
   quality: FlowerOrgansProps["quality"];
 }) {
-  const g = useMemo(
-    () => specimenOrganGeometry(organ, quality),
-    [organ, quality],
-  );
-  useEffect(() => () => g.dispose(), [g]);
+  const g = useMemo(() => {
+    const parts = model.organs
+      .filter(
+        (o, i) =>
+          o.cluster === cluster &&
+          (!o.fine || quality === "high" || quality === "ultra" || i % 3 === 0),
+      )
+      .map((o) => specimenOrganGeometry(o, quality));
+    return parts.length ? joinOrgans(parts) : null;
+  }, [model, cluster, quality]);
+  useEffect(() => () => g?.dispose(), [g]);
+  if (!g) return null;
   return (
     <mesh geometry={g} castShadow receiveShadow>
       <meshStandardMaterial vertexColors roughness={0.68} />

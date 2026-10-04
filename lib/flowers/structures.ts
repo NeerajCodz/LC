@@ -1,6 +1,7 @@
 import { fuchsiaStructure } from "../../components/flowers/fuchsia/Fuchsia";
 import { carnationStructure } from "../../components/flowers/carnation/Carnation";
 import { plumeriaStructure } from "../../components/flowers/plumeria/Plumeria";
+import { foxgloveStructure } from "../../components/flowers/foxglove/Foxglove";
 import { birdOfParadiseStructure } from "../../components/flowers/bird-of-paradise/BirdOfParadise";
 import { bleedingHeartStructure } from "../../components/flowers/bleeding-heart/BleedingHeart";
 import { columbineStructure } from "../../components/flowers/columbine/Columbine";
@@ -30,6 +31,7 @@ import { morningGloryStructure } from "../../components/flowers/morning-glory/Mo
 
 /** Authored anatomy shared by planting layout and geometry verification. */
 export const FLOWER_STRUCTURES: Record<FlowerType, FlowerStructure> = {
+  foxglove: foxgloveStructure,
   plumeria: plumeriaStructure,
   carnation: carnationStructure,
   fuchsia: fuchsiaStructure,

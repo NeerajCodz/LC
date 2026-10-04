@@ -287,6 +287,16 @@ FLOWERS.push({
   detail:
     "Five waxy overlapping lobes unfurl above a fused throat on thick succulent branches.",
 });
+FLOWERS.push({
+  type: "foxglove",
+  name: "Foxglove",
+  latin: "Digitalis purpurea",
+  family: "Plantaginaceae",
+  color: PETAL_PALETTES.foxglove.body,
+  description: "A rising hush.\nBells facing the light.",
+  detail:
+    "A one-sided raceme opens from bottom to top, revealing spotted, softly hairy bell interiors.",
+});
 FLOWERS.sort(
   (a, b) => FLOWER_TYPES.indexOf(a.type) - FLOWER_TYPES.indexOf(b.type),
 );

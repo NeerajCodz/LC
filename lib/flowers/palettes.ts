@@ -30,6 +30,15 @@ const palette = (
 });
 
 export const PETAL_PALETTES: Record<FlowerType, PetalPalette> = {
+  foxglove: palette(
+    "#834260",
+    "#c46e9c",
+    "#e49abb",
+    "#843553",
+    0.36,
+    0.85,
+    0.055,
+  ),
   plumeria: palette(
     "#efbf48",
     "#f8ecd4",

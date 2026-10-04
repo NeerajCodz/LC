@@ -21,6 +21,16 @@ export interface FoliageProfile {
 
 /** Cultivar-independent leaf traits; lotus has its own peltate blade generator. */
 export const FOLIAGE: Record<FlowerType, FoliageProfile> = {
+  foxglove: {
+    length: 1.22,
+    width: 0.46,
+    color: "#567849",
+    veinColor: "#9aab6c",
+    teeth: 23,
+    depth: 0.015,
+    pubescence: 0.022,
+    roughness: 0.89,
+  },
   plumeria: {
     length: 1.45,
     width: 0.38,

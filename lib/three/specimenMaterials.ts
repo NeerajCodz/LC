@@ -69,8 +69,8 @@ export function createSpecimenMaterial(
       s.fragmentShader = s.fragmentShader.replace(
         "#include <roughnessmap_fragment>",
         `float inside=step(vTissueSide,0.);
-      vec2 cells=vPetalUv*vec2(15.,16.),id=floor(cells);
-      vec2 jitter=vec2(hash21(id),hash21(id+12.));
+      vec2 cells=vPetalUv*vec2(15.,16.),foxCellId=floor(cells);
+      vec2 jitter=vec2(hash21(foxCellId),hash21(foxCellId+12.));
       float spot=1.-smoothstep(.10,.19,length(fract(cells)-.25-jitter*.5));
       float halo=1.-smoothstep(.20,.28,length(fract(cells)-.25-jitter*.5));
       float mouth=smoothstep(.4,.72,vPetalUv.y)*inside;

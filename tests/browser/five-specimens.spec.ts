@@ -111,9 +111,18 @@ test("focused cages survive macro, pause, keyboard pulse and reduced motion", as
   await page.emulateMedia({ reducedMotion: "reduce" });
   await expect(canvas).toHaveAttribute("data-petal-physics", "settled");
   await expect(pulse).toBeDisabled();
+  const desktopBudget =
+    (await canvas.getAttribute("data-render-budget")) === "desktop";
   await page.setViewportSize({ width: 390, height: 844 });
   await expect
     .poll(async () => Number(await canvas.getAttribute("data-petal-nodes")))
     .toBeLessThanOrEqual(512);
+  if (desktopBudget) {
+    await expect
+      .poll(async () => Number(await canvas.getAttribute("data-petal-nodes")))
+      .toBeLessThan(Number(nodes));
+    await page.setViewportSize({ width: 1280, height: 720 });
+    await expect(canvas).toHaveAttribute("data-petal-nodes", nodes!);
+  }
   await expectRenderedFlower(canvas, 0.007);
 });

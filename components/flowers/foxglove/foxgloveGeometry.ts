@@ -4,9 +4,10 @@ export const FOXGLOVE_BELLS = 12;
 export function foxgloveBell(u: number, v: number, open: number): Vec3 {
   const a = u * Math.PI * 2,
     lower = Math.max(0, -Math.sin(a));
-  const r =
-    0.04 +
-    (0.045 * (1 - open) + 0.24 * open) * Math.sin(v * Math.PI * 0.55) ** 0.8;
+  const matureRadius = 0.04 + 0.24 * Math.sin(v * Math.PI * 0.55) ** 0.8;
+  const budRadius =
+    0.009 + 0.04 * (1 - v) + 0.055 * Math.sin(v * Math.PI) ** 0.8;
+  const r = budRadius * (1 - open) + matureRadius * open;
   const rim = 1 + 0.045 * Math.cos(a * 4) * v ** 8;
   return [
     Math.cos(a) * r * rim,

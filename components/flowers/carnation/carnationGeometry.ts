@@ -11,7 +11,7 @@ export function carnationPetal(index: number) {
   const layer = Math.floor(index / 10),
     a = index * 2.399963 + layer * 0.17;
   const length = 0.94 - layer * 0.14,
-    spread = 1.23 - layer * 0.04;
+    spread = 1.23 - layer * 0.22;
   return (u: number, v: number, open: number): Vec3 => {
     const w = u * 2 - 1;
     const width =
@@ -20,7 +20,13 @@ export function carnationPetal(index: number) {
       0.036 * (0.5 + 0.5 * Math.cos(u * Math.PI * 30 + index * 0.7)) * v ** 12;
     const t = v - fringe;
     const angle = 0.09 + spread * open;
-    const radius = 0.045 + layer * 0.019 + Math.sin(angle) * length * t;
+    // Inner blades arch back over the included organs instead of leaving a
+    // radial hole through to the calyx. Outer claws still spread into a ruff.
+    const radius =
+      0.045 +
+      (3 - layer) * 0.015 +
+      Math.sin(angle) * length * t -
+      (layer / 3) ** 4 * 0.35 * open * t ** 3;
     const y =
       0.16 +
       layer * 0.043 +
@@ -59,7 +65,7 @@ export const CARNATION_MODEL: SpecimenModel = {
       role: "calyx",
       thickness: 0.016,
       periodic: true,
-      sample: radialTube(0.135, 0.39, 5, 0.16),
+      sample: radialTube(0.135, 0.29, 5, 0.15),
     },
     ...Array.from({ length: 4 }, (_, i) => ({
       name: `basal bract ${i + 1}`,

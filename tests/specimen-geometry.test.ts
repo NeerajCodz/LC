@@ -6,9 +6,18 @@ import {
   type SpecimenModel,
 } from "../lib/three/specimenModel";
 import { PetalDynamics } from "../lib/three/petalDynamics";
-import { CARNATION_MODEL } from "../components/flowers/carnation/carnationGeometry";
-import { PLUMERIA_MODEL } from "../components/flowers/plumeria/plumeriaGeometry";
-import { FOXGLOVE_MODEL } from "../components/flowers/foxglove/foxgloveGeometry";
+import {
+  CARNATION_MODEL,
+  carnationPetal,
+} from "../components/flowers/carnation/carnationGeometry";
+import {
+  PLUMERIA_MODEL,
+  plumeriaLobe,
+} from "../components/flowers/plumeria/plumeriaGeometry";
+import {
+  FOXGLOVE_MODEL,
+  foxgloveBell,
+} from "../components/flowers/foxglove/foxgloveGeometry";
 import { SWEET_PEA_MODEL } from "../components/flowers/sweet-pea/sweetPeaGeometry";
 import { BOUGAINVILLEA_MODEL } from "../components/flowers/bougainvillea/bougainvilleaGeometry";
 
@@ -96,6 +105,37 @@ verifySpecimen("plumeria", PLUMERIA_MODEL);
 verifySpecimen("foxglove", FOXGLOVE_MODEL);
 verifySpecimen("sweet pea", SWEET_PEA_MODEL);
 verifySpecimen("bougainvillea", BOUGAINVILLEA_MODEL);
+test("double carnation covers its calyx and corolla buds close around included organs", () => {
+  for (let i = 30; i < 40; i++) {
+    const tip = carnationPetal(i)(0.5, 1, 1);
+    assert.ok(
+      Math.hypot(tip[0], tip[2]) < 0.12,
+      "inner ruff covers the center",
+    );
+    assert.ok(tip[1] > 0.5, "inner petals arch above the calyx");
+  }
+  for (let i = 0; i < 5; i++) {
+    const lobe = plumeriaLobe(i),
+      tip = lobe(0.5, 1, 0);
+    assert.ok(Math.hypot(tip[0], tip[2]) < 0.025, "furled tip tapers inward");
+    const left = lobe(0, 0.5, 0),
+      right = plumeriaLobe((i + 4) % 5)(1, 0.5, 0);
+    assert.ok(
+      Math.hypot(left[0] - right[0], left[1] - right[1], left[2] - right[2]) <
+        0.025,
+      "adjacent bud sectors overlap",
+    );
+  }
+  for (let i = 0; i < 12; i++) {
+    const bud = foxgloveBell(i / 12, 1, 0),
+      open = foxgloveBell(i / 12, 1, 1);
+    assert.ok(
+      Math.hypot(bud[0], bud[1] + 0.12) <
+        Math.hypot(open[0], open[1] + 0.12) / 4,
+      "foxglove bud mouth stays closed",
+    );
+  }
+});
 test("five specimens preserve their defining authored organ arrangements", () => {
   const count = (m: SpecimenModel, role: string) =>
     m.surfaces.filter((s) => s.role === role).length;

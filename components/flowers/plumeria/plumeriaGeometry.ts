@@ -11,18 +11,20 @@ export function plumeriaLobe(index: number) {
   return (u: number, v: number, open: number): Vec3 => {
     const w = u * 2 - 1,
       width = 0.009 + 0.31 * Math.sin(v * Math.PI * 0.98) ** 0.72;
-    const r =
-      0.073 +
-      (0.75 * open + 0.07 * (1 - open)) * (v - 0.1 * w * w * v ** 8 * open);
-    const sweep = 0.26 * open * v * v + w * width * (0.14 + 0.86 * open);
-    const y =
-      0.16 +
-      (0.68 * (1 - open) + 0.11 * open) * v +
-      open * ((0.03 * w * w - 0.06) * Math.sin(v * Math.PI));
+    const r = 0.073 + 0.75 * (v - 0.1 * w * w * v ** 8);
+    const sweep = 0.26 * v * v + w * width;
+    const y = 0.16 + 0.11 * v + (0.03 * w * w - 0.06) * Math.sin(v * Math.PI);
+    // Five overlapping sectors wrap a contorted, tapered bud. Narrowing only
+    // the flat open blade leaves five separate fingers and exposes its organs.
+    const budAngle = a + v * 1.2 + w * 0.69;
+    const budRadius =
+      0.014 + 0.06 * (1 - v) + 0.095 * Math.sin(Math.PI * v) ** 0.8;
+    const bx = Math.sin(budAngle) * budRadius,
+      bz = Math.cos(budAngle) * budRadius;
     return [
-      Math.sin(a) * r + Math.cos(a) * sweep,
-      y,
-      Math.cos(a) * r - Math.sin(a) * sweep,
+      bx * (1 - open) + (Math.sin(a) * r + Math.cos(a) * sweep) * open,
+      (0.16 + 0.68 * v) * (1 - open) + y * open,
+      bz * (1 - open) + (Math.cos(a) * r - Math.sin(a) * sweep) * open,
     ];
   };
 }
@@ -142,4 +144,3 @@ export const PLUMERIA_MODEL: SpecimenModel = {
     })),
   ],
 };
-

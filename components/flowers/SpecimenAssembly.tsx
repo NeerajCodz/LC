@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { Group, Matrix4, Mesh } from "three";
 import { useActiveFrame } from "@/hooks/useActiveFrame";
-import { isConstrainedDevice } from "@/lib/performance";
+import { useExperienceSettings } from "@/hooks/useExperienceSettings";
 import { PetalDynamics, type SurfaceForces } from "@/lib/three/petalDynamics";
 import {
   CageDeformation,
@@ -37,7 +37,7 @@ export function SpecimenAssembly({
   physics = "ambient",
   reducedMotion = false,
 }: FlowerOrgansProps & { model: SpecimenModel; type: FlowerType }) {
-  const [constrained] = useState(isConstrainedDevice);
+  const { constrained } = useExperienceSettings();
   const canvas = useThree((state) => state.gl.domElement);
   const cost = useRef({ frames: 0, mean: 0, steps: 0 });
   const groups = useRef<(Group | null)[]>([]),
@@ -90,6 +90,7 @@ export function SpecimenAssembly({
     articulationClock = useRef(new SurfaceClock());
   useEffect(() => {
     if (!resources) return;
+    cost.current = { frames: 0, mean: 0, steps: 0 };
     canvas.setAttribute(
       "data-petal-nodes",
       String(resources.sim.inverseMass.length),

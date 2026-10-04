@@ -7,6 +7,7 @@ import {
 import { createCagePatch, PetalDynamics } from "../lib/three/petalDynamics";
 import { CARNATION_MODEL } from "../components/flowers/carnation/carnationGeometry";
 import { PLUMERIA_MODEL } from "../components/flowers/plumeria/plumeriaGeometry";
+import { FOXGLOVE_MODEL } from "../components/flowers/foxglove/foxgloveGeometry";
 
 export function verifySpecimen(name: string, model: SpecimenModel) {
   test(`${name}: deterministic sealed surfaces, positive thickness and stable bloom normals`, () => {
@@ -96,3 +97,4 @@ export function verifySpecimen(name: string, model: SpecimenModel) {
 }
 verifySpecimen("carnation", CARNATION_MODEL);
 verifySpecimen("plumeria", PLUMERIA_MODEL);
+verifySpecimen("foxglove", FOXGLOVE_MODEL);

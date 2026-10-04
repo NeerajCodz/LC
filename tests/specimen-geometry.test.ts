@@ -9,6 +9,7 @@ import { CARNATION_MODEL } from "../components/flowers/carnation/carnationGeomet
 import { PLUMERIA_MODEL } from "../components/flowers/plumeria/plumeriaGeometry";
 import { FOXGLOVE_MODEL } from "../components/flowers/foxglove/foxgloveGeometry";
 import { SWEET_PEA_MODEL } from "../components/flowers/sweet-pea/sweetPeaGeometry";
+import { BOUGAINVILLEA_MODEL } from "../components/flowers/bougainvillea/bougainvilleaGeometry";
 
 export function verifySpecimen(name: string, model: SpecimenModel) {
   test(`${name}: deterministic sealed surfaces, positive thickness and stable bloom normals`, () => {
@@ -100,3 +101,4 @@ verifySpecimen("carnation", CARNATION_MODEL);
 verifySpecimen("plumeria", PLUMERIA_MODEL);
 verifySpecimen("foxglove", FOXGLOVE_MODEL);
 verifySpecimen("sweet pea", SWEET_PEA_MODEL);
+verifySpecimen("bougainvillea", BOUGAINVILLEA_MODEL);

@@ -105,3 +105,31 @@ test("cages obey whole-specimen budgets and retain topology through morph change
     /2048/,
   );
 });
+test("extreme force inputs stay finite and reverse bloom retains fixed insertions", () => {
+  const sim = new PetalDynamics([patch()], true),
+    forces = {
+      wind: 1e8,
+      time: NaN,
+      pulse: 1e8,
+      x: Infinity,
+      y: 0,
+      z: 0,
+      proximity: Infinity,
+    };
+  for (const bloom of [1, 0.5, 0, 0.5, 1]) {
+    sim.setRest(0, bloom);
+    sim.step(10, forces);
+    assert.ok(sim.positions.every(Number.isFinite));
+    for (let node = 0; node < sim.inverseMass.length; node++)
+      for (let c = 0; c < 3; c++) {
+        const k = node * 3 + c;
+        assert.ok(Math.abs(sim.positions[k] - sim.rest[k]) <= 0.180001);
+        if (!sim.inverseMass[node]) assert.equal(sim.positions[k], sim.rest[k]);
+      }
+  }
+  const before = sim.positions.slice();
+  sim.step(0);
+  assert.deepEqual(sim.positions, before);
+  sim.reset();
+  assert.deepEqual(sim.positions, sim.rest);
+});

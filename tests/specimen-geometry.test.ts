@@ -96,3 +96,27 @@ verifySpecimen("plumeria", PLUMERIA_MODEL);
 verifySpecimen("foxglove", FOXGLOVE_MODEL);
 verifySpecimen("sweet pea", SWEET_PEA_MODEL);
 verifySpecimen("bougainvillea", BOUGAINVILLEA_MODEL);
+test("five specimens preserve their defining authored organ arrangements", () => {
+  const count = (m: SpecimenModel, role: string) =>
+    m.surfaces.filter((s) => s.role === role).length;
+  assert.equal(count(CARNATION_MODEL, "petal"), 40);
+  assert.equal(count(PLUMERIA_MODEL, "petal"), 17); // 15 limbs and two younger buds.
+  assert.equal(
+    FOXGLOVE_MODEL.surfaces.filter((s) => s.flexible && s.periodic).length,
+    12,
+  );
+  assert.equal(count(SWEET_PEA_MODEL, "banner"), 3);
+  assert.equal(count(SWEET_PEA_MODEL, "wing"), 6);
+  assert.equal(count(SWEET_PEA_MODEL, "keel"), 6);
+  assert.equal(count(BOUGAINVILLEA_MODEL, "bract"), 9);
+  assert.equal(count(BOUGAINVILLEA_MODEL, "tube"), 9);
+  for (const m of [
+    CARNATION_MODEL,
+    PLUMERIA_MODEL,
+    FOXGLOVE_MODEL,
+    SWEET_PEA_MODEL,
+    BOUGAINVILLEA_MODEL,
+  ])
+    for (const part of [...m.surfaces, ...m.organs])
+      assert.ok(part.cluster >= 0 && part.cluster < m.clusters.length);
+});

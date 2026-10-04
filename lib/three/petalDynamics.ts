@@ -12,6 +12,7 @@ export interface CagePatch {
   folded: Float64Array;
   triangles: Uint32Array;
   edges: Uint32Array;
+  contactEdges: Uint32Array;
 }
 
 /** A midsurface cage is independent of the visible high/ultra tessellation. */
@@ -37,15 +38,23 @@ export function createCagePatch({
   const open = new Float64Array(count * 3),
     folded = new Float64Array(count * 3);
   const triangles: number[] = [],
-    edges: number[] = [];
+    edges: number[] = [],
+    contactEdges: number[] = [];
   const link = (a: number, b: number) => edges.push(a, b);
   for (let j = 0; j <= rows; j++)
     for (let i = 0; i < stride; i++) {
       const k = j * stride + i;
       open.set(sample(i / columns, j / rows, 1), k * 3);
       folded.set(sample(i / columns, j / rows, 0), k * 3);
-      if (j < rows) link(k, k + stride);
-      if (periodic || i < columns) link(k, j * stride + ((i + 1) % stride));
+      if (j < rows) {
+        link(k, k + stride);
+        contactEdges.push(k, k + stride);
+      }
+      if (periodic || i < columns) {
+        const next = j * stride + ((i + 1) % stride);
+        link(k, next);
+        contactEdges.push(k, next);
+      }
       if (j + 2 <= rows) link(k, k + stride * 2);
       if (j < rows && (periodic || i < columns)) {
         const b = j * stride + ((i + 1) % stride),
@@ -67,6 +76,7 @@ export function createCagePatch({
     folded,
     triangles: Uint32Array.from(triangles),
     edges: Uint32Array.from(edges),
+    contactEdges: Uint32Array.from(contactEdges),
   };
 }
 
@@ -157,19 +167,12 @@ export class PetalDynamics {
     this.lambdas = new Float64Array(edges.length / 2);
     this.stepSize = constrained ? 1 / 60 : 1 / 120;
     this.iterations = constrained ? 4 : 6;
-    // Collision segments are actual triangle edges, not the long bend links.
-    const collisionEdges: number[] = [],
-      seen = new Set<string>();
-    for (let t = 0; t < this.triangles.length; t += 3)
-      for (let c = 0; c < 3; c++) {
-        const a = this.triangles[t + c],
-          b = this.triangles[t + ((c + 1) % 3)],
-          key = a < b ? `${a}:${b}` : `${b}:${a}`;
-        if (!seen.has(key)) {
-          seen.add(key);
-          collisionEdges.push(a, b);
-        }
-      }
+    // Contact uses the material cage's warp/weft edges, not artificial diagonals.
+    const collisionEdges: number[] = [];
+    patches.forEach((p, i) => {
+      for (const node of p.contactEdges)
+        collisionEdges.push(node + this.offsets[i]);
+    });
     this.contacts = new PetalContacts(
       this.triangles,
       Uint32Array.from(collisionEdges),
@@ -235,6 +238,15 @@ export class PetalDynamics {
     this.previous.set(p);
     this.lambdas.fill(0);
     const drag = Math.exp(-h * 8);
+    const wind = Number.isFinite(force.wind)
+      ? Math.max(-4, Math.min(4, force.wind))
+      : 0;
+    const pulse = Number.isFinite(force.pulse)
+      ? Math.max(-2, Math.min(2, force.pulse))
+      : 0;
+    const proximity = Number.isFinite(force.proximity)
+      ? Math.max(0, Math.min(1, force.proximity))
+      : 0;
     for (let i = 0; i < this.inverseMass.length; i++) {
       const k = i * 3;
       if (!this.inverseMass[i]) {
@@ -248,11 +260,18 @@ export class PetalDynamics {
         r[k + 1] - force.y,
         r[k + 2] - force.z,
       );
-      const near = Math.max(0, 1 - distance / 0.55) * force.proximity;
+      const near =
+        (Number.isFinite(distance) ? Math.max(0, 1 - distance / 0.55) : 0) *
+        proximity;
       const air =
-        force.wind * (Math.sin(force.time * 1.7 + i * 0.41) * 0.2 + 0.3);
+        wind *
+        (Math.sin(
+          (Number.isFinite(force.time) ? force.time : 0) * 1.7 + i * 0.41,
+        ) *
+          0.2 +
+          0.3);
       v[k] = v[k] * drag + h * (air + near * 2);
-      v[k + 1] = v[k + 1] * drag + h * (force.pulse * 0.35 - near * 0.9);
+      v[k + 1] = v[k + 1] * drag + h * (pulse * 0.35 - near * 0.9);
       v[k + 2] = v[k + 2] * drag + h * (air * 0.6 + near * 0.7);
       p[k] += v[k] * h;
       p[k + 1] += v[k + 1] * h;

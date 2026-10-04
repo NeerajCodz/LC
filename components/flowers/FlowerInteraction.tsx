@@ -1,17 +1,20 @@
 import type { ReactNode } from "react";
 import type { ThreeEvent } from "@react-three/fiber";
+import type { Vec3 } from "@/lib/flowers/types";
 
 /** Phones hit a small invisible envelope, not every triangle of every petal. */
 export function FlowerInteraction({
   children,
   enabled,
   proxyRadius,
+  proxyCenter,
   onHover,
   onClick,
 }: {
   children: ReactNode;
   enabled: boolean;
   proxyRadius?: number;
+  proxyCenter?: Vec3;
   onHover?: (hovered: boolean) => void;
   onClick?: () => void;
 }) {
@@ -43,6 +46,7 @@ export function FlowerInteraction({
         {enabled && (
           <mesh
             visible={false}
+            position={proxyCenter}
             scale={[
               proxyRadius,
               Math.max(0.5, proxyRadius * 0.75),

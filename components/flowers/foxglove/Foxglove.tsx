@@ -18,6 +18,7 @@ export const foxgloveStructure: FlowerStructure = {
   leafCount: 10,
   calyx: false,
   airbornePollen: false,
+  simulatedSurfaces: true,
 };
 const anatomy: StemAnatomy = {
   color: "#6c864d",

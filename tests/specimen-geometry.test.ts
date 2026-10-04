@@ -2,9 +2,10 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
   specimenGeometry,
+  specimenCages,
   type SpecimenModel,
 } from "../lib/three/specimenModel";
-import { createCagePatch, PetalDynamics } from "../lib/three/petalDynamics";
+import { PetalDynamics } from "../lib/three/petalDynamics";
 import { CARNATION_MODEL } from "../components/flowers/carnation/carnationGeometry";
 import { PLUMERIA_MODEL } from "../components/flowers/plumeria/plumeriaGeometry";
 import { FOXGLOVE_MODEL } from "../components/flowers/foxglove/foxgloveGeometry";
@@ -84,14 +85,7 @@ export function verifySpecimen(name: string, model: SpecimenModel) {
   });
   test(`${name}: whole-plant cages respect both node ceilings`, () => {
     for (const constrained of [true, false]) {
-      const patches = model.surfaces
-        .filter((s) => s.flexible)
-        .map((s) => {
-          const [columns, rows] = (constrained ? s.mobileCage : s.cage) ?? [
-            3, 5,
-          ];
-          return createCagePatch({ ...s, columns, rows });
-        });
+      const { patches } = specimenCages(model, constrained);
       const sim = new PetalDynamics(patches, constrained);
       assert.ok(sim.inverseMass.length <= (constrained ? 512 : 2048));
     }

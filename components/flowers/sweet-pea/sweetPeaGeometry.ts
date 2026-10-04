@@ -8,12 +8,13 @@ export const SWEET_PEA_POSITIONS: Vec3[] = [
 export function sweetPeaBanner(u: number, v: number, open: number): Vec3 {
   const w = u * 2 - 1,
     width = 0.008 + 0.48 * Math.sin(v * Math.PI * 0.98) ** 0.65;
+  const radius = 0.008 + 0.075 * Math.sin(v * Math.PI);
   return [
-    w * width * (0.1 + 0.9 * open),
-    0.05 + 0.65 * v,
-    0.03 +
-      (1 - open) * 0.17 * v +
-      open * (0.18 * w * w - 0.13 * Math.sin(v * Math.PI) + 0.08 * v ** 7),
+    open * w * width + (1 - open) * Math.sin(w * 2.8) * radius,
+    0.05 + (0.36 * (1 - open) + 0.65 * open) * v,
+    open *
+      (0.03 + 0.18 * w * w - 0.13 * Math.sin(v * Math.PI) + 0.08 * v ** 7) +
+      (1 - open) * (0.04 + 0.3 * v - Math.cos(w * 2.8) * radius),
   ];
 }
 export function sweetPeaWing(sign: number) {
@@ -33,7 +34,7 @@ export function sweetPeaWing(sign: number) {
 export function sweetPeaKeel(sign: number) {
   return (u: number, v: number, open: number): Vec3 => {
     const r = 0.005 + 0.125 * Math.sin(v * Math.PI * 0.99) ** 0.7,
-      a = u * Math.PI * 0.5;
+      a = u * Math.PI;
     return [
       sign * (0.003 + r * Math.sin(a) * (0.45 + 0.55 * open)),
       -0.08 - r * Math.cos(a) + 0.08 * v ** 4 * open,

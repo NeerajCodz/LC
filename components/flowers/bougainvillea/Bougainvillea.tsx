@@ -18,6 +18,7 @@ export const bougainvilleaStructure: FlowerStructure = {
   leafCount: 4,
   calyx: false,
   airbornePollen: false,
+  simulatedSurfaces: true,
 };
 const anatomy: StemAnatomy = {
   color: "#8b805d",

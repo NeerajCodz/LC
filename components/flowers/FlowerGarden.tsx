@@ -134,6 +134,7 @@ export default function FlowerGarden({
                 interactive={!selected || selected === plant.type}
                 reducedMotion={reducedMotion}
                 paused={paused}
+                pulse={pulse}
                 onClick={() => onSelect(plant.type)}
               />
             </group>

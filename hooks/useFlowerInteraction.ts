@@ -9,6 +9,8 @@ import type { Vec3 } from "@/lib/flowers/types";
 export function useFlowerInteraction(
   head: RefObject<Group | null>,
   enabled: boolean,
+  center?: Vec3,
+  radius = 2.2,
 ) {
   const cursor = useCursor3D();
   const response = useRef({
@@ -28,7 +30,18 @@ export function useFlowerInteraction(
     response.current.angle = Math.atan2(local.current.x, local.current.z);
     response.current.proximity = damp(
       response.current.proximity,
-      enabled ? Math.max(0, 1 - local.current.length() / 2.2) : 0,
+      enabled
+        ? Math.max(
+            0,
+            1 -
+              Math.hypot(
+                local.current.x - (center?.[0] ?? 0),
+                local.current.y - (center?.[1] ?? 0),
+                local.current.z - (center?.[2] ?? 0),
+              ) /
+                radius,
+          )
+        : 0,
       4,
       dt,
     );

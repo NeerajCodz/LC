@@ -18,6 +18,7 @@ export const plumeriaStructure: FlowerStructure = {
   leafCount: 4,
   calyx: false,
   airbornePollen: false,
+  simulatedSurfaces: true,
 };
 const anatomy: StemAnatomy = {
   color: "#858577",

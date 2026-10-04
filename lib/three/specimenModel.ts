@@ -2,6 +2,7 @@ import type { Quality, Vec3 } from "../flowers/types";
 import { createParametricShell } from "./parametricShell";
 import { createOrganicTube } from "./organicTube";
 import { Float32BufferAttribute } from "three";
+import { createCagePatch } from "./petalDynamics";
 export interface SpecimenSurface {
   name: string;
   cluster: number;
@@ -10,6 +11,7 @@ export interface SpecimenSurface {
   thickness: number;
   periodic?: boolean;
   flexible?: boolean;
+  contactObstacle?: boolean;
   delay?: number;
   compliance?: number;
   pinMidrib?: boolean;
@@ -53,6 +55,23 @@ export function specimenGeometry(surface: SpecimenSurface, quality: Quality) {
   for (let i = 0; i < side.length; i++) side[i] = i < side.length / 2 ? 1 : -1;
   g.setAttribute("tissueSide", new Float32BufferAttribute(side, 1));
   return g;
+}
+export function specimenCages(model: SpecimenModel, constrained: boolean) {
+  const indices = model.surfaces.flatMap((s, i) =>
+    s.flexible || s.contactObstacle ? [i] : [],
+  );
+  const patches = indices.map((i) => {
+    const s = model.surfaces[i],
+      [columns, rows] = (constrained ? s.mobileCage : s.cage) ?? [3, 5];
+    return createCagePatch({
+      ...s,
+      columns,
+      rows,
+      pinRows: s.flexible ? 1 : rows + 1,
+      compliance: s.compliance ?? 0.00008,
+    });
+  });
+  return { indices, patches };
 }
 export function specimenOrganGeometry(organ: SpecimenOrgan, quality: Quality) {
   return createOrganicTube({

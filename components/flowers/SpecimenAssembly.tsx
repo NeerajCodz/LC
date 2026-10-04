@@ -2,11 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Group, Matrix4, Mesh } from "three";
 import { useActiveFrame } from "@/hooks/useActiveFrame";
 import { isConstrainedDevice } from "@/lib/performance";
-import {
-  createCagePatch,
-  PetalDynamics,
-  type SurfaceForces,
-} from "@/lib/three/petalDynamics";
+import { PetalDynamics, type SurfaceForces } from "@/lib/three/petalDynamics";
 import {
   CageDeformation,
   bindCageGeometry,
@@ -17,12 +13,14 @@ import {
   specimenOrganGeometry,
   type SpecimenModel,
   type SpecimenSurface,
+  specimenCages,
 } from "@/lib/three/specimenModel";
 import { petalOpenness, stepSpring } from "@/lib/three/easing";
 import type { FlowerOrgansProps } from "./FloralParts";
 import type { FlowerType } from "@/lib/flowers/types";
 import { createSpecimenMaterial } from "@/lib/three/specimenMaterials";
 import { joinOrgans } from "@/lib/three/floralOrgans";
+import { useThree } from "@react-three/fiber";
 
 /** Dedicated anatomy shares only rendering and cage transfer, not its shape. */
 export function SpecimenAssembly({
@@ -40,21 +38,13 @@ export function SpecimenAssembly({
   reducedMotion = false,
 }: FlowerOrgansProps & { model: SpecimenModel; type: FlowerType }) {
   const [constrained] = useState(isConstrainedDevice);
+  const canvas = useThree((state) => state.gl.domElement);
+  const cost = useRef({ frames: 0, mean: 0, steps: 0 });
   const groups = useRef<(Group | null)[]>([]),
     meshes = useRef<(Mesh | null)[]>([]);
   const resources = useMemo(() => {
     if (physics !== "detailed") return null;
-    const indices = model.surfaces.flatMap((s, i) => (s.flexible ? [i] : []));
-    const patches = indices.map((i) => {
-      const s = model.surfaces[i],
-        [columns, rows] = (constrained ? s.mobileCage : s.cage) ?? [3, 5];
-      return createCagePatch({
-        ...s,
-        columns,
-        rows,
-        compliance: s.compliance ?? 0.00008,
-      });
-    });
+    const { indices, patches } = specimenCages(model, constrained);
     const sim = new PetalDynamics(patches, constrained);
     patches.forEach((p, i) => {
       if (!model.surfaces[indices[i]].pinMidrib) return;
@@ -98,6 +88,23 @@ export function SpecimenAssembly({
       model.clusters.map(() => ({ value: 0, velocity: 0 })),
     ),
     articulationClock = useRef(new SurfaceClock());
+  useEffect(() => {
+    if (!resources) return;
+    canvas.setAttribute(
+      "data-petal-nodes",
+      String(resources.sim.inverseMass.length),
+    );
+    canvas.setAttribute("data-petal-steps", "0");
+    return () => {
+      for (const key of [
+        "data-petal-nodes",
+        "data-petal-steps",
+        "data-petal-ms",
+        "data-petal-physics",
+      ])
+        canvas.removeAttribute(key);
+    };
+  }, [canvas, resources]);
   useActiveFrame(() => {
     const touch = interaction?.current,
       press = reducedMotion
@@ -187,10 +194,24 @@ export function SpecimenAssembly({
       f.x = touch?.point?.[0] ?? 0;
       f.y = touch?.point?.[1] ?? 0;
       f.z = touch?.point?.[2] ?? 0;
+      const start = performance.now();
       sim.step(dt, f);
+      const elapsed = performance.now() - start;
+      cost.current.mean +=
+        (elapsed - cost.current.mean) / Math.min(60, ++cost.current.frames);
+      cost.current.steps++;
     }
     deformation.setEnabled(!reducedMotion);
     if (dt !== 0) deformation.update(inverses);
+    canvas.setAttribute(
+      "data-petal-physics",
+      reducedMotion ? "settled" : "detailed",
+    );
+    if (cost.current.frames % 30 === 0) {
+      canvas.setAttribute("data-petal-nodes", String(sim.inverseMass.length));
+      canvas.setAttribute("data-petal-ms", cost.current.mean.toFixed(2));
+      canvas.setAttribute("data-petal-steps", String(cost.current.steps));
+    }
   });
   return (
     <group>
@@ -220,7 +241,14 @@ export function SpecimenAssembly({
               />
             ) : null,
           )}
-          <Organs model={model} cluster={k} quality={quality} />
+          <Organs model={model} cluster={k} quality={quality} bloom={bloom} />
+          <Organs
+            model={model}
+            cluster={k}
+            quality={quality}
+            bloom={bloom}
+            included
+          />
         </group>
       ))}
     </group>
@@ -289,25 +317,45 @@ function Organs({
   model,
   cluster,
   quality,
+  bloom,
+  included = false,
 }: {
   model: SpecimenModel;
   cluster: number;
   quality: FlowerOrgansProps["quality"];
+  bloom: FlowerOrgansProps["bloom"];
+  included?: boolean;
 }) {
   const g = useMemo(() => {
     const parts = model.organs
       .filter(
         (o, i) =>
           o.cluster === cluster &&
+          /stamen|anther|style|pistil|hair/.test(o.name) === included &&
           (!o.fine || quality === "high" || quality === "ultra" || i % 3 === 0),
       )
       .map((o) => specimenOrganGeometry(o, quality));
     return parts.length ? joinOrgans(parts) : null;
-  }, [model, cluster, quality]);
+  }, [model, cluster, quality, included]);
+  const mesh = useRef<Mesh>(null);
+  const delay = useMemo(
+    () =>
+      Math.min(
+        ...model.surfaces
+          .filter((s) => s.cluster === cluster)
+          .map((s) => s.delay ?? 0),
+      ),
+    [model, cluster],
+  );
+  useActiveFrame(() => {
+    if (!mesh.current || !included) return;
+    const open = petalOpenness(bloom.current, delay, 0);
+    mesh.current.scale.setScalar(0.5 + 0.5 * open);
+  });
   useEffect(() => () => g?.dispose(), [g]);
   if (!g) return null;
   return (
-    <mesh geometry={g} castShadow receiveShadow>
+    <mesh ref={mesh} geometry={g} castShadow receiveShadow>
       <meshStandardMaterial vertexColors roughness={0.68} />
     </mesh>
   );

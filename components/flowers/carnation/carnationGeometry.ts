@@ -10,8 +10,8 @@ export const CARNATION_PETALS = 40;
 export function carnationPetal(index: number) {
   const layer = Math.floor(index / 10),
     a = index * 2.399963 + layer * 0.17;
-  const length = 0.94 - layer * 0.085,
-    spread = 1.23 - layer * 0.17;
+  const length = 0.94 - layer * 0.14,
+    spread = 1.23 - layer * 0.04;
   return (u: number, v: number, open: number): Vec3 => {
     const w = u * 2 - 1;
     const width =
@@ -47,11 +47,14 @@ export const CARNATION_MODEL: SpecimenModel = {
       thickness: 0.009,
       flexible: true,
       delay: Math.floor(i / 10) * 0.085,
-      cage: [3, 4] as [number, number],
+      cage: [2, 4] as [number, number],
       mobileCage: [2, 3] as [number, number],
     })),
     {
       name: "cylindrical five-toothed calyx",
+      contactObstacle: true,
+      cage: [8, 3],
+      mobileCage: [6, 3],
       cluster: 0,
       role: "calyx",
       thickness: 0.016,

@@ -107,6 +107,8 @@ export interface FlowerStructure {
   previewScale?: number;
   /** Included pollen stays on organs rather than releasing decorative bursts. */
   airbornePollen?: boolean;
+  /** GPU-displaced shells use a persistent picking envelope. */
+  simulatedSurfaces?: boolean;
   center: "none" | "seeds" | "pod" | "stamens" | "column" | "florets";
   centerRadius: number;
   centerHeight: number;

@@ -19,6 +19,7 @@ export const sweetPeaStructure: FlowerStructure = {
   leafCount: 3,
   calyx: false,
   airbornePollen: false,
+  simulatedSurfaces: true,
 };
 const anatomy: StemAnatomy = {
   color: "#81a165",

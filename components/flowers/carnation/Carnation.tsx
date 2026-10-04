@@ -28,6 +28,7 @@ export const carnationStructure: FlowerStructure = {
   leafCount: 3,
   calyx: false,
   airbornePollen: false,
+  simulatedSurfaces: true,
 };
 function CarnationOrgans(props: FlowerOrgansProps) {
   return (

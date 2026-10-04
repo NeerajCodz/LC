@@ -61,6 +61,9 @@ export const BOUGAINVILLEA_MODEL: SpecimenModel = {
     })),
     ...Array.from({ length: 3 }, (_, j) => ({
       name: "five-angled true floral tube",
+      contactObstacle: true,
+      cage: [6, 4] as [number, number],
+      mobileCage: [6, 4] as [number, number],
       cluster: i + 1,
       role: "tube" as const,
       sample: bougainvilleaTube(j),
@@ -133,3 +136,4 @@ export const BOUGAINVILLEA_MODEL: SpecimenModel = {
     ),
   ],
 };
+

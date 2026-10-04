@@ -11,12 +11,14 @@ export function plumeriaLobe(index: number) {
   return (u: number, v: number, open: number): Vec3 => {
     const w = u * 2 - 1,
       width = 0.009 + 0.31 * Math.sin(v * Math.PI * 0.98) ** 0.72;
-    const r = 0.073 + (0.75 * open + 0.07 * (1 - open)) * v;
-    const sweep = 0.26 * open * v * v + w * width;
+    const r =
+      0.073 +
+      (0.75 * open + 0.07 * (1 - open)) * (v - 0.1 * w * w * v ** 8 * open);
+    const sweep = 0.26 * open * v * v + w * width * (0.14 + 0.86 * open);
     const y =
       0.16 +
       (0.68 * (1 - open) + 0.11 * open) * v +
-      open * (0.08 * w * w - 0.035 * Math.sin(v * Math.PI));
+      open * ((0.03 * w * w - 0.06) * Math.sin(v * Math.PI));
     return [
       Math.sin(a) * r + Math.cos(a) * sweep,
       y,
@@ -62,6 +64,9 @@ export const PLUMERIA_MODEL: SpecimenModel = {
       })),
       {
         name: "fused corolla throat",
+        contactObstacle: true,
+        cage: [8, 3] as [number, number],
+        mobileCage: [6, 3] as [number, number],
         cluster: k + 1,
         role: "tube" as const,
         thickness: 0.022,
@@ -137,3 +142,4 @@ export const PLUMERIA_MODEL: SpecimenModel = {
     })),
   ],
 };
+

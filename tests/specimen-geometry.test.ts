@@ -13,17 +13,17 @@ export function verifySpecimen(name: string, model: SpecimenModel) {
       const g = specimenGeometry(s, "low"),
         b = specimenGeometry(s, "low");
       const p = g.getAttribute("position"),
-        f = g.morphAttributes.position[0],
+        f = g.morphAttributes.position![0],
         half = p.count / 2;
       assert.deepEqual(p.array, b.getAttribute("position").array, s.name);
       for (const a of [
         p,
         f,
         g.getAttribute("normal"),
-        g.morphAttributes.normal[0],
+        g.morphAttributes.normal![0],
       ])
         assert.ok(Array.from(a.array).every(Number.isFinite), s.name);
-      for (const a of [g.getAttribute("normal"), g.morphAttributes.normal[0]])
+      for (const a of [g.getAttribute("normal"), g.morphAttributes.normal![0]])
         for (let i = 0; i < a.count; i++)
           assert.ok(
             Math.abs(Math.hypot(a.getX(i), a.getY(i), a.getZ(i)) - 1) < 0.002,

@@ -157,9 +157,22 @@ export class PetalDynamics {
     this.lambdas = new Float64Array(edges.length / 2);
     this.stepSize = constrained ? 1 / 60 : 1 / 120;
     this.iterations = constrained ? 4 : 6;
+    // Collision segments are actual triangle edges, not the long bend links.
+    const collisionEdges: number[] = [],
+      seen = new Set<string>();
+    for (let t = 0; t < this.triangles.length; t += 3)
+      for (let c = 0; c < 3; c++) {
+        const a = this.triangles[t + c],
+          b = this.triangles[t + ((c + 1) % 3)],
+          key = a < b ? `${a}:${b}` : `${b}:${a}`;
+        if (!seen.has(key)) {
+          seen.add(key);
+          collisionEdges.push(a, b);
+        }
+      }
     this.contacts = new PetalContacts(
       this.triangles,
-      this.edges,
+      Uint32Array.from(collisionEdges),
       this.surface,
       this.thickness,
       this.inverseMass,
@@ -283,9 +296,13 @@ export class PetalDynamics {
         for (let c = 0; c < 3; c++)
           p[i * 3 + c] += (r[i * 3 + c] - p[i * 3 + c]) * gain;
       }
-      this.solveContacts();
+      if (iteration === this.iterations - 1) this.solveContacts();
     }
-    for (let i = 0; i < v.length; i++) v[i] = (p[i] - this.previous[i]) / h;
+    for (let i = 0; i < v.length; i++) {
+      // Keep pathological bloom overlap or pointer input inside a local envelope.
+      p[i] = Math.max(r[i] - 0.18, Math.min(r[i] + 0.18, p[i]));
+      v[i] = Math.max(-2, Math.min(2, (p[i] - this.previous[i]) / h));
+    }
   }
 
   protected solveContacts() {

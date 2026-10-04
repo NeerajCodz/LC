@@ -142,7 +142,7 @@ class ContactGrid {
   readonly overflow: Int32Array;
   overflowCount = 0;
   private used = 0;
-  readonly cell = 0.24;
+  readonly cell = 0.12;
   constructor(count: number) {
     const capacity = Math.min(262144, Math.max(1024, count * 48));
     this.next = new Int32Array(capacity);
@@ -205,6 +205,7 @@ export class PetalContacts {
   private readonly edgeStamp: Int32Array;
   private readonly scratch = new Float64Array(9);
   private readonly edgeBounds: Float64Array;
+  private readonly triangleBounds: Float64Array;
   private query = 0;
   constructor(
     private readonly triangles: Uint32Array,
@@ -219,6 +220,7 @@ export class PetalContacts {
     this.triangleStamp = new Int32Array(triangles.length / 3);
     this.edgeStamp = new Int32Array(edges.length / 2);
     this.edgeBounds = new Float64Array((edges.length / 2) * 6);
+    this.triangleBounds = new Float64Array((triangles.length / 3) * 6);
   }
 
   private adjacent(a: number, b: number) {
@@ -244,6 +246,17 @@ export class PetalContacts {
         b = tri[t + 1] * 3,
         c = tri[t + 2] * 3,
         gap = this.thickness[tri[t]];
+      const bounds = (t / 3) * 6;
+      this.triangleBounds[bounds] = Math.min(p[a], p[b], p[c]) - gap;
+      this.triangleBounds[bounds + 1] =
+        Math.min(p[a + 1], p[b + 1], p[c + 1]) - gap;
+      this.triangleBounds[bounds + 2] =
+        Math.min(p[a + 2], p[b + 2], p[c + 2]) - gap;
+      this.triangleBounds[bounds + 3] = Math.max(p[a], p[b], p[c]) + gap;
+      this.triangleBounds[bounds + 4] =
+        Math.max(p[a + 1], p[b + 1], p[c + 1]) + gap;
+      this.triangleBounds[bounds + 5] =
+        Math.max(p[a + 2], p[b + 2], p[c + 2]) + gap;
       grid.insert(
         t / 3,
         Math.min(p[a], p[b], p[c]) - gap,
@@ -335,6 +348,18 @@ export class PetalContacts {
     p: Float64Array,
     previous: Float64Array,
   ) {
+    const bounds = id * 6,
+      pk = node * 3,
+      tb = this.triangleBounds;
+    if (
+      p[pk] < tb[bounds] ||
+      p[pk] > tb[bounds + 3] ||
+      p[pk + 1] < tb[bounds + 1] ||
+      p[pk + 1] > tb[bounds + 4] ||
+      p[pk + 2] < tb[bounds + 2] ||
+      p[pk + 2] > tb[bounds + 5]
+    )
+      return 0;
     const t = id * 3,
       a = this.triangles[t],
       b = this.triangles[t + 1],
@@ -396,6 +421,18 @@ export class PetalContacts {
     p: Float64Array,
     previous: Float64Array,
   ) {
+    const x = first * 6,
+      y = second * 6,
+      bounds = this.edgeBounds;
+    if (
+      bounds[x] > bounds[y + 3] ||
+      bounds[x + 3] < bounds[y] ||
+      bounds[x + 1] > bounds[y + 4] ||
+      bounds[x + 4] < bounds[y + 1] ||
+      bounds[x + 2] > bounds[y + 5] ||
+      bounds[x + 5] < bounds[y + 2]
+    )
+      return 0;
     const a = this.edges[first * 2],
       b = this.edges[first * 2 + 1],
       c = this.edges[second * 2],

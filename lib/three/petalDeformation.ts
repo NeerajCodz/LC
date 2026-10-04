@@ -126,6 +126,10 @@ export class CageDeformation {
     this.texture.needsUpdate = true;
   }
 
+  setEnabled(enabled: boolean) {
+    this.enabled.value = enabled ? 1 : 0;
+  }
+
   attach(material: Material) {
     const previous = material.onBeforeCompile,
       key = material.customProgramCacheKey.bind(material);

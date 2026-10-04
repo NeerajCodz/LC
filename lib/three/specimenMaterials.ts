@@ -18,6 +18,8 @@ export function createSpecimenMaterial(
     green || color ? undefined : PETAL_PALETTES[type],
   );
   const previous = m.onBeforeCompile;
+  if (type === "sweet-pea" && (role === "wing" || role === "keel"))
+    m.sheenColor.set("#795ca5");
   if (type === "plumeria" && !green) {
     m.roughness = 0.44;
     m.clearcoat = 0.1;
@@ -25,6 +27,11 @@ export function createSpecimenMaterial(
   }
   m.onBeforeCompile = (s, r) => {
     previous.call(m, s, r);
+    if (type === "sweet-pea" && (role === "wing" || role === "keel"))
+      s.fragmentShader = s.fragmentShader.replace(
+        "#include <roughnessmap_fragment>",
+        "diffuseColor.rgb*=vec3(.70,.71,1.05);\n#include <roughnessmap_fragment>",
+      );
     s.vertexShader = s.vertexShader
       .replace(
         "#include <common>",

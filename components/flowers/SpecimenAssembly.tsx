@@ -18,7 +18,7 @@ import {
   type SpecimenModel,
   type SpecimenSurface,
 } from "@/lib/three/specimenModel";
-import { petalOpenness } from "@/lib/three/easing";
+import { petalOpenness, stepSpring } from "@/lib/three/easing";
 import type { FlowerOrgansProps } from "./FloralParts";
 import type { FlowerType } from "@/lib/flowers/types";
 import { createSpecimenMaterial } from "@/lib/three/specimenMaterials";
@@ -94,14 +94,46 @@ export function SpecimenAssembly({
     proximity: 0,
   });
   const initialized = useRef<PetalDynamics | null>(null);
+  const articulation = useRef(
+      model.clusters.map(() => ({ value: 0, velocity: 0 })),
+    ),
+    articulationClock = useRef(new SurfaceClock());
   useActiveFrame(() => {
     const touch = interaction?.current,
       press = reducedMotion
         ? 0
-        : (touch?.proximity ?? 0) * 0.035 + (pulse?.current ?? 0) * 0.04;
+        : (touch?.proximity ?? 0) * 0.24 + (pulse?.current ?? 0) * 0.35;
+    const articulationDt = articulationClock.current.delta(
+      time.current,
+      reducedMotion,
+    );
     model.clusters.forEach((c, i) => {
       const group = groups.current[i];
       if (!group) return;
+      const point = touch?.point,
+        near = point
+          ? Math.max(
+              0,
+              1 -
+                Math.hypot(
+                  point[0] - c.position[0],
+                  point[1] - c.position[1],
+                  point[2] - c.position[2],
+                ) /
+                  1.2,
+            )
+          : 1;
+      const spring = articulation.current[i];
+      if (reducedMotion) {
+        spring.value = 0;
+        spring.velocity = 0;
+      } else
+        stepSpring(
+          spring,
+          Math.max(-0.25, Math.min(0.35, press * near)),
+          articulationDt,
+          65,
+        );
       group.rotation.x =
         c.rotation[0] +
         (reducedMotion
@@ -120,7 +152,10 @@ export function SpecimenAssembly({
       if (!mesh) return;
       const open = petalOpenness(bloom.current, s.delay ?? 0, i * 0.31);
       if (mesh.morphTargetInfluences) mesh.morphTargetInfluences[0] = 1 - open;
-      mesh.rotation.x = s.role === "wing" || s.role === "keel" ? press : 0;
+      mesh.rotation.x =
+        s.role === "wing" || s.role === "keel"
+          ? articulation.current[s.cluster].value
+          : 0;
       mesh.updateMatrix();
     });
     if (!resources) return;

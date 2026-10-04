@@ -30,6 +30,15 @@ const palette = (
 });
 
 export const PETAL_PALETTES: Record<FlowerType, PetalPalette> = {
+  "sweet-pea": palette(
+    "#6a235f",
+    "#c353a4",
+    "#df7abc",
+    "#8c357e",
+    0.35,
+    0.85,
+    0.1,
+  ),
   foxglove: palette(
     "#834260",
     "#c46e9c",

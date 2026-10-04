@@ -7,12 +7,14 @@ import { useActiveFrame } from "@/hooks/useActiveFrame";
 import type { Vec3 } from "@/lib/flowers/types";
 import { LeafSprig } from "./LeafSprig";
 import type { StemProps } from "./Stem";
+import { createPetalGeometry, PETAL } from "@/lib/three/geometry";
 
 export interface StemAnatomy {
   color: string;
   nodes: { t: number; angle: number; scale?: number }[];
   swollen?: boolean;
   winged?: boolean;
+  stipules?: boolean;
   extras?: {
     points: Vec3[];
     radius: number;
@@ -96,6 +98,25 @@ export function BotanicalStem({
     };
   }, [anatomy, length, quality, structure.stemRadius]);
   useEffect(() => () => geometry.stem.dispose(), [geometry]);
+  const stipule = useMemo(
+    () =>
+      anatomy.stipules
+        ? createPetalGeometry(
+            {
+              ...PETAL,
+              length: 0.16,
+              width: 0.095,
+              thickness: 0.007,
+              cup: 0.035,
+              basalLobes: true,
+            },
+            192,
+            quality,
+          )
+        : null,
+    [anatomy.stipules, quality],
+  );
+  useEffect(() => () => stipule?.dispose(), [stipule]);
   useActiveFrame(() => {
     const p = geometry.stem.getAttribute("position"),
       n = geometry.stem.getAttribute("normal"),
@@ -165,6 +186,20 @@ export function BotanicalStem({
             key={i}
           >
             <LeafSprig type={type} quality={quality} />
+            {stipule && (
+              <mesh
+                geometry={stipule}
+                rotation={[0.15, 0, -0.7]}
+                onUpdate={(m) => m.updateMorphTargets()}
+                castShadow
+              >
+                <meshStandardMaterial
+                  color="#8d9f62"
+                  roughness={0.8}
+                  vertexColors
+                />
+              </mesh>
+            )}
           </group>
         ))}
     </group>

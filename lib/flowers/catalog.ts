@@ -297,6 +297,16 @@ FLOWERS.push({
   detail:
     "A one-sided raceme opens from bottom to top, revealing spotted, softly hairy bell interiors.",
 });
+FLOWERS.push({
+  type: "sweet-pea",
+  name: "Sweet Pea",
+  latin: "Lathyrus odoratus",
+  family: "Fabaceae",
+  color: PETAL_PALETTES["sweet-pea"].body,
+  description: "Wings in violet.\nHeld by a climbing thread.",
+  detail:
+    "Three bilateral flowers lift broad banners above paired wings and an enclosing keel; tendrils brace the winged shoot.",
+});
 FLOWERS.sort(
   (a, b) => FLOWER_TYPES.indexOf(a.type) - FLOWER_TYPES.indexOf(b.type),
 );

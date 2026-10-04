@@ -29,7 +29,9 @@ import { Fuchsia } from "./fuchsia/Fuchsia";
 import { Carnation } from "./carnation/Carnation";
 import { Plumeria } from "./plumeria/Plumeria";
 import { Foxglove } from "./foxglove/Foxglove";
+import { SweetPea } from "./sweet-pea/SweetPea";
 const SPECIES = {
+  "sweet-pea": SweetPea,
   foxglove: Foxglove,
   plumeria: Plumeria,
   carnation: Carnation,

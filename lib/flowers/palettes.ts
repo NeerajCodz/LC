@@ -30,6 +30,15 @@ const palette = (
 });
 
 export const PETAL_PALETTES: Record<FlowerType, PetalPalette> = {
+  plumeria: palette(
+    "#efbf48",
+    "#f8ecd4",
+    "#e593ac",
+    "#dec98c",
+    0.46,
+    0.84,
+    0.04,
+  ),
   carnation: palette(
     "#a03961",
     "#e78cae",

@@ -277,6 +277,16 @@ FLOWERS.push({
   detail:
     "A cultivated double bloom opens above a cylindrical calyx and opposite narrow leaves.",
 });
+FLOWERS.push({
+  type: "plumeria",
+  name: "Plumeria",
+  latin: "Plumeria rubra",
+  family: "Apocynaceae",
+  color: PETAL_PALETTES.plumeria.body,
+  description: "Ivory and warm gold.\nA quiet spiral.",
+  detail:
+    "Five waxy overlapping lobes unfurl above a fused throat on thick succulent branches.",
+});
 FLOWERS.sort(
   (a, b) => FLOWER_TYPES.indexOf(a.type) - FLOWER_TYPES.indexOf(b.type),
 );

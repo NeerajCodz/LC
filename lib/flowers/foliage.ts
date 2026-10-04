@@ -1,6 +1,7 @@
 import type { FlowerType } from "./types";
 
 export interface FoliageProfile {
+  thickness?: number;
   veinColor?: string;
   pubescence?: number;
   basalLobes?: boolean;
@@ -20,6 +21,14 @@ export interface FoliageProfile {
 
 /** Cultivar-independent leaf traits; lotus has its own peltate blade generator. */
 export const FOLIAGE: Record<FlowerType, FoliageProfile> = {
+  plumeria: {
+    length: 1.45,
+    width: 0.38,
+    color: "#355f3c",
+    veinColor: "#729655",
+    roughness: 0.43,
+    thickness: 0.017,
+  },
   carnation: {
     length: 0.88,
     width: 0.055,

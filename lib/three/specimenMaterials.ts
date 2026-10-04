@@ -18,8 +18,20 @@ export function createSpecimenMaterial(
     green || color ? undefined : PETAL_PALETTES[type],
   );
   const previous = m.onBeforeCompile;
+  if (type === "plumeria" && !green) {
+    m.roughness = 0.44;
+    m.clearcoat = 0.1;
+    m.clearcoatRoughness = 0.48;
+  }
   m.onBeforeCompile = (s, r) => {
     previous.call(m, s, r);
+    if (type === "plumeria" && !green)
+      s.fragmentShader = s.fragmentShader
+        .replace(
+          "smoothstep(uTipStart,1.0,v) * (.8 + .2*u*u)",
+          "smoothstep(.72,1.0,u)*smoothstep(.35,.8,v)*.7+smoothstep(.9,1.0,v)*.15",
+        )
+        .replace("scatter*.11", "scatter*.055");
     if (type === "carnation" && !green)
       s.fragmentShader = s.fragmentShader.replace(
         "#include <color_fragment>",

@@ -106,6 +106,18 @@ export const SWEET_PEA_MODEL: SpecimenModel = {
     })),
   ]),
   organs: [
+    {
+      name: "flowering shoot axis",
+      cluster: 0,
+      points: [
+        [0, -0.2, 0],
+        [0.008, 0.3, 0],
+        [0, 0.8, 0],
+      ],
+      radius: 0.016,
+      endRadius: 0.007,
+      color: "#729451",
+    },
     ...SWEET_PEA_POSITIONS.map((p) => ({
       name: "flower stalk",
       cluster: 0,

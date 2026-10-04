@@ -73,6 +73,18 @@ export const BOUGAINVILLEA_MODEL: SpecimenModel = {
     })),
   ]),
   organs: [
+    {
+      name: "woody flowering shoot axis",
+      cluster: 0,
+      points: [
+        [0, -0.2, 0],
+        [0, 0.35, 0],
+        [0, 0.85, 0],
+      ],
+      radius: 0.025,
+      endRadius: 0.011,
+      color: "#817854",
+    },
     ...BOUGAINVILLEA_CYMES.map((p) => ({
       name: "woody cyme branch",
       cluster: 0,
@@ -136,4 +148,3 @@ export const BOUGAINVILLEA_MODEL: SpecimenModel = {
     ),
   ],
 };
-

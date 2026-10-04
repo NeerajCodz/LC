@@ -105,6 +105,26 @@ verifySpecimen("plumeria", PLUMERIA_MODEL);
 verifySpecimen("foxglove", FOXGLOVE_MODEL);
 verifySpecimen("sweet pea", SWEET_PEA_MODEL);
 verifySpecimen("bougainvillea", BOUGAINVILLEA_MODEL);
+test("upper sweet pea stalks and bougainvillea branches attach to a continuous shoot", () => {
+  for (const [model, name] of [
+    [SWEET_PEA_MODEL, "flower stalk"],
+    [BOUGAINVILLEA_MODEL, "woody cyme branch"],
+  ] as const) {
+    const axis = model.organs.find((o) => o.name.includes("shoot axis"));
+    assert.ok(axis, "a continuous flowering axis connects upper branches");
+    const heights = axis.points.map((p) => p[1]);
+    for (const branch of model.organs.filter((o) => o.name === name)) {
+      const base = branch.points[0];
+      assert.ok(
+        base[1] >= Math.min(...heights) && base[1] <= Math.max(...heights),
+      );
+      assert.ok(
+        Math.hypot(base[0], base[2]) <= axis.radius,
+        "branch insertion lies on the shoot",
+      );
+    }
+  }
+});
 test("double carnation covers its calyx and corolla buds close around included organs", () => {
   for (let i = 30; i < 40; i++) {
     const tip = carnationPetal(i)(0.5, 1, 1);

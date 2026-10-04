@@ -1,4 +1,5 @@
 import type { Vec3 } from "../flowers/types";
+import { PetalContacts } from "./petalContacts";
 
 export interface CagePatch {
   columns: number;
@@ -108,6 +109,7 @@ export class PetalDynamics {
   readonly iterations: number;
   contactCount = 0;
   private accumulated = 0;
+  private readonly contacts: PetalContacts;
 
   constructor(
     readonly patches: CagePatch[],
@@ -155,6 +157,14 @@ export class PetalDynamics {
     this.lambdas = new Float64Array(edges.length / 2);
     this.stepSize = constrained ? 1 / 60 : 1 / 120;
     this.iterations = constrained ? 4 : 6;
+    this.contacts = new PetalContacts(
+      this.triangles,
+      this.edges,
+      this.surface,
+      this.thickness,
+      this.inverseMass,
+      patches.map((p) => (p.periodic ? p.columns : p.columns + 1)),
+    );
     this.reset();
   }
 
@@ -279,7 +289,7 @@ export class PetalDynamics {
   }
 
   protected solveContacts() {
-    /* Thickness contacts are added by the next delivery slice. */
+    this.contactCount += this.contacts.solve(this.positions, this.previous);
   }
 
   computeNormals(points: Float64Array, result: Float64Array) {

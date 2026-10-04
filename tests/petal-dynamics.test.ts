@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { createCagePatch, PetalDynamics } from "../lib/three/petalDynamics";
+import { closestSegments, closestTriangle } from "../lib/three/petalContacts";
 
 const patch = () =>
   createCagePatch({
@@ -9,6 +10,44 @@ const patch = () =>
     thickness: 0.012,
     sample: (u, v, open) => [(u - 0.5) * 0.5, v, v * v * open * 0.2],
   });
+
+test("contact primitives find triangle interiors and crossing edges", () => {
+  const points = Float64Array.from([-1, 0, -1, 1, 0, -1, 0, 0, 1]);
+  const out = new Float64Array(9);
+  closestTriangle(points, 0, 1, 2, 0, 0.005, 0, out);
+  assert.ok(Math.abs(out[1]) < 1e-10 && Math.abs(out[0]) < 1e-10);
+  assert.ok(Math.abs(out[3] + out[4] + out[5] - 1) < 1e-10);
+  const edges = Float64Array.from([
+    -1, 0, 0, 1, 0, 0, 0, 0.005, -1, 0, 0.005, 1,
+  ]);
+  closestSegments(edges, 0, 1, 2, 3, out);
+  assert.ok(Math.abs(out[5] - 0.005) < 1e-10);
+  assert.ok(Math.abs(out[3] - 0.5) < 1e-10 && Math.abs(out[4] - 0.5) < 1e-10);
+});
+
+test("thickness contacts separate flexible tissue from a pinned neighboring surface", () => {
+  const obstacle = createCagePatch({
+    columns: 3,
+    rows: 3,
+    thickness: 0.012,
+    pinRows: 4,
+    sample: (u, v) => [(u - 0.5) * 0.8, v, 0],
+  });
+  const flexible = createCagePatch({
+    columns: 3,
+    rows: 3,
+    thickness: 0.012,
+    sample: (u, v) => [(u - 0.5) * 0.5, v * 0.9 + 0.03, 0.004],
+  });
+  const sim = new PetalDynamics([obstacle, flexible]);
+  sim.step(1 / 30);
+  assert.ok(sim.contactCount > 0);
+  const offset = sim.offsets[1];
+  for (let i = 8; i < 16; i++)
+    assert.ok(sim.positions[(offset + i) * 3 + 2] >= 0.01);
+  for (let i = 0; i < obstacle.open.length; i++)
+    assert.equal(sim.positions[i], sim.rest[i]);
+});
 
 test("surface dynamics pin insertions, remain bounded and recover across frame rates", () => {
   const ends: number[] = [];

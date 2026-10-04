@@ -15,6 +15,7 @@ import {
   X,
   MoveUpRight,
   Lightbulb,
+  Hand,
 } from "lucide-react";
 import { FLOWERS, getFlower } from "@/lib/flowers/catalog";
 import type { FlowerType } from "@/lib/flowers/types";
@@ -24,6 +25,7 @@ import { useExperienceSettings } from "@/hooks/useExperienceSettings";
 import { useInView } from "@/hooks/useInView";
 import AngleGallery from "./AngleGallery";
 import { useWebGL2Support, WebGLUnavailable } from "./scene/WebGLSupport";
+import { FLOWER_STRUCTURES } from "@/lib/flowers/structures";
 const Scene = dynamic(() => import("./flowers/FlowerScene"), { ssr: false });
 
 export default function Experience({
@@ -190,6 +192,19 @@ export default function Experience({
           <span>{info.family.toUpperCase()}</span>
         </div>
         <div className="view-controls">
+          {FLOWER_STRUCTURES[type].simulatedSurfaces && (
+            <button
+              title="Pulse the flower"
+              aria-label="Pulse the flower"
+              disabled={webGL2 !== true || reducedMotion}
+              onClick={() => {
+                setPaused(false);
+                setPulse((p) => p + 1);
+              }}
+            >
+              <Hand size={17} />
+            </button>
+          )}
           <button
             title={macro ? "Return to full flower" : "Explore close-up"}
             disabled={webGL2 !== true}

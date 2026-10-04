@@ -50,6 +50,8 @@ export interface FlowerProps {
   stem?: boolean;
   leaves?: boolean;
   quality?: Quality;
+  /** Contact cages are opt-in for the focused specimen; previews stay ambient. */
+  physics?: "ambient" | "detailed";
   reducedMotion?: boolean;
   paused?: boolean;
   pulse?: number;
@@ -98,6 +100,8 @@ export interface FlowerStructure {
   headCenter?: Vec3;
   /** Extra camera distance for tall or forward-projecting preview silhouettes. */
   previewScale?: number;
+  /** Included pollen stays on organs rather than releasing decorative bursts. */
+  airbornePollen?: boolean;
   center: "none" | "seeds" | "pod" | "stamens" | "column" | "florets";
   centerRadius: number;
   centerHeight: number;

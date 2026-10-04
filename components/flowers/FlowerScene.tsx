@@ -105,6 +105,7 @@ export default function FlowerScene({
           }
           windStrength={0.8}
           interactive
+          physics="detailed"
           hovered={hovered}
           reducedMotion={reducedMotion}
           paused={paused}
@@ -123,7 +124,7 @@ export default function FlowerScene({
             frames={1}
           />
         )}
-        {!reducedMotion && (
+        {!reducedMotion && FLOWER_STRUCTURES[type].airbornePollen !== false && (
           <Pollen
             count={constrained ? 8 : 80}
             bloom={bloom}

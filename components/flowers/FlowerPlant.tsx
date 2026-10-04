@@ -52,6 +52,7 @@ export function FlowerPlant({
   stem = true,
   leaves = true,
   quality = "high",
+  physics = "ambient",
   reducedMotion = false,
   paused = false,
   pulse = 0,
@@ -283,6 +284,9 @@ export function FlowerPlant({
                     ))}
                     {Organs && (
                       <Organs
+                        physics={physics}
+                        motion={motion}
+                        reducedMotion={reducedMotion}
                         leaves={leaves}
                         bloom={bloom}
                         time={time}

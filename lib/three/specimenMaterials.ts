@@ -10,14 +10,24 @@ export function createSpecimenMaterial(
   color?: string,
 ) {
   const green = role === "calyx";
+  const cream = type === "bougainvillea" && role === "tube";
   const m = createPetalMaterial(
-    green ? "#608065" : (color ?? PETAL_PALETTES[type].body),
+    green
+      ? "#608065"
+      : cream
+        ? "#f4ecd8"
+        : (color ?? PETAL_PALETTES[type].body),
     green ? 0.78 : 0.63,
     green ? 0.2 : 0.5,
     0,
-    green || color ? undefined : PETAL_PALETTES[type],
+    green || cream || color ? undefined : PETAL_PALETTES[type],
   );
   const previous = m.onBeforeCompile;
+  if (type === "bougainvillea" && role === "bract") {
+    m.roughness = 0.79;
+    m.clearcoat = 0;
+    m.sheen = 0.16;
+  }
   if (type === "sweet-pea" && (role === "wing" || role === "keel"))
     m.sheenColor.set("#795ca5");
   if (type === "plumeria" && !green) {
@@ -27,6 +37,16 @@ export function createSpecimenMaterial(
   }
   m.onBeforeCompile = (s, r) => {
     previous.call(m, s, r);
+    if (type === "bougainvillea" && role === "bract")
+      s.fragmentShader = s.fragmentShader
+        .replace(
+          "#include <roughnessmap_fragment>",
+          `float lateral=abs(vPetalUv.x-.5), midrib=exp(-lateral*110.);
+      float branch=pow(.5+.5*cos((vPetalUv.y-lateral*.72)*73.),30.)*smoothstep(.015,.065,lateral);
+      diffuseColor.rgb*=1.-midrib*.18-branch*.12;
+      #include <roughnessmap_fragment>`,
+        )
+        .replace("ridge * .000085", "ridge * .00012");
     if (type === "sweet-pea" && (role === "wing" || role === "keel"))
       s.fragmentShader = s.fragmentShader.replace(
         "#include <roughnessmap_fragment>",

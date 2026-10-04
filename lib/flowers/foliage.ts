@@ -21,6 +21,12 @@ export interface FoliageProfile {
 
 /** Cultivar-independent leaf traits; lotus has its own peltate blade generator. */
 export const FOLIAGE: Record<FlowerType, FoliageProfile> = {
+  bougainvillea: {
+    length: 0.69,
+    width: 0.39,
+    color: "#477d45",
+    roughness: 0.66,
+  },
   "sweet-pea": { length: 0.58, width: 0.29, color: "#7b9c62", roughness: 0.76 },
   foxglove: {
     length: 1.22,

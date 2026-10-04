@@ -307,6 +307,16 @@ FLOWERS.push({
   detail:
     "Three bilateral flowers lift broad banners above paired wings and an enclosing keel; tendrils brace the winged shoot.",
 });
+FLOWERS.push({
+  type: "bougainvillea",
+  name: "Bougainvillea",
+  latin: "Bougainvillea glabra",
+  family: "Nyctaginaceae",
+  color: PETAL_PALETTES.bougainvillea.body,
+  description: "Paper-thin magenta.\nTiny flowers held within.",
+  detail:
+    "Three-bract cymes surround small cream-mouthed floral tubes on a thorny woody shoot.",
+});
 FLOWERS.sort(
   (a, b) => FLOWER_TYPES.indexOf(a.type) - FLOWER_TYPES.indexOf(b.type),
 );

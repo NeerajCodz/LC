@@ -267,6 +267,16 @@ export const FLOWERS: FlowerInfo[] = [
   },
 ];
 
+FLOWERS.push({
+  type: "carnation",
+  name: "Carnation",
+  latin: "Dianthus caryophyllus",
+  family: "Caryophyllaceae",
+  color: PETAL_PALETTES.carnation.body,
+  description: "Fringes of pink.\nA thousand small folds.",
+  detail:
+    "A cultivated double bloom opens above a cylindrical calyx and opposite narrow leaves.",
+});
 FLOWERS.sort(
   (a, b) => FLOWER_TYPES.indexOf(a.type) - FLOWER_TYPES.indexOf(b.type),
 );

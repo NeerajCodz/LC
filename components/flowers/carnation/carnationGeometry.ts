@@ -15,7 +15,7 @@ export function carnationPetal(index: number) {
   return (u: number, v: number, open: number): Vec3 => {
     const w = u * 2 - 1;
     const width =
-      0.006 + (0.36 - layer * 0.024) * Math.sin(v * Math.PI * 0.88) ** 1.7;
+      0.006 + (0.36 - layer * 0.024) * Math.sin(v * Math.PI * 0.55) ** 1.7;
     const fringe =
       0.036 * (0.5 + 0.5 * Math.cos(u * Math.PI * 30 + index * 0.7)) * v ** 12;
     const t = v - fringe;
@@ -24,10 +24,10 @@ export function carnationPetal(index: number) {
     const y =
       0.16 +
       layer * 0.043 +
-      Math.cos(angle) * length * t +
+      Math.cos(angle) * length * t * (0.48 + 0.52 * open) +
       open *
         (0.062 * Math.sin(w * 11 + v * 13 + index) * v ** 2 + 0.08 * w * w * v);
-    const across = w * width * (0.52 + 0.48 * open);
+    const across = w * width * (0.12 + 0.88 * open);
     const r = radius + open * 0.045 * Math.sin(w * 8 + index) * v ** 2;
     return [
       Math.sin(a) * r + Math.cos(a) * across,
@@ -47,7 +47,7 @@ export const CARNATION_MODEL: SpecimenModel = {
       thickness: 0.009,
       flexible: true,
       delay: Math.floor(i / 10) * 0.085,
-      cage: [3, 7] as [number, number],
+      cage: [3, 4] as [number, number],
       mobileCage: [2, 3] as [number, number],
     })),
     {

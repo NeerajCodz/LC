@@ -26,7 +26,9 @@ import { BirdOfParadise } from "./bird-of-paradise/BirdOfParadise";
 import { Passionflower } from "./passionflower/Passionflower";
 import { MorningGlory } from "./morning-glory/MorningGlory";
 import { Fuchsia } from "./fuchsia/Fuchsia";
+import { Carnation } from "./carnation/Carnation";
 const SPECIES = {
+  carnation: Carnation,
   fuchsia: Fuchsia,
   "morning-glory": MorningGlory,
   passionflower: Passionflower,

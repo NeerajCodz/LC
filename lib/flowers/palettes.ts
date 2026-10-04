@@ -30,6 +30,15 @@ const palette = (
 });
 
 export const PETAL_PALETTES: Record<FlowerType, PetalPalette> = {
+  carnation: palette(
+    "#a03961",
+    "#e78cae",
+    "#f5bad0",
+    "#b8527a",
+    0.36,
+    0.82,
+    0.1,
+  ),
   fuchsia: palette("#923049", "#c42b59", "#e7527a", "#9b1b45", 0.35, 0.8, 0.09),
   "morning-glory": palette("#eee8dd", "#7650af", "#8d68bd", "#74395c", 0.78),
   passionflower: palette("#d6d8b9", "#eeecdf", "#faf7eb", "#c9ccb3"),

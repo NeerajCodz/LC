@@ -46,6 +46,11 @@ Generated from `lib/flowers/catalog.ts`; genus or ornamental studies never mark 
 | [Blue Passionflower](http://localhost:1607/flower/passionflower/) | Passiflora caerulea | Exact accepted-name match: `wfo-0000479867` |
 | [Morning Glory](http://localhost:1607/flower/morning-glory/) | Ipomoea purpurea | Exact accepted-name match: `wfo-0001296676` |
 | [Hardy Fuchsia](http://localhost:1607/flower/fuchsia/) | Fuchsia magellanica | Exact accepted-name match: `wfo-0000692791` |
+| [Carnation](http://localhost:1607/flower/carnation/) | Dianthus caryophyllus | Exact accepted-name match: `wfo-0000643278` |
+| [Plumeria](http://localhost:1607/flower/plumeria/) | Plumeria rubra | Exact accepted-name match: `wfo-0000279184` |
+| [Foxglove](http://localhost:1607/flower/foxglove/) | Digitalis purpurea | Exact accepted-name match: `wfo-0000647394` |
+| [Sweet Pea](http://localhost:1607/flower/sweet-pea/) | Lathyrus odoratus | Exact accepted-name match: `wfo-0000212700` |
+| [Bougainvillea](http://localhost:1607/flower/bougainvillea/) | Bougainvillea glabra | Exact accepted-name match: `wfo-0000569884` |
 
 ## Reproduce and audit
 
@@ -27533,7 +27538,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Plumeria montana — `wfo-0000279156`
 - Plumeria obtusa — `wfo-0000279164`
 - Plumeria pudica — `wfo-0000279178`
-- Plumeria rubra — `wfo-0000279184`
+- Plumeria rubra — `wfo-0000279184` · authored study: `plumeria`
 - Plumeria sericifolia — `wfo-0000279190`
 - Plumeria subsessilis — `wfo-0000279195`
 - Plumeria trinitensis — `wfo-0000279201`
@@ -117285,7 +117290,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Dianthus carthusianorum subsp. latifolius — `wfo-0000643261` · subspecies
 - Dianthus carthusianorum subsp. polonicus — `wfo-0000643266` · subspecies
 - Dianthus carthusianorum subsp. sudeticus — `wfo-0001436383` · subspecies
-- Dianthus caryophyllus — `wfo-0000643278`
+- Dianthus caryophyllus — `wfo-0000643278` · authored study: `carnation`
 - Dianthus caucaseus — `wfo-0000643292`
 - Dianthus charidemi — `wfo-0000643299`
 - Dianthus chimanimaniensis — `wfo-0000643301`
@@ -179735,7 +179740,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Lathyrus ochraceus subsp. ochraceus — `wfo-1200113066` · subspecies
 - Lathyrus ochroleucus — `wfo-0000173685`
 - Lathyrus ochrus — `wfo-0000212699`
-- Lathyrus odoratus — `wfo-0000212700`
+- Lathyrus odoratus — `wfo-0000212700` · authored study: `sweet-pea`
 - Lathyrus oleraceus — `wfo-0000214337`
 - Lathyrus pallescens — `wfo-0001061787`
 - Lathyrus palustris — `wfo-0000213816`
@@ -256818,7 +256823,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Bougainvillea berberidifolia — `wfo-0000569876`
 - Bougainvillea buttiana — `wfo-0001086778`
 - Bougainvillea campanulata — `wfo-0000569882`
-- Bougainvillea glabra — `wfo-0000569884`
+- Bougainvillea glabra — `wfo-0000569884` · authored study: `bougainvillea`
 - Bougainvillea herzogiana — `wfo-0000569893`
 - Bougainvillea infesta — `wfo-0000569894`
 - Bougainvillea lehmanniana — `wfo-0000569895`
@@ -309872,7 +309877,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Digitalis obscura subsp. laciniata — `wfo-0000647378` · subspecies
 - Digitalis obscura subsp. obscura — `wfo-1200036700` · subspecies
 - Digitalis parviflora — `wfo-0000647387`
-- Digitalis purpurea — `wfo-0000647394`
+- Digitalis purpurea — `wfo-0000647394` · authored study: `foxglove`
 - Digitalis purpurea var. amandiana — `wfo-0000647400` · variety
 - Digitalis purpurea var. mauretanica — `wfo-0000647415` · variety
 - Digitalis purpurea var. purpurea — `wfo-1200036701` · variety

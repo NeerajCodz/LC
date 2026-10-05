@@ -21,3 +21,12 @@ plant tissue constants. The stronger curvature response prevents fleshy limbs
 from behaving like folded cloth under overlapping contacts.
 The opening slider is an artistic reversible inspection. Fragrance, seasonal
 leaf loss, fruit production and calibrated tissue optics are outside this study.
+
+Authored model-unit proportions: each mature lobe extends about 0.75 radially
+from its 0.073 insertion, with nominal half-width 0.31 and thickness 0.024.
+The fused throat is 0.16 long, widening from radius 0.047 to 0.078. Corolla
+sectors wrap together into a 0.68-long contorted bud above that throat rather
+than shrinking into five separated limbs. Blossom scales descend from 0.92 to
+0.68; two separate 0.44-long younger buds stay furled. Branch centerlines end
+at each flower's attachment. These dimensions and age differences are composed
+from the referenced habit, without measured cultivar dimensions or tissue tests.

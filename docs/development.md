@@ -102,7 +102,7 @@ Useful runtime diagnostics:
 | `[data-flower-preview][data-render-rect]` | Preview scissor rectangle relative to its shared canvas.      |
 | `canvas[data-render-budget]`              | Mobile or desktop rendering budget.                           |
 | `canvas[data-render-frames]`              | Draw count sampled every 30 frames.                           |
-| `#render-stats[data-fps]`                 | Sampled development hero frame rate.                          |
+| `#render-stats[data-fps]`                 | Sampled development hero frame rate, measured in wall time.   |
 
 Wait for a fresh page to settle before comparing scene IDs; hot reloads during code edits can replace scenes. Offscreen retention lasts for the mounted route, not navigation away or a browser reload. The collection uses one WebGL context after every species is visited; a complete specimen page uses three after its angle gallery and scroll study initialize. The shared gallery backing buffer covers its finite grid but its DPR is bounded by pixel and dimension limits. Browser emulation does not establish performance on a physical phone. Use the Wind study toggle in the inspection fixture to check anchored bases and moving attachments.
 
@@ -117,6 +117,10 @@ Spadix checks include capped topology, normal direction and mobile tessellation 
 `morning-glory.test.ts` verifies its periodic sealed shell, matched bud normals, thickness and nondegenerate unfolding triangles. `morning-glory.spec.ts` covers visible pixels, bloom, macro, themes, collection search and garden selection. Its [dossier](specimens/morning-glory-research.md) records the distinction between artistic reverse bloom and biological mature closure. `previewScale` is optional authored camera framing; it must not change geometry scale or existing species framing by default.
 
 `fuchsia.test.ts` checks sealed parametric shells, intermediate triangles, valvate bud seams, two stamen lengths and pendant stability. `fuchsia.spec.ts` checks real rendering, reverse bloom, macro, themes, collection search and garden selection with WebGPU disabled. Its [dossier](specimens/fuchsia-research.md) documents source proportions and uncalibrated mechanics. Custom `Organs` now receive the optional `leaves` flag so upper-branch foliage honors the public API. Shared leaf shaders support an optional `veinColor`; absent values preserve the original appearance.
+
+`specimen-geometry.test.ts` checks the five flexible specimens' sealed surfaces, positive thickness, deterministic normals, intermediate bloom triangles, organ arrangement and complete cage budgets including pinned obstacles. `petal-dynamics.test.ts`, `petal-deformation.test.ts` and `petal-lifecycle.test.ts` cover contact, pinned insertions, elastic recovery, extreme inputs, reverse bloom, frame-rate consistency, render bindings, shadows and retained time. `five-specimens.spec.ts` exercises actual flower pixels, themes, reverse bloom, search, both garden layouts, macro, keyboard pulse, pause, reduced motion and responsive cage budgets with WebGPU disabled. Cold software WebKit renderer/shader startup can exceed 15 seconds; the new readiness assertions allow 60 seconds without adding any product loading delay.
+
+Run `npx tsx scripts/benchmark-petal-physics.ts` for warmed CPU-only measurements. Browser canvases expose `data-petal-physics`, `data-petal-nodes`, `data-petal-steps` and sampled `data-petal-ms`; macro must keep the same node count and advance the same step counter. Paused/offscreen counters freeze. CPU timing excludes draw and texture-upload cost. See the [validation record](specimens/five-specimens-validation.md) for measured results and limitations.
 
 ## Maintenance
 

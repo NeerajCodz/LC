@@ -19,3 +19,12 @@ true flowers or leaves. Midribs remain constrained while free margins flutter
 and meet neighboring bracts. Bract expansion and tube-mouth opening use separate
 inspection timing. Counts, thickness, pigments and motion constants are authored;
 the shoot depicts established support rather than dynamic climbing or seasons.
+
+Authored model-unit proportions: bracts extend 0.56 radially with nominal
+half-width 0.31 and thickness 0.0065; true floral tubes extend 0.32 with basal
+radius near 0.021 and thickness 0.009. Each tube begins at the corresponding
+bract's midrib insertion. Bracts fold upward before expanding, while the tube
+mouths open later. Cyme scales are 1, 0.94 and 0.88, joined to a continuous
+woody axis. Seven stamens and one style are sampled per true flower. Branching
+veins, creases, age offsets and contact response are composed, without measured
+leaf/bract optics, hydraulic growth or seasonal flowering data.

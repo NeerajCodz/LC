@@ -22,3 +22,11 @@ pigment remain matte, with subtle papillae and restrained back scattering.
 Jointed stems bend at a fixed base; free petal margins yield under wind and contact.
 Thickness, pigment spectra, compliance, damping and contact forces are authored.
 Pollen stays on sheltered organs rather than bursting into the air on a tap.
+
+Authored proportions use model units, not millimetres: the four ten-petal
+layers have nominal blade lengths 0.94, 0.80, 0.66 and 0.52, with 0.009 shell
+thickness. The calyx is 0.29 long with basal radius 0.135; four bracts wrap its
+base. Petal claws insert within the calyx, narrow when folded, and spread by
+layer while the inner blades arch over the center. This is a selected double
+form with ten sheltered stamens and two styles; the degree of reproductive-organ
+conversion and fertility of a particular cultivar has not been established.

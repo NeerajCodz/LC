@@ -19,3 +19,13 @@ not search for or dynamically acquire arbitrary neighbors. The support remains
 fixed and the free shoot bends. Forces, compliance and timings are authored, not
 values calibrated from the paper; actual insect behavior and reproduction are
 not simulated.
+
+Authored model-unit proportions: the banner extends 0.65 upward with nominal
+half-width 0.48 and thickness 0.011; wings extend 0.54 forward with thickness
+0.012, while enclosing keel halves extend 0.56 with thickness 0.013. Folded
+lengths contract to 0.36, 0.28 and 0.30 respectively. A continuous flowering
+axis carries three stalks; blossom scales are 1, 0.91 and 0.82. The banner,
+wings and keel have distinct opening delays, and both sides of the wings/keel
+share the elastic depression control. The depicted support and tendril contacts
+are established attachments. No measured stiffness, support acquisition,
+fertility or pollen-release quantity follows from these authored dimensions.

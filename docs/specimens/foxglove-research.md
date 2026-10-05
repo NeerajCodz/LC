@@ -25,3 +25,13 @@ remain younger in the mature composition. Individual pedicels nod while stems
 and foliage share the rooted bend. Numeric mechanics and pigment fields are
 authored; no pollinator agent, reproductive timing or species-identification claim
 is implied by the reversible animation.
+
+Authored model-unit proportions: the mature bell axis is 0.73 long before its
+0.14 lower-lip extension, with nominal maximum radius about 0.28 and 0.012 wall
+thickness. The folded axis is 0.42 long and tapers to a narrow mouth. Short
+pedicels connect twelve bells spaced 0.18 along the raceme, with descending
+scales from 1 to 0.615 and four smaller terminal buds. Four unequal stamens,
+one style and sixteen sampled interior hairs belong to each bell; constrained
+quality retains fewer hairs. Hair placement, spot fields and these proportions
+are authored rather than measured distributions. Male/female phase separation
+and pollinator loading are source-backed behaviors outside the simulation.

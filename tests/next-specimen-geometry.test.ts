@@ -3,6 +3,44 @@ import assert from "node:assert/strict";
 import { verifySpecimen } from "./specimen-checks";
 import { CYCLAMEN_MODEL } from "../components/flowers/cyclamen/cyclamenGeometry";
 import { CYCLAMEN_LEAF } from "../components/flowers/cyclamen/cyclamenLeaf";
+import { BEGONIA_MODEL } from "../components/flowers/hardy-begonia/begoniaGeometry";
+verifySpecimen("hardy begonia", BEGONIA_MODEL);
+test("Begonia grandis preserves sex-specific tepals, stamens and unequal ovary wings", () => {
+  for (const k of [1, 2]) {
+    assert.equal(
+      BEGONIA_MODEL.surfaces.filter(
+        (s) => s.cluster === k && s.name === "male tepal",
+      ).length,
+      4,
+    );
+    assert.equal(
+      BEGONIA_MODEL.organs.filter(
+        (o) => o.cluster === k && o.name === "male stamen",
+      ).length,
+      40,
+    );
+  }
+  for (const k of [3, 4]) {
+    assert.equal(
+      BEGONIA_MODEL.surfaces.filter(
+        (s) => s.cluster === k && s.name === "female tepal",
+      ).length,
+      3,
+    );
+    assert.equal(
+      BEGONIA_MODEL.surfaces.filter(
+        (s) => s.cluster === k && s.name === "ovary wing",
+      ).length,
+      3,
+    );
+    assert.equal(
+      BEGONIA_MODEL.organs.filter(
+        (o) => o.cluster === k && o.name === "male stamen",
+      ).length,
+      0,
+    );
+  }
+});
 import {
   SNAPDRAGON_MODEL,
   snapdragonCorolla,

@@ -41,6 +41,22 @@ export interface SpecimenModel {
   clusters: SpecimenCluster[];
   surfaces: SpecimenSurface[];
   organs: SpecimenOrgan[];
+  instances?: SpecimenInstanceGroup[];
+}
+export interface SpecimenInstancePose {
+  position: Vec3;
+  rotation: Vec3;
+  scale: number;
+  delay: number;
+  phase: number;
+}
+/** Real sealed prototypes share draw resources, never simulation nodes. */
+export interface SpecimenInstanceGroup {
+  name: string;
+  cluster: number;
+  surfaces: SpecimenSurface[];
+  organs: SpecimenOrgan[];
+  poses: SpecimenInstancePose[];
 }
 export function specimenGeometry(surface: SpecimenSurface, quality: Quality) {
   const resolution = {

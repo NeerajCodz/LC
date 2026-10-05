@@ -35,7 +35,9 @@ import { Cyclamen } from "./cyclamen/Cyclamen";
 import { Snapdragon } from "./snapdragon/Snapdragon";
 import { HardyBegonia } from "./hardy-begonia/HardyBegonia";
 import { Hydrangea } from "./hydrangea/Hydrangea";
+import { KingProtea } from "./king-protea/KingProtea";
 const SPECIES = {
+  "king-protea": KingProtea,
   hydrangea: Hydrangea,
   "hardy-begonia": HardyBegonia,
   snapdragon: Snapdragon,

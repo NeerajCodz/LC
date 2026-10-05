@@ -39,8 +39,11 @@ import { hardyBegoniaStructure } from "../../components/flowers/hardy-begonia/Ha
 
 import { hydrangeaStructure } from "../../components/flowers/hydrangea/Hydrangea";
 
+import { kingProteaStructure } from "../../components/flowers/king-protea/KingProtea";
+
 /** Authored anatomy shared by planting layout and geometry verification. */
 export const FLOWER_STRUCTURES: Record<FlowerType, FlowerStructure> = {
+  "king-protea": kingProteaStructure,
   hydrangea: hydrangeaStructure,
   "hardy-begonia": hardyBegoniaStructure,
   snapdragon: snapdragonStructure,

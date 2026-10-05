@@ -21,6 +21,14 @@ export interface FoliageProfile {
 
 /** Cultivar-independent leaf traits; lotus has its own peltate blade generator. */
 export const FOLIAGE: Record<FlowerType, FoliageProfile> = {
+  "king-protea": {
+    length: 0.89,
+    width: 0.37,
+    color: "#4d6e45",
+    veinColor: "#85975f",
+    thickness: 0.018,
+    roughness: 0.44,
+  },
   hydrangea: {
     length: 1.02,
     width: 0.55,

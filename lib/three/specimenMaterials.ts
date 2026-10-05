@@ -10,7 +10,9 @@ export function createSpecimenMaterial(
   color?: string,
 ) {
   const green = role === "calyx";
-  const cream = type === "bougainvillea" && role === "tube";
+  const cream =
+    (type === "bougainvillea" && role === "tube") ||
+    (type === "king-protea" && role !== "bract" && !green);
   const m = createPetalMaterial(
     green
       ? "#608065"
@@ -23,6 +25,12 @@ export function createSpecimenMaterial(
     green || cream || color ? undefined : PETAL_PALETTES[type],
   );
   const previous = m.onBeforeCompile;
+  if (type === "king-protea" && !green) {
+    m.roughness = role === "bract" ? 0.66 : 0.78;
+    m.sheen = role === "bract" ? 0.3 : 0.38;
+    m.sheenColor.set("#d8d4cb");
+    m.clearcoat = 0.015;
+  }
   if (type === "hydrangea" && !green) {
     m.roughness = 0.72;
     m.sheen = 0.14;
@@ -55,6 +63,16 @@ export function createSpecimenMaterial(
   }
   m.onBeforeCompile = (s, r) => {
     previous.call(m, s, r);
+    if (type === "king-protea" && !green)
+      s.fragmentShader = s.fragmentShader
+        .replace(
+          "#include <roughnessmap_fragment>",
+          `float proteaFibers=pow(.5+.5*sin(vPetalUv.x*145.+vPetalUv.y*9.),18.);
+      diffuseColor.rgb*=1.-proteaFibers*.07;
+      #include <roughnessmap_fragment>`,
+        )
+        .replace("scatter*.11", "scatter*.045")
+        .replace("ridge * .000085", "ridge * .00006");
     if (type === "hydrangea" && role === "bract")
       s.fragmentShader = s.fragmentShader
         .replace(

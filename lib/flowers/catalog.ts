@@ -357,6 +357,16 @@ FLOWERS.push({
   type: "hydrangea",
   color: "#a5a9de",
 });
+FLOWERS.push({
+  name: "King Protea",
+  latin: "Protea cynaroides",
+  family: "Proteaceae",
+  description: "A crown of bracts.\nA hundred finer flowers.",
+  detail:
+    "Substantial pink and cream bracts surround a dense head of true florets, each with a perianth and pollen-presenting style. A thick woody shoot carries glossy leathery leaves.",
+  type: "king-protea",
+  color: "#ddb0b5",
+});
 FLOWERS.sort(
   (a, b) => FLOWER_TYPES.indexOf(a.type) - FLOWER_TYPES.indexOf(b.type),
 );

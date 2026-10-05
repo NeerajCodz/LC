@@ -30,6 +30,15 @@ const palette = (
 });
 
 export const PETAL_PALETTES: Record<FlowerType, PetalPalette> = {
+  "king-protea": palette(
+    "#c5bda7",
+    "#ddb0b5",
+    "#c26a83",
+    "#b08389",
+    0.44,
+    0.76,
+    0.045,
+  ),
   hydrangea: palette(
     "#676da4",
     "#a5a9de",

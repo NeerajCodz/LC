@@ -6,6 +6,28 @@ import { CYCLAMEN_LEAF } from "../components/flowers/cyclamen/cyclamenLeaf";
 import { BEGONIA_MODEL } from "../components/flowers/hardy-begonia/begoniaGeometry";
 import { BEGONIA_LEAF } from "../components/flowers/hardy-begonia/begoniaLeaf";
 import { HYDRANGEA_MODEL } from "../components/flowers/hydrangea/hydrangeaGeometry";
+import { PROTEA_MODEL } from "../components/flowers/king-protea/proteaGeometry";
+verifySpecimen("king protea", PROTEA_MODEL);
+test("king protea has layered substantial bracts and true perianth/style florets", () => {
+  assert.equal(
+    PROTEA_MODEL.surfaces.filter((s) => s.role === "bract").length,
+    32,
+  );
+  const florets = PROTEA_MODEL.instances![0];
+  assert.equal(florets.poses.length, 128);
+  assert.equal(
+    florets.surfaces.filter((s) => s.name === "perianth limb").length,
+    4,
+  );
+  assert.equal(
+    florets.organs.filter((o) => o.name === "pollen-presenting style").length,
+    1,
+  );
+  assert.equal(
+    florets.organs.filter((o) => o.name === "included anther").length,
+    4,
+  );
+});
 verifySpecimen("hydrangea", HYDRANGEA_MODEL);
 test("lacecap hydrangea keeps marginal four-sepalled flowers distinct from the fertile center", () => {
   assert.equal(

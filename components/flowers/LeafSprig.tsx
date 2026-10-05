@@ -25,7 +25,7 @@ export function LeafSprig({
           cup: profile.basal ? 0.08 : 0.12,
           curl: profile.basal ? 0.24 : 0.12,
           edge: profile.parallel ? 0.035 : 0.05,
-          thickness: type === "orchid" ? 0.013 : 0.005,
+          thickness: profile.thickness ?? (type === "orchid" ? 0.013 : 0.005),
           ripple: 0.006,
           marginTeeth: profile.teeth,
           marginDepth: profile.depth,

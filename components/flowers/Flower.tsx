@@ -26,7 +26,17 @@ import { BirdOfParadise } from "./bird-of-paradise/BirdOfParadise";
 import { Passionflower } from "./passionflower/Passionflower";
 import { MorningGlory } from "./morning-glory/MorningGlory";
 import { Fuchsia } from "./fuchsia/Fuchsia";
+import { Carnation } from "./carnation/Carnation";
+import { Plumeria } from "./plumeria/Plumeria";
+import { Foxglove } from "./foxglove/Foxglove";
+import { SweetPea } from "./sweet-pea/SweetPea";
+import { Bougainvillea } from "./bougainvillea/Bougainvillea";
 const SPECIES = {
+  bougainvillea: Bougainvillea,
+  "sweet-pea": SweetPea,
+  foxglove: Foxglove,
+  plumeria: Plumeria,
+  carnation: Carnation,
   fuchsia: Fuchsia,
   "morning-glory": MorningGlory,
   passionflower: Passionflower,

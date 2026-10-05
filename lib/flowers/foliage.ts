@@ -1,6 +1,7 @@
 import type { FlowerType } from "./types";
 
 export interface FoliageProfile {
+  thickness?: number;
   veinColor?: string;
   pubescence?: number;
   basalLobes?: boolean;
@@ -20,6 +21,39 @@ export interface FoliageProfile {
 
 /** Cultivar-independent leaf traits; lotus has its own peltate blade generator. */
 export const FOLIAGE: Record<FlowerType, FoliageProfile> = {
+  bougainvillea: {
+    length: 0.69,
+    width: 0.39,
+    color: "#477d45",
+    roughness: 0.66,
+  },
+  "sweet-pea": { length: 0.58, width: 0.29, color: "#7b9c62", roughness: 0.76 },
+  foxglove: {
+    length: 1.22,
+    width: 0.46,
+    color: "#567849",
+    veinColor: "#9aab6c",
+    teeth: 23,
+    depth: 0.015,
+    pubescence: 0.022,
+    roughness: 0.89,
+  },
+  plumeria: {
+    length: 1.45,
+    width: 0.38,
+    color: "#355f3c",
+    veinColor: "#729655",
+    roughness: 0.43,
+    thickness: 0.017,
+  },
+  carnation: {
+    length: 0.88,
+    width: 0.055,
+    color: "#6c8d80",
+    parallel: true,
+    opposite: true,
+    roughness: 0.84,
+  },
   fuchsia: {
     length: 0.94,
     width: 0.39,

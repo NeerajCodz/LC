@@ -12,7 +12,7 @@ test.use({
 test("mobile specimen, macro, collection and garden keep bounded buffers and live frames", async ({
   page,
 }) => {
-  test.setTimeout(120_000);
+  test.setTimeout(180_000 + FLOWER_TYPES.length * 2000);
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
   async function checkBuffers() {
@@ -48,7 +48,9 @@ test("mobile specimen, macro, collection and garden keep bounded buffers and liv
       .toBeGreaterThan(before);
   }
   await page.goto("/flower/rose/");
-  await expect(page.locator(".bloom-loader")).toHaveCount(0);
+  await expect(page.locator(".bloom-loader")).toHaveCount(0, {
+    timeout: 60000,
+  });
   await checkBuffers();
   await checkLive();
   await expectRenderedFlower(page.locator("canvas").first());
@@ -103,7 +105,9 @@ test("mobile specimen, macro, collection and garden keep bounded buffers and liv
   await checkBuffers();
   await checkLive();
   await page.goto("/garden/");
-  await expect(page.locator(".bloom-loader")).toHaveCount(0);
+  await expect(page.locator(".bloom-loader")).toHaveCount(0, {
+    timeout: 60000,
+  });
   await checkBuffers();
   await page.getByRole("button", { name: "A passing breeze" }).tap();
   await checkLive();

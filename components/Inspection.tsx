@@ -7,6 +7,7 @@ import type { FlowerType } from "@/lib/flowers/types";
 import { Flower } from "./flowers/Flower";
 import { Lighting } from "./scene/Lighting";
 import { SafeCanvas } from "./scene/SafeCanvas";
+import { FLOWER_STRUCTURES } from "@/lib/flowers/structures";
 
 const VIEWS = [
   { name: "Front · full", angle: 0, bloom: 1, macro: false },
@@ -22,6 +23,12 @@ export default function Inspection() {
   const container = useRef<HTMLDivElement>(null);
   const [type, setType] = useState<FlowerType>("rose");
   const [wind, setWind] = useState(false);
+  const structure = FLOWER_STRUCTURES[type],
+    center = structure.headCenter ?? [0, 0.25, 0];
+  const targetY =
+    0.25 +
+    center[1] * Math.cos(structure.headTilt) -
+    center[2] * Math.sin(structure.headTilt);
   return (
     <div ref={container} style={{ padding: 20 }}>
       <div
@@ -69,9 +76,19 @@ export default function Inspection() {
             <View style={{ height: 365 }} index={i + 1}>
               <PerspectiveCamera
                 makeDefault
-                position={[0, v.macro ? 1.25 : 1.5, v.macro ? 2.8 : 5.5]}
+                position={[
+                  v.macro ? center[0] : 0,
+                  v.macro ? targetY + 0.8 : 0.6,
+                  (v.macro ? 3 : 5.5) * (structure.previewScale ?? 1),
+                ]}
                 fov={36}
-                onUpdate={(c) => c.lookAt(0, v.macro ? 0.65 : 0.15, 0)}
+                onUpdate={(c) =>
+                  c.lookAt(
+                    v.macro ? center[0] : 0,
+                    v.macro ? targetY : -0.45,
+                    v.macro ? center[2] : 0,
+                  )
+                }
               />
               <Lighting shadows={false} followCursor={false} />
               <group rotation={[0, v.angle, 0]}>

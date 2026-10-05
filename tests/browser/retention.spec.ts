@@ -4,6 +4,7 @@ import { FLOWER_TYPES } from "../../lib/flowers/types";
 test("all catalog scenes survive a round-trip scroll in one WebGL context", async ({
   page,
 }) => {
+  test.setTimeout(180000 + FLOWER_TYPES.length * 2000);
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
   await page.emulateMedia({ reducedMotion: "reduce" });
@@ -11,11 +12,27 @@ test("all catalog scenes survive a round-trip scroll in one WebGL context", asyn
   const previews = page.locator(".flower-preview");
   const sceneIds: string[] = [];
   await expect(previews).toHaveCount(FLOWER_TYPES.length);
-  for (let i = 0; i < FLOWER_TYPES.length; i++) {
-    await previews.nth(i).scrollIntoViewIfNeeded();
-    await expect(previews.nth(i)).toHaveAttribute("data-render-rect", /,/);
-    sceneIds.push((await previews.nth(i).getAttribute("data-scene-id"))!);
+  const pages = page
+    .getByRole("navigation", { name: "Collection pages" })
+    .getByRole("button", { name: /^Page \d+$/ });
+  const pageCount = Math.max(1, await pages.count());
+  const visible = page.locator(
+    ".gallery-specimen:not([hidden]) .flower-preview",
+  );
+  for (let p = 1; p <= pageCount; p++) {
+    if (p > 1)
+      await page
+        .getByRole("button", { name: `Page ${p}`, exact: true })
+        .click();
+    for (let i = 0; i < (await visible.count()); i++) {
+      await visible.nth(i).scrollIntoViewIfNeeded();
+      await expect(visible.nth(i)).toHaveAttribute("data-render-rect", /,/);
+      sceneIds.push((await visible.nth(i).getAttribute("data-scene-id"))!);
+    }
   }
+  expect(new Set(sceneIds).size).toBe(FLOWER_TYPES.length);
+  if (pageCount > 1)
+    await page.getByRole("button", { name: "Page 1", exact: true }).click();
   await previews.first().scrollIntoViewIfNeeded();
   await expect(page.locator(".preview-stage")).toHaveAttribute(
     "data-retained-scenes",

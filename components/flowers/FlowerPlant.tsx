@@ -52,6 +52,7 @@ export function FlowerPlant({
   stem = true,
   leaves = true,
   quality = "high",
+  physics = "ambient",
   reducedMotion = false,
   paused = false,
   pulse = 0,
@@ -110,6 +111,8 @@ export function FlowerPlant({
   const interaction = useFlowerInteraction(
     head,
     interactive && !reducedMotion && !paused,
+    structure.headCenter,
+    Math.max(2.2, envelope * 1.5),
   );
   useLayoutEffect(() => {
     if (!garden) return;
@@ -238,7 +241,12 @@ export function FlowerPlant({
           <group ref={head} rotation={[structure.headTilt, 0, 0]}>
             <FlowerInteraction
               enabled={interactive}
-              proxyRadius={quality === "low" ? envelope : undefined}
+              proxyRadius={
+                quality === "low" || structure.simulatedSurfaces
+                  ? envelope
+                  : undefined
+              }
+              proxyCenter={structure.headCenter}
               onHover={onHover}
               onClick={onClick}
             >
@@ -283,6 +291,9 @@ export function FlowerPlant({
                     ))}
                     {Organs && (
                       <Organs
+                        physics={physics}
+                        motion={motion}
+                        reducedMotion={reducedMotion}
                         leaves={leaves}
                         bloom={bloom}
                         time={time}

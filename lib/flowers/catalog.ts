@@ -267,6 +267,56 @@ export const FLOWERS: FlowerInfo[] = [
   },
 ];
 
+FLOWERS.push({
+  type: "carnation",
+  name: "Carnation",
+  latin: "Dianthus caryophyllus",
+  family: "Caryophyllaceae",
+  color: PETAL_PALETTES.carnation.body,
+  description: "Fringes of pink.\nA thousand small folds.",
+  detail:
+    "A cultivated double bloom opens above a cylindrical calyx and opposite narrow leaves.",
+});
+FLOWERS.push({
+  type: "plumeria",
+  name: "Plumeria",
+  latin: "Plumeria rubra",
+  family: "Apocynaceae",
+  color: PETAL_PALETTES.plumeria.body,
+  description: "Ivory and warm gold.\nA quiet spiral.",
+  detail:
+    "Five waxy overlapping lobes unfurl above a fused throat on thick succulent branches.",
+});
+FLOWERS.push({
+  type: "foxglove",
+  name: "Foxglove",
+  latin: "Digitalis purpurea",
+  family: "Plantaginaceae",
+  color: PETAL_PALETTES.foxglove.body,
+  description: "A rising hush.\nBells facing the light.",
+  detail:
+    "A one-sided raceme opens from bottom to top, revealing spotted, softly hairy bell interiors.",
+});
+FLOWERS.push({
+  type: "sweet-pea",
+  name: "Sweet Pea",
+  latin: "Lathyrus odoratus",
+  family: "Fabaceae",
+  color: PETAL_PALETTES["sweet-pea"].body,
+  description: "Wings in violet.\nHeld by a climbing thread.",
+  detail:
+    "Three bilateral flowers lift broad banners above paired wings and an enclosing keel; tendrils brace the winged shoot.",
+});
+FLOWERS.push({
+  type: "bougainvillea",
+  name: "Bougainvillea",
+  latin: "Bougainvillea glabra",
+  family: "Nyctaginaceae",
+  color: PETAL_PALETTES.bougainvillea.body,
+  description: "Paper-thin magenta.\nTiny flowers held within.",
+  detail:
+    "Three-bract cymes surround small cream-mouthed floral tubes on a thorny woody shoot.",
+});
 FLOWERS.sort(
   (a, b) => FLOWER_TYPES.indexOf(a.type) - FLOWER_TYPES.indexOf(b.type),
 );

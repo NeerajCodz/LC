@@ -10,7 +10,11 @@ import { createPetalGeometry } from "@/lib/three/geometry";
 import { createPetalMaterial } from "@/lib/three/materials";
 import { createOrganicTube } from "@/lib/three/organicTube";
 import { petalOpenness } from "@/lib/three/easing";
+import type { PlantMotion } from "@/lib/flowers/wind";
 export interface FlowerOrgansProps {
+  physics?: "ambient" | "detailed";
+  motion?: RefObject<PlantMotion>;
+  reducedMotion?: boolean;
   leaves?: boolean;
   bloom: RefObject<number>;
   time: RefObject<number>;
@@ -22,6 +26,7 @@ export interface FlowerOrgansProps {
     angle: number;
     proximity: number;
     velocity: number;
+    point?: Vec3;
   }>;
 }
 export function FloralSurfacePart({

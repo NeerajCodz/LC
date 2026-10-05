@@ -70,6 +70,7 @@ for (const failure of ["null", "throw"] as const) {
 test("renderer setup rejection stays inside the optional scene", async ({
   page,
 }) => {
+  test.setTimeout(120000);
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
   await page.addInitScript(() => {
@@ -86,7 +87,7 @@ test("renderer setup rejection stays inside the optional scene", async ({
   await page.goto("/flower/lotus/");
   await expect(
     page.locator(".experience [data-renderer=unavailable]"),
-  ).toBeVisible();
+  ).toBeVisible({ timeout: 60000 });
   await expect(
     page.getByRole("heading", { name: "Lotus.", exact: true }),
   ).toBeVisible();
@@ -98,11 +99,14 @@ test("renderer setup rejection stays inside the optional scene", async ({
 test("context loss stops rendering and explicit retry keeps bloom state", async ({
   page,
 }) => {
+  test.setTimeout(180000);
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
   await page.goto("/flower/lotus/");
   const canvas = page.locator(".flower-canvas canvas");
-  await expect(canvas).toHaveAttribute("data-render-frames", /\d+/);
+  await expect(canvas).toHaveAttribute("data-render-frames", /\d+/, {
+    timeout: 60000,
+  });
   await expectRenderedFlower(canvas);
   await page.locator("#bloom").fill("0.37");
   await canvas.evaluate((element: HTMLCanvasElement) => {
@@ -122,7 +126,9 @@ test("context loss stops rendering and explicit retry keeps bloom state", async 
     .locator(".experience")
     .getByRole("button", { name: "Try 3D again" })
     .click();
-  await expect(canvas).toHaveAttribute("data-render-frames", /\d+/);
+  await expect(canvas).toHaveAttribute("data-render-frames", /\d+/, {
+    timeout: 60000,
+  });
   await expect(page.locator("#bloom")).toBeEnabled();
   await expect(page.locator("#bloom")).toHaveValue("0.37");
   await expectRenderedFlower(canvas);

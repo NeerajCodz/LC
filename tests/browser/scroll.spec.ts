@@ -25,6 +25,7 @@ for (const scenario of [
 ]) {
   test(`${scenario.name} keeps flowers aligned with captions while scrolling`, async ({
     page,
+    isMobile,
   }) => {
     await page.emulateMedia({ reducedMotion: "reduce" });
     await page.goto(scenario.route);
@@ -56,7 +57,25 @@ for (const scenario of [
         };
       }, scenario);
     const before = await measure();
-    await page.mouse.wheel(0, 160);
+    async function scroll(delta: number) {
+      if (isMobile) {
+        // WebKit has no native wheel injection. scrollBy still exercises the
+        // browser's scrolling and the production scissor/bounds sampling.
+        await page.evaluate((amount) => window.scrollBy(0, amount), delta);
+      } else {
+        // The hero canvas consumes wheel gestures for orbit zoom. Scroll over
+        // its DOM control, where wheel input scrolls the surrounding page.
+        if (scenario.name === "specimen hero")
+          await page
+            .getByRole("button", {
+              name: "Explore the collection",
+              exact: true,
+            })
+            .hover();
+        await page.mouse.wheel(0, delta);
+      }
+    }
+    await scroll(160);
     await expect
       .poll(async () => (await measure()).scroll)
       .toBeGreaterThan(before.scroll + 100);
@@ -69,7 +88,7 @@ for (const scenario of [
           (after.captionTop - before.captionTop),
       ),
     ).toBeLessThan(1);
-    await page.mouse.wheel(0, -160);
+    await scroll(-160);
     await expect
       .poll(async () => (await measure()).scroll)
       .toBeLessThan(after.scroll - 100);

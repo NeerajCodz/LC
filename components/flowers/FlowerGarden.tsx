@@ -117,6 +117,7 @@ export default function FlowerGarden({
               <Flower
                 {...plant}
                 rooted
+                physics={selected === plant.type ? "detailed" : "ambient"}
                 bloom={bloom}
                 quality={
                   selected === plant.type
@@ -133,19 +134,22 @@ export default function FlowerGarden({
                 interactive={!selected || selected === plant.type}
                 reducedMotion={reducedMotion}
                 paused={paused}
+                pulse={pulse}
                 onClick={() => onSelect(plant.type)}
               />
             </group>
           ))}
         </GardenDynamics>
-        {!reducedMotion && (
-          <Pollen
-            count={constrained ? 12 : 90}
-            bloom={bloom}
-            pulse={pulse}
-            paused={paused}
-          />
-        )}
+        {!reducedMotion &&
+          (!selected ||
+            FLOWER_STRUCTURES[selected].airbornePollen !== false) && (
+            <Pollen
+              count={constrained ? 12 : 90}
+              bloom={bloom}
+              pulse={pulse}
+              paused={paused}
+            />
+          )}
       </Suspense>
       <CameraRig
         garden

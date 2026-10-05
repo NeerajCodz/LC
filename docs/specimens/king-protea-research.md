@@ -19,7 +19,8 @@ Florets use real instanced geometry; do not replace the center with beads,
 flat fur or a sunflower seed disk. Bract rims yield around firm attachments,
 while the stem/head respond more slowly than the fine central organs. Use pale
 pink/cream pigment, restrained sheen, granular tissue detail and green glossy
-foliage. Fine hairs are placed conservatively and must be reviewed against
-species images rather than borrowed from bearded Protea species. Scale, age
+foliage. The implemented fine surface fibers use authored striation and sheen;
+no species-specific hair dimensions or borrowed bearded-Protea structures are
+claimed. The dense center consists of perianths and styles. Scale, age
 offsets, shell thickness and mechanical response are authored. Fire ecology,
 nectar, seed production and calibrated optics are outside the simulation.

@@ -1,4 +1,4 @@
-import { chromium, webkit, devices } from "@playwright/test";
+import { chromium, webkit, devices, expect } from "@playwright/test";
 import { captureRenderingCost } from "../tests/browser/render-costs";
 
 // Run against an already started port-1607 server; each sample owns a fresh page.
@@ -38,6 +38,13 @@ async function main() {
         process.stderr.write(
           `${target} ${slug}: visible ${await canvas.getAttribute("data-render-frames")}\n`,
         );
+        await expect
+          .poll(
+            async () => Number(await canvas.getAttribute("data-render-frames")),
+            { timeout: 120000 },
+          )
+          .toBeGreaterThanOrEqual(30);
+        const startupTo30FramesMs = performance.now() - loaded;
         for (const view of ["specimen", "macro"]) {
           if (view === "macro")
             await page
@@ -50,6 +57,7 @@ async function main() {
             view,
             ...cost,
             warmPageElapsedMs: performance.now() - loaded,
+            startupTo30FramesMs,
             errors: [...errors],
           };
           results.push(sample);

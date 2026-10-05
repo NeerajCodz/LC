@@ -7,6 +7,11 @@ import { PLUMERIA_MODEL } from "../components/flowers/plumeria/plumeriaGeometry"
 import { FOXGLOVE_MODEL } from "../components/flowers/foxglove/foxgloveGeometry";
 import { SWEET_PEA_MODEL } from "../components/flowers/sweet-pea/sweetPeaGeometry";
 import { BOUGAINVILLEA_MODEL } from "../components/flowers/bougainvillea/bougainvilleaGeometry";
+import { CYCLAMEN_MODEL } from "../components/flowers/cyclamen/cyclamenGeometry";
+import { SNAPDRAGON_MODEL } from "../components/flowers/snapdragon/snapdragonGeometry";
+import { BEGONIA_MODEL } from "../components/flowers/hardy-begonia/begoniaGeometry";
+import { HYDRANGEA_MODEL } from "../components/flowers/hydrangea/hydrangeaGeometry";
+import { PROTEA_MODEL } from "../components/flowers/king-protea/proteaGeometry";
 const results = [];
 for (const [name, model] of Object.entries({
   carnation: CARNATION_MODEL,
@@ -14,7 +19,14 @@ for (const [name, model] of Object.entries({
   foxglove: FOXGLOVE_MODEL,
   "sweet-pea": SWEET_PEA_MODEL,
   bougainvillea: BOUGAINVILLEA_MODEL,
-}))
+  cyclamen: CYCLAMEN_MODEL,
+  snapdragon: SNAPDRAGON_MODEL,
+  "hardy-begonia": BEGONIA_MODEL,
+  hydrangea: HYDRANGEA_MODEL,
+  "king-protea": PROTEA_MODEL,
+}).filter(
+  ([name]) => !process.argv[2] || process.argv[2].split(",").includes(name),
+))
   for (const constrained of [false, true]) {
     const { indices, patches } = specimenCages(model, constrained),
       sim = new PetalDynamics(patches, constrained);

@@ -29,6 +29,7 @@ async function main() {
             configurable: true,
           }),
         );
+        const loaded = performance.now();
         await page.goto(`http://localhost:1607/flower/${slug}/`);
         process.stderr.write(`${target} ${slug}: loaded\n`);
         await page.bringToFront();
@@ -43,7 +44,14 @@ async function main() {
               .getByRole("button", { name: "Explore close-up", exact: true })
               .click();
           const cost = await captureRenderingCost(canvas);
-          const sample = { target, slug, view, ...cost, errors: [...errors] };
+          const sample = {
+            target,
+            slug,
+            view,
+            ...cost,
+            warmPageElapsedMs: performance.now() - loaded,
+            errors: [...errors],
+          };
           results.push(sample);
           process.stderr.write(
             `${target} ${slug} ${view}: ${cost.fps.toFixed(1)} FPS, solver ${cost.solverMeanMs} ms\n`,

@@ -41,7 +41,13 @@ export function SpecimenAssembly({
 }: FlowerOrgansProps & { model: SpecimenModel; type: FlowerType }) {
   const { constrained } = useExperienceSettings();
   const canvas = useThree((state) => state.gl.domElement);
-  const cost = useRef({ frames: 0, mean: 0, steps: 0 });
+  const cost = useRef({
+    frames: 0,
+    mean: 0,
+    steps: 0,
+    transfer: 0,
+    transfers: 0,
+  });
   const groups = useRef<(Group | null)[]>([]),
     meshes = useRef<(Mesh | null)[]>([]);
   const resources = useMemo(() => {
@@ -92,7 +98,7 @@ export function SpecimenAssembly({
     articulationClock = useRef(new SurfaceClock());
   useEffect(() => {
     if (!resources) return;
-    cost.current = { frames: 0, mean: 0, steps: 0 };
+    cost.current = { frames: 0, mean: 0, steps: 0, transfer: 0, transfers: 0 };
     canvas.setAttribute(
       "data-petal-nodes",
       String(resources.sim.inverseMass.length),
@@ -103,6 +109,7 @@ export function SpecimenAssembly({
         "data-petal-nodes",
         "data-petal-steps",
         "data-petal-ms",
+        "data-petal-transfer-ms",
         "data-petal-physics",
       ])
         canvas.removeAttribute(key);
@@ -211,7 +218,13 @@ export function SpecimenAssembly({
       cost.current.steps++;
     }
     deformation.setEnabled(!reducedMotion);
-    if (dt !== 0) deformation.update(inverses);
+    if (dt !== 0) {
+      const start = performance.now();
+      deformation.update(inverses);
+      cost.current.transfer +=
+        (performance.now() - start - cost.current.transfer) /
+        Math.min(60, ++cost.current.transfers);
+    }
     canvas.setAttribute(
       "data-petal-physics",
       reducedMotion ? "settled" : "detailed",
@@ -219,6 +232,10 @@ export function SpecimenAssembly({
     if (cost.current.frames % 30 === 0) {
       canvas.setAttribute("data-petal-nodes", String(sim.inverseMass.length));
       canvas.setAttribute("data-petal-ms", cost.current.mean.toFixed(2));
+      canvas.setAttribute(
+        "data-petal-transfer-ms",
+        cost.current.transfer.toFixed(2),
+      );
       canvas.setAttribute("data-petal-steps", String(cost.current.steps));
     }
   });

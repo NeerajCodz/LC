@@ -27,6 +27,9 @@ export async function captureRenderingCost(canvas: Locator, frames = 120) {
         height: c.height,
         contextLost: gl.isContextLost(),
         budget: c.dataset.renderBudget,
+        tissue: c.dataset.surfaceDetail,
+        lighting: c.dataset.lightingBackend,
+        transferMeanMs: Number(c.dataset.petalTransferMs ?? 0),
         renderer: gl.getParameter(
           debug?.UNMASKED_RENDERER_WEBGL ?? gl.RENDERER,
         ) as string,

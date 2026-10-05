@@ -11,6 +11,7 @@ export interface CagePatch {
   pinRows: number;
   open: Float64Array;
   folded: Float64Array;
+  pressure?: Float64Array;
   triangles: Uint32Array;
   edges: Uint32Array;
   contactEdges: Uint32Array;
@@ -22,6 +23,7 @@ export function createCagePatch({
   rows,
   thickness,
   sample,
+  pressureSample,
   periodic = false,
   compliance = 0.00008,
   shapeCompliance = compliance * 125,
@@ -31,6 +33,7 @@ export function createCagePatch({
   rows: number;
   thickness: number;
   sample: (u: number, v: number, open: number) => Vec3;
+  pressureSample?: (u: number, v: number, open: number) => Vec3;
   periodic?: boolean;
   compliance?: number;
   shapeCompliance?: number;
@@ -40,6 +43,7 @@ export function createCagePatch({
   const count = stride * (rows + 1);
   const open = new Float64Array(count * 3),
     folded = new Float64Array(count * 3);
+  const pressure = pressureSample ? new Float64Array(count * 3) : undefined;
   const triangles: number[] = [],
     edges: number[] = [],
     contactEdges: number[] = [];
@@ -49,6 +53,8 @@ export function createCagePatch({
       const k = j * stride + i;
       open.set(sample(i / columns, j / rows, 1), k * 3);
       folded.set(sample(i / columns, j / rows, 0), k * 3);
+      if (pressure && pressureSample)
+        pressure.set(pressureSample(i / columns, j / rows, 1), k * 3);
       if (j < rows) {
         link(k, k + stride);
         contactEdges.push(k, k + stride);
@@ -78,6 +84,7 @@ export function createCagePatch({
     pinRows,
     open,
     folded,
+    pressure,
     triangles: Uint32Array.from(triangles),
     edges: Uint32Array.from(edges),
     contactEdges: Uint32Array.from(contactEdges),
@@ -188,14 +195,29 @@ export class PetalDynamics {
     this.reset();
   }
 
-  setRest(surface: number, openness: number, matrix?: ArrayLike<number>) {
+  setRest(
+    surface: number,
+    openness: number,
+    matrix?: ArrayLike<number>,
+    pressure = 0,
+  ) {
     const p = this.patches[surface],
       offset = this.offsets[surface] * 3;
     const open = Math.max(0, Math.min(1, openness));
+    const pressed = Math.max(0, Math.min(1, pressure)) * open;
     for (let i = 0; i < p.open.length; i += 3) {
-      const x = p.folded[i] + (p.open[i] - p.folded[i]) * open;
-      const y = p.folded[i + 1] + (p.open[i + 1] - p.folded[i + 1]) * open;
-      const z = p.folded[i + 2] + (p.open[i + 2] - p.folded[i + 2]) * open;
+      const x =
+        p.folded[i] +
+        (p.open[i] - p.folded[i]) * open +
+        ((p.pressure?.[i] ?? p.open[i]) - p.open[i]) * pressed;
+      const y =
+        p.folded[i + 1] +
+        (p.open[i + 1] - p.folded[i + 1]) * open +
+        ((p.pressure?.[i + 1] ?? p.open[i + 1]) - p.open[i + 1]) * pressed;
+      const z =
+        p.folded[i + 2] +
+        (p.open[i + 2] - p.folded[i + 2]) * open +
+        ((p.pressure?.[i + 2] ?? p.open[i + 2]) - p.open[i + 2]) * pressed;
       this.rest[offset + i] = matrix
         ? matrix[0] * x + matrix[4] * y + matrix[8] * z + matrix[12]
         : x;

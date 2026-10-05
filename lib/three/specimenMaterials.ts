@@ -23,6 +23,10 @@ export function createSpecimenMaterial(
     green || cream || color ? undefined : PETAL_PALETTES[type],
   );
   const previous = m.onBeforeCompile;
+  if (type === "snapdragon" && !green) {
+    m.roughness = 0.64;
+    m.sheen = 0.18;
+  }
   if (type === "cyclamen" && !green) {
     m.roughness = 0.57;
     m.sheen = 0.2;
@@ -41,6 +45,15 @@ export function createSpecimenMaterial(
   }
   m.onBeforeCompile = (s, r) => {
     previous.call(m, s, r);
+    if (type === "snapdragon" && !green)
+      s.fragmentShader = s.fragmentShader.replace(
+        "#include <roughnessmap_fragment>",
+        `float snapLower=smoothstep(.52,.70,vPetalUv.x)*(1.-smoothstep(.82,.96,vPetalUv.x));
+      float snapPalate=snapLower*smoothstep(.55,.78,vPetalUv.y);
+      diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.91,.67,.25),snapPalate*.80);
+      diffuseColor.rgb*=1.-.065*pow(.5+.5*sin(vPetalUv.y*90.),16.);
+      #include <roughnessmap_fragment>`,
+      );
     if (type === "cyclamen" && !green)
       s.fragmentShader = s.fragmentShader
         .replace("scatter*.11", "scatter*.065")

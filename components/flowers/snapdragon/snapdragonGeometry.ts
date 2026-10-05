@@ -51,6 +51,7 @@ export const SNAPDRAGON_MODEL: SpecimenModel = {
       thickness: 0.014,
       flexible: true,
       sample: snapdragonCorolla,
+      pressureSample: (u: number, v: number, open: number) => snapdragonCorolla(u, v, open, 1),
       delay: i * 0.04,
       cage: [12, 7] as [number, number],
       mobileCage: [6, 4] as [number, number],

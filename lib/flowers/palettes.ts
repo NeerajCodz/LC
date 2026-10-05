@@ -30,6 +30,15 @@ const palette = (
 });
 
 export const PETAL_PALETTES: Record<FlowerType, PetalPalette> = {
+  snapdragon: palette(
+    "#9c364e",
+    "#dd737e",
+    "#f5a4a1",
+    "#aa465f",
+    0.32,
+    0.86,
+    0.07,
+  ),
   cyclamen: palette(
     "#9e2359",
     "#f1d9df",

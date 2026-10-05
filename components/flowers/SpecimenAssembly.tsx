@@ -162,6 +162,9 @@ export function SpecimenAssembly({
       if (!mesh) return;
       const open = petalOpenness(bloom.current, s.delay ?? 0, i * 0.31);
       if (mesh.morphTargetInfluences) mesh.morphTargetInfluences[0] = 1 - open;
+      if (s.pressureSample && mesh.morphTargetInfluences)
+        mesh.morphTargetInfluences[1] =
+          (Math.max(0, articulation.current[s.cluster].value) / 0.35) * open;
       mesh.rotation.x =
         s.role === "wing" || s.role === "keel"
           ? articulation.current[s.cluster].value
@@ -182,6 +185,9 @@ export function SpecimenAssembly({
         p,
         petalOpenness(bloom.current, s.delay ?? 0, i * 0.31),
         matrices[p].elements,
+        s.pressureSample
+          ? Math.max(0, articulation.current[s.cluster].value) / 0.35
+          : 0,
       );
     }
     const dt = clock.delta(time.current, reducedMotion);

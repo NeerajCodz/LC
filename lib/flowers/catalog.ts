@@ -327,6 +327,16 @@ FLOWERS.push({
   type: "cyclamen",
   color: "#f1d9df",
 });
+FLOWERS.push({
+  name: "Snapdragon",
+  latin: "Antirrhinum majus",
+  family: "Plantaginaceae",
+  description: "A closed mouth.\nA soft invitation.",
+  detail:
+    "Bilateral corollas open in sequence along a narrow-leaved shoot. Pointer contact or the pulse control depresses the lower palate, which returns when released.",
+  type: "snapdragon",
+  color: "#dd737e",
+});
 FLOWERS.sort(
   (a, b) => FLOWER_TYPES.indexOf(a.type) - FLOWER_TYPES.indexOf(b.type),
 );

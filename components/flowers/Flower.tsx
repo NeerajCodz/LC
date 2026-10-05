@@ -32,7 +32,9 @@ import { Foxglove } from "./foxglove/Foxglove";
 import { SweetPea } from "./sweet-pea/SweetPea";
 import { Bougainvillea } from "./bougainvillea/Bougainvillea";
 import { Cyclamen } from "./cyclamen/Cyclamen";
+import { Snapdragon } from "./snapdragon/Snapdragon";
 const SPECIES = {
+  snapdragon: Snapdragon,
   cyclamen: Cyclamen,
   bougainvillea: Bougainvillea,
   "sweet-pea": SweetPea,

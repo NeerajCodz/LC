@@ -31,6 +31,7 @@ export const FLOWER_TYPES = [
   "sweet-pea",
   "bougainvillea",
   "cyclamen",
+  "snapdragon",
 ] as const;
 
 export type FlowerType = (typeof FLOWER_TYPES)[number];

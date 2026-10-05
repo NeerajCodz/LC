@@ -347,6 +347,16 @@ FLOWERS.push({
   type: "hardy-begonia",
   color: "#e8a2b4",
 });
+FLOWERS.push({
+  name: "Lacecap Hydrangea",
+  latin: "Hydrangea macrophylla",
+  family: "Hydrangeaceae",
+  description: "A rim of lavender.\nTiny flowers within.",
+  detail:
+    "Broad showy sepals frame a flat lacecap of small fertile flowers, each with petals, stamens and styles. Opposite serrated leaves grow along a firm woody shoot.",
+  type: "hydrangea",
+  color: "#a5a9de",
+});
 FLOWERS.sort(
   (a, b) => FLOWER_TYPES.indexOf(a.type) - FLOWER_TYPES.indexOf(b.type),
 );

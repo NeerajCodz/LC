@@ -33,6 +33,7 @@ export const FLOWER_TYPES = [
   "cyclamen",
   "snapdragon",
   "hardy-begonia",
+  "hydrangea",
 ] as const;
 
 export type FlowerType = (typeof FLOWER_TYPES)[number];

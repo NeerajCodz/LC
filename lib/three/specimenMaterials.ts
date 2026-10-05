@@ -23,6 +23,11 @@ export function createSpecimenMaterial(
     green || cream || color ? undefined : PETAL_PALETTES[type],
   );
   const previous = m.onBeforeCompile;
+  if (type === "hydrangea" && !green) {
+    m.roughness = 0.72;
+    m.sheen = 0.14;
+    m.clearcoat = 0;
+  }
   if (type === "hardy-begonia" && !green) {
     m.roughness = 0.59;
     m.sheen = 0.23;
@@ -50,6 +55,17 @@ export function createSpecimenMaterial(
   }
   m.onBeforeCompile = (s, r) => {
     previous.call(m, s, r);
+    if (type === "hydrangea" && role === "bract")
+      s.fragmentShader = s.fragmentShader
+        .replace(
+          "#include <roughnessmap_fragment>",
+          `float hydAcross=abs(vPetalUv.x-.5);
+      float hydMid=exp(-hydAcross*100.);
+      float hydBranch=pow(.5+.5*cos((vPetalUv.y-hydAcross*.72)*58.),25.);
+      diffuseColor.rgb*=1.-hydMid*.09-hydBranch*.065;
+      #include <roughnessmap_fragment>`,
+        )
+        .replace("scatter*.11", "scatter*.055");
     if (type === "hardy-begonia" && !green)
       s.fragmentShader = s.fragmentShader
         .replace("scatter*.11", "scatter*.075")

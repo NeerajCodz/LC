@@ -10,6 +10,7 @@ export interface WindProfile {
 // Art-directed response classes informed by habit, stem construction and head load.
 // These are not measured species-specific elastic constants. See wind-and-contact.md.
 export const WIND_PROFILES: Record<FlowerType, WindProfile> = {
+  hydrangea: { compliance: 0.11, stiffness: 49, damping: 0.89, flutter: 0.53 },
   "hardy-begonia": {
     compliance: 0.16,
     stiffness: 34,

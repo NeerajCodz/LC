@@ -30,6 +30,15 @@ const palette = (
 });
 
 export const PETAL_PALETTES: Record<FlowerType, PetalPalette> = {
+  hydrangea: palette(
+    "#676da4",
+    "#a5a9de",
+    "#c1b9e2",
+    "#787bad",
+    0.3,
+    0.9,
+    0.045,
+  ),
   "hardy-begonia": palette(
     "#bc6381",
     "#e8a2b4",

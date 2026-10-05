@@ -14,6 +14,7 @@ export interface SpecimenSurface {
   contactObstacle?: boolean;
   delay?: number;
   compliance?: number;
+  shapeCompliance?: number;
   pinMidrib?: boolean;
   cage?: [number, number];
   mobileCage?: [number, number];

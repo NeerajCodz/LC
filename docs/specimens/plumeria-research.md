@@ -15,5 +15,9 @@ retain the contorted bud and concealed stamens/style. Ivory lobes, warm yellow
 throats and pink margins are an authored supported color combination. Surface
 detail is fine and waxy rather than lacquered. Branches, short pedicels and
 thicker lobes have slower responses than papery bracts; leaves move independently.
+The detailed lobe cage uses authored stretch compliance `0.000025` and curved
+rest-shape compliance `0.00008`. These visual response parameters are not measured
+plant tissue constants. The stronger curvature response prevents fleshy limbs
+from behaving like folded cloth under overlapping contacts.
 The opening slider is an artistic reversible inspection. Fragrance, seasonal
 leaf loss, fruit production and calibrated tissue optics are outside this study.

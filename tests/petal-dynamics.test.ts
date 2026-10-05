@@ -1,7 +1,14 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { Euler, Matrix4, Quaternion, Vector3 } from "three";
+import { PLUMERIA_MODEL } from "../components/flowers/plumeria/plumeriaGeometry";
+import { specimenCages } from "../lib/three/specimenModel";
 import { createCagePatch, PetalDynamics } from "../lib/three/petalDynamics";
-import { closestSegments, closestTriangle } from "../lib/three/petalContacts";
+import {
+  closestSegments,
+  closestTriangle,
+  PetalContacts,
+} from "../lib/three/petalContacts";
 
 const patch = () =>
   createCagePatch({
@@ -10,6 +17,67 @@ const patch = () =>
     thickness: 0.012,
     sample: (u, v, open) => [(u - 0.5) * 0.5, v, v * v * open * 0.2],
   });
+
+test("contact near a pinned edge endpoint cannot fling its free endpoint", () => {
+  const positions = Float64Array.from([
+    0, 0, 0, 1, 0, 0, 0.001, 0.004, -1, 0.001, 0.004, 1,
+  ]);
+  const previous = positions.slice();
+  const contacts = new PetalContacts(
+    new Uint32Array(),
+    Uint32Array.from([0, 1, 2, 3]),
+    Uint16Array.from([0, 0, 1, 1]),
+    new Float64Array(4).fill(0.012),
+    Float64Array.from([0, 1, 0, 0]),
+    [2, 2],
+  );
+  assert.equal(contacts.solve(positions, previous), 1);
+  assert.ok(
+    Math.hypot(positions[3] - 1, positions[4], positions[5]) <= 0.012001,
+  );
+  for (const node of [0, 2, 3])
+    for (let component = 0; component < 3; component++)
+      assert.equal(
+        positions[node * 3 + component],
+        previous[node * 3 + component],
+      );
+});
+
+test("fleshy plumeria lobes retain curvature while their overlap settles", () => {
+  for (const constrained of [false, true]) {
+    const { indices, patches } = specimenCages(PLUMERIA_MODEL, constrained);
+    const sim = new PetalDynamics(patches, constrained);
+    indices.forEach((index, i) => {
+      const cluster =
+        PLUMERIA_MODEL.clusters[PLUMERIA_MODEL.surfaces[index].cluster];
+      const matrix = new Matrix4().compose(
+        new Vector3(...cluster.position),
+        new Quaternion().setFromEuler(new Euler(...cluster.rotation)),
+        new Vector3(cluster.scale, cluster.scale, cluster.scale),
+      );
+      sim.setRest(i, 1, matrix.elements);
+    });
+    sim.reset();
+    for (let frame = 0; frame < 240; frame++) sim.step(1 / 60);
+    for (let node = 0; node < sim.inverseMass.length; node++) {
+      const k = node * 3;
+      const distance = Math.hypot(
+        sim.positions[k] - sim.rest[k],
+        sim.positions[k + 1] - sim.rest[k + 1],
+        sim.positions[k + 2] - sim.rest[k + 2],
+      );
+      assert.ok(distance < 0.08, `lobe displacement ${distance}`);
+      const normalAgreement =
+        sim.normals[k] * sim.restNormals[k] +
+        sim.normals[k + 1] * sim.restNormals[k + 1] +
+        sim.normals[k + 2] * sim.restNormals[k + 2];
+      assert.ok(
+        normalAgreement > 0,
+        "the fleshy lobe must not fold inside out",
+      );
+    }
+  }
+});
 
 test("contact primitives find triangle interiors and crossing edges", () => {
   const points = Float64Array.from([-1, 0, -1, 1, 0, -1, 0, 0, 1]);

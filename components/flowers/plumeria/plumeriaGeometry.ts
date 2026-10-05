@@ -59,6 +59,8 @@ export const PLUMERIA_MODEL: SpecimenModel = {
         thickness: 0.024,
         flexible: true,
         compliance: 0.000025,
+        // Fleshy limbs restore their authored curvature more firmly than cloth.
+        shapeCompliance: 0.00008,
         delay: k * 0.08,
         sample: plumeriaLobe(i),
         cage: [4, 5] as [number, number],

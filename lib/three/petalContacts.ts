@@ -206,6 +206,7 @@ export class PetalContacts {
   private readonly scratch = new Float64Array(9);
   private readonly edgeBounds: Float64Array;
   private readonly triangleBounds: Float64Array;
+  private readonly remainingProjection: Float64Array;
   private query = 0;
   constructor(
     private readonly triangles: Uint32Array,
@@ -221,6 +222,7 @@ export class PetalContacts {
     this.edgeStamp = new Int32Array(edges.length / 2);
     this.edgeBounds = new Float64Array((edges.length / 2) * 6);
     this.triangleBounds = new Float64Array((triangles.length / 3) * 6);
+    this.remainingProjection = new Float64Array(surface.length);
   }
 
   private adjacent(a: number, b: number) {
@@ -236,6 +238,9 @@ export class PetalContacts {
   }
 
   solve(p: Float64Array, previous: Float64Array) {
+    // Dense, redundant contacts must not sum to an unbounded correction at a
+    // single node. Further separation can converge in the next fixed substep.
+    this.remainingProjection.set(this.thickness);
     let contacts = 0;
     const tri = this.triangles,
       edge = this.edges,
@@ -404,7 +409,15 @@ export class PetalContacts {
       weights[b] * wb * wb +
       weights[c] * wc * wc;
     if (!sum) return 0;
-    const amount = (gap - (distance === 1 ? 0 : distance)) / sum;
+    let amount = (gap - (distance === 1 ? 0 : distance)) / sum;
+    amount = this.limitProjection(node, weights[node], amount);
+    amount = this.limitProjection(a, weights[a] * wa, amount);
+    amount = this.limitProjection(b, weights[b] * wb, amount);
+    amount = this.limitProjection(c, weights[c] * wc, amount);
+    this.remainingProjection[node] -= amount * weights[node];
+    this.remainingProjection[a] -= amount * weights[a] * wa;
+    this.remainingProjection[b] -= amount * weights[b] * wb;
+    this.remainingProjection[c] -= amount * weights[c] * wc;
     for (let component = 0; component < 3; component++) {
       const n = component === 0 ? dx : component === 1 ? dy : dz;
       p[k + component] += amount * weights[node] * n;
@@ -491,7 +504,18 @@ export class PetalContacts {
       weights[c] * wc * wc +
       weights[d] * wd * wd;
     if (!sum) return 0;
-    const amount = (gap - distance) / sum;
+    // A contact arbitrarily close to a pinned endpoint has vanishing effective
+    // mass. Dividing by it can move the remote free endpoint by metres. Bound
+    // each projection to one tissue thickness while retaining weighted motion.
+    let amount = (gap - distance) / sum;
+    amount = this.limitProjection(a, weights[a] * wa, amount);
+    amount = this.limitProjection(b, weights[b] * wb, amount);
+    amount = this.limitProjection(c, weights[c] * wc, amount);
+    amount = this.limitProjection(d, weights[d] * wd, amount);
+    this.remainingProjection[a] -= amount * weights[a] * wa;
+    this.remainingProjection[b] -= amount * weights[b] * wb;
+    this.remainingProjection[c] -= amount * weights[c] * wc;
+    this.remainingProjection[d] -= amount * weights[d] * wd;
     for (let component = 0; component < 3; component++) {
       const n = component === 0 ? nx : component === 1 ? ny : nz;
       p[a * 3 + component] += amount * weights[a] * wa * n;
@@ -500,5 +524,11 @@ export class PetalContacts {
       p[d * 3 + component] -= amount * weights[d] * wd * n;
     }
     return 1;
+  }
+
+  private limitProjection(node: number, weight: number, amount: number) {
+    return weight > 0
+      ? Math.min(amount, Math.max(0, this.remainingProjection[node]) / weight)
+      : amount;
   }
 }

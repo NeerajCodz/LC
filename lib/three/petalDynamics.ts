@@ -7,6 +7,7 @@ export interface CagePatch {
   periodic: boolean;
   thickness: number;
   compliance: number;
+  shapeCompliance: number;
   pinRows: number;
   open: Float64Array;
   folded: Float64Array;
@@ -23,6 +24,7 @@ export function createCagePatch({
   sample,
   periodic = false,
   compliance = 0.00008,
+  shapeCompliance = compliance * 125,
   pinRows = 1,
 }: {
   columns: number;
@@ -31,6 +33,7 @@ export function createCagePatch({
   sample: (u: number, v: number, open: number) => Vec3;
   periodic?: boolean;
   compliance?: number;
+  shapeCompliance?: number;
   pinRows?: number;
 }): CagePatch {
   const stride = periodic ? columns : columns + 1;
@@ -71,6 +74,7 @@ export function createCagePatch({
     periodic,
     thickness,
     compliance,
+    shapeCompliance,
     pinRows,
     open,
     folded,
@@ -310,7 +314,7 @@ export class PetalDynamics {
       // Weak rest-shape constraints preserve botanical curvature, not a flat cloth.
       for (let i = 0; i < this.inverseMass.length; i++) {
         if (!this.inverseMass[i]) continue;
-        const compliance = this.patches[this.surface[i]].compliance * 125;
+        const compliance = this.patches[this.surface[i]].shapeCompliance;
         const gain = (h * h) / (compliance + h * h);
         for (let c = 0; c < 3; c++)
           p[i * 3 + c] += (r[i * 3 + c] - p[i * 3 + c]) * gain;

@@ -19,7 +19,7 @@ export function snapdragonCorolla(
     Math.cos(a) * r * (1 + 0.12 * upper * v ** 6),
     Math.sin(a) * r * 0.67 +
       palate -
-      0.2 * press * lower ** 2 * v ** 4 * open +
+      0.22 * press * lower ** 2 * v ** 2 * open +
       0.015 * upper * v ** 6 * open,
     v * (0.29 + 0.27 * open) + lobes + 0.065 * lower ** 4 * v ** 8 * open,
   ];

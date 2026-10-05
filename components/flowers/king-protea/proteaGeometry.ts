@@ -63,7 +63,14 @@ export const PROTEA_MODEL: SpecimenModel = {
     {
       name: "true central florets",
       cluster: 0,
-      poses: radialFloretPoses(128, 0.49, 0.09, 901),
+      poses: radialFloretPoses(128, 0.49, 0.09, 901).map((p) => ({
+        ...p,
+        foldedPosition: [
+          p.position[0] * 0.3,
+          p.position[1] * 0.4,
+          p.position[2] * 0.3,
+        ] as Vec3,
+      })),
       surfaces: [
         {
           name: "fused perianth base",

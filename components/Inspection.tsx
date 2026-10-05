@@ -24,8 +24,7 @@ export default function Inspection() {
   const container = useRef<HTMLDivElement>(null);
   const [type, setType] = useState<FlowerType>("rose");
   const [wind, setWind] = useState(false);
-  const structure = FLOWER_STRUCTURES[type],
-    center = structure.headCenter ?? [0, 0.25, 0];
+  const structure = FLOWER_STRUCTURES[type];
   const target = flowerHeadTarget(structure, [
       0,
       0.25 - structure.stemLength,

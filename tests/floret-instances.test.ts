@@ -13,6 +13,28 @@ import {
   Matrix4,
 } from "three";
 import type { SpecimenInstanceGroup } from "../lib/three/specimenModel";
+import { PROTEA_MODEL } from "../components/flowers/king-protea/proteaGeometry";
+test("protea florets gather inside the closed bract envelope", () => {
+  const group = PROTEA_MODEL.instances![0],
+    g = specimenInstanceGeometry(group, "low"),
+    material = new MeshStandardMaterial(),
+    mesh = new InstancedMesh(g.surfaces[0], material, group.poses.length),
+    target = new Mesh(g.surfaces[0], material),
+    dummy = new Object3D(),
+    matrix = new Matrix4();
+  updateFloretInstances(mesh, target, group.poses, 0, 0, 0, true, dummy);
+  for (let i = 0; i < group.poses.length; i++) {
+    mesh.getMatrixAt(i, matrix);
+    assert.ok(Math.hypot(matrix.elements[12], matrix.elements[14]) < 0.15);
+  }
+  updateFloretInstances(mesh, target, group.poses, 1, 0, 0, true, dummy);
+  mesh.getMatrixAt(127, matrix);
+  assert.ok(Math.hypot(matrix.elements[12], matrix.elements[14]) > 0.45);
+  mesh.morphTexture?.dispose();
+  mesh.dispose();
+  [...g.surfaces, ...g.organs].forEach((p) => p.dispose());
+  material.dispose();
+});
 
 const prototype: SpecimenInstanceGroup = {
   name: "test florets",

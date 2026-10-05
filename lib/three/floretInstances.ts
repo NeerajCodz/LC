@@ -84,7 +84,12 @@ export function updateFloretInstances(
   for (let i = 0; i < poses.length; i++) {
     const pose = poses[i],
       open = petalOpenness(bloom, pose.delay, pose.phase);
-    dummy.position.set(...pose.position);
+    const folded = pose.foldedPosition ?? pose.position;
+    dummy.position.set(
+      folded[0] + (pose.position[0] - folded[0]) * open,
+      folded[1] + (pose.position[1] - folded[1]) * open,
+      folded[2] + (pose.position[2] - folded[2]) * open,
+    );
     dummy.rotation.set(
       pose.rotation[0] +
         (reducedMotion ? 0 : Math.sin(time * 1.4 + pose.phase) * 0.008 * wind),

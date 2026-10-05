@@ -46,6 +46,7 @@ export interface SpecimenModel {
 }
 export interface SpecimenInstancePose {
   position: Vec3;
+  foldedPosition?: Vec3;
   rotation: Vec3;
   scale: number;
   delay: number;

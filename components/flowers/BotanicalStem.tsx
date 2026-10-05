@@ -166,6 +166,8 @@ export function BotanicalStem({
     anatomy.nodes.forEach((node, i) => {
       const group = groups.current[i];
       if (!group) return;
+      // Custom blades pitch in their own plane before rotating around the shoot.
+      group.rotation.order = anatomy.leafTilt === undefined ? "XYZ" : "YXZ";
       const w = supportedBendWeight(node.t, support);
       group.position.set(
         0.025 * Math.sin(node.t * Math.PI) +

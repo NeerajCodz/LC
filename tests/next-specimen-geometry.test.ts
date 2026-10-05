@@ -8,6 +8,16 @@ import { BEGONIA_LEAF } from "../components/flowers/hardy-begonia/begoniaLeaf";
 import { HYDRANGEA_MODEL } from "../components/flowers/hydrangea/hydrangeaGeometry";
 import { PROTEA_MODEL } from "../components/flowers/king-protea/proteaGeometry";
 verifySpecimen("king protea", PROTEA_MODEL);
+verifySpecimen("protea floret prototype", {
+  clusters: [],
+  surfaces: PROTEA_MODEL.instances![0].surfaces,
+  organs: [],
+});
+verifySpecimen("hydrangea fertile prototype", {
+  clusters: [],
+  surfaces: HYDRANGEA_MODEL.instances![0].surfaces,
+  organs: [],
+});
 test("king protea has layered substantial bracts and true perianth/style florets", () => {
   assert.equal(
     PROTEA_MODEL.surfaces.filter((s) => s.role === "bract").length,

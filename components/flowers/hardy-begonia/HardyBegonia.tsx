@@ -9,6 +9,7 @@ import type { StemProps } from "../Stem";
 import { BegoniaLeaf } from "./BegoniaFoliage";
 const anatomy: StemAnatomy = {
   color: "#b57167",
+  leafTilt: -0.85,
   stipules: true,
   nodes: [
     { t: 0.22, angle: 0.1 },

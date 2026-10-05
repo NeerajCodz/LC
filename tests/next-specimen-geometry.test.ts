@@ -19,6 +19,10 @@ verifySpecimen("hydrangea fertile prototype", {
   organs: [],
 });
 test("king protea has layered substantial bracts and true perianth/style florets", () => {
+  for (const s of PROTEA_MODEL.surfaces) {
+    const tip = s.sample(0.5, 1, 0);
+    assert.ok(Math.hypot(tip[0], tip[2]) < 0.01, "closed bract tips converge");
+  }
   assert.equal(
     PROTEA_MODEL.surfaces.filter((s) => s.role === "bract").length,
     32,
@@ -158,6 +162,11 @@ test("cyclamen has five reflexed twisted lobes per mature flower and individuall
     );
     assert.equal(lobes.length, 5);
     for (const lobe of lobes) {
+      const tip = lobe.sample(0.5, 1, 0);
+      assert.ok(
+        Math.hypot(tip[0], tip[2]) < 0.01,
+        "folded corolla closes its tip",
+      );
       assert.ok(lobe.sample(0.5, 1, 1)[1] > 0.5);
       assert.ok(lobe.sample(0.5, 1, 0)[1] < -0.3);
     }

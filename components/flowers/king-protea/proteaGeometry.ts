@@ -18,7 +18,7 @@ export function proteaBract(index: number) {
     const r =
       root +
       (0.6 - layer * 0.09) * Math.sin(v * Math.PI * 0.56) * open -
-      root * 0.78 * (1 - open) * v;
+      root * 0.98 * (1 - open) * v;
     return [
       Math.sin(a) * r + Math.cos(a) * w,
       -0.1 +
@@ -65,9 +65,10 @@ export const PROTEA_MODEL: SpecimenModel = {
       cluster: 0,
       poses: radialFloretPoses(128, 0.49, 0.09, 901).map((p) => ({
         ...p,
+        position: [p.position[0], p.position[1] + 0.3, p.position[2]],
         foldedPosition: [
           p.position[0] * 0.3,
-          p.position[1] * 0.4,
+          0.09 + p.position[1] * 0.4,
           p.position[2] * 0.3,
         ] as Vec3,
       })),

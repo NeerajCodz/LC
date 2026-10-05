@@ -9,13 +9,32 @@ import type { StemProps } from "../Stem";
 import { CyclamenLeaf } from "./CyclamenFoliage";
 const anatomy: StemAnatomy = {
   axis: false,
+  leafTilt: -1.3,
   color: "#81675b",
   nodes: Array.from({ length: 6 }, (_, i) => ({
     t: 0.11 + (i % 2) * 0.045,
     angle: i * 2.399,
     scale: 0.86 + (i % 3) * 0.08,
+    offset: [-Math.sin(i * 2.399) * 0.13, 0, -Math.cos(i * 2.399) * 0.13],
   })),
-  extras: CYCLAMEN_MODEL.organs.filter((o) => o.name === "curved flower stalk"),
+  extras: [
+    ...CYCLAMEN_MODEL.organs.filter((o) => o.name === "curved flower stalk"),
+    ...Array.from({ length: 6 }, (_, i) => ({
+      points: [
+        [0, -1.8, 0],
+        [-Math.sin(i * 2.399) * 0.07, -1.7, -Math.cos(i * 2.399) * 0.07],
+        [
+          -Math.sin(i * 2.399) * 0.13 +
+            0.025 * Math.sin((0.11 + (i % 2) * 0.045) * Math.PI),
+          -1.8 + 1.8 * (0.11 + (i % 2) * 0.045),
+          -Math.cos(i * 2.399) * 0.13,
+        ],
+      ] as import("@/lib/flowers/types").Vec3[],
+      radius: 0.012,
+      endRadius: 0.009,
+      color: "#936f72",
+    })),
+  ],
 };
 const model = {
   ...CYCLAMEN_MODEL,
@@ -53,4 +72,3 @@ export function Cyclamen(props: Omit<FlowerProps, "type">) {
     />
   );
 }
-

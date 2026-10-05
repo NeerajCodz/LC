@@ -21,6 +21,7 @@ export const kingProteaStructure: FlowerStructure = {
   ...BASE_STRUCTURE,
   layers: [],
   headRadius: 1.18,
+  previewScale: 1.2,
   headCenter: [0, 0.42, 0],
   headTilt: 0.17,
   stemLength: 2.5,

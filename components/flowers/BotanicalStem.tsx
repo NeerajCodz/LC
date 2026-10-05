@@ -11,8 +11,9 @@ import { createPetalGeometry, PETAL } from "@/lib/three/geometry";
 
 export interface StemAnatomy {
   axis?: boolean;
+  leafTilt?: number;
   color: string;
-  nodes: { t: number; angle: number; scale?: number }[];
+  nodes: { t: number; angle: number; scale?: number; offset?: Vec3 }[];
   swollen?: boolean;
   winged?: boolean;
   stipules?: boolean;
@@ -167,12 +168,17 @@ export function BotanicalStem({
       if (!group) return;
       const w = supportedBendWeight(node.t, support);
       group.position.set(
-        0.025 * Math.sin(node.t * Math.PI) + motion.current.x * w,
-        -length + length * node.t * g - motion.current.drop * w,
-        motion.current.z * w,
+        0.025 * Math.sin(node.t * Math.PI) +
+          (node.offset?.[0] ?? 0) * g +
+          motion.current.x * w,
+        -length +
+          (length * node.t + (node.offset?.[1] ?? 0)) * g -
+          motion.current.drop * w,
+        (node.offset?.[2] ?? 0) * g + motion.current.z * w,
       );
       group.rotation.set(
-        0.9 + Math.sin(time.current * 1.3 + i) * 0.035 * wind,
+        (anatomy.leafTilt ?? 0.9) +
+          Math.sin(time.current * 1.3 + i) * 0.035 * wind,
         node.angle,
         0.1,
       );

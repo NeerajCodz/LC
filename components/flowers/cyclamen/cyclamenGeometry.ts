@@ -8,9 +8,13 @@ export function cyclamenLobe(index: number, bud = false) {
       w =
         (u * 2 - 1) *
         (0.006 + 0.14 * Math.sin(Math.PI * v) ** 0.8) *
-        (0.22 + 0.78 * open);
+        (0.45 + 0.55 * open);
     const twist = open * 0.95 * v,
-      r = 0.065 + 0.3 * open * Math.sin(v * Math.PI * 0.8) + 0.02 * v;
+      r =
+        0.052 +
+        0.3 * open * Math.sin(v * Math.PI * 0.8) +
+        0.02 * v -
+        0.069 * (1 - open) * v ** 3;
     const y = -0.22 + v * (-0.34 + 1.2 * open) + w * Math.sin(twist);
     const across = w * Math.cos(twist);
     return [

@@ -1,7 +1,13 @@
 import type { Quality } from "../flowers/types";
 import { seededRandom, GOLDEN_ANGLE } from "./noise";
 import { createParametricShell } from "./parametricShell";
-import { Float32BufferAttribute } from "three";
+import {
+  Float32BufferAttribute,
+  type InstancedMesh,
+  type Mesh,
+  type Object3D,
+} from "three";
+import { petalOpenness } from "./easing";
 import {
   specimenOrganGeometry,
   type SpecimenInstanceGroup,
@@ -62,4 +68,35 @@ export function specimenInstanceGeometry(
     return g;
   });
   return { surfaces, organs };
+}
+
+/** The caller owns scratch objects. Three applies these morphs to normals and shadows. */
+export function updateFloretInstances(
+  mesh: InstancedMesh,
+  target: Mesh,
+  poses: SpecimenInstancePose[],
+  bloom: number,
+  time: number,
+  wind: number,
+  reducedMotion: boolean,
+  dummy: Object3D,
+) {
+  for (let i = 0; i < poses.length; i++) {
+    const pose = poses[i],
+      open = petalOpenness(bloom, pose.delay, pose.phase);
+    dummy.position.set(...pose.position);
+    dummy.rotation.set(
+      pose.rotation[0] +
+        (reducedMotion ? 0 : Math.sin(time * 1.4 + pose.phase) * 0.008 * wind),
+      pose.rotation[1],
+      pose.rotation[2],
+    );
+    dummy.scale.setScalar(pose.scale);
+    dummy.updateMatrix();
+    mesh.setMatrixAt(i, dummy.matrix);
+    target.morphTargetInfluences![0] = 1 - open;
+    mesh.setMorphAt(i, target);
+  }
+  mesh.instanceMatrix.needsUpdate = true;
+  if (mesh.morphTexture) mesh.morphTexture.needsUpdate = true;
 }

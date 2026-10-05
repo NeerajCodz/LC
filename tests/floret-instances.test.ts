@@ -3,7 +3,15 @@ import assert from "node:assert/strict";
 import {
   specimenInstanceGeometry,
   radialFloretPoses,
+  updateFloretInstances,
 } from "../lib/three/floretInstances";
+import {
+  InstancedMesh,
+  Mesh,
+  MeshStandardMaterial,
+  Object3D,
+  Matrix4,
+} from "three";
 import type { SpecimenInstanceGroup } from "../lib/three/specimenModel";
 
 const prototype: SpecimenInstanceGroup = {
@@ -51,6 +59,45 @@ test("dense floret poses preserve the count, bounds and deterministic variation"
       ),
     );
   }
+});
+test("instances initialize transforms and folded normals before drawing, and reverse bloom without replacing resources", () => {
+  const g = specimenInstanceGeometry(prototype, "low").surfaces[0],
+    material = new MeshStandardMaterial();
+  const mesh = new InstancedMesh(g, material, prototype.poses.length),
+    target = new Mesh(g, material),
+    dummy = new Object3D();
+  updateFloretInstances(mesh, target, prototype.poses, 0, 0, 0, true, dummy);
+  const texture = mesh.morphTexture!;
+  assert.ok(texture);
+  assert.equal(texture.image.height, 48);
+  const transform = new Matrix4();
+  mesh.getMatrixAt(10, transform);
+  assert.ok(transform.determinant() > 0.5);
+  for (const bloom of [1, 0.5, 0]) {
+    updateFloretInstances(
+      mesh,
+      target,
+      prototype.poses,
+      bloom,
+      5,
+      1,
+      false,
+      dummy,
+    );
+    assert.equal(mesh.morphTexture, texture);
+    mesh.getMorphAt(10, target);
+    assert.ok(
+      target.morphTargetInfluences![0] >= 0 &&
+        target.morphTargetInfluences![0] <= 1,
+    );
+  }
+  updateFloretInstances(mesh, target, prototype.poses, 0, 5, 1, true, dummy);
+  mesh.getMorphAt(10, target);
+  assert.equal(target.morphTargetInfluences![0], 1);
+  texture.dispose();
+  g.dispose();
+  material.dispose();
+  mesh.dispose();
 });
 test("repeated floret prototypes retain thick sealed walls and matched morph normals at every quality", () => {
   for (const quality of ["low", "medium", "high", "ultra"] as const) {

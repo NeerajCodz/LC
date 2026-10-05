@@ -22,6 +22,7 @@ import type { FlowerType } from "@/lib/flowers/types";
 import { createSpecimenMaterial } from "@/lib/three/specimenMaterials";
 import { joinOrgans } from "@/lib/three/floralOrgans";
 import { useThree } from "@react-three/fiber";
+import { FloretInstances } from "./FloretInstances";
 
 /** Dedicated anatomy shares only rendering and cage transfer, not its shape. */
 export function SpecimenAssembly({
@@ -244,6 +245,21 @@ export function SpecimenAssembly({
             ) : null,
           )}
           <Organs model={model} cluster={k} quality={quality} bloom={bloom} />
+          {model.instances
+            ?.filter((g) => g.cluster === k)
+            .map((g) => (
+              <FloretInstances
+                key={g.name}
+                group={g}
+                type={type}
+                bloom={bloom}
+                time={time}
+                wind={wind}
+                quality={quality}
+                color={color}
+                reducedMotion={reducedMotion}
+              />
+            ))}
           <Organs
             model={model}
             cluster={k}

@@ -4,6 +4,18 @@ import { verifySpecimen } from "./specimen-checks";
 import { CYCLAMEN_MODEL } from "../components/flowers/cyclamen/cyclamenGeometry";
 import { CYCLAMEN_LEAF } from "../components/flowers/cyclamen/cyclamenLeaf";
 import { BEGONIA_MODEL } from "../components/flowers/hardy-begonia/begoniaGeometry";
+import { BEGONIA_LEAF } from "../components/flowers/hardy-begonia/begoniaLeaf";
+verifySpecimen("begonia asymmetric leaf", {
+  clusters: [],
+  surfaces: [BEGONIA_LEAF],
+  organs: [],
+});
+test("begonia leaf remains one asymmetric blade", () => {
+  assert.ok(
+    Math.abs(BEGONIA_LEAF.sample(1, 0.4, 1)[0]) >
+      Math.abs(BEGONIA_LEAF.sample(0, 0.4, 1)[0]) * 1.5,
+  );
+});
 verifySpecimen("hardy begonia", BEGONIA_MODEL);
 test("Begonia grandis preserves sex-specific tepals, stamens and unequal ovary wings", () => {
   for (const k of [1, 2]) {
@@ -21,6 +33,12 @@ test("Begonia grandis preserves sex-specific tepals, stamens and unequal ovary w
     );
   }
   for (const k of [3, 4]) {
+    assert.equal(
+      BEGONIA_MODEL.organs.filter(
+        (o) => o.cluster === k && o.name === "U-shaped stigma",
+      ).length,
+      6,
+    );
     assert.equal(
       BEGONIA_MODEL.surfaces.filter(
         (s) => s.cluster === k && s.name === "female tepal",

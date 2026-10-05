@@ -35,8 +35,11 @@ import { cyclamenStructure } from "../../components/flowers/cyclamen/Cyclamen";
 
 import { snapdragonStructure } from "../../components/flowers/snapdragon/Snapdragon";
 
+import { hardyBegoniaStructure } from "../../components/flowers/hardy-begonia/HardyBegonia";
+
 /** Authored anatomy shared by planting layout and geometry verification. */
 export const FLOWER_STRUCTURES: Record<FlowerType, FlowerStructure> = {
+  "hardy-begonia": hardyBegoniaStructure,
   snapdragon: snapdragonStructure,
   cyclamen: cyclamenStructure,
   bougainvillea: bougainvilleaStructure,

@@ -33,7 +33,9 @@ import { SweetPea } from "./sweet-pea/SweetPea";
 import { Bougainvillea } from "./bougainvillea/Bougainvillea";
 import { Cyclamen } from "./cyclamen/Cyclamen";
 import { Snapdragon } from "./snapdragon/Snapdragon";
+import { HardyBegonia } from "./hardy-begonia/HardyBegonia";
 const SPECIES = {
+  "hardy-begonia": HardyBegonia,
   snapdragon: Snapdragon,
   cyclamen: Cyclamen,
   bougainvillea: Bougainvillea,

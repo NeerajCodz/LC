@@ -21,6 +21,16 @@ export interface FoliageProfile {
 
 /** Cultivar-independent leaf traits; lotus has its own peltate blade generator. */
 export const FOLIAGE: Record<FlowerType, FoliageProfile> = {
+  "hardy-begonia": {
+    length: 1.16,
+    width: 0.62,
+    color: "#426b44",
+    veinColor: "#7b3546",
+    teeth: 19,
+    depth: 0.02,
+    thickness: 0.011,
+    roughness: 0.71,
+  },
   snapdragon: {
     length: 0.7,
     width: 0.12,

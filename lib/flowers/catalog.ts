@@ -337,6 +337,16 @@ FLOWERS.push({
   type: "snapdragon",
   color: "#dd737e",
 });
+FLOWERS.push({
+  name: "Hardy Begonia",
+  latin: "Begonia grandis",
+  family: "Begoniaceae",
+  description: "Unequal leaves.\nTwo kinds of bloom.",
+  detail:
+    "Forked pendant cymes carry four-tepalled male flowers with golden stamens and three-tepalled female flowers with unequal ovary wings. Asymmetric leaves reveal reddish undersides and veins.",
+  type: "hardy-begonia",
+  color: "#e8a2b4",
+});
 FLOWERS.sort(
   (a, b) => FLOWER_TYPES.indexOf(a.type) - FLOWER_TYPES.indexOf(b.type),
 );

@@ -157,7 +157,7 @@ export const BEGONIA_MODEL: SpecimenModel = {
             color: "#d7b548",
           };
         }),
-      ),
+      ).flat(),
     ),
   ],
 };

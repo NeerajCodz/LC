@@ -30,6 +30,15 @@ const palette = (
 });
 
 export const PETAL_PALETTES: Record<FlowerType, PetalPalette> = {
+  "hardy-begonia": palette(
+    "#bc6381",
+    "#e8a2b4",
+    "#f6c5ce",
+    "#b56c88",
+    0.27,
+    0.88,
+    0.05,
+  ),
   snapdragon: palette(
     "#9c364e",
     "#dd737e",

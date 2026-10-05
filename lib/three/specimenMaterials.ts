@@ -23,6 +23,11 @@ export function createSpecimenMaterial(
     green || cream || color ? undefined : PETAL_PALETTES[type],
   );
   const previous = m.onBeforeCompile;
+  if (type === "hardy-begonia" && !green) {
+    m.roughness = 0.59;
+    m.sheen = 0.23;
+    m.clearcoat = 0.025;
+  }
   if (type === "snapdragon" && !green) {
     m.roughness = 0.64;
     m.sheen = 0.18;
@@ -45,6 +50,10 @@ export function createSpecimenMaterial(
   }
   m.onBeforeCompile = (s, r) => {
     previous.call(m, s, r);
+    if (type === "hardy-begonia" && !green)
+      s.fragmentShader = s.fragmentShader
+        .replace("scatter*.11", "scatter*.075")
+        .replace("ridge * .000085", "ridge * .000055");
     if (type === "snapdragon" && !green)
       s.fragmentShader = s.fragmentShader.replace(
         "#include <roughnessmap_fragment>",

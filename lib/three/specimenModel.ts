@@ -30,6 +30,8 @@ export interface SpecimenOrgan {
   cluster: number;
   name: string;
   points: Vec3[];
+  foldedPoints?: Vec3[];
+  foldedRadius?: number;
   radius: number;
   endRadius?: number;
   color: string;
@@ -75,12 +77,47 @@ export function specimenCages(model: SpecimenModel, constrained: boolean) {
   return { indices, patches };
 }
 export function specimenOrganGeometry(organ: SpecimenOrgan, quality: Quality) {
-  return createOrganicTube({
+  const options = {
     ...organ,
     segments: quality === "low" ? 10 : 24,
     sides: quality === "low" ? 7 : 12,
     grain: 0.025,
-  });
+  };
+  const geometry = createOrganicTube(options);
+  if (organ.foldedPoints) {
+    const radius = organ.foldedRadius ?? organ.radius;
+    const folded = createOrganicTube({
+      ...options,
+      points: organ.foldedPoints,
+      radius,
+      endRadius:
+        ((organ.endRadius ?? organ.radius * 0.6) * radius) / organ.radius,
+    });
+    geometry.morphAttributes.position = [folded.getAttribute("position")];
+    geometry.morphAttributes.normal = [folded.getAttribute("normal")];
+    folded.dispose();
+  }
+  return geometry;
+}
+
+/** Included tissue follows its enclosing corolla/keel, not an earlier calyx. */
+export function specimenOrganCarrier(model: SpecimenModel, cluster: number) {
+  for (const role of [
+    "tube",
+    "keel",
+    "petal",
+    "banner",
+    "wing",
+    "bract",
+    "calyx",
+  ] as const) {
+    const index = model.surfaces.findIndex(
+      (s) => s.cluster === cluster && s.role === role,
+    );
+    if (index >= 0)
+      return { delay: model.surfaces[index].delay ?? 0, phase: index * 0.31 };
+  }
+  return { delay: 0, phase: 0 };
 }
 export const SINGLE_CLUSTER: SpecimenCluster = {
   position: [0, 0, 0],

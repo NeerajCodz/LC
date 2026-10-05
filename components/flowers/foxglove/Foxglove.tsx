@@ -5,7 +5,7 @@ import { SpecimenAssembly } from "../SpecimenAssembly";
 import { BotanicalStem, type StemAnatomy } from "../BotanicalStem";
 import type { StemProps } from "../Stem";
 import type { FlowerOrgansProps } from "../FloralParts";
-import { FOXGLOVE_MODEL, foxgloveBell } from "./foxgloveGeometry";
+import { FOXGLOVE_MODEL } from "./foxgloveGeometry";
 export const foxgloveStructure: FlowerStructure = {
   ...BASE_STRUCTURE,
   layers: [],
@@ -33,46 +33,11 @@ const anatomy: StemAnatomy = {
     { t: 0.8, angle: 1.3, scale: 0.22 },
   ],
 };
-const model = {
-  ...FOXGLOVE_MODEL,
-  organs: [
-    ...FOXGLOVE_MODEL.organs,
-    ...Array.from({ length: 12 }, (_, cluster) =>
-      Array.from({ length: 16 }, (_, i) => {
-        const u = 0.45 + (i % 8) * 0.07,
-          v = 0.62 + Math.floor(i / 8) * 0.19,
-          p = foxgloveBell(u, v, 1),
-          a = u * Math.PI * 2;
-        return {
-          name: "interior corolla hair",
-          cluster: cluster + 1,
-          fine: true,
-          points: [
-            p,
-            [
-              p[0] - Math.cos(a) * 0.012,
-              p[1] - Math.sin(a) * 0.012,
-              p[2] + 0.012,
-            ],
-            [
-              p[0] - Math.cos(a) * 0.024,
-              p[1] - Math.sin(a) * 0.024,
-              p[2] + 0.02,
-            ],
-          ] as [number, number, number][],
-          radius: 0.0015,
-          endRadius: 0.0005,
-          color: "#e8d5d6",
-        };
-      }),
-    ).flat(),
-  ],
-};
 function FoxgloveStem(props: StemProps) {
   return <BotanicalStem {...props} anatomy={anatomy} />;
 }
 function FoxgloveOrgans(props: FlowerOrgansProps) {
-  return <SpecimenAssembly {...props} type="foxglove" model={model} />;
+  return <SpecimenAssembly {...props} type="foxglove" model={FOXGLOVE_MODEL} />;
 }
 export function Foxglove(props: Omit<FlowerProps, "type">) {
   return (

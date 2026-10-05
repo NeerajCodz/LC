@@ -11,6 +11,7 @@ import { SurfaceClock } from "@/lib/three/surfaceClock";
 import {
   specimenGeometry,
   specimenOrganGeometry,
+  specimenOrganCarrier,
   type SpecimenModel,
   type SpecimenSurface,
   specimenCages,
@@ -331,27 +332,39 @@ function Organs({
           (!o.fine || quality === "high" || quality === "ultra" || i % 3 === 0),
       )
       .map((o) => specimenOrganGeometry(o, quality));
+    if (parts.some((part) => part.morphAttributes.position?.length))
+      for (const part of parts)
+        if (!part.morphAttributes.position?.length) {
+          part.morphAttributes.position = [
+            part.getAttribute("position").clone(),
+          ];
+          part.morphAttributes.normal = [part.getAttribute("normal").clone()];
+        }
     return parts.length ? joinOrgans(parts) : null;
   }, [model, cluster, quality, included]);
   const mesh = useRef<Mesh>(null);
-  const delay = useMemo(
-    () =>
-      Math.min(
-        ...model.surfaces
-          .filter((s) => s.cluster === cluster)
-          .map((s) => s.delay ?? 0),
-      ),
+  const carrier = useMemo(
+    () => specimenOrganCarrier(model, cluster),
     [model, cluster],
   );
   useActiveFrame(() => {
     if (!mesh.current || !included) return;
-    const open = petalOpenness(bloom.current, delay, 0);
-    mesh.current.scale.setScalar(0.5 + 0.5 * open);
+    const open = petalOpenness(bloom.current, carrier.delay, carrier.phase);
+    if (mesh.current.morphTargetInfluences) {
+      mesh.current.morphTargetInfluences[0] = 1 - open;
+      mesh.current.scale.setScalar(1);
+    } else mesh.current.scale.setScalar(0.5 + 0.5 * open);
   });
   useEffect(() => () => g?.dispose(), [g]);
   if (!g) return null;
   return (
-    <mesh ref={mesh} geometry={g} castShadow receiveShadow>
+    <mesh
+      ref={mesh}
+      geometry={g}
+      onUpdate={(m) => m.updateMorphTargets()}
+      castShadow
+      receiveShadow
+    >
       <meshStandardMaterial vertexColors roughness={0.68} />
     </mesh>
   );

@@ -3,6 +3,8 @@ import assert from "node:assert/strict";
 import {
   specimenGeometry,
   specimenCages,
+  specimenOrganGeometry,
+  specimenOrganCarrier,
   type SpecimenModel,
 } from "../lib/three/specimenModel";
 import { PetalDynamics } from "../lib/three/petalDynamics";
@@ -20,6 +22,46 @@ import {
 } from "../components/flowers/foxglove/foxgloveGeometry";
 import { SWEET_PEA_MODEL } from "../components/flowers/sweet-pea/sweetPeaGeometry";
 import { BOUGAINVILLEA_MODEL } from "../components/flowers/bougainvillea/bougainvilleaGeometry";
+
+test("foxglove internal organs morph inside closed corollas with matched normals", () => {
+  for (let cluster = 1; cluster <= 12; cluster++) {
+    const bell = FOXGLOVE_MODEL.surfaces[cluster - 1];
+    assert.deepEqual(
+      specimenOrganCarrier(FOXGLOVE_MODEL, cluster),
+      {
+        delay: bell.delay,
+        phase: (cluster - 1) * 0.31,
+      },
+      "included organs follow their bell's bottom-to-top bloom stage",
+    );
+  }
+  const included = FOXGLOVE_MODEL.organs.filter(
+    (o) => o.cluster === 1 && /stamen|style|hair/.test(o.name),
+  );
+  assert.equal(included.length, 21);
+  for (const organ of included) {
+    assert.ok(organ.foldedPoints, organ.name);
+    const g = specimenOrganGeometry(organ, "low"),
+      folded = g.morphAttributes.position![0],
+      normals = g.morphAttributes.normal![0];
+    assert.equal(folded.count, g.getAttribute("position").count);
+    for (let i = 0; i < folded.count; i++) {
+      const v = Math.max(0, Math.min(1, folded.getZ(i) / 0.42));
+      const r = Math.hypot(
+        folded.getX(i),
+        (folded.getY(i) + 0.12 * v * v) / 0.95,
+      );
+      const wall = foxgloveBell(0, v, 0)[0];
+      assert.ok(r < wall - 0.002, `${organ.name} stays inside the bud wall`);
+      assert.ok(
+        Math.abs(
+          Math.hypot(normals.getX(i), normals.getY(i), normals.getZ(i)) - 1,
+        ) < 0.002,
+      );
+    }
+    g.dispose();
+  }
+});
 
 export function verifySpecimen(name: string, model: SpecimenModel) {
   test(`${name}: deterministic sealed surfaces, positive thickness and stable bloom normals`, () => {

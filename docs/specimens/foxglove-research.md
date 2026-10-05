@@ -1,5 +1,11 @@
 # Foxglove — Digitalis purpurea
 
+Included stamens, style and inner-wall hairs have matching folded positions and
+normals. Their bloom carrier is the corresponding bell, including its
+bottom-to-top delay and phase; the earlier calyx does not open them. Folded
+organs contract within the bent bud axis, and pubescence remains attached to
+the inner corolla wall. These dimensions and transformations are authored.
+
 Sources reviewed October 4, 2026. Model a native-type purple, one-sided raceme;
 avoid peloric terminal flowers and all-around hybrid arrangements.
 

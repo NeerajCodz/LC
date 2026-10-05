@@ -1,6 +1,13 @@
 import type { Vec3 } from "@/lib/flowers/types";
 import { SINGLE_CLUSTER, type SpecimenModel } from "@/lib/three/specimenModel";
 export const FOXGLOVE_BELLS = 12;
+function foldedOrganPoints(points: Vec3[]): Vec3[] {
+  return points.map(([x, y, z]) => {
+    const v = z / 0.73,
+      center = -0.12 * v * v;
+    return [x * 0.2, center + (y - center) * 0.2, (z * 0.42) / 0.73];
+  });
+}
 export function foxgloveBell(u: number, v: number, open: number): Vec3 {
   const a = u * Math.PI * 2,
     lower = Math.max(0, -Math.sin(a));
@@ -108,14 +115,17 @@ export const FOXGLOVE_MODEL: SpecimenModel = {
       Array.from({ length: 4 }, (_, j) => {
         const a = 0.4 + j * 0.58,
           len = j % 2 ? 0.51 : 0.43;
+        const points: Vec3[] = [
+          [Math.cos(a) * 0.047, Math.sin(a) * 0.047, 0.1],
+          [Math.cos(a) * 0.1, Math.sin(a) * 0.12, 0.31],
+          [Math.cos(a) * 0.11, Math.sin(a) * 0.12, len],
+        ];
         return {
           name: "included didynamous stamen",
           cluster: i + 1,
-          points: [
-            [Math.cos(a) * 0.047, Math.sin(a) * 0.047, 0.1],
-            [Math.cos(a) * 0.1, Math.sin(a) * 0.12, 0.31],
-            [Math.cos(a) * 0.11, Math.sin(a) * 0.12, len],
-          ] as Vec3[],
+          points,
+          foldedPoints: foldedOrganPoints(points),
+          foldedRadius: 0.003,
           radius: 0.006,
           endRadius: 0.011,
           color: "#d6bc98",
@@ -130,9 +140,41 @@ export const FOXGLOVE_MODEL: SpecimenModel = {
         [0, 0.1, 0.32],
         [0, 0.09, 0.49],
       ] as Vec3[],
+      foldedPoints: foldedOrganPoints([
+        [0, 0, 0.07],
+        [0, 0.1, 0.32],
+        [0, 0.09, 0.49],
+      ]),
+      foldedRadius: 0.003,
       radius: 0.006,
       endRadius: 0.01,
       color: "#d7c9b5",
     })),
+    ...FOXGLOVE_POSITIONS.flatMap((_, cluster) =>
+      Array.from({ length: 16 }, (_, i) => {
+        const u = 0.45 + (i % 8) * 0.07,
+          v = 0.62 + Math.floor(i / 8) * 0.19,
+          a = u * Math.PI * 2;
+        const points = (open: number): Vec3[] => {
+          const p = foxgloveBell(u, v, open);
+          return [0.007, 0.019, 0.031].map((inset, j) => [
+            p[0] - Math.cos(a) * inset,
+            p[1] - Math.sin(a) * inset * 0.95,
+            p[2] + j * 0.009 * (0.6 + 0.4 * open),
+          ]);
+        };
+        return {
+          name: "interior corolla hair",
+          cluster: cluster + 1,
+          fine: true,
+          points: points(1),
+          foldedPoints: points(0),
+          radius: 0.0015,
+          foldedRadius: 0.0008,
+          endRadius: 0.0005,
+          color: "#e8d5d6",
+        };
+      }),
+    ),
   ],
 };

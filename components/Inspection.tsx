@@ -8,6 +8,7 @@ import { Flower } from "./flowers/Flower";
 import { Lighting } from "./scene/Lighting";
 import { SafeCanvas } from "./scene/SafeCanvas";
 import { FLOWER_STRUCTURES } from "@/lib/flowers/structures";
+import { flowerHeadTarget } from "@/lib/flowers/framing";
 
 const VIEWS = [
   { name: "Front · full", angle: 0, bloom: 1, macro: false },
@@ -25,10 +26,12 @@ export default function Inspection() {
   const [wind, setWind] = useState(false);
   const structure = FLOWER_STRUCTURES[type],
     center = structure.headCenter ?? [0, 0.25, 0];
-  const targetY =
-    0.25 +
-    center[1] * Math.cos(structure.headTilt) -
-    center[2] * Math.sin(structure.headTilt);
+  const target = flowerHeadTarget(structure, [
+      0,
+      0.25 - structure.stemLength,
+      0,
+    ]),
+    targetY = target[1];
   return (
     <div ref={container} style={{ padding: 20 }}>
       <div
@@ -77,16 +80,16 @@ export default function Inspection() {
               <PerspectiveCamera
                 makeDefault
                 position={[
-                  v.macro ? center[0] : 0,
+                  v.macro ? target[0] : 0,
                   v.macro ? targetY + 0.8 : 0.6,
                   (v.macro ? 3 : 5.5) * (structure.previewScale ?? 1),
                 ]}
                 fov={36}
                 onUpdate={(c) =>
                   c.lookAt(
-                    v.macro ? center[0] : 0,
+                    v.macro ? target[0] : 0,
                     v.macro ? targetY : -0.45,
-                    v.macro ? center[2] : 0,
+                    v.macro ? target[2] : 0,
                   )
                 }
               />

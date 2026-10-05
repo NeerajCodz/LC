@@ -5,6 +5,7 @@ import { ContactShadows } from "@react-three/drei";
 import { ACESFilmicToneMapping, PCFShadowMap } from "three";
 import type { FlowerType, Vec3 } from "@/lib/flowers/types";
 import { FLOWER_STRUCTURES } from "@/lib/flowers/structures";
+import { flowerHeadTarget } from "@/lib/flowers/framing";
 import { useExperienceSettings } from "@/hooks/useExperienceSettings";
 import { Lighting } from "../scene/Lighting";
 import { Environment } from "../scene/Environment";
@@ -53,13 +54,7 @@ export default function FlowerScene({
     const structure = FLOWER_STRUCTURES[type],
       center = structure.headCenter;
     if (!center) return undefined;
-    const c = Math.cos(structure.headTilt),
-      s = Math.sin(structure.headTilt);
-    return [
-      center[0],
-      -1.78 + structure.stemLength + center[1] * c - center[2] * s,
-      center[1] * s + center[2] * c,
-    ];
+    return flowerHeadTarget(structure, [0, -1.78, 0]);
   }, [type]);
   return (
     <SafeCanvas

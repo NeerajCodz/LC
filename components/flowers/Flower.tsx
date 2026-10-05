@@ -31,7 +31,9 @@ import { Plumeria } from "./plumeria/Plumeria";
 import { Foxglove } from "./foxglove/Foxglove";
 import { SweetPea } from "./sweet-pea/SweetPea";
 import { Bougainvillea } from "./bougainvillea/Bougainvillea";
+import { Cyclamen } from "./cyclamen/Cyclamen";
 const SPECIES = {
+  cyclamen: Cyclamen,
   bougainvillea: Bougainvillea,
   "sweet-pea": SweetPea,
   foxglove: Foxglove,

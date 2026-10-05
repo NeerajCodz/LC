@@ -317,6 +317,16 @@ FLOWERS.push({
   detail:
     "Three-bract cymes surround small cream-mouthed floral tubes on a thorny woody shoot.",
 });
+FLOWERS.push({
+  name: "Cyclamen",
+  latin: "Cyclamen persicum",
+  family: "Primulaceae",
+  description: "A pale twist.\nSilver leaves beneath.",
+  detail:
+    "Five swept-back corolla lobes surround a darker nodding mouth. Separate curved stalks rise from a basal crown above fleshy, silver-zoned leaves.",
+  type: "cyclamen",
+  color: "#f1d9df",
+});
 FLOWERS.sort(
   (a, b) => FLOWER_TYPES.indexOf(a.type) - FLOWER_TYPES.indexOf(b.type),
 );

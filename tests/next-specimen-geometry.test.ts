@@ -2,6 +2,12 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { verifySpecimen } from "./specimen-checks";
 import { CYCLAMEN_MODEL } from "../components/flowers/cyclamen/cyclamenGeometry";
+import { CYCLAMEN_LEAF } from "../components/flowers/cyclamen/cyclamenLeaf";
+verifySpecimen("cyclamen fleshy leaf", {
+  clusters: [],
+  surfaces: [CYCLAMEN_LEAF],
+  organs: [],
+});
 verifySpecimen("cyclamen", CYCLAMEN_MODEL);
 test("cyclamen has five reflexed twisted lobes per mature flower and individually curved basal stalks", () => {
   for (let k = 1; k <= 3; k++) {

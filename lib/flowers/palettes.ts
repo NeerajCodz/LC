@@ -30,6 +30,15 @@ const palette = (
 });
 
 export const PETAL_PALETTES: Record<FlowerType, PetalPalette> = {
+  cyclamen: palette(
+    "#9e2359",
+    "#f1d9df",
+    "#f9eeea",
+    "#c76b94",
+    0.34,
+    0.87,
+    0.07,
+  ),
   bougainvillea: palette(
     "#8d285f",
     "#d74499",

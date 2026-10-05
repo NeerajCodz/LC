@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, type ComponentType } from "react";
 import { Group } from "three";
 import { createOrganicTube } from "@/lib/three/organicTube";
 import { joinOrgans } from "@/lib/three/floralOrgans";
@@ -10,6 +10,7 @@ import type { StemProps } from "./Stem";
 import { createPetalGeometry, PETAL } from "@/lib/three/geometry";
 
 export interface StemAnatomy {
+  axis?: boolean;
   color: string;
   nodes: { t: number; angle: number; scale?: number }[];
   swollen?: boolean;
@@ -24,6 +25,7 @@ export interface StemAnatomy {
 }
 /** Sealed shoot and all attachments follow one anchored, clamped bend curve. */
 export function BotanicalStem({
+  LeafComponent = LeafSprig,
   anatomy,
   type,
   structure,
@@ -33,17 +35,30 @@ export function BotanicalStem({
   wind,
   motion,
   leaves,
-}: StemProps & { anatomy: StemAnatomy }) {
+}: StemProps & {
+  anatomy: StemAnatomy;
+  LeafComponent?: ComponentType<{
+    type: StemProps["type"];
+    quality: StemProps["quality"];
+  }>;
+}) {
   const groups = useRef<(Group | null)[]>([]),
     length = structure.stemLength,
     support = structure.supportHeight ?? 0;
   const geometry = useMemo(() => {
     const g = createOrganicTube({
-      points: [
-        [0, -length, 0],
-        [0.025, -length * 0.55, 0],
-        [0, 0, 0],
-      ],
+      points:
+        anatomy.axis === false
+          ? [
+              [0, -length, 0],
+              [0, -length + 0.05, 0],
+              [0, -length + 0.1, 0],
+            ]
+          : [
+              [0, -length, 0],
+              [0.025, -length * 0.55, 0],
+              [0, 0, 0],
+            ],
       radius: structure.stemRadius * 1.2,
       endRadius: structure.stemRadius,
       color: anatomy.color,
@@ -185,7 +200,7 @@ export function BotanicalStem({
             }}
             key={i}
           >
-            <LeafSprig type={type} quality={quality} />
+            <LeafComponent type={type} quality={quality} />
             {stipule && (
               <mesh
                 geometry={stipule}

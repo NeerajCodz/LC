@@ -21,6 +21,15 @@ export interface FoliageProfile {
 
 /** Cultivar-independent leaf traits; lotus has its own peltate blade generator. */
 export const FOLIAGE: Record<FlowerType, FoliageProfile> = {
+  cyclamen: {
+    length: 0.93,
+    width: 0.48,
+    color: "#3e684b",
+    basal: true,
+    basalLobes: true,
+    thickness: 0.016,
+    roughness: 0.56,
+  },
   bougainvillea: {
     length: 0.69,
     width: 0.39,

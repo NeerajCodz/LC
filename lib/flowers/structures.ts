@@ -31,8 +31,11 @@ import type { FlowerStructure, FlowerType } from "./types";
 import { passionflowerStructure } from "../../components/flowers/passionflower/Passionflower";
 import { morningGloryStructure } from "../../components/flowers/morning-glory/MorningGlory";
 
+import { cyclamenStructure } from "../../components/flowers/cyclamen/Cyclamen";
+
 /** Authored anatomy shared by planting layout and geometry verification. */
 export const FLOWER_STRUCTURES: Record<FlowerType, FlowerStructure> = {
+  cyclamen: cyclamenStructure,
   bougainvillea: bougainvilleaStructure,
   "sweet-pea": sweetPeaStructure,
   foxglove: foxgloveStructure,

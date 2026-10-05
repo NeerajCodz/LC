@@ -23,6 +23,10 @@ export function createSpecimenMaterial(
     green || cream || color ? undefined : PETAL_PALETTES[type],
   );
   const previous = m.onBeforeCompile;
+  if (type === "cyclamen" && !green) {
+    m.roughness = 0.57;
+    m.sheen = 0.2;
+  }
   if (type === "bougainvillea" && role === "bract") {
     m.roughness = 0.79;
     m.clearcoat = 0;
@@ -37,6 +41,10 @@ export function createSpecimenMaterial(
   }
   m.onBeforeCompile = (s, r) => {
     previous.call(m, s, r);
+    if (type === "cyclamen" && !green)
+      s.fragmentShader = s.fragmentShader
+        .replace("scatter*.11", "scatter*.065")
+        .replace("ridge * .000085", "ridge * .00007");
     if (type === "bougainvillea" && role === "bract")
       s.fragmentShader = s.fragmentShader
         .replace(

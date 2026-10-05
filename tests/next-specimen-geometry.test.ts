@@ -5,6 +5,30 @@ import { CYCLAMEN_MODEL } from "../components/flowers/cyclamen/cyclamenGeometry"
 import { CYCLAMEN_LEAF } from "../components/flowers/cyclamen/cyclamenLeaf";
 import { BEGONIA_MODEL } from "../components/flowers/hardy-begonia/begoniaGeometry";
 import { BEGONIA_LEAF } from "../components/flowers/hardy-begonia/begoniaLeaf";
+import { HYDRANGEA_MODEL } from "../components/flowers/hydrangea/hydrangeaGeometry";
+verifySpecimen("hydrangea", HYDRANGEA_MODEL);
+test("lacecap hydrangea keeps marginal four-sepalled flowers distinct from the fertile center", () => {
+  assert.equal(
+    HYDRANGEA_MODEL.surfaces.filter((s) => s.name === "showy petaloid sepal")
+      .length,
+    40,
+  );
+  const fertile = HYDRANGEA_MODEL.instances![0];
+  assert.equal(fertile.poses.length, 48);
+  assert.equal(fertile.surfaces.filter((s) => s.role === "petal").length, 5);
+  assert.equal(
+    fertile.organs.filter((o) => o.name === "fertile stamen").length,
+    10,
+  );
+  assert.equal(
+    fertile.organs.filter((o) => o.name === "fertile style").length,
+    3,
+  );
+  assert.equal(
+    HYDRANGEA_MODEL.organs.filter((o) => o.name === "fertile pedicel").length,
+    48,
+  );
+});
 verifySpecimen("begonia asymmetric leaf", {
   clusters: [],
   surfaces: [BEGONIA_LEAF],

@@ -10,7 +10,7 @@ import { useWebGL2Support, WebGLUnavailable } from "./scene/WebGLSupport";
 
 type Angle = "front" | "side" | "45°" | "macro";
 
-const PAGE_SIZE = 20;
+const PAGE_SIZE = 15;
 export default function Gallery() {
   const webGL2 = useWebGL2Support();
   const [angle, setAngle] = useState<Angle>("front"),

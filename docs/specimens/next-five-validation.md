@@ -161,3 +161,18 @@ Reproduce with
 `npx tsx scripts/benchmark-specimen-rendering.ts cyclamen,snapdragon,hardy-begonia,hydrangea,king-protea desktop,mobile`
 against the production server. Raw JSON, logs and screenshots are kept in ignored
 `dist/next-specimens/`; the tables above preserve the measured results in Git.
+
+## Pagination follow-up
+
+The shared collection paginator now shows at most **15 flowers per page** on
+both `/` and `/gallery/`. Page totals and the final partial page still derive
+from the catalog. Existing browser coverage now walks every page and compares
+the complete sequence of specimen links with `FLOWER_TYPES`; filtering from the
+last page resets correctly. Retention and constrained-buffer checks visit every
+preview across the smaller pages.
+
+The updated pagination check first failed against the old twenty-item page.
+After the change, all six relevant browser scenarios passed across desktop
+Chromium and mobile WebKit: complete catalog/search navigation, constrained
+buffers with live frames, and retained scenes. TypeScript, lint for the changed
+files and a fresh production build also passed.

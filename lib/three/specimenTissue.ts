@@ -71,3 +71,32 @@ export function specimenTissueShader(type: string, tissue?: SpecimenTissue) {
       return "";
   }
 }
+
+const TISSUE_TYPES = Object.keys(TISSUE_RESPONSE);
+export function specimenTissueKind(type: string) {
+  return TISSUE_TYPES.indexOf(type);
+}
+export function specimenTissueRegion(tissue?: SpecimenTissue) {
+  return tissue === "inner"
+    ? 1
+    : tissue === "guide"
+      ? 2
+      : tissue === "disc"
+        ? 3
+        : 0;
+}
+
+/** Uniform branches preserve every authored pattern without a program per organ. */
+export const SHARED_SPECIMEN_TISSUE_SHADER = TISSUE_TYPES.map((type, kind) => {
+  const base = specimenTissueShader(type);
+  const variants = (["inner", "guide", "disc"] as const).flatMap((tissue) => {
+    const source = specimenTissueShader(type, tissue);
+    return source === base
+      ? []
+      : [`if(uSpecimenRegion==${specimenTissueRegion(tissue)}) { ${source} }`];
+  });
+  const source = variants.length
+    ? `${variants.join(" else ")} else { ${base} }`
+    : base;
+  return source ? `if(uSpecimenKind==${kind}) { ${source} }` : "";
+}).join("\n");

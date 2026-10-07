@@ -5,7 +5,9 @@ import type { SpecimenSurface } from "./specimenModel";
 import {
   TISSUE_RESPONSE,
   specimenTissueColor,
-  specimenTissueShader,
+  specimenTissueKind,
+  specimenTissueRegion,
+  SHARED_SPECIMEN_TISSUE_SHADER,
 } from "./specimenTissue";
 
 /** Species optics compose the shared tissue atlas and its GLSL fallback. */
@@ -191,19 +193,33 @@ export function createSpecimenMaterial(
       diffuseColor.rgb*=1.-.055*pow(abs(sin(vPetalUv.x*35.+vPetalUv.y*7.)),8.);`,
       );
     if (response && !green && tissue !== "leaf") {
+      s.uniforms.uSpecimenKind = { value: specimenTissueKind(type) };
+      s.uniforms.uSpecimenRegion = { value: specimenTissueRegion(tissue) };
+      s.uniforms.uSpecimenScatter = { value: response.scatter };
       s.fragmentShader = s.fragmentShader.replace(
         "scatter*.11",
-        `scatter*${response.scatter.toFixed(3)}`,
+        "scatter*uSpecimenScatter",
       );
-      const detail = specimenTissueShader(type, tissue);
-      if (detail)
-        s.fragmentShader = s.fragmentShader.replace(
+      s.fragmentShader = s.fragmentShader
+        .replace(
+          "#include <common>",
+          "#include <common>\nuniform int uSpecimenKind, uSpecimenRegion; uniform float uSpecimenScatter;",
+        )
+        .replace(
           "#include <roughnessmap_fragment>",
-          `${detail}\n#include <roughnessmap_fragment>`,
+          `${SHARED_SPECIMEN_TISSUE_SHADER}\n#include <roughnessmap_fragment>`,
         );
     }
   };
-  m.customProgramCacheKey = () =>
-    `specimen-${type}-${role}-v1${tissue ? `-${tissue}` : ""}`;
+  m.customProgramCacheKey = () => {
+    if (green)
+      return type === "zinnia"
+        ? "specimen-calyx-zinnia-v2"
+        : "specimen-calyx-v2";
+    if (!green && tissue === "leaf" && response) return "specimen-leaf-v2";
+    // Pigments are uniforms. Organ names alone must not compile duplicate programs.
+    if (!green && response) return "specimen-shared-tissue-v3";
+    return `specimen-${type}-${role}-v1${tissue ? `-${tissue}` : ""}`;
+  };
   return m;
 }

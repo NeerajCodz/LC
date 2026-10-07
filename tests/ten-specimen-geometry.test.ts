@@ -8,6 +8,7 @@ import { LILY_OF_THE_VALLEY_MODEL } from "../components/flowers/lily-of-the-vall
 import { SNOWDROP_MODEL } from "../components/flowers/snowdrop/snowdropGeometry";
 import { GLADIOLUS_MODEL } from "../components/flowers/gladiolus/gladiolusGeometry";
 import { DELPHINIUM_MODEL } from "../components/flowers/delphinium/delphiniumGeometry";
+import { ALSTROEMERIA_MODEL } from "../components/flowers/alstroemeria/alstroemeriaGeometry";
 import { createDelphiniumLeaf } from "../components/flowers/delphinium/delphiniumLeaf";
 import { GLADIOLUS_LEAF } from "../components/flowers/gladiolus/gladiolusLeaf";
 import { SNOWDROP_LEAF } from "../components/flowers/snowdrop/snowdropLeaf";
@@ -40,6 +41,25 @@ verifySpecimen("lily of the valley", LILY_OF_THE_VALLEY_MODEL);
 verifySpecimen("snowdrop", SNOWDROP_MODEL);
 verifySpecimen("gladiolus", GLADIOLUS_MODEL);
 verifySpecimen("delphinium", DELPHINIUM_MODEL);
+verifySpecimen("alstroemeria", ALSTROEMERIA_MODEL);
+test("alstroemeria keeps six free tepals with only two marked upper inner segments", () => {
+  const m = ALSTROEMERIA_MODEL;
+  assert.equal(m.clusters.length, 5);
+  assert.equal(m.surfaces.filter((s) => s.name === "free tepal").length, 30);
+  assert.equal(m.surfaces.filter((s) => s.tissue === "inner").length, 10);
+  for (let c = 0; c < 5; c++) {
+    assert.equal(
+      m.organs.filter((o) => o.cluster === c && o.name === "stamen filament")
+        .length,
+      6,
+    );
+    assert.equal(
+      m.organs.filter((o) => o.cluster === c && o.name === "pistil style arm")
+        .length,
+      3,
+    );
+  }
+});
 test("delphinium leaves keep a continuous filled palmate blade at constrained quality", () => {
   const g = createDelphiniumLeaf("low");
   const folded = g.morphAttributes.position;

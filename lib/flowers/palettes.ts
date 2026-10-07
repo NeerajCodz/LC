@@ -30,6 +30,15 @@ const palette = (
 });
 
 export const PETAL_PALETTES: Record<FlowerType, PetalPalette> = {
+  ranunculus: palette(
+    "#b75434",
+    "#eb9568",
+    "#f9ccb1",
+    "#be7055",
+    0.42,
+    0.73,
+    0.07,
+  ),
   zinnia: palette(
     "#873d5e",
     "#b96188",

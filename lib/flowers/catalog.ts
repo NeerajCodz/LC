@@ -467,6 +467,16 @@ FLOWERS.push({
   type: "zinnia",
   color: "#b96188",
 });
+FLOWERS.push({
+  type: "ranunculus",
+  name: "Ranunculus",
+  latin: "Ranunculus asiaticus",
+  family: "Ranunculaceae",
+  color: PETAL_PALETTES.ranunculus.body,
+  description: "Apricot petals unfold into a close-packed cup.",
+  detail:
+    "A cultivated double form with nested curved petals, five protective sepals and finely divided green foliage.",
+});
 FLOWERS.sort(
   (a, b) => FLOWER_TYPES.indexOf(a.type) - FLOWER_TYPES.indexOf(b.type),
 );

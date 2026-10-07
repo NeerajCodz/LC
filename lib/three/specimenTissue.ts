@@ -5,6 +5,7 @@ export const TISSUE_RESPONSE: Record<
   string,
   { roughness: number; sheen: number; coat: number; scatter: number }
 > = {
+  ranunculus: { roughness: 0.66, sheen: 0.2, coat: 0.015, scatter: 0.055 },
   hellebore: { roughness: 0.59, sheen: 0.12, coat: 0.04, scatter: 0.055 },
   primrose: { roughness: 0.75, sheen: 0.16, coat: 0, scatter: 0.07 },
   petunia: { roughness: 0.73, sheen: 0.22, coat: 0, scatter: 0.08 },
@@ -32,6 +33,9 @@ export function specimenTissueColor(type: string, tissue?: SpecimenTissue) {
 export function specimenTissueShader(type: string, tissue?: SpecimenTissue) {
   if (tissue === "leaf") return "";
   switch (type) {
+    case "ranunculus":
+      return `float ranVein=pow(.5+.5*cos((vPetalUv.y-abs(vPetalUv.x-.5)*.45)*61.),24.);
+      diffuseColor.rgb*=1.-ranVein*.036;`;
     case "hellebore":
       return `float helVein=pow(.5+.5*cos((vPetalUv.y-abs(vPetalUv.x-.5)*.6)*49.),24.);
       float helSpot=pow(max(0.,sin(vPetalUv.x*83.)*sin(vPetalUv.y*69.)),12.);

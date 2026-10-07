@@ -45,6 +45,7 @@ export const FLOWER_TYPES = [
   "alstroemeria",
   "gerbera",
   "zinnia",
+  "ranunculus",
 ] as const;
 
 export type FlowerType = (typeof FLOWER_TYPES)[number];

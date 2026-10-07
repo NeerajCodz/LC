@@ -21,6 +21,18 @@ export interface FoliageProfile {
 
 /** Cultivar-independent leaf traits; lotus has its own peltate blade generator. */
 export const FOLIAGE: Record<FlowerType, FoliageProfile> = {
+  ranunculus: {
+    length: 0.65,
+    width: 0.25,
+    color: "#456c48",
+    teeth: 4,
+    depth: 0.75,
+    leaflets: 3,
+    basal: true,
+    pubescence: 0.16,
+    thickness: 0.009,
+    roughness: 0.76,
+  },
   zinnia: {
     length: 0.84,
     width: 0.35,

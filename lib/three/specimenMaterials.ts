@@ -91,6 +91,12 @@ export function createSpecimenMaterial(
   }
   m.onBeforeCompile = (s, r) => {
     previous.call(m, s, r);
+    if (type === "zinnia" && green)
+      s.fragmentShader = s.fragmentShader.replace(
+        "#include <roughnessmap_fragment>",
+        `diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.19,.10,.075),smoothstep(.54,.88,vPetalUv.y)*.46);
+      #include <roughnessmap_fragment>`,
+      );
     if (type === "king-protea" && !green)
       s.fragmentShader = s.fragmentShader
         .replace(

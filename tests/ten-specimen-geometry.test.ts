@@ -11,6 +11,7 @@ import { DELPHINIUM_MODEL } from "../components/flowers/delphinium/delphiniumGeo
 import { ALSTROEMERIA_MODEL } from "../components/flowers/alstroemeria/alstroemeriaGeometry";
 import { GERBERA_MODEL } from "../components/flowers/gerbera/gerberaGeometry";
 import { ZINNIA_MODEL } from "../components/flowers/zinnia/zinniaGeometry";
+import { ZINNIA_LEAF } from "../components/flowers/zinnia/zinniaLeaf";
 import { GERBERA_LEAF } from "../components/flowers/gerbera/gerberaLeaf";
 import { ALSTROEMERIA_LEAF } from "../components/flowers/alstroemeria/alstroemeriaLeaf";
 import { createDelphiniumLeaf } from "../components/flowers/delphinium/delphiniumLeaf";
@@ -48,6 +49,16 @@ verifySpecimen("delphinium", DELPHINIUM_MODEL);
 verifySpecimen("alstroemeria", ALSTROEMERIA_MODEL);
 verifySpecimen("gerbera", GERBERA_MODEL);
 verifySpecimen("zinnia", ZINNIA_MODEL);
+verifySpecimen("zinnia sessile blades", {
+  clusters: [],
+  surfaces: [ZINNIA_LEAF],
+  organs: [],
+});
+test("zinnia leaf bases stay broad enough to clasp the stem", () => {
+  const a = ZINNIA_LEAF.sample(0, 0, 1),
+    b = ZINNIA_LEAF.sample(1, 0, 1);
+  assert.ok(Math.abs(a[0] - b[0]) > 0.06);
+});
 for (const group of ZINNIA_MODEL.instances ?? [])
   verifySpecimen(`zinnia ${group.name} prototypes`, {
     clusters: [],

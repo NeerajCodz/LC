@@ -457,6 +457,16 @@ FLOWERS.push({
   type: "gerbera",
   color: "#df745b",
 });
+FLOWERS.push({
+  name: "Zinnia",
+  latin: "Zinnia elegans",
+  family: "Asteraceae",
+  description: "Magenta rays, layered.\nGolden stars within.",
+  detail:
+    "An authored semi-double head surrounds true five-lobed golden disk florets with layered female rays and overlapping involucral bracts. Rough, opposite leaves clasp the stem and carry veins radiating from their bases.",
+  type: "zinnia",
+  color: "#b96188",
+});
 FLOWERS.sort(
   (a, b) => FLOWER_TYPES.indexOf(a.type) - FLOWER_TYPES.indexOf(b.type),
 );

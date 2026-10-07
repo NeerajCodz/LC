@@ -21,6 +21,16 @@ export interface FoliageProfile {
 
 /** Cultivar-independent leaf traits; lotus has its own peltate blade generator. */
 export const FOLIAGE: Record<FlowerType, FoliageProfile> = {
+  zinnia: {
+    length: 0.84,
+    width: 0.35,
+    color: "#577943",
+    thickness: 0.014,
+    roughness: 0.87,
+    pubescence: 0.4,
+    opposite: true,
+    basalLobes: true,
+  },
   gerbera: {
     length: 1.42,
     width: 0.43,

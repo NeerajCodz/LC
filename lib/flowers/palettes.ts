@@ -30,6 +30,15 @@ const palette = (
 });
 
 export const PETAL_PALETTES: Record<FlowerType, PetalPalette> = {
+  zinnia: palette(
+    "#873d5e",
+    "#b96188",
+    "#d58fa8",
+    "#953e67",
+    0.39,
+    0.75,
+    0.065,
+  ),
   gerbera: palette(
     "#9c493c",
     "#df745b",

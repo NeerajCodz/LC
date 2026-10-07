@@ -10,6 +10,7 @@ import { GLADIOLUS_MODEL } from "../components/flowers/gladiolus/gladiolusGeomet
 import { DELPHINIUM_MODEL } from "../components/flowers/delphinium/delphiniumGeometry";
 import { ALSTROEMERIA_MODEL } from "../components/flowers/alstroemeria/alstroemeriaGeometry";
 import { GERBERA_MODEL } from "../components/flowers/gerbera/gerberaGeometry";
+import { GERBERA_LEAF } from "../components/flowers/gerbera/gerberaLeaf";
 import { ALSTROEMERIA_LEAF } from "../components/flowers/alstroemeria/alstroemeriaLeaf";
 import { createDelphiniumLeaf } from "../components/flowers/delphinium/delphiniumLeaf";
 import { GLADIOLUS_LEAF } from "../components/flowers/gladiolus/gladiolusLeaf";
@@ -45,6 +46,11 @@ verifySpecimen("gladiolus", GLADIOLUS_MODEL);
 verifySpecimen("delphinium", DELPHINIUM_MODEL);
 verifySpecimen("alstroemeria", ALSTROEMERIA_MODEL);
 verifySpecimen("gerbera", GERBERA_MODEL);
+verifySpecimen("gerbera pinnatifid blades", {
+  clusters: [],
+  surfaces: [GERBERA_LEAF],
+  organs: [],
+});
 for (const group of GERBERA_MODEL.instances ?? [])
   verifySpecimen(`gerbera ${group.name} prototypes`, {
     clusters: [],

@@ -56,8 +56,11 @@ import { delphiniumStructure } from "../../components/flowers/delphinium/Delphin
 
 import { alstroemeriaStructure } from "../../components/flowers/alstroemeria/Alstroemeria";
 
+import { gerberaStructure } from "../../components/flowers/gerbera/Gerbera";
+
 /** Authored anatomy shared by planting layout and geometry verification. */
 export const FLOWER_STRUCTURES: Record<FlowerType, FlowerStructure> = {
+  gerbera: gerberaStructure,
   alstroemeria: alstroemeriaStructure,
   delphinium: delphiniumStructure,
   gladiolus: gladiolusStructure,

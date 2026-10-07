@@ -30,6 +30,15 @@ const palette = (
 });
 
 export const PETAL_PALETTES: Record<FlowerType, PetalPalette> = {
+  gerbera: palette(
+    "#9c493c",
+    "#df745b",
+    "#eea080",
+    "#a75144",
+    0.42,
+    0.76,
+    0.065,
+  ),
   alstroemeria: palette(
     "#9f702f",
     "#e7a75c",

@@ -44,7 +44,9 @@ import { Snowdrop } from "./snowdrop/Snowdrop";
 import { Gladiolus } from "./gladiolus/Gladiolus";
 import { Delphinium } from "./delphinium/Delphinium";
 import { Alstroemeria } from "./alstroemeria/Alstroemeria";
+import { Gerbera } from "./gerbera/Gerbera";
 const SPECIES = {
+  gerbera: Gerbera,
   alstroemeria: Alstroemeria,
   delphinium: Delphinium,
   gladiolus: Gladiolus,

@@ -43,6 +43,7 @@ export const FLOWER_TYPES = [
   "gladiolus",
   "delphinium",
   "alstroemeria",
+  "gerbera",
 ] as const;
 
 export type FlowerType = (typeof FLOWER_TYPES)[number];

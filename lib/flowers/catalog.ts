@@ -447,6 +447,16 @@ FLOWERS.push({
   type: "alstroemeria",
   color: "#e7a75c",
 });
+FLOWERS.push({
+  name: "Gerbera",
+  latin: "Gerbera jamesonii",
+  family: "Asteraceae",
+  description: "Long rays of orange.\nMany smaller flowers within.",
+  detail:
+    "A leafless scape lifts an inflorescence of long female rays, shorter inner rays and bilateral bisexual disk florets. Three-toothed outer lips and paired inner limbs surround real reproductive organs above deeply lobed basal leaves.",
+  type: "gerbera",
+  color: "#df745b",
+});
 FLOWERS.sort(
   (a, b) => FLOWER_TYPES.indexOf(a.type) - FLOWER_TYPES.indexOf(b.type),
 );

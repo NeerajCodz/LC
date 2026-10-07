@@ -48,8 +48,11 @@ import { petuniaStructure } from "../../components/flowers/petunia/Petunia";
 
 import { lilyOfTheValleyStructure } from "../../components/flowers/lily-of-the-valley/LilyOfTheValley";
 
+import { snowdropStructure } from "../../components/flowers/snowdrop/Snowdrop";
+
 /** Authored anatomy shared by planting layout and geometry verification. */
 export const FLOWER_STRUCTURES: Record<FlowerType, FlowerStructure> = {
+  snowdrop: snowdropStructure,
   "lily-of-the-valley": lilyOfTheValleyStructure,
   petunia: petuniaStructure,
   primrose: primroseStructure,

@@ -407,6 +407,16 @@ FLOWERS.push({
   type: "lily-of-the-valley",
   color: "#e7e8de",
 });
+FLOWERS.push({
+  name: "Snowdrop",
+  latin: "Galanthus nivalis",
+  family: "Amaryllidaceae",
+  description: "Six ivory segments.\nA small mark of green.",
+  detail:
+    "Each curved scape carries one nodding flower, with three long outer tepals and three shorter, green-marked inner segments. Included stamens sit beneath the ovary, above paired blue-green basal leaves.",
+  type: "snowdrop",
+  color: "#e7e9df",
+});
 FLOWERS.sort(
   (a, b) => FLOWER_TYPES.indexOf(a.type) - FLOWER_TYPES.indexOf(b.type),
 );

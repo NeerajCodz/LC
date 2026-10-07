@@ -6,6 +6,7 @@ import { PRIMROSE_MODEL } from "../components/flowers/primrose/primroseGeometry"
 import { PETUNIA_MODEL } from "../components/flowers/petunia/petuniaGeometry";
 import { LILY_OF_THE_VALLEY_MODEL } from "../components/flowers/lily-of-the-valley/lilyOfTheValleyGeometry";
 import { SNOWDROP_MODEL } from "../components/flowers/snowdrop/snowdropGeometry";
+import { SNOWDROP_LEAF } from "../components/flowers/snowdrop/snowdropLeaf";
 import { LILY_OF_THE_VALLEY_LEAF } from "../components/flowers/lily-of-the-valley/lilyOfTheValleyLeaf";
 import { PETUNIA_LEAF } from "../components/flowers/petunia/petuniaLeaf";
 import { PRIMROSE_LEAF } from "../components/flowers/primrose/primroseLeaf";
@@ -33,6 +34,11 @@ verifySpecimen("primrose", PRIMROSE_MODEL);
 verifySpecimen("petunia", PETUNIA_MODEL);
 verifySpecimen("lily of the valley", LILY_OF_THE_VALLEY_MODEL);
 verifySpecimen("snowdrop", SNOWDROP_MODEL);
+verifySpecimen("snowdrop strap blades", {
+  clusters: [],
+  surfaces: [SNOWDROP_LEAF],
+  organs: [],
+});
 test("snowdrop keeps unequal tepal whorls and six included stamens on solitary scapes", () => {
   const m = SNOWDROP_MODEL;
   assert.equal(m.clusters.length, 3);

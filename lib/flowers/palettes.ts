@@ -30,6 +30,15 @@ const palette = (
 });
 
 export const PETAL_PALETTES: Record<FlowerType, PetalPalette> = {
+  snowdrop: palette(
+    "#bfcca9",
+    "#e7e9df",
+    "#f4f3e8",
+    "#c8d0b8",
+    0.24,
+    0.72,
+    0.035,
+  ),
   "lily-of-the-valley": palette(
     "#b4c3a6",
     "#e7e8de",

@@ -40,7 +40,9 @@ import { Hellebore } from "./hellebore/Hellebore";
 import { Primrose } from "./primrose/Primrose";
 import { Petunia } from "./petunia/Petunia";
 import { LilyOfTheValley } from "./lily-of-the-valley/LilyOfTheValley";
+import { Snowdrop } from "./snowdrop/Snowdrop";
 const SPECIES = {
+  snowdrop: Snowdrop,
   "lily-of-the-valley": LilyOfTheValley,
   petunia: Petunia,
   primrose: Primrose,

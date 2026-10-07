@@ -8,11 +8,14 @@ export function helleboreSepal(index: number, young = false) {
       w =
         (2 * u - 1) *
         (0.004 + 0.35 * Math.sin(Math.PI * v) ** 0.65) *
-        (0.15 + 0.85 * open);
-    const r = 0.14 * (1 - v) + 0.67 * open * Math.sin(v * Math.PI * 0.51);
+        (0.48 + 0.52 * open);
+    const r =
+      0.14 * (1 - v) +
+      0.09 * (1 - open) * Math.sin(Math.PI * v) ** 0.7 +
+      0.61 * open * Math.sin(v * Math.PI * 0.51);
     return [
       Math.sin(a) * r + Math.cos(a) * w,
-      0.77 * v * (1 - 0.74 * open) +
+      0.77 * v * (1 - 0.62 * open) +
         0.1 * (2 * u - 1) ** 2 * Math.sin(Math.PI * v) * open,
       Math.cos(a) * r - Math.sin(a) * w,
     ];

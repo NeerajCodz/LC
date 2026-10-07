@@ -11,7 +11,12 @@ export function primroseCorolla(
     t = Math.max(0, (v - 0.52) / 0.48);
   const notch = 0.024 * Math.exp(-(Math.sin(a * 2.5) ** 2) / 0.035);
   const rim = 0.57 * (0.9 + 0.1 * Math.cos(a * 5)) - notch;
-  const closed = 0.022 + 0.018 * Math.sin(Math.PI * v) - 0.01 * v;
+  const crown = Math.max(0, Math.min(1, (v - 0.56) / 0.2));
+  const closed =
+    0.022 +
+    0.018 * Math.sin(Math.PI * v) -
+    0.01 * v +
+    0.12 * Math.sin(Math.PI * v) ** 0.65 * crown * crown * (3 - 2 * crown);
   const radius =
     closed * (1 - open) +
     (0.026 + 0.008 * v + (rim - 0.034) * t ** 1.25) * open;

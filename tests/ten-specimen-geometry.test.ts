@@ -10,6 +10,20 @@ import {
 } from "../components/flowers/hellebore/helleboreLeaf";
 
 verifySpecimen("hellebore", HELLEBORE_MODEL);
+test("closed buds keep a swollen body around their preformed floral organs", () => {
+  const hel = HELLEBORE_MODEL.surfaces
+    .find((s) => s.name === "showy sepal")!
+    .sample(0.5, 0.55, 0);
+  assert.ok(Math.hypot(hel[0], hel[2]) > 0.12);
+  const prim = PRIMROSE_MODEL.surfaces.find(
+    (s) => s.name === "five-lobed fused corolla",
+  )!;
+  const crown = prim.sample(0.13, 0.78, 0),
+    neck = prim.sample(0.13, 0.3, 0);
+  assert.ok(
+    Math.hypot(crown[0], crown[2]) > Math.hypot(neck[0], neck[2]) * 1.8,
+  );
+});
 verifySpecimen("primrose", PRIMROSE_MODEL);
 verifySpecimen("primrose rosette", {
   clusters: [],

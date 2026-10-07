@@ -2,12 +2,35 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { verifySpecimen } from "./specimen-checks";
 import { HELLEBORE_MODEL } from "../components/flowers/hellebore/helleboreGeometry";
+import { PRIMROSE_MODEL } from "../components/flowers/primrose/primroseGeometry";
 import {
   HELLEBORE_LEAFLET,
   HELLEBORE_LEAF_POSES,
 } from "../components/flowers/hellebore/helleboreLeaf";
 
 verifySpecimen("hellebore", HELLEBORE_MODEL);
+verifySpecimen("primrose", PRIMROSE_MODEL);
+test("primrose keeps continuous corollas and the stigma above its included pin-form anthers", () => {
+  const m = PRIMROSE_MODEL;
+  assert.equal(m.clusters.length, 7);
+  assert.equal(
+    m.surfaces.filter((s) => s.name === "five-lobed fused corolla").length,
+    7,
+  );
+  for (let c = 0; c < 7; c++) {
+    const anthers = m.organs.filter(
+      (o) => o.cluster === c && o.name === "included anther",
+    );
+    assert.equal(anthers.length, 5);
+    const style = m.organs.find(
+      (o) => o.cluster === c && o.name === "pin style",
+    )!;
+    assert.ok(
+      Math.max(...style.points.map((p) => p[1])) >
+        Math.max(...anthers.flatMap((o) => o.points.map((p) => p[1]))) + 0.05,
+    );
+  }
+});
 verifySpecimen("hellebore leaflets", {
   clusters: [],
   surfaces: [HELLEBORE_LEAFLET],

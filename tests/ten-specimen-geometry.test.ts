@@ -4,6 +4,7 @@ import { verifySpecimen } from "./specimen-checks";
 import { HELLEBORE_MODEL } from "../components/flowers/hellebore/helleboreGeometry";
 import { PRIMROSE_MODEL } from "../components/flowers/primrose/primroseGeometry";
 import { PETUNIA_MODEL } from "../components/flowers/petunia/petuniaGeometry";
+import { LILY_OF_THE_VALLEY_MODEL } from "../components/flowers/lily-of-the-valley/lilyOfTheValleyGeometry";
 import { PETUNIA_LEAF } from "../components/flowers/petunia/petuniaLeaf";
 import { PRIMROSE_LEAF } from "../components/flowers/primrose/primroseLeaf";
 import {
@@ -28,6 +29,23 @@ test("closed buds keep a swollen body around their preformed floral organs", () 
 });
 verifySpecimen("primrose", PRIMROSE_MODEL);
 verifySpecimen("petunia", PETUNIA_MODEL);
+verifySpecimen("lily of the valley", LILY_OF_THE_VALLEY_MODEL);
+test("lily of the valley retains continuous six-toothed bells and six included stamens", () => {
+  const m = LILY_OF_THE_VALLEY_MODEL;
+  assert.equal(m.clusters.length, 11);
+  assert.equal(
+    m.surfaces.filter((s) => s.name === "six-toothed bell").length,
+    11,
+  );
+  for (let c = 0; c < 11; c++)
+    assert.equal(
+      m.organs.filter((o) => o.cluster === c && o.name === "included anther")
+        .length,
+      6,
+    );
+  for (const s of m.surfaces.filter((s) => s.name === "six-toothed bell"))
+    assert.ok(s.periodic);
+});
 verifySpecimen("petunia foliage", {
   clusters: [],
   surfaces: [PETUNIA_LEAF],

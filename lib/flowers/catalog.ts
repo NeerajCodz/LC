@@ -417,6 +417,16 @@ FLOWERS.push({
   type: "snowdrop",
   color: "#e7e9df",
 });
+FLOWERS.push({
+  name: "Gladiolus",
+  latin: "Gladiolus communis",
+  family: "Iridaceae",
+  description: "Six unequal segments.\nA rising stroke of purple.",
+  detail:
+    "A two-ranked spike opens from below, with curved floral tubes, six unequal tepals and white guides on the three outer segments. Three unilateral stamens sit beneath the hooded upper tepal, above firm sword-shaped foliage.",
+  type: "gladiolus",
+  color: "#b75d98",
+});
 FLOWERS.sort(
   (a, b) => FLOWER_TYPES.indexOf(a.type) - FLOWER_TYPES.indexOf(b.type),
 );

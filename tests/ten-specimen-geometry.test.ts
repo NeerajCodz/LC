@@ -7,6 +7,7 @@ import { PETUNIA_MODEL } from "../components/flowers/petunia/petuniaGeometry";
 import { LILY_OF_THE_VALLEY_MODEL } from "../components/flowers/lily-of-the-valley/lilyOfTheValleyGeometry";
 import { SNOWDROP_MODEL } from "../components/flowers/snowdrop/snowdropGeometry";
 import { GLADIOLUS_MODEL } from "../components/flowers/gladiolus/gladiolusGeometry";
+import { GLADIOLUS_LEAF } from "../components/flowers/gladiolus/gladiolusLeaf";
 import { SNOWDROP_LEAF } from "../components/flowers/snowdrop/snowdropLeaf";
 import { LILY_OF_THE_VALLEY_LEAF } from "../components/flowers/lily-of-the-valley/lilyOfTheValleyLeaf";
 import { PETUNIA_LEAF } from "../components/flowers/petunia/petuniaLeaf";
@@ -36,6 +37,11 @@ verifySpecimen("petunia", PETUNIA_MODEL);
 verifySpecimen("lily of the valley", LILY_OF_THE_VALLEY_MODEL);
 verifySpecimen("snowdrop", SNOWDROP_MODEL);
 verifySpecimen("gladiolus", GLADIOLUS_MODEL);
+verifySpecimen("gladiolus sword blades", {
+  clusters: [],
+  surfaces: [GLADIOLUS_LEAF],
+  organs: [],
+});
 test("gladiolus preserves unequal whorls, three guided outer tepals and unilateral stamens", () => {
   const m = GLADIOLUS_MODEL;
   assert.equal(m.clusters.length, 11);

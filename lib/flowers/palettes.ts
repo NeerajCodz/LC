@@ -30,6 +30,15 @@ const palette = (
 });
 
 export const PETAL_PALETTES: Record<FlowerType, PetalPalette> = {
+  gladiolus: palette(
+    "#80476c",
+    "#b75d98",
+    "#d692b8",
+    "#8f466f",
+    0.43,
+    0.73,
+    0.065,
+  ),
   snowdrop: palette(
     "#bfcca9",
     "#e7e9df",

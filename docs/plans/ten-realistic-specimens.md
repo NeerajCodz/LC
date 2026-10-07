@@ -58,25 +58,27 @@ SafeCanvas and WebGL-compatible tissue/HDR fallbacks. No WGSL change is planned.
 
 ## Commit slices and checks
 
-- [ ] 1. `docs:` ten source dossiers and this implementation record.
-- [ ] 2. `feat:` typed tissue channels and sealed blade rendering; verify default
+- [x] 1. `docs:` ten source dossiers and this implementation record.
+- [x] 2. `feat:` typed tissue channels and sealed blade rendering; verify default
       material preservation, normal/thickness invariants and initialized morphs.
-- [ ] 3–22. Two commits per species, in the table's order: anatomy/geometry with
+- [x] 3–22. Two commits per species, in the table's order: anatomy/geometry with
       `tests/ten-specimen-geometry.test.ts` assertions, followed by tissue, foliage,
       dedicated stem/motion and complete catalog integration. Each anatomy slice
       first demonstrates a failing missing-model/count/geometry assertion, then
       passes sealed/thickness/determinism/normals/bud/intermediate-bloom checks.
       Each integration slice passes typecheck, affected lint and relevant tests.
-- [ ] 23. `test:` all ten transformed contact cages, reverse bloom, insertions,
+- [x] 23. `test:` all ten transformed contact cages, reverse bloom, insertions,
       included organs and low/high quality retention. Dense prototype tests include
       true Gerbera bilateral florets and Zinnia disk corollas.
-- [ ] 24. `feat:` complete framing and planting clearance across both layouts;
+- [x] 24. `feat:` complete framing and planting clearance across both layouts;
       retain 15-item pagination and exhaustive routes/metadata/search.
 - [ ] 25. `test:` Chromium and mobile WebKit rendered pixels, pulse, pause,
       reduced motion, macro retention, themes, search, gallery retention and garden
       selection. Extend the seven-view inspection fixture to Rose plus all ten.
       Commit genuine visual corrections separately after reference review.
-- [ ] 26. `docs:` generated inventory, API/dossier links and measured validation.
+      Coverage is committed and exercised; the full retained-gallery-to-garden
+      WebKit journey remains a draft blocker in the validation record.
+- [x] 26. `docs:` generated inventory, API/dossier links and measured validation.
       Extend CPU/rendering drivers with these models; measure sequentially on a
       production port-1607 server. Record solver, transfer and total drawing costs,
       reported hardware, startup scope and physical-device/GPU-timing limits.

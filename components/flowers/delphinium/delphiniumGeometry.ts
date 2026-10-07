@@ -1,5 +1,14 @@
 import type { Vec3 } from "@/lib/flowers/types";
 import type { SpecimenModel, SpecimenOrgan } from "@/lib/three/specimenModel";
+const SPUR_SIDE = 1 / Math.sqrt(10),
+  SPUR_UP = 3 / Math.sqrt(10);
+function spurCenter(v: number): Vec3 {
+  return [
+    0,
+    0.08 + 0.075 * SPUR_UP - 0.2 * v,
+    0.1 + 0.075 * SPUR_SIDE + 0.6 * v,
+  ];
+}
 export function delphiniumSepal(i: number, young = false) {
   const a = (i * Math.PI * 2) / 5,
     length = i === 0 ? 0.76 : 0.66;
@@ -48,7 +57,11 @@ export const DELPHINIUM_MODEL: SpecimenModel = {
       -0.12 + i * 0.13,
       0.1 + Math.cos(i * 2.399) * 0.12,
     ] as Vec3,
-    rotation: [1.1 + (i % 3) * 0.12, Math.sin(i * 2.399) * 0.35, 0] as Vec3,
+    rotation: [
+      1.1 + (i % 3) * 0.12,
+      Math.PI + Math.sin(i * 2.399) * 0.35,
+      0,
+    ] as Vec3,
     scale: i < 9 ? 0.43 - i * 0.01 : 0.27,
     nod: 0.016,
   })),
@@ -110,11 +123,12 @@ for (let c = 0; c < 12; c++) {
     delay,
     sample: (u, v) => {
       const a = u * Math.PI * 2,
-        r = 0.065 * (1 - v) + 0.01;
+        r = 0.065 * (1 - v) + 0.01,
+        p = spurCenter(v);
       return [
         Math.sin(a) * r,
-        0.08 - 0.62 * v,
-        0.175 + 0.12 * v + Math.cos(a) * r,
+        p[1] + Math.cos(a) * r * SPUR_UP,
+        p[2] + Math.cos(a) * r * SPUR_SIDE,
       ];
     },
   });
@@ -143,11 +157,7 @@ for (let c = 0; c < 12; c++) {
   DELPHINIUM_MODEL.organs.push({
     name: "spur terminal cap",
     cluster: c,
-    points: [
-      [0, -0.53, 0.293],
-      [0, -0.548, 0.296],
-      [0, -0.565, 0.3],
-    ],
+    points: [spurCenter(0.96), spurCenter(1), spurCenter(1.045)],
     radius: 0.012,
     endRadius: 0.008,
     color: "#5578bb",
@@ -158,8 +168,8 @@ for (let c = 0; c < 12; c++) {
       cluster: c,
       points: [
         [side * 0.016, 0.1, 0.112],
-        [side * 0.015, -0.2, 0.22],
-        [side * 0.009, -0.48, 0.283],
+        [side * 0.015, spurCenter(0.44)[1], spurCenter(0.44)[2]],
+        [side * 0.009, spurCenter(0.9)[1], spurCenter(0.9)[2]],
       ],
       radius: 0.005,
       endRadius: 0.004,

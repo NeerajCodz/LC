@@ -65,6 +65,10 @@ export const ALSTROEMERIA_MODEL: SpecimenModel = {
   surfaces: [],
   organs: [],
 };
+// The negative local Z side projects upward when the flower faces the viewer.
+ALSTROEMERIA_MODEL.clusters.forEach((c) => {
+  c.rotation[1] += Math.PI;
+});
 export const ALSTROEMERIA_STALKS: SpecimenOrgan[] = [
   {
     name: "cyme upper axis",

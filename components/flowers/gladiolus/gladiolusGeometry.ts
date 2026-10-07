@@ -32,7 +32,11 @@ export function gladiolusTepal(i: number, young = false) {
 export const GLADIOLUS_MODEL: SpecimenModel = {
   clusters: Array.from({ length: 11 }, (_, i) => ({
     position: [(i % 2 ? 1 : -1) * 0.21, -0.22 + i * 0.17, 0.12] as Vec3,
-    rotation: [1.18 + (i % 2) * 0.09, (i % 2 ? 1 : -1) * 0.16, 0] as Vec3,
+    rotation: [
+      1.18 + (i % 2) * 0.09,
+      Math.PI + (i % 2 ? 1 : -1) * 0.16,
+      0,
+    ] as Vec3,
     scale: i < 8 ? 0.54 - i * 0.018 : 0.27,
     nod: 0.015,
   })),

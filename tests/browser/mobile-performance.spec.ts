@@ -111,5 +111,6 @@ test("mobile specimen, macro, collection and garden keep bounded buffers and liv
   await checkBuffers();
   await page.getByRole("button", { name: "A passing breeze" }).tap();
   await checkLive();
+  await expectRenderedFlower(page.locator(".garden-scene canvas"), 0.007);
   expect(errors).toEqual([]);
 });

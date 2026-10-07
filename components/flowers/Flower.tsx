@@ -43,7 +43,9 @@ import { LilyOfTheValley } from "./lily-of-the-valley/LilyOfTheValley";
 import { Snowdrop } from "./snowdrop/Snowdrop";
 import { Gladiolus } from "./gladiolus/Gladiolus";
 import { Delphinium } from "./delphinium/Delphinium";
+import { Alstroemeria } from "./alstroemeria/Alstroemeria";
 const SPECIES = {
+  alstroemeria: Alstroemeria,
   delphinium: Delphinium,
   gladiolus: Gladiolus,
   snowdrop: Snowdrop,

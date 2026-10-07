@@ -30,6 +30,15 @@ const palette = (
 });
 
 export const PETAL_PALETTES: Record<FlowerType, PetalPalette> = {
+  alstroemeria: palette(
+    "#9f702f",
+    "#e7a75c",
+    "#f1c66e",
+    "#ac763b",
+    0.38,
+    0.75,
+    0.06,
+  ),
   delphinium: palette(
     "#2c467e",
     "#577fcc",

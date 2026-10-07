@@ -21,6 +21,14 @@ export interface FoliageProfile {
 
 /** Cultivar-independent leaf traits; lotus has its own peltate blade generator. */
 export const FOLIAGE: Record<FlowerType, FoliageProfile> = {
+  alstroemeria: {
+    length: 0.92,
+    width: 0.18,
+    color: "#4f784d",
+    thickness: 0.013,
+    roughness: 0.61,
+    parallel: true,
+  },
   delphinium: {
     length: 0.95,
     width: 0.7,

@@ -437,6 +437,16 @@ FLOWERS.push({
   type: "delphinium",
   color: "#577fcc",
 });
+FLOWERS.push({
+  name: "Alstroemeria",
+  latin: "Alstroemeria aurea",
+  family: "Alstroemeriaceae",
+  description: "Orange and dark flecks.\nLeaves turned toward light.",
+  detail:
+    "Six unequal free tepals open in a branched cyme, with dark marks on the upper two inner segments. Six stamens and three style branches rise above an inferior ovary, while alternate leaves twist over at their bases.",
+  type: "alstroemeria",
+  color: "#e7a75c",
+});
 FLOWERS.sort(
   (a, b) => FLOWER_TYPES.indexOf(a.type) - FLOWER_TYPES.indexOf(b.type),
 );

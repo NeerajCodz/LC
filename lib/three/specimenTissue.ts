@@ -23,6 +23,7 @@ export const TISSUE_RESPONSE: Record<
 };
 export function specimenTissueColor(type: string, tissue?: SpecimenTissue) {
   if (type === "delphinium" && tissue === "inner") return "#dfdcc2";
+  if (type === "alstroemeria" && tissue === "inner") return "#e8c971";
   if (tissue === "disc") {
     if (type === "gerbera") return "#dac090";
     if (type === "zinnia") return "#eac04d";

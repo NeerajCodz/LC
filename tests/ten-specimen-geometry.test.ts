@@ -9,6 +9,7 @@ import { SNOWDROP_MODEL } from "../components/flowers/snowdrop/snowdropGeometry"
 import { GLADIOLUS_MODEL } from "../components/flowers/gladiolus/gladiolusGeometry";
 import { DELPHINIUM_MODEL } from "../components/flowers/delphinium/delphiniumGeometry";
 import { ALSTROEMERIA_MODEL } from "../components/flowers/alstroemeria/alstroemeriaGeometry";
+import { ALSTROEMERIA_LEAF } from "../components/flowers/alstroemeria/alstroemeriaLeaf";
 import { createDelphiniumLeaf } from "../components/flowers/delphinium/delphiniumLeaf";
 import { GLADIOLUS_LEAF } from "../components/flowers/gladiolus/gladiolusLeaf";
 import { SNOWDROP_LEAF } from "../components/flowers/snowdrop/snowdropLeaf";
@@ -42,6 +43,15 @@ verifySpecimen("snowdrop", SNOWDROP_MODEL);
 verifySpecimen("gladiolus", GLADIOLUS_MODEL);
 verifySpecimen("delphinium", DELPHINIUM_MODEL);
 verifySpecimen("alstroemeria", ALSTROEMERIA_MODEL);
+verifySpecimen("alstroemeria resupinate leaf", {
+  clusters: [],
+  surfaces: [ALSTROEMERIA_LEAF],
+  organs: [],
+});
+test("alstroemeria twists the continuous leaf over along its basal attachment", () => {
+  assert.ok(ALSTROEMERIA_LEAF.sample(0.8, 0.02, 1)[0] > 0);
+  assert.ok(ALSTROEMERIA_LEAF.sample(0.8, 0.55, 1)[0] < 0);
+});
 test("alstroemeria keeps six free tepals with only two marked upper inner segments", () => {
   const m = ALSTROEMERIA_MODEL;
   assert.equal(m.clusters.length, 5);

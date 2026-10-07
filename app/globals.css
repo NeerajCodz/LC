@@ -1399,6 +1399,13 @@ input[type="range"]::-moz-range-thumb {
   .gallery-pagination {
     justify-content: space-between;
     gap: 10px;
+    flex-wrap: wrap;
+  }
+  .gallery-pagination > div {
+    order: 1;
+    flex-basis: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
   }
   .gallery-pagination button {
     min-height: 44px;

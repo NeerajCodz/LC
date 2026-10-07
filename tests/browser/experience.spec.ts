@@ -37,6 +37,11 @@ test("collection search and pagination expose every species", async ({
         links.map((link) => link.getAttribute("href")!),
       )),
     );
+    expect(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth <= innerWidth,
+      ),
+    ).toBe(true);
   }
   expect(exposed).toEqual(FLOWER_TYPES.map((type) => `/flower/${type}/`));
 

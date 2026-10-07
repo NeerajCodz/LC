@@ -387,6 +387,16 @@ FLOWERS.push({
   type: "primrose",
   color: "#eee3a6",
 });
+FLOWERS.push({
+  name: "Petunia",
+  latin: "Petunia axillaris",
+  family: "Solanaceae",
+  description: "White, drawn from green.\nA long quiet trumpet.",
+  detail:
+    "White five-lobed corollas unfurl above long narrow tubes. Five unequal stamens and a small stigma remain inside, while leafy calyx lobes and glandular foliage support the branched shoot.",
+  type: "petunia",
+  color: "#e8e5d5",
+});
 FLOWERS.sort(
   (a, b) => FLOWER_TYPES.indexOf(a.type) - FLOWER_TYPES.indexOf(b.type),
 );

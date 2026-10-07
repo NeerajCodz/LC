@@ -21,6 +21,14 @@ export interface FoliageProfile {
 
 /** Cultivar-independent leaf traits; lotus has its own peltate blade generator. */
 export const FOLIAGE: Record<FlowerType, FoliageProfile> = {
+  petunia: {
+    length: 0.67,
+    width: 0.235,
+    color: "#557344",
+    thickness: 0.014,
+    roughness: 0.82,
+    pubescence: 0.35,
+  },
   primrose: {
     length: 0.98,
     width: 0.32,

@@ -4,6 +4,7 @@ import { verifySpecimen } from "./specimen-checks";
 import { HELLEBORE_MODEL } from "../components/flowers/hellebore/helleboreGeometry";
 import { PRIMROSE_MODEL } from "../components/flowers/primrose/primroseGeometry";
 import { PETUNIA_MODEL } from "../components/flowers/petunia/petuniaGeometry";
+import { PETUNIA_LEAF } from "../components/flowers/petunia/petuniaLeaf";
 import { PRIMROSE_LEAF } from "../components/flowers/primrose/primroseLeaf";
 import {
   HELLEBORE_LEAFLET,
@@ -27,6 +28,11 @@ test("closed buds keep a swollen body around their preformed floral organs", () 
 });
 verifySpecimen("primrose", PRIMROSE_MODEL);
 verifySpecimen("petunia", PETUNIA_MODEL);
+verifySpecimen("petunia foliage", {
+  clusters: [],
+  surfaces: [PETUNIA_LEAF],
+  organs: [],
+});
 test("white petunia retains its long fused tube and unequal included stamens", () => {
   const m = PETUNIA_MODEL;
   assert.equal(m.clusters.length, 5);

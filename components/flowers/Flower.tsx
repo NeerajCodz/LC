@@ -38,7 +38,9 @@ import { Hydrangea } from "./hydrangea/Hydrangea";
 import { KingProtea } from "./king-protea/KingProtea";
 import { Hellebore } from "./hellebore/Hellebore";
 import { Primrose } from "./primrose/Primrose";
+import { Petunia } from "./petunia/Petunia";
 const SPECIES = {
+  petunia: Petunia,
   primrose: Primrose,
   hellebore: Hellebore,
   "king-protea": KingProtea,

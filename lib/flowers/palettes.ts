@@ -30,6 +30,15 @@ const palette = (
 });
 
 export const PETAL_PALETTES: Record<FlowerType, PetalPalette> = {
+  petunia: palette(
+    "#adb993",
+    "#e8e5d5",
+    "#f2eee4",
+    "#b4c1a3",
+    0.3,
+    0.75,
+    0.035,
+  ),
   primrose: palette(
     "#ceb457",
     "#eee3a6",

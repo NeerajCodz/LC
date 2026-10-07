@@ -9,6 +9,7 @@ import { SNOWDROP_MODEL } from "../components/flowers/snowdrop/snowdropGeometry"
 import { GLADIOLUS_MODEL } from "../components/flowers/gladiolus/gladiolusGeometry";
 import { DELPHINIUM_MODEL } from "../components/flowers/delphinium/delphiniumGeometry";
 import { ALSTROEMERIA_MODEL } from "../components/flowers/alstroemeria/alstroemeriaGeometry";
+import { GERBERA_MODEL } from "../components/flowers/gerbera/gerberaGeometry";
 import { ALSTROEMERIA_LEAF } from "../components/flowers/alstroemeria/alstroemeriaLeaf";
 import { createDelphiniumLeaf } from "../components/flowers/delphinium/delphiniumLeaf";
 import { GLADIOLUS_LEAF } from "../components/flowers/gladiolus/gladiolusLeaf";
@@ -43,6 +44,38 @@ verifySpecimen("snowdrop", SNOWDROP_MODEL);
 verifySpecimen("gladiolus", GLADIOLUS_MODEL);
 verifySpecimen("delphinium", DELPHINIUM_MODEL);
 verifySpecimen("alstroemeria", ALSTROEMERIA_MODEL);
+verifySpecimen("gerbera", GERBERA_MODEL);
+for (const group of GERBERA_MODEL.instances ?? [])
+  verifySpecimen(`gerbera ${group.name} prototypes`, {
+    clusters: [],
+    surfaces: group.surfaces,
+    organs: group.organs,
+  });
+test("gerbera retains true female rays and bilateral bisexual disk flowers", () => {
+  const m = GERBERA_MODEL;
+  assert.equal(
+    m.surfaces.filter((s) => s.name === "outer ray ligule").length,
+    32,
+  );
+  assert.equal(m.surfaces.filter((s) => s.name === "ray inner lip").length, 64);
+  assert.equal(
+    m.instances?.find((g) => g.name === "inner female rays")?.poses.length,
+    24,
+  );
+  const disk = m.instances!.find(
+    (g) => g.name === "bisexual bilateral disk florets",
+  )!;
+  assert.equal(disk.poses.length, 64);
+  assert.equal(
+    disk.surfaces.filter((s) => s.name === "paired inner limb").length,
+    2,
+  );
+  assert.equal(disk.organs.filter((o) => o.name === "stamen anther").length, 5);
+  assert.equal(
+    disk.organs.filter((o) => o.name === "pistil style arm").length,
+    2,
+  );
+});
 verifySpecimen("alstroemeria resupinate leaf", {
   clusters: [],
   surfaces: [ALSTROEMERIA_LEAF],

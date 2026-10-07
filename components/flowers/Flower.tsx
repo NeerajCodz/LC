@@ -36,7 +36,27 @@ import { Snapdragon } from "./snapdragon/Snapdragon";
 import { HardyBegonia } from "./hardy-begonia/HardyBegonia";
 import { Hydrangea } from "./hydrangea/Hydrangea";
 import { KingProtea } from "./king-protea/KingProtea";
+import { Hellebore } from "./hellebore/Hellebore";
+import { Primrose } from "./primrose/Primrose";
+import { Petunia } from "./petunia/Petunia";
+import { LilyOfTheValley } from "./lily-of-the-valley/LilyOfTheValley";
+import { Snowdrop } from "./snowdrop/Snowdrop";
+import { Gladiolus } from "./gladiolus/Gladiolus";
+import { Delphinium } from "./delphinium/Delphinium";
+import { Alstroemeria } from "./alstroemeria/Alstroemeria";
+import { Gerbera } from "./gerbera/Gerbera";
+import { Zinnia } from "./zinnia/Zinnia";
 const SPECIES = {
+  zinnia: Zinnia,
+  gerbera: Gerbera,
+  alstroemeria: Alstroemeria,
+  delphinium: Delphinium,
+  gladiolus: Gladiolus,
+  snowdrop: Snowdrop,
+  "lily-of-the-valley": LilyOfTheValley,
+  petunia: Petunia,
+  primrose: Primrose,
+  hellebore: Hellebore,
   "king-protea": KingProtea,
   hydrangea: Hydrangea,
   "hardy-begonia": HardyBegonia,

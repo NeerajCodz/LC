@@ -40,9 +40,38 @@ import { hardyBegoniaStructure } from "../../components/flowers/hardy-begonia/Ha
 import { hydrangeaStructure } from "../../components/flowers/hydrangea/Hydrangea";
 
 import { kingProteaStructure } from "../../components/flowers/king-protea/KingProtea";
+import { helleboreStructure } from "../../components/flowers/hellebore/Hellebore";
+
+import { primroseStructure } from "../../components/flowers/primrose/Primrose";
+
+import { petuniaStructure } from "../../components/flowers/petunia/Petunia";
+
+import { lilyOfTheValleyStructure } from "../../components/flowers/lily-of-the-valley/LilyOfTheValley";
+
+import { snowdropStructure } from "../../components/flowers/snowdrop/Snowdrop";
+
+import { gladiolusStructure } from "../../components/flowers/gladiolus/Gladiolus";
+
+import { delphiniumStructure } from "../../components/flowers/delphinium/Delphinium";
+
+import { alstroemeriaStructure } from "../../components/flowers/alstroemeria/Alstroemeria";
+
+import { gerberaStructure } from "../../components/flowers/gerbera/Gerbera";
+
+import { zinniaStructure } from "../../components/flowers/zinnia/Zinnia";
 
 /** Authored anatomy shared by planting layout and geometry verification. */
 export const FLOWER_STRUCTURES: Record<FlowerType, FlowerStructure> = {
+  zinnia: zinniaStructure,
+  gerbera: gerberaStructure,
+  alstroemeria: alstroemeriaStructure,
+  delphinium: delphiniumStructure,
+  gladiolus: gladiolusStructure,
+  snowdrop: snowdropStructure,
+  "lily-of-the-valley": lilyOfTheValleyStructure,
+  petunia: petuniaStructure,
+  primrose: primroseStructure,
+  hellebore: helleboreStructure,
   "king-protea": kingProteaStructure,
   hydrangea: hydrangeaStructure,
   "hardy-begonia": hardyBegoniaStructure,

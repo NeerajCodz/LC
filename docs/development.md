@@ -1,5 +1,11 @@
 # Development and verification
 
+`ten-specimen-geometry.test.ts` checks all ten recent models, their defining organs and sealed dense-floret prototypes. `ten-specimen-dynamics.test.ts` stresses transformed/pinned cages at both budgets; `ten-specimen-arrangement.test.ts` checks assembled dorsal orientation, the ascending Delphinium spur and Zinnia peduncle clearance. `botanical-blades.test.ts` / `specimen-tissue.test.ts` verify continuous palmate surfaces, required color attributes, distinct tissue channels and independent leaf pigments.
+
+The material regression also compares shader source across organ/tissue combinations, preserves Zinnia's bicolored calyx program, and verifies independent species/region/scatter and blade pigment uniforms. Shared program keys must never merge different source code or embed per-material colors as shared GLSL literals.
+
+`ten-specimens.spec.ts` covers rendered pixels, bloom, themes, collection/search, both garden layouts and focused physics lifecycle. `DEV_INSPECTION=1` enables `ten-specimen-inspection.spec.ts`; `SPECIMENS_TO_INSPECT` optionally filters its comma-separated slugs. Inspect the seven-view captures against Rose and the dossiers; keep images/logs in ignored outputs. Rendering and CPU drivers accept the new slugs as comma-separated filters. See [measured validation](specimens/ten-specimens-validation.md).
+
 Project LC's mission is to bring every single flower in the world to life in 3D. Living Colors is its standalone Next.js App Router application, with a catalog that grows as specimens are developed. [README](../README.md) documents the rendering architecture and Flower API; [AGENTS.md](../AGENTS.md) holds the project brief and coding requirements. Botanical changes should follow the [reference notes](botanical-references.md) and [wind/contact model](wind-and-contact.md).
 
 ## Local setup

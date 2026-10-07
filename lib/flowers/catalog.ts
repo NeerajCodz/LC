@@ -367,6 +367,106 @@ FLOWERS.push({
   type: "king-protea",
   color: "#ddb0b5",
 });
+FLOWERS.push({
+  type: "hellebore",
+  name: "Hellebore",
+  latin: "Helleborus orientalis",
+  family: "Ranunculaceae",
+  color: PETAL_PALETTES.hellebore.body,
+  description: "Winter, held in green.\nSmall cups of nectar.",
+  detail:
+    "Five substantial sepals surround tubular nectar-bearing petals, numerous stamens and pale green carpels. Nodding flowers rise above leathery, seven-leaflet basal foliage.",
+});
+FLOWERS.push({
+  name: "Primrose",
+  latin: "Primula vulgaris",
+  family: "Primulaceae",
+  description: "Pale yellow, opening.\nA small eye of gold.",
+  detail:
+    "Continuous five-lobed corollas rise on separate basal stalks above a wrinkled leaf rosette. This long-styled pin form places its stigma at the mouth and the five anthers lower inside the tube.",
+  type: "primrose",
+  color: "#eee3a6",
+});
+FLOWERS.push({
+  name: "Petunia",
+  latin: "Petunia axillaris",
+  family: "Solanaceae",
+  description: "White, drawn from green.\nA long quiet trumpet.",
+  detail:
+    "White five-lobed corollas unfurl above long narrow tubes. Five unequal stamens and a small stigma remain inside, while leafy calyx lobes and glandular foliage support the branched shoot.",
+  type: "petunia",
+  color: "#e8e5d5",
+});
+FLOWERS.push({
+  name: "Lily of the Valley",
+  latin: "Convallaria majalis",
+  family: "Asparagaceae",
+  description: "White bells, suspended.\nA gentle arc of spring.",
+  detail:
+    "An arching one-sided raceme carries continuous white bells with six turned-back rim teeth and six included stamens. Two broad parallel-veined leaves rise from the base; younger bells remain furled near the tip.",
+  type: "lily-of-the-valley",
+  color: "#e7e8de",
+});
+FLOWERS.push({
+  name: "Snowdrop",
+  latin: "Galanthus nivalis",
+  family: "Amaryllidaceae",
+  description: "Six ivory segments.\nA small mark of green.",
+  detail:
+    "Each curved scape carries one nodding flower, with three long outer tepals and three shorter, green-marked inner segments. Included stamens sit beneath the ovary, above paired blue-green basal leaves.",
+  type: "snowdrop",
+  color: "#e7e9df",
+});
+FLOWERS.push({
+  name: "Gladiolus",
+  latin: "Gladiolus communis",
+  family: "Iridaceae",
+  description: "Six unequal segments.\nA rising stroke of purple.",
+  detail:
+    "A two-ranked spike opens from below, with curved floral tubes, six unequal tepals and white guides on the three outer segments. Three unilateral stamens sit beneath the hooded upper tepal, above firm sword-shaped foliage.",
+  type: "gladiolus",
+  color: "#b75d98",
+});
+FLOWERS.push({
+  name: "Delphinium",
+  latin: "Delphinium elatum",
+  family: "Ranunculaceae",
+  description: "Blue sepals, ascending.\nA small hidden spur.",
+  detail:
+    "Five petaloid sepals frame four smaller inner petals; the dorsal sepal extends into a hollow nectar spur. Pale beards lift from the lower petals, while deeply divided continuous leaves grow along the upright raceme.",
+  type: "delphinium",
+  color: "#577fcc",
+});
+FLOWERS.push({
+  name: "Alstroemeria",
+  latin: "Alstroemeria aurea",
+  family: "Alstroemeriaceae",
+  description: "Orange and dark flecks.\nLeaves turned toward light.",
+  detail:
+    "Six unequal free tepals open in a branched cyme, with dark marks on the upper two inner segments. Six stamens and three style branches rise above an inferior ovary, while alternate leaves twist over at their bases.",
+  type: "alstroemeria",
+  color: "#e7a75c",
+});
+FLOWERS.push({
+  name: "Gerbera",
+  latin: "Gerbera jamesonii",
+  family: "Asteraceae",
+  description: "Long rays of orange.\nMany smaller flowers within.",
+  detail:
+    "A leafless scape lifts an inflorescence of long female rays, shorter inner rays and bilateral bisexual disk florets. Three-toothed outer lips and paired inner limbs surround real reproductive organs above deeply lobed basal leaves.",
+  type: "gerbera",
+  color: "#df745b",
+});
+FLOWERS.push({
+  name: "Zinnia",
+  latin: "Zinnia elegans",
+  family: "Asteraceae",
+  description: "Magenta rays, layered.\nGolden stars within.",
+  detail:
+    "An authored semi-double head surrounds true five-lobed golden disk florets with layered female rays and overlapping involucral bracts. Rough, opposite leaves clasp the stem and carry veins radiating from their bases.",
+  type: "zinnia",
+  color: "#b96188",
+});
 FLOWERS.sort(
   (a, b) => FLOWER_TYPES.indexOf(a.type) - FLOWER_TYPES.indexOf(b.type),
 );

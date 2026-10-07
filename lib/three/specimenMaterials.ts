@@ -2,28 +2,58 @@ import type { FlowerType } from "../flowers/types";
 import { PETAL_PALETTES } from "../flowers/palettes";
 import { createPetalMaterial } from "./materials";
 import type { SpecimenSurface } from "./specimenModel";
+import {
+  TISSUE_RESPONSE,
+  specimenTissueColor,
+  specimenTissueKind,
+  specimenTissueRegion,
+  SHARED_SPECIMEN_TISSUE_SHADER,
+} from "./specimenTissue";
 
 /** Species optics compose the shared tissue atlas and its GLSL fallback. */
 export function createSpecimenMaterial(
   type: FlowerType,
   role: SpecimenSurface["role"],
   color?: string,
+  tissue?: SpecimenSurface["tissue"],
 ) {
   const green = role === "calyx";
   const cream =
     (type === "bougainvillea" && role === "tube") ||
     (type === "king-protea" && role !== "bract" && !green);
+  const tissueColor = specimenTissueColor(type, tissue);
+  const leafPalette =
+    tissue === "leaf" && color
+      ? {
+          root: color,
+          body: color,
+          tip: color,
+          vein: color,
+          rootFalloff: 0.2,
+          tipStart: 0.8,
+          veinStrength: 0,
+        }
+      : undefined;
   const m = createPetalMaterial(
     green
       ? "#608065"
       : cream
         ? "#f4ecd8"
-        : (color ?? PETAL_PALETTES[type].body),
+        : (tissueColor ?? color ?? PETAL_PALETTES[type].body),
     green ? 0.78 : 0.63,
     green ? 0.2 : 0.5,
     0,
-    green || cream || color ? undefined : PETAL_PALETTES[type],
+    leafPalette ??
+      (green || cream || color || tissueColor
+        ? undefined
+        : PETAL_PALETTES[type]),
   );
+  const response = TISSUE_RESPONSE[type];
+  if (response && !green && tissue !== "leaf") {
+    m.roughness = response.roughness;
+    m.sheen = response.sheen;
+    m.clearcoat = response.coat;
+  }
   const previous = m.onBeforeCompile;
   if (type === "king-protea" && !green) {
     m.roughness = role === "bract" ? 0.66 : 0.78;
@@ -63,6 +93,12 @@ export function createSpecimenMaterial(
   }
   m.onBeforeCompile = (s, r) => {
     previous.call(m, s, r);
+    if (type === "zinnia" && green)
+      s.fragmentShader = s.fragmentShader.replace(
+        "#include <roughnessmap_fragment>",
+        `diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.19,.10,.075),smoothstep(.54,.88,vPetalUv.y)*.46);
+      #include <roughnessmap_fragment>`,
+      );
     if (type === "king-protea" && !green)
       s.fragmentShader = s.fragmentShader
         .replace(
@@ -156,7 +192,34 @@ export function createSpecimenMaterial(
         `#include <color_fragment>
       diffuseColor.rgb*=1.-.055*pow(abs(sin(vPetalUv.x*35.+vPetalUv.y*7.)),8.);`,
       );
+    if (response && !green && tissue !== "leaf") {
+      s.uniforms.uSpecimenKind = { value: specimenTissueKind(type) };
+      s.uniforms.uSpecimenRegion = { value: specimenTissueRegion(tissue) };
+      s.uniforms.uSpecimenScatter = { value: response.scatter };
+      s.fragmentShader = s.fragmentShader.replace(
+        "scatter*.11",
+        "scatter*uSpecimenScatter",
+      );
+      s.fragmentShader = s.fragmentShader
+        .replace(
+          "#include <common>",
+          "#include <common>\nuniform int uSpecimenKind, uSpecimenRegion; uniform float uSpecimenScatter;",
+        )
+        .replace(
+          "#include <roughnessmap_fragment>",
+          `${SHARED_SPECIMEN_TISSUE_SHADER}\n#include <roughnessmap_fragment>`,
+        );
+    }
   };
-  m.customProgramCacheKey = () => `specimen-${type}-${role}-v1`;
+  m.customProgramCacheKey = () => {
+    if (green)
+      return type === "zinnia"
+        ? "specimen-calyx-zinnia-v2"
+        : "specimen-calyx-v2";
+    if (!green && tissue === "leaf" && response) return "specimen-leaf-v2";
+    // Pigments are uniforms. Organ names alone must not compile duplicate programs.
+    if (!green && response) return "specimen-shared-tissue-v3";
+    return `specimen-${type}-${role}-v1${tissue ? `-${tissue}` : ""}`;
+  };
   return m;
 }

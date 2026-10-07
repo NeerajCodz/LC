@@ -326,7 +326,7 @@ function Surface({
     return g;
   }, [surface, quality, resources, index]);
   const material = useMemo(() => {
-    const m = createSpecimenMaterial(type, surface.role, color);
+    const m = createSpecimenMaterial(type, surface.role, color, surface.tissue);
     if (resources && surface.flexible) resources.deformation.attach(m);
     return m;
   }, [type, surface, color, resources]);

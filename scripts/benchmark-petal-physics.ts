@@ -12,8 +12,28 @@ import { SNAPDRAGON_MODEL } from "../components/flowers/snapdragon/snapdragonGeo
 import { BEGONIA_MODEL } from "../components/flowers/hardy-begonia/begoniaGeometry";
 import { HYDRANGEA_MODEL } from "../components/flowers/hydrangea/hydrangeaGeometry";
 import { PROTEA_MODEL } from "../components/flowers/king-protea/proteaGeometry";
+import { HELLEBORE_MODEL } from "../components/flowers/hellebore/helleboreGeometry";
+import { PRIMROSE_MODEL } from "../components/flowers/primrose/primroseGeometry";
+import { PETUNIA_MODEL } from "../components/flowers/petunia/petuniaGeometry";
+import { LILY_OF_THE_VALLEY_MODEL } from "../components/flowers/lily-of-the-valley/lilyOfTheValleyGeometry";
+import { SNOWDROP_MODEL } from "../components/flowers/snowdrop/snowdropGeometry";
+import { GLADIOLUS_MODEL } from "../components/flowers/gladiolus/gladiolusGeometry";
+import { DELPHINIUM_MODEL } from "../components/flowers/delphinium/delphiniumGeometry";
+import { ALSTROEMERIA_MODEL } from "../components/flowers/alstroemeria/alstroemeriaGeometry";
+import { GERBERA_MODEL } from "../components/flowers/gerbera/gerberaGeometry";
+import { ZINNIA_MODEL } from "../components/flowers/zinnia/zinniaGeometry";
 const results = [];
 for (const [name, model] of Object.entries({
+  hellebore: HELLEBORE_MODEL,
+  primrose: PRIMROSE_MODEL,
+  petunia: PETUNIA_MODEL,
+  "lily-of-the-valley": LILY_OF_THE_VALLEY_MODEL,
+  snowdrop: SNOWDROP_MODEL,
+  gladiolus: GLADIOLUS_MODEL,
+  delphinium: DELPHINIUM_MODEL,
+  alstroemeria: ALSTROEMERIA_MODEL,
+  gerbera: GERBERA_MODEL,
+  zinnia: ZINNIA_MODEL,
   carnation: CARNATION_MODEL,
   plumeria: PLUMERIA_MODEL,
   foxglove: FOXGLOVE_MODEL,

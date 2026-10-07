@@ -56,6 +56,16 @@ Generated from `lib/flowers/catalog.ts`; genus or ornamental studies never mark 
 | [Hardy Begonia](http://localhost:1607/flower/hardy-begonia/) | Begonia grandis | Exact accepted-name match: `wfo-0000824176` |
 | [Lacecap Hydrangea](http://localhost:1607/flower/hydrangea/) | Hydrangea macrophylla | Exact accepted-name match: `wfo-0000726228` |
 | [King Protea](http://localhost:1607/flower/king-protea/) | Protea cynaroides | Exact accepted-name match: `wfo-0001106756` |
+| [Hellebore](http://localhost:1607/flower/hellebore/) | Helleborus orientalis | Exact accepted-name match: `wfo-0000719190` |
+| [Primrose](http://localhost:1607/flower/primrose/) | Primula vulgaris | Exact accepted-name match: `wfo-0000482762` |
+| [Petunia](http://localhost:1607/flower/petunia/) | Petunia axillaris | Exact accepted-name match: `wfo-0001024409` |
+| [Lily of the Valley](http://localhost:1607/flower/lily-of-the-valley/) | Convallaria majalis | Exact accepted-name match: `wfo-0000764146` |
+| [Snowdrop](http://localhost:1607/flower/snowdrop/) | Galanthus nivalis | Exact accepted-name match: `wfo-0000768822` |
+| [Gladiolus](http://localhost:1607/flower/gladiolus/) | Gladiolus communis | Exact accepted-name match: `wfo-0000789736` |
+| [Delphinium](http://localhost:1607/flower/delphinium/) | Delphinium elatum | Exact accepted-name match: `wfo-0000640017` |
+| [Alstroemeria](http://localhost:1607/flower/alstroemeria/) | Alstroemeria aurea | Exact accepted-name match: `wfo-0000759057` |
+| [Gerbera](http://localhost:1607/flower/gerbera/) | Gerbera jamesonii | Taxonomic mapping requires review |
+| [Zinnia](http://localhost:1607/flower/zinnia/) | Zinnia elegans | Taxonomic mapping requires review |
 
 ## Reproduce and audit
 
@@ -9557,7 +9567,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Alstroemeria aquidauanica — `wfo-0000759050`
 - Alstroemeria arnicana — `wfo-0000759053`
 - Alstroemeria aulica — `wfo-0000759055`
-- Alstroemeria aurea — `wfo-0000759057`
+- Alstroemeria aurea — `wfo-0000759057` · authored study: `alstroemeria`
 - Alstroemeria bahiensis — `wfo-0000759061`
 - Alstroemeria bakeri — `wfo-0000759062`
 - Alstroemeria bilabiata — `wfo-0000759065`
@@ -12161,7 +12171,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Galanthus krasnovii — `wfo-0000768811`
 - Galanthus lagodechianus — `wfo-0000768814`
 - Galanthus lagodechianus — `wfo-0001046803`
-- Galanthus nivalis — `wfo-0000768822`
+- Galanthus nivalis — `wfo-0000768822` · authored study: `snowdrop`
 - Galanthus panjutinii — `wfo-0001332818`
 - Galanthus peshmenii — `wfo-0000768846`
 - Galanthus platyphyllus — `wfo-0001046802`
@@ -41899,7 +41909,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Coilonox zebrinum — `wfo-0000763795`
 - Comospermum yedoense — `wfo-0000764075`
 - Convallaria keiskei — `wfo-0000764137`
-- Convallaria majalis — `wfo-0000764146`
+- Convallaria majalis — `wfo-0000764146` · authored study: `lily-of-the-valley`
 - Convallaria montana — `wfo-0000764165`
 - Convallaria pseudomajalis — `wfo-0001329094`
 - Cordyline angustissima — `wfo-0000764202`
@@ -205995,7 +206005,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Gladiolus chelamontanus — `wfo-0000789726`
 - Gladiolus chevalierianus — `wfo-0000789727`
 - Gladiolus clivorum — `wfo-0001338443`
-- Gladiolus communis — `wfo-0000789736`
+- Gladiolus communis — `wfo-0000789736` · authored study: `gladiolus`
 - Gladiolus comptonii — `wfo-0000789745`
 - Gladiolus crassifolius — `wfo-0000789754`
 - Gladiolus crispulatus — `wfo-0000789757`
@@ -335145,7 +335155,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Primula violacea — `wfo-0001106372`
 - Primula violaris — `wfo-0001105876`
 - Primula virginis — `wfo-0001106076`
-- Primula vulgaris — `wfo-0000482762`
+- Primula vulgaris — `wfo-0000482762` · authored study: `primrose`
 - Primula vulgaris subsp. alpina — `wfo-0001368805` · subspecies
 - Primula vulgaris subsp. atlantica — `wfo-0000482768` · subspecies
 - Primula vulgaris subsp. balearica — `wfo-0000747338` · subspecies
@@ -339387,7 +339397,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Delphinium ecalcaratum — `wfo-0000640013`
 - Delphinium edelbergii — `wfo-0000640014`
 - Delphinium eglandulosum — `wfo-0000640015`
-- Delphinium elatum — `wfo-0000640017`
+- Delphinium elatum — `wfo-0000640017` · authored study: `delphinium`
 - Delphinium elatum subsp. helveticum — `wfo-0000640026` · subspecies
 - Delphinium elatum subsp. nacladense — `wfo-0000640028` · subspecies
 - Delphinium elatum subsp. polatschekii — `wfo-0000640031` · subspecies
@@ -339901,7 +339911,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Helleborus niger subsp. macranthus — `wfo-0000735067` · subspecies
 - Helleborus odorus — `wfo-0000719185`
 - Helleborus odorus subsp. laxus — `wfo-0000735063` · subspecies
-- Helleborus orientalis — `wfo-0000719190`
+- Helleborus orientalis — `wfo-0000719190` · authored study: `hellebore`
 - Helleborus purpurascens — `wfo-0000719199`
 - Helleborus thibetanus — `wfo-0000719207`
 - Helleborus vesicarius — `wfo-0000719218`
@@ -383239,7 +383249,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Pantacantha ameghinoi — `wfo-0001024372`
 - Petunia altiplana — `wfo-0001024405`
 - Petunia atkinsiana — `wfo-0001024407`
-- Petunia axillaris — `wfo-0001024409`
+- Petunia axillaris — `wfo-0001024409` · authored study: `petunia`
 - Petunia axillaris subsp. parodii — `wfo-0001024411` · subspecies
 - Petunia axillaris subsp. subandina — `wfo-0001024412` · subspecies
 - Petunia bajeensis — `wfo-0001024413`

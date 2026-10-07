@@ -35,6 +35,16 @@ export const FLOWER_TYPES = [
   "hardy-begonia",
   "hydrangea",
   "king-protea",
+  "hellebore",
+  "primrose",
+  "petunia",
+  "lily-of-the-valley",
+  "snowdrop",
+  "gladiolus",
+  "delphinium",
+  "alstroemeria",
+  "gerbera",
+  "zinnia",
 ] as const;
 
 export type FlowerType = (typeof FLOWER_TYPES)[number];

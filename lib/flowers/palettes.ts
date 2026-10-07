@@ -30,6 +30,15 @@ const palette = (
 });
 
 export const PETAL_PALETTES: Record<FlowerType, PetalPalette> = {
+  hellebore: palette(
+    "#92a28a",
+    "#d8dad0",
+    "#e8dce0",
+    "#809675",
+    0.34,
+    0.72,
+    0.055,
+  ),
   "king-protea": palette(
     "#c5bda7",
     "#ddb0b5",

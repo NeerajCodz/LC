@@ -36,7 +36,9 @@ import { Snapdragon } from "./snapdragon/Snapdragon";
 import { HardyBegonia } from "./hardy-begonia/HardyBegonia";
 import { Hydrangea } from "./hydrangea/Hydrangea";
 import { KingProtea } from "./king-protea/KingProtea";
+import { Hellebore } from "./hellebore/Hellebore";
 const SPECIES = {
+  hellebore: Hellebore,
   "king-protea": KingProtea,
   hydrangea: Hydrangea,
   "hardy-begonia": HardyBegonia,

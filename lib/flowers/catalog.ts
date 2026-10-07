@@ -367,6 +367,16 @@ FLOWERS.push({
   type: "king-protea",
   color: "#ddb0b5",
 });
+FLOWERS.push({
+  type: "hellebore",
+  name: "Hellebore",
+  latin: "Helleborus orientalis",
+  family: "Ranunculaceae",
+  color: PETAL_PALETTES.hellebore.body,
+  description: "Winter, held in green.\nSmall cups of nectar.",
+  detail:
+    "Five substantial sepals surround tubular nectar-bearing petals, numerous stamens and pale green carpels. Nodding flowers rise above leathery, seven-leaflet basal foliage.",
+});
 FLOWERS.sort(
   (a, b) => FLOWER_TYPES.indexOf(a.type) - FLOWER_TYPES.indexOf(b.type),
 );

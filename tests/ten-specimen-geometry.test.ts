@@ -6,6 +6,7 @@ import { PRIMROSE_MODEL } from "../components/flowers/primrose/primroseGeometry"
 import { PETUNIA_MODEL } from "../components/flowers/petunia/petuniaGeometry";
 import { LILY_OF_THE_VALLEY_MODEL } from "../components/flowers/lily-of-the-valley/lilyOfTheValleyGeometry";
 import { SNOWDROP_MODEL } from "../components/flowers/snowdrop/snowdropGeometry";
+import { GLADIOLUS_MODEL } from "../components/flowers/gladiolus/gladiolusGeometry";
 import { SNOWDROP_LEAF } from "../components/flowers/snowdrop/snowdropLeaf";
 import { LILY_OF_THE_VALLEY_LEAF } from "../components/flowers/lily-of-the-valley/lilyOfTheValleyLeaf";
 import { PETUNIA_LEAF } from "../components/flowers/petunia/petuniaLeaf";
@@ -34,6 +35,25 @@ verifySpecimen("primrose", PRIMROSE_MODEL);
 verifySpecimen("petunia", PETUNIA_MODEL);
 verifySpecimen("lily of the valley", LILY_OF_THE_VALLEY_MODEL);
 verifySpecimen("snowdrop", SNOWDROP_MODEL);
+verifySpecimen("gladiolus", GLADIOLUS_MODEL);
+test("gladiolus preserves unequal whorls, three guided outer tepals and unilateral stamens", () => {
+  const m = GLADIOLUS_MODEL;
+  assert.equal(m.clusters.length, 11);
+  assert.equal(m.surfaces.filter((s) => s.name === "unequal tepal").length, 66);
+  assert.equal(m.surfaces.filter((s) => s.tissue === "guide").length, 33);
+  for (let c = 0; c < 11; c++) {
+    const fil = m.organs.filter(
+      (o) => o.cluster === c && o.name === "unilateral stamen filament",
+    );
+    assert.equal(fil.length, 3);
+    assert.ok(fil.every((o) => o.points.at(-1)![2] > 0));
+    assert.equal(
+      m.organs.filter((o) => o.cluster === c && o.name === "pistil style arm")
+        .length,
+      3,
+    );
+  }
+});
 verifySpecimen("snowdrop strap blades", {
   clusters: [],
   surfaces: [SNOWDROP_LEAF],

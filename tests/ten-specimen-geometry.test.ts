@@ -8,6 +8,7 @@ import { LILY_OF_THE_VALLEY_MODEL } from "../components/flowers/lily-of-the-vall
 import { SNOWDROP_MODEL } from "../components/flowers/snowdrop/snowdropGeometry";
 import { GLADIOLUS_MODEL } from "../components/flowers/gladiolus/gladiolusGeometry";
 import { DELPHINIUM_MODEL } from "../components/flowers/delphinium/delphiniumGeometry";
+import { createDelphiniumLeaf } from "../components/flowers/delphinium/delphiniumLeaf";
 import { GLADIOLUS_LEAF } from "../components/flowers/gladiolus/gladiolusLeaf";
 import { SNOWDROP_LEAF } from "../components/flowers/snowdrop/snowdropLeaf";
 import { LILY_OF_THE_VALLEY_LEAF } from "../components/flowers/lily-of-the-valley/lilyOfTheValleyLeaf";
@@ -39,6 +40,15 @@ verifySpecimen("lily of the valley", LILY_OF_THE_VALLEY_MODEL);
 verifySpecimen("snowdrop", SNOWDROP_MODEL);
 verifySpecimen("gladiolus", GLADIOLUS_MODEL);
 verifySpecimen("delphinium", DELPHINIUM_MODEL);
+test("delphinium leaves keep a continuous filled palmate blade at constrained quality", () => {
+  const g = createDelphiniumLeaf("low");
+  const folded = g.morphAttributes.position;
+  assert.ok(folded);
+  assert.ok(g.index && g.getAttribute("position").count > 1000);
+  assert.equal(folded[0].count, g.getAttribute("position").count);
+  assert.ok(g.getAttribute("tissueSide"));
+  g.dispose();
+});
 test("delphinium keeps five sepals, a hollow dorsal spur and four distinct inner petals", () => {
   const m = DELPHINIUM_MODEL;
   assert.equal(m.clusters.length, 12);

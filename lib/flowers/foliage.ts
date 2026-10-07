@@ -21,6 +21,15 @@ export interface FoliageProfile {
 
 /** Cultivar-independent leaf traits; lotus has its own peltate blade generator. */
 export const FOLIAGE: Record<FlowerType, FoliageProfile> = {
+  delphinium: {
+    length: 0.95,
+    width: 0.7,
+    color: "#587864",
+    thickness: 0.008,
+    roughness: 0.77,
+    lobes: 0.75,
+    pubescence: 0.1,
+  },
   gladiolus: {
     length: 1.95,
     width: 0.19,

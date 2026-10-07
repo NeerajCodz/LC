@@ -30,6 +30,15 @@ const palette = (
 });
 
 export const PETAL_PALETTES: Record<FlowerType, PetalPalette> = {
+  delphinium: palette(
+    "#2c467e",
+    "#577fcc",
+    "#829bda",
+    "#3a568f",
+    0.4,
+    0.71,
+    0.06,
+  ),
   gladiolus: palette(
     "#80476c",
     "#b75d98",

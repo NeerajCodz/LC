@@ -41,6 +41,7 @@ export const FLOWER_TYPES = [
   "lily-of-the-valley",
   "snowdrop",
   "gladiolus",
+  "delphinium",
 ] as const;
 
 export type FlowerType = (typeof FLOWER_TYPES)[number];

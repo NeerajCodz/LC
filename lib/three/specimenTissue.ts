@@ -22,6 +22,7 @@ export const TISSUE_RESPONSE: Record<
   zinnia: { roughness: 0.78, sheen: 0.16, coat: 0, scatter: 0.055 },
 };
 export function specimenTissueColor(type: string, tissue?: SpecimenTissue) {
+  if (type === "delphinium" && tissue === "inner") return "#dfdcc2";
   if (tissue === "disc") {
     if (type === "gerbera") return "#dac090";
     if (type === "zinnia") return "#eac04d";

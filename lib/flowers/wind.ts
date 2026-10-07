@@ -10,6 +10,7 @@ export interface WindProfile {
 // Art-directed response classes informed by habit, stem construction and head load.
 // These are not measured species-specific elastic constants. See wind-and-contact.md.
 export const WIND_PROFILES: Record<FlowerType, WindProfile> = {
+  delphinium: { compliance: 0.14, stiffness: 46, damping: 0.85, flutter: 0.58 },
   gladiolus: { compliance: 0.12, stiffness: 49, damping: 0.86, flutter: 0.55 },
   snowdrop: { compliance: 0.09, stiffness: 46, damping: 0.88, flutter: 0.42 },
   "lily-of-the-valley": {

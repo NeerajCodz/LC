@@ -427,6 +427,16 @@ FLOWERS.push({
   type: "gladiolus",
   color: "#b75d98",
 });
+FLOWERS.push({
+  name: "Delphinium",
+  latin: "Delphinium elatum",
+  family: "Ranunculaceae",
+  description: "Blue sepals, ascending.\nA small hidden spur.",
+  detail:
+    "Five petaloid sepals frame four smaller inner petals; the dorsal sepal extends into a hollow nectar spur. Pale beards lift from the lower petals, while deeply divided continuous leaves grow along the upright raceme.",
+  type: "delphinium",
+  color: "#577fcc",
+});
 FLOWERS.sort(
   (a, b) => FLOWER_TYPES.indexOf(a.type) - FLOWER_TYPES.indexOf(b.type),
 );

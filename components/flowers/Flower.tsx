@@ -42,7 +42,9 @@ import { Petunia } from "./petunia/Petunia";
 import { LilyOfTheValley } from "./lily-of-the-valley/LilyOfTheValley";
 import { Snowdrop } from "./snowdrop/Snowdrop";
 import { Gladiolus } from "./gladiolus/Gladiolus";
+import { Delphinium } from "./delphinium/Delphinium";
 const SPECIES = {
+  delphinium: Delphinium,
   gladiolus: Gladiolus,
   snowdrop: Snowdrop,
   "lily-of-the-valley": LilyOfTheValley,

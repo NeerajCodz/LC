@@ -52,8 +52,11 @@ import { snowdropStructure } from "../../components/flowers/snowdrop/Snowdrop";
 
 import { gladiolusStructure } from "../../components/flowers/gladiolus/Gladiolus";
 
+import { delphiniumStructure } from "../../components/flowers/delphinium/Delphinium";
+
 /** Authored anatomy shared by planting layout and geometry verification. */
 export const FLOWER_STRUCTURES: Record<FlowerType, FlowerStructure> = {
+  delphinium: delphiniumStructure,
   gladiolus: gladiolusStructure,
   snowdrop: snowdropStructure,
   "lily-of-the-valley": lilyOfTheValleyStructure,

@@ -21,6 +21,15 @@ export interface FoliageProfile {
 
 /** Cultivar-independent leaf traits; lotus has its own peltate blade generator. */
 export const FOLIAGE: Record<FlowerType, FoliageProfile> = {
+  "lily-of-the-valley": {
+    length: 1.42,
+    width: 0.41,
+    color: "#426b46",
+    thickness: 0.016,
+    roughness: 0.62,
+    parallel: true,
+    basal: true,
+  },
   petunia: {
     length: 0.67,
     width: 0.235,

@@ -38,6 +38,7 @@ export const FLOWER_TYPES = [
   "hellebore",
   "primrose",
   "petunia",
+  "lily-of-the-valley",
 ] as const;
 
 export type FlowerType = (typeof FLOWER_TYPES)[number];

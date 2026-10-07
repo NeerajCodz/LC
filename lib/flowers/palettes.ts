@@ -30,6 +30,15 @@ const palette = (
 });
 
 export const PETAL_PALETTES: Record<FlowerType, PetalPalette> = {
+  "lily-of-the-valley": palette(
+    "#b4c3a6",
+    "#e7e8de",
+    "#f5f3e9",
+    "#c7d1bd",
+    0.32,
+    0.76,
+    0.032,
+  ),
   petunia: palette(
     "#adb993",
     "#e8e5d5",

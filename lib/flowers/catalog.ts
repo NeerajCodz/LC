@@ -397,6 +397,16 @@ FLOWERS.push({
   type: "petunia",
   color: "#e8e5d5",
 });
+FLOWERS.push({
+  name: "Lily of the Valley",
+  latin: "Convallaria majalis",
+  family: "Asparagaceae",
+  description: "White bells, suspended.\nA gentle arc of spring.",
+  detail:
+    "An arching one-sided raceme carries continuous white bells with six turned-back rim teeth and six included stamens. Two broad parallel-veined leaves rise from the base; younger bells remain furled near the tip.",
+  type: "lily-of-the-valley",
+  color: "#e7e8de",
+});
 FLOWERS.sort(
   (a, b) => FLOWER_TYPES.indexOf(a.type) - FLOWER_TYPES.indexOf(b.type),
 );

@@ -5,6 +5,7 @@ import { HELLEBORE_MODEL } from "../components/flowers/hellebore/helleboreGeomet
 import { PRIMROSE_MODEL } from "../components/flowers/primrose/primroseGeometry";
 import { PETUNIA_MODEL } from "../components/flowers/petunia/petuniaGeometry";
 import { LILY_OF_THE_VALLEY_MODEL } from "../components/flowers/lily-of-the-valley/lilyOfTheValleyGeometry";
+import { LILY_OF_THE_VALLEY_LEAF } from "../components/flowers/lily-of-the-valley/lilyOfTheValleyLeaf";
 import { PETUNIA_LEAF } from "../components/flowers/petunia/petuniaLeaf";
 import { PRIMROSE_LEAF } from "../components/flowers/primrose/primroseLeaf";
 import {
@@ -30,6 +31,11 @@ test("closed buds keep a swollen body around their preformed floral organs", () 
 verifySpecimen("primrose", PRIMROSE_MODEL);
 verifySpecimen("petunia", PETUNIA_MODEL);
 verifySpecimen("lily of the valley", LILY_OF_THE_VALLEY_MODEL);
+verifySpecimen("lily of the valley basal blades", {
+  clusters: [],
+  surfaces: [LILY_OF_THE_VALLEY_LEAF],
+  organs: [],
+});
 test("lily of the valley retains continuous six-toothed bells and six included stamens", () => {
   const m = LILY_OF_THE_VALLEY_MODEL;
   assert.equal(m.clusters.length, 11);

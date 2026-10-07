@@ -2,28 +2,41 @@ import type { FlowerType } from "../flowers/types";
 import { PETAL_PALETTES } from "../flowers/palettes";
 import { createPetalMaterial } from "./materials";
 import type { SpecimenSurface } from "./specimenModel";
+import {
+  TISSUE_RESPONSE,
+  specimenTissueColor,
+  specimenTissueShader,
+} from "./specimenTissue";
 
 /** Species optics compose the shared tissue atlas and its GLSL fallback. */
 export function createSpecimenMaterial(
   type: FlowerType,
   role: SpecimenSurface["role"],
   color?: string,
+  tissue?: SpecimenSurface["tissue"],
 ) {
   const green = role === "calyx";
   const cream =
     (type === "bougainvillea" && role === "tube") ||
     (type === "king-protea" && role !== "bract" && !green);
+  const tissueColor = specimenTissueColor(type, tissue);
   const m = createPetalMaterial(
     green
       ? "#608065"
       : cream
         ? "#f4ecd8"
-        : (color ?? PETAL_PALETTES[type].body),
+        : (tissueColor ?? color ?? PETAL_PALETTES[type].body),
     green ? 0.78 : 0.63,
     green ? 0.2 : 0.5,
     0,
-    green || cream || color ? undefined : PETAL_PALETTES[type],
+    green || cream || color || tissueColor ? undefined : PETAL_PALETTES[type],
   );
+  const response = TISSUE_RESPONSE[type];
+  if (response && !green && tissue !== "leaf") {
+    m.roughness = response.roughness;
+    m.sheen = response.sheen;
+    m.clearcoat = response.coat;
+  }
   const previous = m.onBeforeCompile;
   if (type === "king-protea" && !green) {
     m.roughness = role === "bract" ? 0.66 : 0.78;
@@ -156,7 +169,20 @@ export function createSpecimenMaterial(
         `#include <color_fragment>
       diffuseColor.rgb*=1.-.055*pow(abs(sin(vPetalUv.x*35.+vPetalUv.y*7.)),8.);`,
       );
+    if (response && !green && tissue !== "leaf") {
+      s.fragmentShader = s.fragmentShader.replace(
+        "scatter*.11",
+        `scatter*${response.scatter.toFixed(3)}`,
+      );
+      const detail = specimenTissueShader(type, tissue);
+      if (detail)
+        s.fragmentShader = s.fragmentShader.replace(
+          "#include <roughnessmap_fragment>",
+          `${detail}\n#include <roughnessmap_fragment>`,
+        );
+    }
   };
-  m.customProgramCacheKey = () => `specimen-${type}-${role}-v1`;
+  m.customProgramCacheKey = () =>
+    `specimen-${type}-${role}-v1${tissue ? `-${tissue}` : ""}`;
   return m;
 }

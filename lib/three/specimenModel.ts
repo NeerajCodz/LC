@@ -3,7 +3,9 @@ import { createParametricShell } from "./parametricShell";
 import { createOrganicTube } from "./organicTube";
 import { Float32BufferAttribute } from "three";
 import { createCagePatch } from "./petalDynamics";
+export type SpecimenTissue = "inner" | "guide" | "disc" | "leaf";
 export interface SpecimenSurface {
+  tissue?: SpecimenTissue;
   name: string;
   cluster: number;
   role: "petal" | "tube" | "calyx" | "bract" | "banner" | "wing" | "keel";

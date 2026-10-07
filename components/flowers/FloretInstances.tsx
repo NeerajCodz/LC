@@ -92,7 +92,7 @@ export function FloretInstances({
   const materials = useMemo(
     () => ({
       surfaces: group.surfaces.map((s) =>
-        createSpecimenMaterial(type, s.role, props.color),
+        createSpecimenMaterial(type, s.role, props.color, s.tissue),
       ),
       organs: new MeshStandardMaterial({ vertexColors: true, roughness: 0.65 }),
     }),

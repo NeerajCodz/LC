@@ -7,6 +7,7 @@ import { PETUNIA_MODEL } from "../components/flowers/petunia/petuniaGeometry";
 import { LILY_OF_THE_VALLEY_MODEL } from "../components/flowers/lily-of-the-valley/lilyOfTheValleyGeometry";
 import { SNOWDROP_MODEL } from "../components/flowers/snowdrop/snowdropGeometry";
 import { GLADIOLUS_MODEL } from "../components/flowers/gladiolus/gladiolusGeometry";
+import { DELPHINIUM_MODEL } from "../components/flowers/delphinium/delphiniumGeometry";
 import { GLADIOLUS_LEAF } from "../components/flowers/gladiolus/gladiolusLeaf";
 import { SNOWDROP_LEAF } from "../components/flowers/snowdrop/snowdropLeaf";
 import { LILY_OF_THE_VALLEY_LEAF } from "../components/flowers/lily-of-the-valley/lilyOfTheValleyLeaf";
@@ -37,6 +38,36 @@ verifySpecimen("petunia", PETUNIA_MODEL);
 verifySpecimen("lily of the valley", LILY_OF_THE_VALLEY_MODEL);
 verifySpecimen("snowdrop", SNOWDROP_MODEL);
 verifySpecimen("gladiolus", GLADIOLUS_MODEL);
+verifySpecimen("delphinium", DELPHINIUM_MODEL);
+test("delphinium keeps five sepals, a hollow dorsal spur and four distinct inner petals", () => {
+  const m = DELPHINIUM_MODEL;
+  assert.equal(m.clusters.length, 12);
+  assert.equal(
+    m.surfaces.filter((s) => s.name === "petaloid sepal").length,
+    60,
+  );
+  const spurs = m.surfaces.filter((s) => s.name === "hollow dorsal spur");
+  assert.equal(spurs.length, 12);
+  assert.ok(spurs.every((s) => s.periodic));
+  for (const spur of spurs) {
+    const sepal = m.surfaces.find(
+      (s) => s.cluster === spur.cluster && s.name === "petaloid sepal",
+    )!;
+    const a = spur.sample(0.5, 0, 0),
+      b = sepal.sample(0.5, 0, 0);
+    assert.ok(Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2]) < 1e-6);
+  }
+  assert.equal(
+    m.organs.filter((o) => o.name === "spur terminal cap").length,
+    12,
+  );
+  assert.equal(m.surfaces.filter((s) => s.name === "inner petal").length, 48);
+  assert.equal(
+    m.organs.filter((o) => o.name === "upper nectar petal spur").length,
+    24,
+  );
+  assert.ok(m.organs.some((o) => o.name === "lower petal beard hair"));
+});
 verifySpecimen("gladiolus sword blades", {
   clusters: [],
   surfaces: [GLADIOLUS_LEAF],

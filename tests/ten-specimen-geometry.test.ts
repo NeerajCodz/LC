@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { verifySpecimen } from "./specimen-checks";
 import { HELLEBORE_MODEL } from "../components/flowers/hellebore/helleboreGeometry";
 import { PRIMROSE_MODEL } from "../components/flowers/primrose/primroseGeometry";
+import { PETUNIA_MODEL } from "../components/flowers/petunia/petuniaGeometry";
 import { PRIMROSE_LEAF } from "../components/flowers/primrose/primroseLeaf";
 import {
   HELLEBORE_LEAFLET,
@@ -25,6 +26,29 @@ test("closed buds keep a swollen body around their preformed floral organs", () 
   );
 });
 verifySpecimen("primrose", PRIMROSE_MODEL);
+verifySpecimen("petunia", PETUNIA_MODEL);
+test("white petunia retains its long fused tube and unequal included stamens", () => {
+  const m = PETUNIA_MODEL;
+  assert.equal(m.clusters.length, 5);
+  assert.equal(
+    m.surfaces.filter((s) => s.name === "long-tubed corolla").length,
+    5,
+  );
+  for (let c = 0; c < 5; c++) {
+    const fil = m.organs.filter(
+      (o) => o.cluster === c && o.name === "included stamen filament",
+    );
+    assert.equal(fil.length, 5);
+    const tips = fil.map((o) => o.points.at(-1)![1]);
+    assert.ok(Math.max(...tips) - Math.min(...tips) > 0.08);
+    const flower = m.surfaces.find(
+      (s) => s.cluster === c && s.name === "long-tubed corolla",
+    )!;
+    const mouth = flower.sample(0.1, 1, 1);
+    for (const o of m.organs.filter((o) => o.cluster === c))
+      assert.ok(Math.max(...o.points.map((p) => p[1])) < mouth[1]);
+  }
+});
 verifySpecimen("primrose rosette", {
   clusters: [],
   surfaces: [PRIMROSE_LEAF],

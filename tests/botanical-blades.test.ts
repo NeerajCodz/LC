@@ -41,6 +41,13 @@ test("a divided simple blade remains sealed, deterministic and thick with valid 
           ) > 0.006,
         );
     assert.equal(g.getAttribute("tissueSide").count, p.count);
+    const colors = g.getAttribute("color");
+    assert.ok(colors);
+    assert.equal(colors.count, p.count);
+    assert.ok(
+      Array.from(colors.array).every((value) => value === 1),
+      "procedural pigment receives neutral vertex colors",
+    );
     g.dispose();
     b.dispose();
   }

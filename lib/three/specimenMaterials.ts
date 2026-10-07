@@ -20,6 +20,18 @@ export function createSpecimenMaterial(
     (type === "bougainvillea" && role === "tube") ||
     (type === "king-protea" && role !== "bract" && !green);
   const tissueColor = specimenTissueColor(type, tissue);
+  const leafPalette =
+    tissue === "leaf" && color
+      ? {
+          root: color,
+          body: color,
+          tip: color,
+          vein: color,
+          rootFalloff: 0.2,
+          tipStart: 0.8,
+          veinStrength: 0,
+        }
+      : undefined;
   const m = createPetalMaterial(
     green
       ? "#608065"
@@ -29,7 +41,10 @@ export function createSpecimenMaterial(
     green ? 0.78 : 0.63,
     green ? 0.2 : 0.5,
     0,
-    green || cream || color || tissueColor ? undefined : PETAL_PALETTES[type],
+    leafPalette ??
+      (green || cream || color || tissueColor
+        ? undefined
+        : PETAL_PALETTES[type]),
   );
   const response = TISSUE_RESPONSE[type];
   if (response && !green && tissue !== "leaf") {

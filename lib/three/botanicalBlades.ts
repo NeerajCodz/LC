@@ -116,6 +116,10 @@ export function createPalmateBlade(quality: Quality, lobes = 5) {
   }
   const g = new BufferGeometry();
   g.setAttribute("position", new Float32BufferAttribute(p, 3));
+  g.setAttribute(
+    "color",
+    new Float32BufferAttribute(new Float32Array(p.length).fill(1), 3),
+  );
   g.setAttribute("uv", new Float32BufferAttribute(uv, 2));
   g.setAttribute("tissueSide", new Float32BufferAttribute(side, 1));
   g.setIndex(ix);

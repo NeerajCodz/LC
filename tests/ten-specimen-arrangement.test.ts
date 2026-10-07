@@ -9,6 +9,12 @@ import type {
 import { ALSTROEMERIA_MODEL } from "../components/flowers/alstroemeria/alstroemeriaGeometry";
 import { GLADIOLUS_MODEL } from "../components/flowers/gladiolus/gladiolusGeometry";
 import { DELPHINIUM_MODEL } from "../components/flowers/delphinium/delphiniumGeometry";
+import { ZINNIA_MODEL } from "../components/flowers/zinnia/zinniaGeometry";
+import { ZINNIA_LEAF } from "../components/flowers/zinnia/zinniaLeaf";
+import {
+  zinniaAnatomy,
+  zinniaStructure,
+} from "../components/flowers/zinnia/Zinnia";
 function world(model: SpecimenModel, s: SpecimenSurface, p: Vec3) {
   const c = model.clusters[s.cluster];
   return new Vector3(...p)
@@ -53,4 +59,32 @@ test("delphinium's dorsal spur ascends behind its flower", () => {
     end = world(DELPHINIUM_MODEL, s, s.sample(0.25, 1, 1));
   assert.ok(end.y > start.y);
   assert.ok(end.z < start.z);
+});
+test("zinnia's elongated peduncle keeps opposite leaves below the mature flower", () => {
+  let leafTop = -Infinity,
+    headBottom = Infinity;
+  for (const n of zinniaAnatomy.nodes)
+    for (let u = 0; u <= 8; u++)
+      for (let v = 0; v <= 16; v++) {
+        const p = new Vector3(...ZINNIA_LEAF.sample(u / 8, v / 16, 1))
+          .applyEuler(
+            new Euler(zinniaAnatomy.leafTilt ?? 0.9, n.angle, 0.1, "YXZ"),
+          )
+          .multiplyScalar(n.scale ?? 1);
+        leafTop = Math.max(
+          leafTop,
+          -zinniaStructure.stemLength + zinniaStructure.stemLength * n.t + p.y,
+        );
+      }
+  for (const s of ZINNIA_MODEL.surfaces.filter((s) => s.name === "ray ligule"))
+    for (let u = 0; u <= 8; u++)
+      for (let v = 0; v <= 16; v++)
+        headBottom = Math.min(
+          headBottom,
+          world(ZINNIA_MODEL, s, s.sample(u / 8, v / 16, 1)).y,
+        );
+  assert.ok(
+    leafTop < headBottom - 0.04,
+    `leaf top ${leafTop}, head bottom ${headBottom}`,
+  );
 });

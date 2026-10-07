@@ -377,6 +377,16 @@ FLOWERS.push({
   detail:
     "Five substantial sepals surround tubular nectar-bearing petals, numerous stamens and pale green carpels. Nodding flowers rise above leathery, seven-leaflet basal foliage.",
 });
+FLOWERS.push({
+  name: "Primrose",
+  latin: "Primula vulgaris",
+  family: "Primulaceae",
+  description: "Pale yellow, opening.\nA small eye of gold.",
+  detail:
+    "Continuous five-lobed corollas rise on separate basal stalks above a wrinkled leaf rosette. This long-styled pin form places its stigma at the mouth and the five anthers lower inside the tube.",
+  type: "primrose",
+  color: "#eee3a6",
+});
 FLOWERS.sort(
   (a, b) => FLOWER_TYPES.indexOf(a.type) - FLOWER_TYPES.indexOf(b.type),
 );

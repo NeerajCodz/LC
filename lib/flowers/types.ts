@@ -36,6 +36,7 @@ export const FLOWER_TYPES = [
   "hydrangea",
   "king-protea",
   "hellebore",
+  "primrose",
 ] as const;
 
 export type FlowerType = (typeof FLOWER_TYPES)[number];

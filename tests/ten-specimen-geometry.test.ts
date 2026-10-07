@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { verifySpecimen } from "./specimen-checks";
 import { HELLEBORE_MODEL } from "../components/flowers/hellebore/helleboreGeometry";
 import { PRIMROSE_MODEL } from "../components/flowers/primrose/primroseGeometry";
+import { PRIMROSE_LEAF } from "../components/flowers/primrose/primroseLeaf";
 import {
   HELLEBORE_LEAFLET,
   HELLEBORE_LEAF_POSES,
@@ -10,6 +11,11 @@ import {
 
 verifySpecimen("hellebore", HELLEBORE_MODEL);
 verifySpecimen("primrose", PRIMROSE_MODEL);
+verifySpecimen("primrose rosette", {
+  clusters: [],
+  surfaces: [PRIMROSE_LEAF],
+  organs: [],
+});
 test("primrose keeps continuous corollas and the stigma above its included pin-form anthers", () => {
   const m = PRIMROSE_MODEL;
   assert.equal(m.clusters.length, 7);

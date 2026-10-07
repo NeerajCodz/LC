@@ -5,6 +5,7 @@ import { HELLEBORE_MODEL } from "../components/flowers/hellebore/helleboreGeomet
 import { PRIMROSE_MODEL } from "../components/flowers/primrose/primroseGeometry";
 import { PETUNIA_MODEL } from "../components/flowers/petunia/petuniaGeometry";
 import { LILY_OF_THE_VALLEY_MODEL } from "../components/flowers/lily-of-the-valley/lilyOfTheValleyGeometry";
+import { SNOWDROP_MODEL } from "../components/flowers/snowdrop/snowdropGeometry";
 import { LILY_OF_THE_VALLEY_LEAF } from "../components/flowers/lily-of-the-valley/lilyOfTheValleyLeaf";
 import { PETUNIA_LEAF } from "../components/flowers/petunia/petuniaLeaf";
 import { PRIMROSE_LEAF } from "../components/flowers/primrose/primroseLeaf";
@@ -31,6 +32,31 @@ test("closed buds keep a swollen body around their preformed floral organs", () 
 verifySpecimen("primrose", PRIMROSE_MODEL);
 verifySpecimen("petunia", PETUNIA_MODEL);
 verifySpecimen("lily of the valley", LILY_OF_THE_VALLEY_MODEL);
+verifySpecimen("snowdrop", SNOWDROP_MODEL);
+test("snowdrop keeps unequal tepal whorls and six included stamens on solitary scapes", () => {
+  const m = SNOWDROP_MODEL;
+  assert.equal(m.clusters.length, 3);
+  assert.equal(m.surfaces.filter((s) => s.name === "outer tepal").length, 9);
+  assert.equal(
+    m.surfaces.filter((s) => s.name === "inner green-marked tepal").length,
+    9,
+  );
+  for (let c = 0; c < 3; c++) {
+    assert.equal(
+      m.organs.filter((o) => o.cluster === c && o.name === "included anther")
+        .length,
+      6,
+    );
+    const out = m.surfaces.find(
+        (s) => s.cluster === c && s.name === "outer tepal",
+      )!,
+      inn = m.surfaces.find(
+        (s) => s.cluster === c && s.name === "inner green-marked tepal",
+      )!;
+    assert.ok(out.sample(0.5, 1, 0)[1] > inn.sample(0.5, 1, 0)[1] * 1.6);
+    assert.equal(inn.tissue, "inner");
+  }
+});
 verifySpecimen("lily of the valley basal blades", {
   clusters: [],
   surfaces: [LILY_OF_THE_VALLEY_LEAF],

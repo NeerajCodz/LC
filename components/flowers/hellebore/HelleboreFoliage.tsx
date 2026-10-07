@@ -1,4 +1,5 @@
 import { useEffect, useMemo } from "react";
+import { MeshStandardMaterial } from "three";
 import type { Quality } from "@/lib/flowers/types";
 import { specimenGeometry } from "@/lib/three/specimenModel";
 import { createOrganicTube } from "@/lib/three/organicTube";
@@ -29,12 +30,15 @@ export function HelleboreLeaf({ quality }: { quality: Quality }) {
       }),
     [quality],
   );
+  const petioleMaterial = useMemo(
+    () => new MeshStandardMaterial({ vertexColors: true, roughness: 0.7 }),
+    [],
+  );
   useEffect(() => () => petiole.dispose(), [petiole]);
+  useEffect(() => () => petioleMaterial.dispose(), [petioleMaterial]);
   return (
     <group dispose={null}>
-      <mesh geometry={petiole} castShadow>
-        <meshStandardMaterial vertexColors roughness={0.7} />
-      </mesh>
+      <mesh geometry={petiole} material={petioleMaterial} castShadow />
       <BotanicalBlade
         type="hellebore"
         quality={quality}

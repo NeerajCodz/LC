@@ -31,7 +31,17 @@ import { Plumeria } from "./plumeria/Plumeria";
 import { Foxglove } from "./foxglove/Foxglove";
 import { SweetPea } from "./sweet-pea/SweetPea";
 import { Bougainvillea } from "./bougainvillea/Bougainvillea";
+import { Cyclamen } from "./cyclamen/Cyclamen";
+import { Snapdragon } from "./snapdragon/Snapdragon";
+import { HardyBegonia } from "./hardy-begonia/HardyBegonia";
+import { Hydrangea } from "./hydrangea/Hydrangea";
+import { KingProtea } from "./king-protea/KingProtea";
 const SPECIES = {
+  "king-protea": KingProtea,
+  hydrangea: Hydrangea,
+  "hardy-begonia": HardyBegonia,
+  snapdragon: Snapdragon,
+  cyclamen: Cyclamen,
   bougainvillea: Bougainvillea,
   "sweet-pea": SweetPea,
   foxglove: Foxglove,

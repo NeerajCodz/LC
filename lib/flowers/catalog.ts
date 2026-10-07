@@ -317,6 +317,56 @@ FLOWERS.push({
   detail:
     "Three-bract cymes surround small cream-mouthed floral tubes on a thorny woody shoot.",
 });
+FLOWERS.push({
+  name: "Cyclamen",
+  latin: "Cyclamen persicum",
+  family: "Primulaceae",
+  description: "A pale twist.\nSilver leaves beneath.",
+  detail:
+    "Five swept-back corolla lobes surround a darker nodding mouth. Separate curved stalks rise from a basal crown above fleshy, silver-zoned leaves.",
+  type: "cyclamen",
+  color: "#f1d9df",
+});
+FLOWERS.push({
+  name: "Snapdragon",
+  latin: "Antirrhinum majus",
+  family: "Plantaginaceae",
+  description: "A closed mouth.\nA soft invitation.",
+  detail:
+    "Bilateral corollas open in sequence along a narrow-leaved shoot. Pointer contact or the pulse control depresses the lower palate, which returns when released.",
+  type: "snapdragon",
+  color: "#dd737e",
+});
+FLOWERS.push({
+  name: "Hardy Begonia",
+  latin: "Begonia grandis",
+  family: "Begoniaceae",
+  description: "Unequal leaves.\nTwo kinds of bloom.",
+  detail:
+    "Forked pendant cymes carry four-tepalled male flowers with golden stamens and three-tepalled female flowers with unequal ovary wings. Asymmetric leaves reveal reddish undersides and veins.",
+  type: "hardy-begonia",
+  color: "#e8a2b4",
+});
+FLOWERS.push({
+  name: "Lacecap Hydrangea",
+  latin: "Hydrangea macrophylla",
+  family: "Hydrangeaceae",
+  description: "A rim of lavender.\nTiny flowers within.",
+  detail:
+    "Broad showy sepals frame a flat lacecap of small fertile flowers, each with petals, stamens and styles. Opposite serrated leaves grow along a firm woody shoot.",
+  type: "hydrangea",
+  color: "#a5a9de",
+});
+FLOWERS.push({
+  name: "King Protea",
+  latin: "Protea cynaroides",
+  family: "Proteaceae",
+  description: "A crown of bracts.\nA hundred finer flowers.",
+  detail:
+    "Substantial pink and cream bracts surround a dense head of true florets, each with a perianth and pollen-presenting style. A thick woody shoot carries glossy leathery leaves.",
+  type: "king-protea",
+  color: "#ddb0b5",
+});
 FLOWERS.sort(
   (a, b) => FLOWER_TYPES.indexOf(a.type) - FLOWER_TYPES.indexOf(b.type),
 );

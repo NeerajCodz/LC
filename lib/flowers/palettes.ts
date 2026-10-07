@@ -30,6 +30,51 @@ const palette = (
 });
 
 export const PETAL_PALETTES: Record<FlowerType, PetalPalette> = {
+  "king-protea": palette(
+    "#c5bda7",
+    "#ddb0b5",
+    "#c26a83",
+    "#b08389",
+    0.44,
+    0.76,
+    0.045,
+  ),
+  hydrangea: palette(
+    "#676da4",
+    "#a5a9de",
+    "#c1b9e2",
+    "#787bad",
+    0.3,
+    0.9,
+    0.045,
+  ),
+  "hardy-begonia": palette(
+    "#bc6381",
+    "#e8a2b4",
+    "#f6c5ce",
+    "#b56c88",
+    0.27,
+    0.88,
+    0.05,
+  ),
+  snapdragon: palette(
+    "#9c364e",
+    "#dd737e",
+    "#f5a4a1",
+    "#aa465f",
+    0.32,
+    0.86,
+    0.07,
+  ),
+  cyclamen: palette(
+    "#9e2359",
+    "#f1d9df",
+    "#f9eeea",
+    "#c76b94",
+    0.34,
+    0.87,
+    0.07,
+  ),
   bougainvillea: palette(
     "#8d285f",
     "#d74499",

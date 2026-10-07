@@ -13,8 +13,8 @@ test("collection search and pagination expose every species", async ({
   const visiblePreviews = page.locator(
     ".gallery-specimen:not([hidden]) .preview-link",
   );
-  const pageCount = Math.ceil(FLOWER_TYPES.length / 20);
-  await expect(visiblePreviews).toHaveCount(Math.min(20, FLOWER_TYPES.length));
+  const pageCount = Math.ceil(FLOWER_TYPES.length / 15);
+  await expect(visiblePreviews).toHaveCount(Math.min(15, FLOWER_TYPES.length));
   await expect(page.locator(".gallery-pagination > div button")).toHaveCount(
     pageCount,
   );
@@ -22,16 +22,23 @@ test("collection search and pagination expose every species", async ({
     "aria-current",
     "page",
   );
-  if (pageCount > 1) {
-    await page.getByRole("button", { name: "Page 2" }).click();
+  const exposed: string[] = [];
+  for (let pageNumber = 1; pageNumber <= pageCount; pageNumber++) {
+    if (pageNumber > 1)
+      await page.getByRole("button", { name: `Page ${pageNumber}` }).click();
     await expect(visiblePreviews).toHaveCount(
-      Math.min(20, FLOWER_TYPES.length - 20),
+      Math.min(15, FLOWER_TYPES.length - (pageNumber - 1) * 15),
     );
-    await expect(page.getByRole("button", { name: "Page 2" })).toHaveAttribute(
-      "aria-current",
-      "page",
+    await expect(
+      page.getByRole("button", { name: `Page ${pageNumber}` }),
+    ).toHaveAttribute("aria-current", "page");
+    exposed.push(
+      ...(await visiblePreviews.evaluateAll((links) =>
+        links.map((link) => link.getAttribute("href")!),
+      )),
     );
   }
+  expect(exposed).toEqual(FLOWER_TYPES.map((type) => `/flower/${type}/`));
 
   const search = page.getByRole("searchbox", {
     name: "Search the collection",

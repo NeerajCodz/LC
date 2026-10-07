@@ -10,7 +10,9 @@ export function createSpecimenMaterial(
   color?: string,
 ) {
   const green = role === "calyx";
-  const cream = type === "bougainvillea" && role === "tube";
+  const cream =
+    (type === "bougainvillea" && role === "tube") ||
+    (type === "king-protea" && role !== "bract" && !green);
   const m = createPetalMaterial(
     green
       ? "#608065"
@@ -23,6 +25,30 @@ export function createSpecimenMaterial(
     green || cream || color ? undefined : PETAL_PALETTES[type],
   );
   const previous = m.onBeforeCompile;
+  if (type === "king-protea" && !green) {
+    m.roughness = role === "bract" ? 0.66 : 0.78;
+    m.sheen = role === "bract" ? 0.3 : 0.38;
+    m.sheenColor.set("#d8d4cb");
+    m.clearcoat = 0.015;
+  }
+  if (type === "hydrangea" && !green) {
+    m.roughness = 0.72;
+    m.sheen = 0.14;
+    m.clearcoat = 0;
+  }
+  if (type === "hardy-begonia" && !green) {
+    m.roughness = 0.59;
+    m.sheen = 0.23;
+    m.clearcoat = 0.025;
+  }
+  if (type === "snapdragon" && !green) {
+    m.roughness = 0.64;
+    m.sheen = 0.18;
+  }
+  if (type === "cyclamen" && !green) {
+    m.roughness = 0.57;
+    m.sheen = 0.2;
+  }
   if (type === "bougainvillea" && role === "bract") {
     m.roughness = 0.79;
     m.clearcoat = 0;
@@ -37,6 +63,44 @@ export function createSpecimenMaterial(
   }
   m.onBeforeCompile = (s, r) => {
     previous.call(m, s, r);
+    if (type === "king-protea" && !green)
+      s.fragmentShader = s.fragmentShader
+        .replace(
+          "#include <roughnessmap_fragment>",
+          `float proteaFibers=pow(.5+.5*sin(vPetalUv.x*145.+vPetalUv.y*9.),18.);
+      diffuseColor.rgb*=1.-proteaFibers*.07;
+      #include <roughnessmap_fragment>`,
+        )
+        .replace("scatter*.11", "scatter*.045")
+        .replace("ridge * .000085", "ridge * .00006");
+    if (type === "hydrangea" && role === "bract")
+      s.fragmentShader = s.fragmentShader
+        .replace(
+          "#include <roughnessmap_fragment>",
+          `float hydAcross=abs(vPetalUv.x-.5);
+      float hydMid=exp(-hydAcross*100.);
+      float hydBranch=pow(.5+.5*cos((vPetalUv.y-hydAcross*.72)*58.),25.);
+      diffuseColor.rgb*=1.-hydMid*.09-hydBranch*.065;
+      #include <roughnessmap_fragment>`,
+        )
+        .replace("scatter*.11", "scatter*.055");
+    if (type === "hardy-begonia" && !green)
+      s.fragmentShader = s.fragmentShader
+        .replace("scatter*.11", "scatter*.075")
+        .replace("ridge * .000085", "ridge * .000055");
+    if (type === "snapdragon" && !green)
+      s.fragmentShader = s.fragmentShader.replace(
+        "#include <roughnessmap_fragment>",
+        `float snapLower=smoothstep(.52,.70,vPetalUv.x)*(1.-smoothstep(.82,.96,vPetalUv.x));
+      float snapPalate=snapLower*smoothstep(.55,.78,vPetalUv.y);
+      diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.91,.67,.25),snapPalate*.80);
+      diffuseColor.rgb*=1.-.065*pow(.5+.5*sin(vPetalUv.y*90.),16.);
+      #include <roughnessmap_fragment>`,
+      );
+    if (type === "cyclamen" && !green)
+      s.fragmentShader = s.fragmentShader
+        .replace("scatter*.11", "scatter*.065")
+        .replace("ridge * .000085", "ridge * .00007");
     if (type === "bougainvillea" && role === "bract")
       s.fragmentShader = s.fragmentShader
         .replace(

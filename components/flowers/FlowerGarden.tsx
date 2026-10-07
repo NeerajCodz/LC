@@ -2,9 +2,10 @@
 import { Suspense, useState, useMemo } from "react";
 import { botanicalEvents } from "@/lib/three/events";
 import { PerformanceMonitor } from "@react-three/drei";
-import { PCFShadowMap, Vector3, Euler } from "three";
+import { PCFShadowMap } from "three";
 import type { FlowerType, Vec3 } from "@/lib/flowers/types";
 import { FLOWER_STRUCTURES } from "@/lib/flowers/structures";
+import { flowerHeadTarget } from "@/lib/flowers/framing";
 import { Flower } from "./Flower";
 import { Lighting } from "../scene/Lighting";
 import { Environment } from "../scene/Environment";
@@ -49,14 +50,7 @@ export default function FlowerGarden({
   const focus = useMemo<Vec3 | undefined>(() => {
     if (!chosen) return undefined;
     const structure = FLOWER_STRUCTURES[chosen.type];
-    const center = new Vector3(...(structure.headCenter ?? [0, 0, 0]))
-      .applyEuler(new Euler(structure.headTilt, 0, 0))
-      .multiplyScalar(chosen.scale);
-    return [
-      chosen.position[0] + center.x,
-      chosen.position[1] + structure.stemLength * chosen.scale + center.y,
-      chosen.position[2] + center.z,
-    ];
+    return flowerHeadTarget(structure, chosen.position, chosen.scale);
   }, [chosen]);
   return (
     <SafeCanvas

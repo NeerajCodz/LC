@@ -85,11 +85,11 @@ test("mobile specimen, macro, collection and garden keep bounded buffers and liv
     ".gallery-specimen:not([hidden]) .flower-preview",
   );
   await expect(previews).toHaveCount(FLOWER_TYPES.length);
-  const pageCount = Math.ceil(FLOWER_TYPES.length / 20);
+  const pageCount = Math.ceil(FLOWER_TYPES.length / 15);
   for (let pageNumber = 1; pageNumber <= pageCount; pageNumber++) {
     if (pageNumber > 1)
       await page.getByRole("button", { name: `Page ${pageNumber}` }).click();
-    const pageSize = Math.min(20, FLOWER_TYPES.length - (pageNumber - 1) * 20);
+    const pageSize = Math.min(15, FLOWER_TYPES.length - (pageNumber - 1) * 15);
     await expect(visiblePreviews).toHaveCount(pageSize);
     for (let i = 0; i < pageSize; i++) {
       await visiblePreviews.nth(i).scrollIntoViewIfNeeded();

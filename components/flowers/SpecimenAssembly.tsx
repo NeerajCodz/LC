@@ -22,6 +22,7 @@ import type { FlowerType } from "@/lib/flowers/types";
 import { createSpecimenMaterial } from "@/lib/three/specimenMaterials";
 import { joinOrgans } from "@/lib/three/floralOrgans";
 import { useThree } from "@react-three/fiber";
+import { FloretInstances } from "./FloretInstances";
 
 /** Dedicated anatomy shares only rendering and cage transfer, not its shape. */
 export function SpecimenAssembly({
@@ -40,7 +41,13 @@ export function SpecimenAssembly({
 }: FlowerOrgansProps & { model: SpecimenModel; type: FlowerType }) {
   const { constrained } = useExperienceSettings();
   const canvas = useThree((state) => state.gl.domElement);
-  const cost = useRef({ frames: 0, mean: 0, steps: 0 });
+  const cost = useRef({
+    frames: 0,
+    mean: 0,
+    steps: 0,
+    transfer: 0,
+    transfers: 0,
+  });
   const groups = useRef<(Group | null)[]>([]),
     meshes = useRef<(Mesh | null)[]>([]);
   const resources = useMemo(() => {
@@ -91,7 +98,7 @@ export function SpecimenAssembly({
     articulationClock = useRef(new SurfaceClock());
   useEffect(() => {
     if (!resources) return;
-    cost.current = { frames: 0, mean: 0, steps: 0 };
+    cost.current = { frames: 0, mean: 0, steps: 0, transfer: 0, transfers: 0 };
     canvas.setAttribute(
       "data-petal-nodes",
       String(resources.sim.inverseMass.length),
@@ -102,6 +109,7 @@ export function SpecimenAssembly({
         "data-petal-nodes",
         "data-petal-steps",
         "data-petal-ms",
+        "data-petal-transfer-ms",
         "data-petal-physics",
       ])
         canvas.removeAttribute(key);
@@ -161,6 +169,9 @@ export function SpecimenAssembly({
       if (!mesh) return;
       const open = petalOpenness(bloom.current, s.delay ?? 0, i * 0.31);
       if (mesh.morphTargetInfluences) mesh.morphTargetInfluences[0] = 1 - open;
+      if (s.pressureSample && mesh.morphTargetInfluences)
+        mesh.morphTargetInfluences[1] =
+          (Math.max(0, articulation.current[s.cluster].value) / 0.35) * open;
       mesh.rotation.x =
         s.role === "wing" || s.role === "keel"
           ? articulation.current[s.cluster].value
@@ -181,6 +192,9 @@ export function SpecimenAssembly({
         p,
         petalOpenness(bloom.current, s.delay ?? 0, i * 0.31),
         matrices[p].elements,
+        s.pressureSample
+          ? Math.max(0, articulation.current[s.cluster].value) / 0.35
+          : 0,
       );
     }
     const dt = clock.delta(time.current, reducedMotion);
@@ -204,7 +218,13 @@ export function SpecimenAssembly({
       cost.current.steps++;
     }
     deformation.setEnabled(!reducedMotion);
-    if (dt !== 0) deformation.update(inverses);
+    if (dt !== 0) {
+      const start = performance.now();
+      deformation.update(inverses);
+      cost.current.transfer +=
+        (performance.now() - start - cost.current.transfer) /
+        Math.min(60, ++cost.current.transfers);
+    }
     canvas.setAttribute(
       "data-petal-physics",
       reducedMotion ? "settled" : "detailed",
@@ -212,6 +232,10 @@ export function SpecimenAssembly({
     if (cost.current.frames % 30 === 0) {
       canvas.setAttribute("data-petal-nodes", String(sim.inverseMass.length));
       canvas.setAttribute("data-petal-ms", cost.current.mean.toFixed(2));
+      canvas.setAttribute(
+        "data-petal-transfer-ms",
+        cost.current.transfer.toFixed(2),
+      );
       canvas.setAttribute("data-petal-steps", String(cost.current.steps));
     }
   });
@@ -244,6 +268,21 @@ export function SpecimenAssembly({
             ) : null,
           )}
           <Organs model={model} cluster={k} quality={quality} bloom={bloom} />
+          {model.instances
+            ?.filter((g) => g.cluster === k)
+            .map((g) => (
+              <FloretInstances
+                key={g.name}
+                group={g}
+                type={type}
+                bloom={bloom}
+                time={time}
+                wind={wind}
+                quality={quality}
+                color={color}
+                reducedMotion={reducedMotion}
+              />
+            ))}
           <Organs
             model={model}
             cluster={k}

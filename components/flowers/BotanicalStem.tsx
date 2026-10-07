@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, type ComponentType } from "react";
 import { Group } from "three";
 import { createOrganicTube } from "@/lib/three/organicTube";
 import { joinOrgans } from "@/lib/three/floralOrgans";
@@ -10,8 +10,10 @@ import type { StemProps } from "./Stem";
 import { createPetalGeometry, PETAL } from "@/lib/three/geometry";
 
 export interface StemAnatomy {
+  axis?: boolean;
+  leafTilt?: number;
   color: string;
-  nodes: { t: number; angle: number; scale?: number }[];
+  nodes: { t: number; angle: number; scale?: number; offset?: Vec3 }[];
   swollen?: boolean;
   winged?: boolean;
   stipules?: boolean;
@@ -24,6 +26,7 @@ export interface StemAnatomy {
 }
 /** Sealed shoot and all attachments follow one anchored, clamped bend curve. */
 export function BotanicalStem({
+  LeafComponent = LeafSprig,
   anatomy,
   type,
   structure,
@@ -33,17 +36,30 @@ export function BotanicalStem({
   wind,
   motion,
   leaves,
-}: StemProps & { anatomy: StemAnatomy }) {
+}: StemProps & {
+  anatomy: StemAnatomy;
+  LeafComponent?: ComponentType<{
+    type: StemProps["type"];
+    quality: StemProps["quality"];
+  }>;
+}) {
   const groups = useRef<(Group | null)[]>([]),
     length = structure.stemLength,
     support = structure.supportHeight ?? 0;
   const geometry = useMemo(() => {
     const g = createOrganicTube({
-      points: [
-        [0, -length, 0],
-        [0.025, -length * 0.55, 0],
-        [0, 0, 0],
-      ],
+      points:
+        anatomy.axis === false
+          ? [
+              [0, -length, 0],
+              [0, -length + 0.05, 0],
+              [0, -length + 0.1, 0],
+            ]
+          : [
+              [0, -length, 0],
+              [0.025, -length * 0.55, 0],
+              [0, 0, 0],
+            ],
       radius: structure.stemRadius * 1.2,
       endRadius: structure.stemRadius,
       color: anatomy.color,
@@ -150,14 +166,21 @@ export function BotanicalStem({
     anatomy.nodes.forEach((node, i) => {
       const group = groups.current[i];
       if (!group) return;
+      // Custom blades pitch in their own plane before rotating around the shoot.
+      group.rotation.order = anatomy.leafTilt === undefined ? "XYZ" : "YXZ";
       const w = supportedBendWeight(node.t, support);
       group.position.set(
-        0.025 * Math.sin(node.t * Math.PI) + motion.current.x * w,
-        -length + length * node.t * g - motion.current.drop * w,
-        motion.current.z * w,
+        0.025 * Math.sin(node.t * Math.PI) +
+          (node.offset?.[0] ?? 0) * g +
+          motion.current.x * w,
+        -length +
+          (length * node.t + (node.offset?.[1] ?? 0)) * g -
+          motion.current.drop * w,
+        (node.offset?.[2] ?? 0) * g + motion.current.z * w,
       );
       group.rotation.set(
-        0.9 + Math.sin(time.current * 1.3 + i) * 0.035 * wind,
+        (anatomy.leafTilt ?? 0.9) +
+          Math.sin(time.current * 1.3 + i) * 0.035 * wind,
         node.angle,
         0.1,
       );
@@ -185,7 +208,7 @@ export function BotanicalStem({
             }}
             key={i}
           >
-            <LeafSprig type={type} quality={quality} />
+            <LeafComponent type={type} quality={quality} />
             {stipule && (
               <mesh
                 geometry={stipule}

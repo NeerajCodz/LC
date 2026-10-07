@@ -31,8 +31,23 @@ import type { FlowerStructure, FlowerType } from "./types";
 import { passionflowerStructure } from "../../components/flowers/passionflower/Passionflower";
 import { morningGloryStructure } from "../../components/flowers/morning-glory/MorningGlory";
 
+import { cyclamenStructure } from "../../components/flowers/cyclamen/Cyclamen";
+
+import { snapdragonStructure } from "../../components/flowers/snapdragon/Snapdragon";
+
+import { hardyBegoniaStructure } from "../../components/flowers/hardy-begonia/HardyBegonia";
+
+import { hydrangeaStructure } from "../../components/flowers/hydrangea/Hydrangea";
+
+import { kingProteaStructure } from "../../components/flowers/king-protea/KingProtea";
+
 /** Authored anatomy shared by planting layout and geometry verification. */
 export const FLOWER_STRUCTURES: Record<FlowerType, FlowerStructure> = {
+  "king-protea": kingProteaStructure,
+  hydrangea: hydrangeaStructure,
+  "hardy-begonia": hardyBegoniaStructure,
+  snapdragon: snapdragonStructure,
+  cyclamen: cyclamenStructure,
   bougainvillea: bougainvilleaStructure,
   "sweet-pea": sweetPeaStructure,
   foxglove: foxgloveStructure,

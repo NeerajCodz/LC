@@ -51,6 +51,11 @@ Generated from `lib/flowers/catalog.ts`; genus or ornamental studies never mark 
 | [Foxglove](http://localhost:1607/flower/foxglove/) | Digitalis purpurea | Exact accepted-name match: `wfo-0000647394` |
 | [Sweet Pea](http://localhost:1607/flower/sweet-pea/) | Lathyrus odoratus | Exact accepted-name match: `wfo-0000212700` |
 | [Bougainvillea](http://localhost:1607/flower/bougainvillea/) | Bougainvillea glabra | Exact accepted-name match: `wfo-0000569884` |
+| [Cyclamen](http://localhost:1607/flower/cyclamen/) | Cyclamen persicum | Exact accepted-name match: `wfo-0000631834` |
+| [Snapdragon](http://localhost:1607/flower/snapdragon/) | Antirrhinum majus | Exact accepted-name match: `wfo-0000539365` |
+| [Hardy Begonia](http://localhost:1607/flower/hardy-begonia/) | Begonia grandis | Exact accepted-name match: `wfo-0000824176` |
+| [Lacecap Hydrangea](http://localhost:1607/flower/hydrangea/) | Hydrangea macrophylla | Exact accepted-name match: `wfo-0000726228` |
+| [King Protea](http://localhost:1607/flower/king-protea/) | Protea cynaroides | Exact accepted-name match: `wfo-0001106756` |
 
 ## Reproduce and audit
 
@@ -90466,7 +90471,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Begonia gracilis var. martiana — `wfo-0000824166` · variety
 - Begonia gracilis var. membranacea — `wfo-0000824167` · variety
 - Begonia gracilis var. nervipilosa — `wfo-0000824168` · variety
-- Begonia grandis — `wfo-0000824176`
+- Begonia grandis — `wfo-0000824176` · authored study: `hardy-begonia`
 - Begonia grandis subsp. grandis — `wfo-0000833935` · subspecies
 - Begonia grandis subsp. holostyla — `wfo-0001360513` · subspecies
 - Begonia grandis subsp. sinensis — `wfo-0000824180` · subspecies
@@ -203160,7 +203165,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Hydrangea luteovenosa var. luteovenosa — `wfo-1200064795` · variety
 - Hydrangea luteovenosa var. yakushimensis — `wfo-1200011834` · variety
 - Hydrangea macrocarpa — `wfo-0001234053`
-- Hydrangea macrophylla — `wfo-0000726228`
+- Hydrangea macrophylla — `wfo-0000726228` · authored study: `hydrangea`
 - Hydrangea macrophylla var. otaksa — `wfo-0001219227` · variety
 - Hydrangea mangshanensis — `wfo-0001219188`
 - Hydrangea marunoi — `wfo-1000040961`
@@ -309460,7 +309465,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Antirrhinum latifolium subsp. intermedium — `wfo-0000539329` · subspecies
 - Antirrhinum latifolium subsp. latifolium — `wfo-1200036679` · subspecies
 - Antirrhinum linkianum — `wfo-0000539351`
-- Antirrhinum majus — `wfo-0000539365`
+- Antirrhinum majus — `wfo-0000539365` · authored study: `snapdragon`
 - Antirrhinum majus subsp. majus — `wfo-1200036680` · subspecies
 - Antirrhinum majus subsp. tortuosum — `wfo-0000539406` · subspecies
 - Antirrhinum martenii — `wfo-0000539411`
@@ -332900,7 +332905,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Cyclamen parviflorum — `wfo-0000631824`
 - Cyclamen parviflorum var. parviflorum — `wfo-1200070334` · variety
 - Cyclamen parviflorum var. subalpinum — `wfo-0000631827` · variety
-- Cyclamen persicum — `wfo-0000631834`
+- Cyclamen persicum — `wfo-0000631834` · authored study: `cyclamen`
 - Cyclamen persicum f. puniceum — `wfo-0000631838` · form
 - Cyclamen persicum var. autumnale — `wfo-0001390685` · variety
 - Cyclamen persicum var. persicum — `wfo-1200070335` · variety
@@ -337163,7 +337168,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Protea coronata — `wfo-0001106750`
 - Protea cryophila — `wfo-0001106754`
 - Protea curvata — `wfo-0001106755`
-- Protea cynaroides — `wfo-0001106756`
+- Protea cynaroides — `wfo-0001106756` · authored study: `king-protea`
 - Protea decurrens — `wfo-0001106757`
 - Protea dekindtiana — `wfo-0000483040`
 - Protea denticulata — `wfo-0001106758`

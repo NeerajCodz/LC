@@ -8,6 +8,7 @@ export interface SpecimenSurface {
   cluster: number;
   role: "petal" | "tube" | "calyx" | "bract" | "banner" | "wing" | "keel";
   sample: (u: number, v: number, open: number) => Vec3;
+  pressureSample?: (u: number, v: number, open: number) => Vec3;
   thickness: number;
   periodic?: boolean;
   flexible?: boolean;
@@ -41,6 +42,23 @@ export interface SpecimenModel {
   clusters: SpecimenCluster[];
   surfaces: SpecimenSurface[];
   organs: SpecimenOrgan[];
+  instances?: SpecimenInstanceGroup[];
+}
+export interface SpecimenInstancePose {
+  position: Vec3;
+  foldedPosition?: Vec3;
+  rotation: Vec3;
+  scale: number;
+  delay: number;
+  phase: number;
+}
+/** Real sealed prototypes share draw resources, never simulation nodes. */
+export interface SpecimenInstanceGroup {
+  name: string;
+  cluster: number;
+  surfaces: SpecimenSurface[];
+  organs: SpecimenOrgan[];
+  poses: SpecimenInstancePose[];
 }
 export function specimenGeometry(surface: SpecimenSurface, quality: Quality) {
   const resolution = {
@@ -57,6 +75,17 @@ export function specimenGeometry(surface: SpecimenSurface, quality: Quality) {
   const side = new Float32Array(g.getAttribute("position").count);
   for (let i = 0; i < side.length; i++) side[i] = i < side.length / 2 ? 1 : -1;
   g.setAttribute("tissueSide", new Float32BufferAttribute(side, 1));
+  if (surface.pressureSample) {
+    const pressed = createParametricShell({
+      columns: resolution[0],
+      rows: resolution[1],
+      ...surface,
+      sample: surface.pressureSample,
+    });
+    g.morphAttributes.position!.push(pressed.getAttribute("position"));
+    g.morphAttributes.normal!.push(pressed.getAttribute("normal"));
+    pressed.dispose();
+  }
   return g;
 }
 export function specimenCages(model: SpecimenModel, constrained: boolean) {

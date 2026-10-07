@@ -10,6 +10,7 @@ import { GLADIOLUS_MODEL } from "../components/flowers/gladiolus/gladiolusGeomet
 import { DELPHINIUM_MODEL } from "../components/flowers/delphinium/delphiniumGeometry";
 import { ALSTROEMERIA_MODEL } from "../components/flowers/alstroemeria/alstroemeriaGeometry";
 import { GERBERA_MODEL } from "../components/flowers/gerbera/gerberaGeometry";
+import { ZINNIA_MODEL } from "../components/flowers/zinnia/zinniaGeometry";
 import { GERBERA_LEAF } from "../components/flowers/gerbera/gerberaLeaf";
 import { ALSTROEMERIA_LEAF } from "../components/flowers/alstroemeria/alstroemeriaLeaf";
 import { createDelphiniumLeaf } from "../components/flowers/delphinium/delphiniumLeaf";
@@ -46,6 +47,28 @@ verifySpecimen("gladiolus", GLADIOLUS_MODEL);
 verifySpecimen("delphinium", DELPHINIUM_MODEL);
 verifySpecimen("alstroemeria", ALSTROEMERIA_MODEL);
 verifySpecimen("gerbera", GERBERA_MODEL);
+verifySpecimen("zinnia", ZINNIA_MODEL);
+for (const group of ZINNIA_MODEL.instances ?? [])
+  verifySpecimen(`zinnia ${group.name} prototypes`, {
+    clusters: [],
+    surfaces: group.surfaces,
+    organs: group.organs,
+  });
+test("semi-double zinnia retains ray florets and true five-lobed disk flowers", () => {
+  const m = ZINNIA_MODEL;
+  assert.equal(m.surfaces.filter((s) => s.name === "ray ligule").length, 28);
+  const disk = m.instances!.find((g) => g.name === "bisexual disk florets")!;
+  assert.equal(disk.poses.length, 32);
+  assert.equal(
+    disk.surfaces.filter((s) => s.name === "disk corolla lobe").length,
+    5,
+  );
+  assert.equal(disk.organs.filter((o) => o.name === "stamen anther").length, 5);
+  assert.equal(
+    disk.organs.filter((o) => o.name === "pistil style arm").length,
+    2,
+  );
+});
 verifySpecimen("gerbera pinnatifid blades", {
   clusters: [],
   surfaces: [GERBERA_LEAF],

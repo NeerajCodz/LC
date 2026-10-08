@@ -145,8 +145,8 @@ function SepalAwn({
         radius: 0.008,
         endRadius: 0.0015,
         color: "#799252",
-        segments: quality === "low" ? 12 : 24,
-        sides: quality === "low" ? 6 : 10,
+        segments: quality === "overview" || quality === "low" ? 12 : 24,
+        sides: quality === "overview" || quality === "low" ? 6 : 10,
       });
     const g = make(false),
       closed = make(true);

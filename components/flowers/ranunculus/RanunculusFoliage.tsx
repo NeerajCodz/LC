@@ -27,7 +27,7 @@ export function RanunculusLeaf({ quality }: { quality: Quality }) {
         radius: 0.011,
         endRadius: 0.008,
         color: "#668453",
-        segments: quality === "low" ? 8 : 16,
+        segments: quality === "overview" || quality === "low" ? 8 : 16,
         sides: 7,
       }),
     [quality],

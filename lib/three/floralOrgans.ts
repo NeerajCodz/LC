@@ -17,8 +17,13 @@ export function organTube(
     endRadius,
     color,
     tipColor: color,
-    segments: quality === "low" ? 10 : 24,
-    sides: quality === "low" ? 7 : 12,
+    segments:
+      quality === "overview"
+        ? Math.max(5, points.length * 2)
+        : quality === "low"
+          ? 10
+          : 24,
+    sides: quality === "overview" ? 5 : quality === "low" ? 7 : 12,
     flatten,
     grain: 0.025,
   });
@@ -77,7 +82,7 @@ export function stamenRing(
 }
 export function createPoppyHeart(quality: Quality) {
   const parts = stamenRing(
-    quality === "low" ? 55 : 95,
+    quality === "overview" || quality === "low" ? 55 : 95,
     0.32,
     0.28,
     quality,

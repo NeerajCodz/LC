@@ -30,14 +30,19 @@ export function morningCorollaPoint(
 
 export function createMorningCorolla(quality: Quality) {
   const columns =
-    quality === "low"
+    quality === "overview" || quality === "low"
       ? 60
       : quality === "medium"
         ? 90
         : quality === "high"
           ? 140
           : 200;
-  const rows = quality === "low" ? 28 : quality === "medium" ? 40 : 60;
+  const rows =
+    quality === "overview" || quality === "low"
+      ? 28
+      : quality === "medium"
+        ? 40
+        : 60;
   const count = columns * (rows + 1),
     indices: number[] = [],
     uv: number[] = [];
@@ -207,15 +212,15 @@ export function createMorningShoot(quality: Quality, length: number) {
       points,
       radius: 0.019,
       endRadius: 0.012,
-      segments: quality === "low" ? 96 : 180,
-      sides: quality === "low" ? 7 : 12,
+      segments: quality === "overview" || quality === "low" ? 96 : 180,
+      sides: quality === "overview" || quality === "low" ? 7 : 12,
       color: "#716844",
       tipColor: "#76934f",
       grain: 0.07,
     }),
   ];
   const random = seededRandom(4199),
-    hairs = quality === "low" ? 100 : 280;
+    hairs = quality === "overview" || quality === "low" ? 100 : 280;
   for (let i = 0; i < hairs; i++) {
     const t = random() * 0.97,
       p = morningVinePoint(t, length),

@@ -58,7 +58,8 @@ export const FLOWER_TYPES = [
 ] as const;
 
 export type FlowerType = (typeof FLOWER_TYPES)[number];
-export type Quality = "low" | "medium" | "high" | "ultra";
+/** Overview is reserved for distant whole-garden geometry; selection restores detail. */
+export type Quality = "overview" | "low" | "medium" | "high" | "ultra";
 export type Vec3 = [number, number, number];
 
 export interface FlowerProps {

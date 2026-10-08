@@ -35,8 +35,8 @@ export function LotusFoliage({
         endRadius: 0.013,
         color: "#466b4a",
         tipColor: "#5c8060",
-        segments: quality === "low" ? 24 : 48,
-        sides: quality === "low" ? 8 : 16,
+        segments: quality === "overview" || quality === "low" ? 24 : 48,
+        sides: quality === "overview" || quality === "low" ? 8 : 16,
       }),
     [length, quality],
   );

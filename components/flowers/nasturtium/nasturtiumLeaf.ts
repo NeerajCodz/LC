@@ -3,6 +3,7 @@ import type { Quality } from "@/lib/flowers/types";
 /** Closed curved fan; the petiole meets the interior hub rather than an edge. */
 export function createNasturtiumLeaf(quality: Quality) {
   const [sectors, rings] = {
+      overview: [40, 4],
       low: [64, 8],
       medium: [96, 12],
       high: [144, 16],

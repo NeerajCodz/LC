@@ -4,8 +4,8 @@ import { createOrganicTube } from "@/lib/three/organicTube";
 import { joinOrgans } from "@/lib/three/floralOrgans";
 /** One merged, sealed bipinnate leaf preserves all fine divisions at every quality. */
 export function createCosmosLeaf(quality: Quality) {
-  const segments = quality === "low" ? 6 : 12,
-    sides = quality === "low" ? 5 : 8;
+  const segments = quality === "overview" || quality === "low" ? 6 : 12,
+    sides = quality === "overview" || quality === "low" ? 5 : 8;
   const tube = (
     points: Vec3[],
     radius: number,

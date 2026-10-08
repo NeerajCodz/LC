@@ -15,7 +15,7 @@ export function createStamenHeart(type: StamenSpecies, quality: Quality) {
     pistils: BufferGeometry[] = [],
     stigmas: BufferGeometry[] = [];
   const random = seededRandom(624),
-    detail = quality === "ultra" ? 40 : 26;
+    detail = quality === "overview" ? 10 : quality === "ultra" ? 40 : 26;
   const tube = (
     points: Vec3[],
     radius: number,

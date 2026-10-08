@@ -242,7 +242,9 @@ export function FlowerPlant({
             <FlowerInteraction
               enabled={interactive}
               proxyRadius={
-                quality === "low" || structure.simulatedSurfaces
+                quality === "overview" ||
+                quality === "low" ||
+                structure.simulatedSurfaces
                   ? envelope
                   : undefined
               }

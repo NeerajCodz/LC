@@ -25,6 +25,7 @@ import {
 import { GardenDynamics } from "../scene/GardenDynamics";
 import { useTheme } from "@/hooks/useTheme";
 import { THEME_BACKGROUNDS } from "@/lib/theme";
+
 export default function FlowerGarden({
   bloom,
   paused,
@@ -42,7 +43,7 @@ export default function FlowerGarden({
   onSelect: (type: FlowerType) => void;
   reset: number;
 }) {
-  const { quality, reducedMotion, constrained } = useExperienceSettings();
+  const { reducedMotion, constrained } = useExperienceSettings();
   const { theme } = useTheme();
   const [degraded, setDegraded] = useState(false);
   const plantings = constrained ? MOBILE_GARDEN_PLANTINGS : GARDEN_PLANTINGS;
@@ -115,9 +116,7 @@ export default function FlowerGarden({
                     ? constrained
                       ? "medium"
                       : "high"
-                    : quality === "low" || degraded
-                      ? "low"
-                      : "medium"
+                    : "overview"
                 }
                 animationSpeed={0.85 + (i % 7) * 0.055}
                 windStrength={0.85}

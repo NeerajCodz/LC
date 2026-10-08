@@ -50,6 +50,7 @@ export function leafBlade(
 /** Fan topology keeps the center filled and the deep lobes connected in one simple leaf. */
 export function createPalmateBlade(quality: Quality, lobes = 5) {
   const [sectors, rings] = {
+    overview: [80, 4],
     low: [80, 8],
     medium: [140, 12],
     high: [200, 18],

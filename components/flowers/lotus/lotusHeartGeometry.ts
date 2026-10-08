@@ -44,9 +44,16 @@ export function createLotusReceptacle(
   height: number,
   quality: Quality,
 ) {
-  const sides = quality === "ultra" ? 160 : quality === "high" ? 128 : 80;
-  const sideRows = 24,
-    topRows = quality === "ultra" ? 56 : 40;
+  const sides =
+    quality === "overview"
+      ? 40
+      : quality === "ultra"
+        ? 160
+        : quality === "high"
+          ? 128
+          : 80;
+  const sideRows = quality === "overview" ? 8 : 24,
+    topRows = quality === "overview" ? 16 : quality === "ultra" ? 56 : 40;
   const carpels = lotusCarpels(radius);
   const p: number[] = [],
     c: number[] = [],
@@ -105,7 +112,7 @@ export function createLotusReceptacle(
 }
 
 export function createLotusStamenParts(quality: Quality) {
-  const detail = quality === "ultra" ? 44 : 28;
+  const detail = quality === "overview" ? 10 : quality === "ultra" ? 44 : 28;
   const filament = createOrganicTube({
     points: [
       [0, 0, 0],

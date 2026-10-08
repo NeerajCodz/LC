@@ -94,13 +94,17 @@ export interface SpecimenInstanceGroup {
 }
 export function specimenGeometry(surface: SpecimenSurface, quality: Quality) {
   const resolution = {
+    overview: [8, 10],
     low: [12, 16],
     medium: [20, 24],
     high: [32, 32],
     ultra: [48, 44],
   }[quality];
+  // Small fused corollas still need enough angular samples to preserve their lobes.
+  const columns =
+    surface.periodic && quality === "overview" ? 24 : resolution[0];
   const g = createParametricShell({
-    columns: resolution[0],
+    columns,
     rows: resolution[1],
     ...surface,
   });
@@ -109,7 +113,7 @@ export function specimenGeometry(surface: SpecimenSurface, quality: Quality) {
   g.setAttribute("tissueSide", new Float32BufferAttribute(side, 1));
   if (surface.pressureSample) {
     const pressed = createParametricShell({
-      columns: resolution[0],
+      columns,
       rows: resolution[1],
       ...surface,
       sample: surface.pressureSample,
@@ -140,8 +144,13 @@ export function specimenCages(model: SpecimenModel, constrained: boolean) {
 export function specimenOrganGeometry(organ: SpecimenOrgan, quality: Quality) {
   const options = {
     ...organ,
-    segments: quality === "low" ? 10 : 24,
-    sides: quality === "low" ? 7 : 12,
+    segments:
+      quality === "overview"
+        ? Math.max(5, organ.points.length * 2)
+        : quality === "low"
+          ? 10
+          : 24,
+    sides: quality === "overview" ? 5 : quality === "low" ? 7 : 12,
     grain: 0.025,
   };
   const geometry = createOrganicTube(options);

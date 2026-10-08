@@ -35,7 +35,7 @@ export function NasturtiumLeaf({ quality }: { quality: Quality }) {
         radius: 0.011,
         endRadius: 0.007,
         color: "#729566",
-        segments: quality === "low" ? 8 : 16,
+        segments: quality === "overview" || quality === "low" ? 8 : 16,
         sides: 8,
       }),
     [quality],

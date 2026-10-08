@@ -39,8 +39,8 @@ export function PassionVine({
       endRadius: structure.stemRadius * 0.75,
       color: "#52734e",
       tipColor: "#7d945e",
-      segments: quality === "low" ? 36 : 64,
-      sides: quality === "low" ? 10 : 20,
+      segments: quality === "overview" || quality === "low" ? 36 : 64,
+      sides: quality === "overview" || quality === "low" ? 10 : 20,
       grain: 0.045,
     });
     const position = stem.getAttribute("position");

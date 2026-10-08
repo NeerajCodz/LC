@@ -47,6 +47,7 @@ export const FLOWER_TYPES = [
   "zinnia",
   "ranunculus",
   "anemone",
+  "crocus",
 ] as const;
 
 export type FlowerType = (typeof FLOWER_TYPES)[number];

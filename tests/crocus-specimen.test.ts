@@ -3,6 +3,12 @@ import assert from "node:assert/strict";
 import { CROCUS_MODEL } from "../components/flowers/crocus/crocusGeometry";
 import { verifySpecimen } from "./specimen-checks";
 verifySpecimen("crocus", CROCUS_MODEL);
+import { CROCUS_LEAF } from "../components/flowers/crocus/crocusLeaf";
+verifySpecimen("crocus striped foliage", {
+  clusters: [],
+  surfaces: [CROCUS_LEAF],
+  organs: [],
+});
 test("crocus distinguishes six tepals, three stamens and three stigma branches on every scape", async () => {
   const anatomy =
     await import("../components/flowers/crocus/crocusGeometry").catch(

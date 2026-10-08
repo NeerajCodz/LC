@@ -61,9 +61,11 @@ import { gerberaStructure } from "../../components/flowers/gerbera/Gerbera";
 import { zinniaStructure } from "../../components/flowers/zinnia/Zinnia";
 
 import { anemoneStructure } from "../../components/flowers/anemone/Anemone";
+import { crocusStructure } from "../../components/flowers/crocus/Crocus";
 /** Authored anatomy shared by planting layout and geometry verification. */
 import { ranunculusStructure } from "../../components/flowers/ranunculus/Ranunculus";
 export const FLOWER_STRUCTURES: Record<FlowerType, FlowerStructure> = {
+  crocus: crocusStructure,
   anemone: anemoneStructure,
   ranunculus: ranunculusStructure,
   zinnia: zinniaStructure,

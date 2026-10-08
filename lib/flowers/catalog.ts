@@ -487,6 +487,16 @@ FLOWERS.push({
     "A single poppy anemone with petaloid sepals, many stamens, individual carpels and a leafy involucre above divided basal foliage.",
   color: PETAL_PALETTES.anemone.body,
 });
+FLOWERS.push({
+  type: "crocus",
+  name: "Crocus",
+  latin: "Crocus vernus",
+  family: "Iridaceae",
+  description: "Violet cups rise among fine, silver-striped leaves.",
+  detail:
+    "Six tepals surround three yellow stamens and three orange stigma branches above long basal tubes and narrow leaves.",
+  color: PETAL_PALETTES.crocus.body,
+});
 FLOWERS.sort(
   (a, b) => FLOWER_TYPES.indexOf(a.type) - FLOWER_TYPES.indexOf(b.type),
 );

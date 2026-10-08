@@ -23,3 +23,9 @@ test("anemone is available throughout the typed catalog with included pollen", (
   assert.equal(FLOWER_STRUCTURES[type].simulatedSurfaces, true);
   assert.equal(FLOWER_STRUCTURES[type].airbornePollen, false);
 });
+test("crocus is a typed specimen with dedicated anchored scapes", () => {
+  const type = FLOWER_TYPES.find((t) => String(t) === "crocus");
+  assert.ok(type, "crocus catalog integration is missing");
+  assert.equal(getFlower(type).latin, "Crocus vernus");
+  assert.equal(FLOWER_STRUCTURES[type].simulatedSurfaces, true);
+});

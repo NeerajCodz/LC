@@ -104,7 +104,10 @@ for (let c = 0; c < 5; c++) {
           0.14 +
             0.79 * v * (1 - 0.5 * open) +
             0.12 * (2 * u - 1) ** 2 * Math.sin(v * Math.PI) * open +
-            0.013 * Math.sin(v * 36 + i) * open,
+            0.0035 *
+              Math.sin(v * 27 + i + u * 9) *
+              Math.sin(v * Math.PI) *
+              open,
           Math.cos(angle) * r - Math.sin(angle) * w,
         ];
       },

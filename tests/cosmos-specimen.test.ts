@@ -72,3 +72,17 @@ test("cosmos bipinnate foliage keeps sealed filiform segments and folded normals
   assert.ok([...edges.values()].every((n) => n === 2));
   g.dispose();
 });
+test("cosmos closed heads retain a compact rounded profile", () => {
+  const ray = COSMOS_MODEL.surfaces.find(
+      (s) => s.name === "neuter ray ligule",
+    )!,
+    root = COSMOS_MODEL.surfaces
+      .find((s) => s.name === "head receptacle")!
+      .sample(0, 0, 0),
+    tip = ray.sample(0.5, 1, 0),
+    body = ray.sample(0.5, 0.5, 0);
+  assert.ok(
+    (tip[1] - root[1]) / (2 * Math.hypot(body[0], body[2])) < 1.25,
+    "closed cosmos head is too elongated",
+  );
+});

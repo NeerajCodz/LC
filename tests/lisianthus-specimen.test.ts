@@ -15,6 +15,20 @@ test("lisianthus blades retain broad stem-clasping insertions", () => {
       0.09,
   );
 });
+test("lisianthus petal centers avoid repeated deep corrugations", () => {
+  const s = LISIANTHUS_MODEL.surfaces.find((s) => s.name === "corolla lobe")!,
+    d = 0.0125;
+  for (let v = 0.12; v < 0.88; v += 0.03) {
+    const curve =
+      s.sample(0.5, v - d, 1)[1] +
+      s.sample(0.5, v + d, 1)[1] -
+      2 * s.sample(0.5, v, 1)[1];
+    assert.ok(
+      Math.abs(curve) < 0.0006,
+      "petal pleats are too mechanically regular and deep",
+    );
+  }
+});
 test("lisianthus retains short fused bases, five lobes and two stigma tips", async () => {
   const a =
     await import("../components/flowers/lisianthus/lisianthusGeometry").catch(

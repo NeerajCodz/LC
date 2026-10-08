@@ -39,7 +39,7 @@ for (let i = 0; i < 8; i++) {
       return [
         Math.sin(a) * r + Math.cos(a) * w,
         0.045 +
-          0.64 * v * (1 - 0.85 * open) +
+          v * (0.39 * (1 - open) + 0.096 * open) +
           0.085 * (2 * u - 1) ** 2 * Math.sin(v * Math.PI) * open,
         Math.cos(a) * r - Math.sin(a) * w,
       ];
@@ -83,7 +83,7 @@ for (let rank = 0; rank < 2; rank++)
             (rank ? 0.12 : 0.18) * open * v;
         return [
           Math.sin(a) * r + Math.cos(a) * w,
-          -0.08 + rank * 0.025 + 0.73 * v * (1 - 1.18 * open),
+          -0.08 + rank * 0.025 + v * (0.52 * (1 - open) - 0.1314 * open),
           Math.cos(a) * r - Math.sin(a) * w,
         ];
       },

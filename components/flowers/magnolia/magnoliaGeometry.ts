@@ -77,7 +77,7 @@ MAGNOLIA_MODEL.surfaces.push({
   sample: (u, v) => {
     const a = u * Math.PI * 2,
       r = magnoliaReceptacleRadius(v);
-    return [Math.sin(a) * r, 0.01 + 0.78 * v, Math.cos(a) * r];
+    return [Math.sin(a) * r, 0.01 + 0.5 * v, Math.cos(a) * r];
   },
 });
 for (let i = 0; i < 2; i++) {
@@ -110,7 +110,7 @@ MAGNOLIA_MODEL.instances = [
     organs: floralStamens({
       count: 1,
       cluster: 0,
-      radius: 0,
+      radius: 0.07,
       height: 0.031,
       base: 0.003,
       foldedHeight: 0.022,
@@ -122,7 +122,10 @@ MAGNOLIA_MODEL.instances = [
     poses: Array.from({ length: 179 }, (_, i) => {
       const a = i * 2.399963,
         y = 0.04 + (0.17 * i) / 179,
-        r = magnoliaReceptacleRadius((y - 0.01) / 0.78);
+        r =
+          magnoliaReceptacleRadius((y - 0.01) / 0.5) +
+          0.012 -
+          0.0525 * (0.86 + 0.14 * Math.sin(i * 0.61) ** 2);
       return {
         position: [Math.sin(a) * r, y, Math.cos(a) * r] as Vec3,
         foldedPosition: [
@@ -169,8 +172,11 @@ MAGNOLIA_MODEL.instances = [
     ],
     poses: Array.from({ length: 60 }, (_, i) => {
       const a = i * 2.399963,
-        y = 0.3 + (0.4 * i) / 60,
-        r = magnoliaReceptacleRadius((y - 0.01) / 0.78);
+        y = 0.25 + (0.21 * i) / 60,
+        r =
+          magnoliaReceptacleRadius((y - 0.01) / 0.5) +
+          0.012 -
+          0.0525 * (0.86 + 0.14 * Math.sin(i * 0.61) ** 2);
       return {
         position: [Math.sin(a) * r, y, Math.cos(a) * r] as Vec3,
         foldedPosition: [

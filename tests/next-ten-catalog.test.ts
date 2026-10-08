@@ -59,3 +59,9 @@ test("gardenia is a typed specimen with a long fused corolla", () => {
   assert.equal(getFlower(type).latin, "Gardenia jasminoides");
   assert.equal(FLOWER_STRUCTURES[type].simulatedSurfaces, true);
 });
+test("nasturtium is a typed specimen with bilateral floral anatomy", () => {
+  const type = FLOWER_TYPES.find((t) => String(t) === "nasturtium");
+  assert.ok(type, "nasturtium catalog integration is missing");
+  assert.equal(getFlower(type).latin, "Tropaeolum majus");
+  assert.equal(FLOWER_STRUCTURES[type].simulatedSurfaces, true);
+});

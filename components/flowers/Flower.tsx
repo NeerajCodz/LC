@@ -54,7 +54,9 @@ import { Lisianthus } from "./lisianthus/Lisianthus";
 import { Camellia } from "./camellia/Camellia";
 import { Magnolia } from "./magnolia/Magnolia";
 import { Gardenia } from "./gardenia/Gardenia";
+import { Nasturtium } from "./nasturtium/Nasturtium";
 const SPECIES = {
+  nasturtium: Nasturtium,
   gardenia: Gardenia,
   magnolia: Magnolia,
   camellia: Camellia,

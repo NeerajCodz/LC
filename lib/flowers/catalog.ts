@@ -547,6 +547,16 @@ FLOWERS.push({
     "A single gardenia with a long fused tube, six overlapping lobes, included anthers and an inferior ovary above opposite leaves and pointed stipules.",
   color: PETAL_PALETTES.gardenia.body,
 });
+FLOWERS.push({
+  type: "nasturtium",
+  name: "Nasturtium",
+  latin: "Tropaeolum majus",
+  family: "Tropaeolaceae",
+  description: "Orange bilateral flowers lean above rounded, veined leaves.",
+  detail:
+    "Upper guide petals and fringed lower claws surround eight stamens, with a hollow dorsal calyx spur and leaves attached at interior hubs.",
+  color: PETAL_PALETTES.nasturtium.body,
+});
 FLOWERS.sort(
   (a, b) => FLOWER_TYPES.indexOf(a.type) - FLOWER_TYPES.indexOf(b.type),
 );

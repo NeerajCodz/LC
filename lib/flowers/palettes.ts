@@ -30,6 +30,15 @@ const palette = (
 });
 
 export const PETAL_PALETTES: Record<FlowerType, PetalPalette> = {
+  nasturtium: palette(
+    "#b43b24",
+    "#ed813f",
+    "#f7b361",
+    "#b6452a",
+    0.25,
+    0.8,
+    0.1,
+  ),
   gardenia: palette(
     "#c8cba0",
     "#f1ecda",

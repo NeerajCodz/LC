@@ -25,6 +25,7 @@ import {
 import { GardenDynamics } from "../scene/GardenDynamics";
 import { useTheme } from "@/hooks/useTheme";
 import { THEME_BACKGROUNDS } from "@/lib/theme";
+import { RenderActivity } from "@/hooks/useActiveFrame";
 
 export default function FlowerGarden({
   bloom,
@@ -106,27 +107,29 @@ export default function FlowerGarden({
               key={plant.type}
               visible={!selected || selected === plant.type}
             >
-              <Flower
-                {...plant}
-                rooted
-                physics={selected === plant.type ? "detailed" : "ambient"}
-                bloom={bloom}
-                quality={
-                  selected === plant.type
-                    ? constrained
-                      ? "medium"
-                      : "high"
-                    : "overview"
-                }
-                animationSpeed={0.85 + (i % 7) * 0.055}
-                windStrength={0.85}
-                cursorStrength={0.8}
-                interactive={!selected || selected === plant.type}
-                reducedMotion={reducedMotion}
-                paused={paused}
-                pulse={pulse}
-                onClick={() => onSelect(plant.type)}
-              />
+              <RenderActivity value={!selected || selected === plant.type}>
+                <Flower
+                  {...plant}
+                  rooted
+                  physics={selected === plant.type ? "detailed" : "ambient"}
+                  bloom={bloom}
+                  quality={
+                    selected === plant.type
+                      ? constrained
+                        ? "medium"
+                        : "high"
+                      : "overview"
+                  }
+                  animationSpeed={0.85 + (i % 7) * 0.055}
+                  windStrength={0.85}
+                  cursorStrength={0.8}
+                  interactive={!selected || selected === plant.type}
+                  reducedMotion={reducedMotion}
+                  paused={paused}
+                  pulse={pulse}
+                  onClick={() => onSelect(plant.type)}
+                />
+              </RenderActivity>
             </group>
           ))}
         </GardenDynamics>

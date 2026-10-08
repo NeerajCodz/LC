@@ -6,6 +6,7 @@ import {
   type ComponentType,
 } from "react";
 import { useActiveFrame as useFrame } from "@/hooks/useActiveFrame";
+import { RenderActivity } from "@/hooks/useActiveFrame";
 import { Group, Vector3 } from "three";
 import type { FlowerProps, FlowerStructure } from "@/lib/flowers/types";
 import { getFlower } from "@/lib/flowers/catalog";
@@ -65,6 +66,7 @@ export function FlowerPlant({
 }) {
   const head = useRef<Group>(null);
   const garden = useContext(GardenEnvironment);
+  const active = useContext(RenderActivity);
   const profile = WIND_PROFILES[type];
   const bendingLength = freeStemLength(structure);
   const motion = useRef<PlantMotion>({
@@ -115,7 +117,7 @@ export function FlowerPlant({
     Math.max(2.2, envelope * 1.5),
   );
   useLayoutEffect(() => {
-    if (!garden) return;
+    if (!garden || !active) return;
     const entry = body.current;
     entry.commit = () => {
       if (!head.current?.parent || !entry.pressure) return;
@@ -146,7 +148,7 @@ export function FlowerPlant({
       const index = entries.indexOf(entry);
       if (index !== -1) entries.splice(index, 1);
     };
-  }, [garden, world, structure, bendingLength]);
+  }, [garden, active, world, structure, bendingLength]);
   useFrame(({ pointer }, dt) => {
     if (paused) return;
     const delta = Math.min(dt, 0.05);

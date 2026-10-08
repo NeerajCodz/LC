@@ -3,6 +3,12 @@ import assert from "node:assert/strict";
 import { verifySpecimen } from "./specimen-checks";
 import { ANEMONE_MODEL } from "../components/flowers/anemone/anemoneGeometry";
 verifySpecimen("anemone", ANEMONE_MODEL);
+import { ANEMONE_LEAF } from "../components/flowers/anemone/anemoneLeaf";
+verifySpecimen("anemone divided foliage", {
+  clusters: [],
+  surfaces: [ANEMONE_LEAF],
+  organs: [],
+});
 test("anemone preserves petaloid sepals, dark stamens and the leafy involucre", async () => {
   const anatomy =
     await import("../components/flowers/anemone/anemoneGeometry").catch(

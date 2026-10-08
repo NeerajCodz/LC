@@ -47,7 +47,9 @@ import { Alstroemeria } from "./alstroemeria/Alstroemeria";
 import { Gerbera } from "./gerbera/Gerbera";
 import { Zinnia } from "./zinnia/Zinnia";
 import { Ranunculus } from "./ranunculus/Ranunculus";
+import { Anemone } from "./anemone/Anemone";
 const SPECIES = {
+  anemone: Anemone,
   ranunculus: Ranunculus,
   zinnia: Zinnia,
   gerbera: Gerbera,

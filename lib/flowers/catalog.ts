@@ -477,6 +477,16 @@ FLOWERS.push({
   detail:
     "A cultivated double form with nested curved petals, five protective sepals and finely divided green foliage.",
 });
+FLOWERS.push({
+  type: "anemone",
+  name: "Anemone",
+  latin: "Anemone coronaria",
+  family: "Ranunculaceae",
+  description: "Violet sepals surround a dark, finely textured heart.",
+  detail:
+    "A single poppy anemone with petaloid sepals, many stamens, individual carpels and a leafy involucre above divided basal foliage.",
+  color: PETAL_PALETTES.anemone.body,
+});
 FLOWERS.sort(
   (a, b) => FLOWER_TYPES.indexOf(a.type) - FLOWER_TYPES.indexOf(b.type),
 );

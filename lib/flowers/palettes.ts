@@ -30,6 +30,15 @@ const palette = (
 });
 
 export const PETAL_PALETTES: Record<FlowerType, PetalPalette> = {
+  anemone: palette(
+    "#282344",
+    "#8970b9",
+    "#b6a0d7",
+    "#665195",
+    0.3,
+    0.78,
+    0.095,
+  ),
   ranunculus: palette(
     "#b75434",
     "#eb9568",

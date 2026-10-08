@@ -5,6 +5,7 @@ export const TISSUE_RESPONSE: Record<
   string,
   { roughness: number; sheen: number; coat: number; scatter: number }
 > = {
+  anemone: { roughness: 0.69, sheen: 0.17, coat: 0.008, scatter: 0.065 },
   ranunculus: { roughness: 0.66, sheen: 0.2, coat: 0.015, scatter: 0.055 },
   hellebore: { roughness: 0.59, sheen: 0.12, coat: 0.04, scatter: 0.055 },
   primrose: { roughness: 0.75, sheen: 0.16, coat: 0, scatter: 0.07 },
@@ -23,6 +24,7 @@ export const TISSUE_RESPONSE: Record<
   zinnia: { roughness: 0.78, sheen: 0.16, coat: 0, scatter: 0.055 },
 };
 export function specimenTissueColor(type: string, tissue?: SpecimenTissue) {
+  if (type === "anemone" && tissue === "disc") return "#29243b";
   if (type === "delphinium" && tissue === "inner") return "#dfdcc2";
   if (type === "alstroemeria" && tissue === "inner") return "#e8c971";
   if (tissue === "disc") {
@@ -33,6 +35,8 @@ export function specimenTissueColor(type: string, tissue?: SpecimenTissue) {
 export function specimenTissueShader(type: string, tissue?: SpecimenTissue) {
   if (tissue === "leaf") return "";
   switch (type) {
+    case "anemone":
+      return `float anVein=pow(.5+.5*cos(vPetalUv.x*49.+vPetalUv.y*3.),23.); diffuseColor.rgb*=1.-anVein*.047;`;
     case "ranunculus":
       return `float ranVein=pow(.5+.5*cos((vPetalUv.y-abs(vPetalUv.x-.5)*.45)*61.),24.);
       diffuseColor.rgb*=1.-ranVein*.036;`;

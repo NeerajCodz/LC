@@ -21,6 +21,16 @@ export interface FoliageProfile {
 
 /** Cultivar-independent leaf traits; lotus has its own peltate blade generator. */
 export const FOLIAGE: Record<FlowerType, FoliageProfile> = {
+  anemone: {
+    length: 0.72,
+    width: 0.22,
+    color: "#426b48",
+    leaflets: 3,
+    teeth: 5,
+    depth: 0.7,
+    basal: true,
+    thickness: 0.009,
+  },
   ranunculus: {
     length: 0.65,
     width: 0.25,

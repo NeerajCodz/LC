@@ -16,3 +16,10 @@ test("ranunculus is a complete catalog specimen with dedicated nested-surface ph
   assert.equal(FLOWER_STRUCTURES[type].airbornePollen, false);
   assert.ok(WIND_PROFILES[type].compliance > 0);
 });
+test("anemone is available throughout the typed catalog with included pollen", () => {
+  const type = FLOWER_TYPES.find((t) => String(t) === "anemone");
+  assert.ok(type, "anemone catalog integration is missing");
+  assert.equal(getFlower(type).latin, "Anemone coronaria");
+  assert.equal(FLOWER_STRUCTURES[type].simulatedSurfaces, true);
+  assert.equal(FLOWER_STRUCTURES[type].airbornePollen, false);
+});

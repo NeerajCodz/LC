@@ -3,6 +3,15 @@ import { expectRenderedFlower } from "./pixel-content";
 
 const specimens = [
   { slug: "ranunculus", name: "Ranunculus", latin: "Ranunculus asiaticus" },
+  { slug: "anemone", name: "Anemone", latin: "Anemone coronaria" },
+  { slug: "crocus", name: "Crocus", latin: "Crocus vernus" },
+  { slug: "freesia", name: "Freesia", latin: "Freesia refracta" },
+  { slug: "lisianthus", name: "Lisianthus", latin: "Eustoma russellianum" },
+  { slug: "camellia", name: "Camellia", latin: "Camellia japonica" },
+  { slug: "magnolia", name: "Magnolia", latin: "Magnolia grandiflora" },
+  { slug: "gardenia", name: "Gardenia", latin: "Gardenia jasminoides" },
+  { slug: "nasturtium", name: "Nasturtium", latin: "Tropaeolum majus" },
+  { slug: "cosmos", name: "Cosmos", latin: "Cosmos bipinnatus" },
 ];
 test.beforeEach(async ({ page }) => {
   await page.addInitScript(() =>

@@ -2,6 +2,7 @@
 import { useEffect, useLayoutEffect, useRef } from "react";
 import { useStore, useThree } from "@react-three/fiber";
 import { boundedDpr } from "@/lib/performance";
+import { bindRendererDocumentExit } from "@/lib/three/documentRenderer";
 import { markWebGL2Unavailable } from "./WebGLSupport";
 
 /** One capped clock per Canvas. Two startup frames release readiness; inactive scenes then stay at zero FPS. */
@@ -105,8 +106,18 @@ export function RenderBudget({
     document.addEventListener("visibilitychange", resume);
     canvas.addEventListener("webglcontextlost", onLost);
     canvas.addEventListener("webglcontextrestored", onRestored);
+    const detachDocumentExit = bindRendererDocumentExit(
+      state.gl,
+      window,
+      () => {
+        lost = true;
+        cancelAnimationFrame(frame);
+        frame = 0;
+      },
+    );
     resume();
     return () => {
+      detachDocumentExit();
       cancelAnimationFrame(frame);
       document.removeEventListener("visibilitychange", resume);
       canvas.removeEventListener("webglcontextlost", onLost);

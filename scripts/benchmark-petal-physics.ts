@@ -22,8 +22,28 @@ import { DELPHINIUM_MODEL } from "../components/flowers/delphinium/delphiniumGeo
 import { ALSTROEMERIA_MODEL } from "../components/flowers/alstroemeria/alstroemeriaGeometry";
 import { GERBERA_MODEL } from "../components/flowers/gerbera/gerberaGeometry";
 import { ZINNIA_MODEL } from "../components/flowers/zinnia/zinniaGeometry";
+import { RANUNCULUS_MODEL } from "../components/flowers/ranunculus/ranunculusGeometry";
+import { ANEMONE_MODEL } from "../components/flowers/anemone/anemoneGeometry";
+import { CROCUS_MODEL } from "../components/flowers/crocus/crocusGeometry";
+import { FREESIA_MODEL } from "../components/flowers/freesia/freesiaGeometry";
+import { LISIANTHUS_MODEL } from "../components/flowers/lisianthus/lisianthusGeometry";
+import { CAMELLIA_MODEL } from "../components/flowers/camellia/camelliaGeometry";
+import { MAGNOLIA_MODEL } from "../components/flowers/magnolia/magnoliaGeometry";
+import { GARDENIA_MODEL } from "../components/flowers/gardenia/gardeniaGeometry";
+import { NASTURTIUM_MODEL } from "../components/flowers/nasturtium/nasturtiumGeometry";
+import { COSMOS_MODEL } from "../components/flowers/cosmos/cosmosGeometry";
 const results = [];
 for (const [name, model] of Object.entries({
+  ranunculus: RANUNCULUS_MODEL,
+  anemone: ANEMONE_MODEL,
+  crocus: CROCUS_MODEL,
+  freesia: FREESIA_MODEL,
+  lisianthus: LISIANTHUS_MODEL,
+  camellia: CAMELLIA_MODEL,
+  magnolia: MAGNOLIA_MODEL,
+  gardenia: GARDENIA_MODEL,
+  nasturtium: NASTURTIUM_MODEL,
+  cosmos: COSMOS_MODEL,
   hellebore: HELLEBORE_MODEL,
   primrose: PRIMROSE_MODEL,
   petunia: PETUNIA_MODEL,

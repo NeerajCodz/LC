@@ -4,7 +4,27 @@ import { Object3D } from "three";
 import { PetalDynamics } from "../lib/three/petalDynamics";
 import { specimenCages } from "../lib/three/specimenModel";
 import { RANUNCULUS_MODEL } from "../components/flowers/ranunculus/ranunculusGeometry";
-for (const [name, model] of [["ranunculus", RANUNCULUS_MODEL]] as const)
+import { ANEMONE_MODEL } from "../components/flowers/anemone/anemoneGeometry";
+import { CROCUS_MODEL } from "../components/flowers/crocus/crocusGeometry";
+import { FREESIA_MODEL } from "../components/flowers/freesia/freesiaGeometry";
+import { LISIANTHUS_MODEL } from "../components/flowers/lisianthus/lisianthusGeometry";
+import { CAMELLIA_MODEL } from "../components/flowers/camellia/camelliaGeometry";
+import { MAGNOLIA_MODEL } from "../components/flowers/magnolia/magnoliaGeometry";
+import { GARDENIA_MODEL } from "../components/flowers/gardenia/gardeniaGeometry";
+import { NASTURTIUM_MODEL } from "../components/flowers/nasturtium/nasturtiumGeometry";
+import { COSMOS_MODEL } from "../components/flowers/cosmos/cosmosGeometry";
+for (const [name, model] of [
+  ["ranunculus", RANUNCULUS_MODEL],
+  ["anemone", ANEMONE_MODEL],
+  ["crocus", CROCUS_MODEL],
+  ["freesia", FREESIA_MODEL],
+  ["lisianthus", LISIANTHUS_MODEL],
+  ["camellia", CAMELLIA_MODEL],
+  ["magnolia", MAGNOLIA_MODEL],
+  ["gardenia", GARDENIA_MODEL],
+  ["nasturtium", NASTURTIUM_MODEL],
+  ["cosmos", COSMOS_MODEL],
+] as const)
   test(`${name}: transformed cages keep insertions pinned through gust, reverse bloom and release`, () => {
     for (const constrained of [true, false]) {
       const { indices, patches } = specimenCages(model, constrained),

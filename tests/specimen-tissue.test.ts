@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { createSpecimenMaterial } from "../lib/three/specimenMaterials";
-import type { Color, WebGLRenderer } from "three";
+import { Color, type WebGLRenderer } from "three";
 import { FLOWER_TYPES } from "../lib/flowers/types";
 import { createBotanicalBladeMaterial } from "../lib/three/botanicalBladeMaterial";
 import type { SpecimenSurface } from "../lib/three/specimenModel";
@@ -172,4 +172,33 @@ test("leaf pigment does not inherit the dark petal root gradient across palmate 
     body = shader.uniforms.uPigmentBody.value as Color;
   assert.ok(root.equals(body));
   leaf.dispose();
+});
+
+test("a diagnostic foliar midstripe uses independent uniforms within shared blade programs", () => {
+  const pigment = {
+    color: "#426644",
+    underside: "#70916b",
+    vein: "#759968",
+    roughness: 0.6,
+    venation: "parallel" as const,
+    midstripe: "#dae0cf",
+  };
+  const striped = createBotanicalBladeMaterial("snowdrop", pigment);
+  const plain = createBotanicalBladeMaterial("snowdrop", {
+    ...pigment,
+    midstripe: undefined,
+  });
+  const a = compile(striped),
+    b = compile(plain);
+  assert.equal(a.uniforms.uBladeMidstripeStrength?.value, 1);
+  assert.equal(b.uniforms.uBladeMidstripeStrength?.value, 0);
+  assert.equal(a.fragmentShader, b.fragmentShader);
+  assert.equal(striped.customProgramCacheKey(), plain.customProgramCacheKey());
+  assert.ok(
+    (a.uniforms.uBladeMidstripe.value as Color).equals(
+      new Color(pigment.midstripe),
+    ),
+  );
+  striped.dispose();
+  plain.dispose();
 });

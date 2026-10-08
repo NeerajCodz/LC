@@ -105,6 +105,7 @@ export default function FlowerGarden({
           {plantings.map((plant, i) => (
             <group
               key={plant.type}
+              name={`garden-plant:${plant.type}`}
               visible={!selected || selected === plant.type}
             >
               <RenderActivity value={!selected || selected === plant.type}>

@@ -51,7 +51,8 @@ test("garden close-up freezes hidden plant geometry and resumes the retained pla
         let ancestor: Object3D | null = node;
         let hidden = false;
         while (ancestor) {
-          if (!ancestor.visible) hidden = true;
+          if (ancestor.name.startsWith("garden-plant:") && !ancestor.visible)
+            hidden = true;
           ancestor = ancestor.parent;
         }
         if (hidden) {

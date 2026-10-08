@@ -21,9 +21,9 @@ export const CROCUS_STALKS: SpecimenOrgan[] = CROCUS_MODEL.clusters.flatMap(
       name: "inferior basal ovary",
       cluster: 0,
       points: [
-        [i * 0.018, -1.25, 0],
-        [i * 0.018, -1.19, 0],
-        [i * 0.018, -1.15, 0],
+        [i * 0.018, -0.55, 0],
+        [i * 0.018, -0.49, 0],
+        [i * 0.018, -0.45, 0],
       ] as Vec3[],
       radius: 0.032,
       endRadius: 0.022,
@@ -33,8 +33,8 @@ export const CROCUS_STALKS: SpecimenOrgan[] = CROCUS_MODEL.clusters.flatMap(
       name: "perianth stalk",
       cluster: 0,
       points: [
-        [i * 0.018, -1.15, 0],
-        [c.position[0] * 0.4, -0.54, c.position[2] * 0.4],
+        [i * 0.018, -0.45, 0],
+        [c.position[0] * 0.4, -0.22, c.position[2] * 0.4],
         c.position,
       ] as Vec3[],
       radius: 0.016,

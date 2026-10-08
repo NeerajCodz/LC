@@ -1,4 +1,6 @@
 import test from "node:test";
+import { crocusStructure } from "../components/flowers/crocus/Crocus";
+import { CROCUS_LEAF } from "../components/flowers/crocus/crocusLeaf";
 import assert from "node:assert/strict";
 import { ANEMONE_MODEL } from "../components/flowers/anemone/anemoneGeometry";
 import {
@@ -30,4 +32,13 @@ test("crocus basal tubes overlap their scape insertions", () => {
     Math.hypot(p[0], p[2]) - tube.thickness * 0.5 <=
       (stalk.endRadius ?? stalk.radius) + 0.001,
   );
+});
+test("crocus flowers sit close to their basal striped foliage", () => {
+  const flowerHeight = crocusStructure.stemLength + 0.56 * 0.97;
+  const leafHeight = CROCUS_LEAF.sample(0.5, 1, 1)[1];
+  assert.ok(
+    crocusStructure.stemLength < leafHeight,
+    "bare crocus tubes dominate the foliage",
+  );
+  assert.ok(leafHeight / flowerHeight > 0.65);
 });

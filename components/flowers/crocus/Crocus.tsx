@@ -32,7 +32,7 @@ export const crocusStructure: FlowerStructure = {
   headRadius: 1.03,
   headCenter: [0, 0.47, 0.04],
   headTilt: 0,
-  stemLength: 1.25,
+  stemLength: 0.55,
   stemRadius: 0.016,
   leafCount: 6,
   previewScale: 1.05,

@@ -80,8 +80,8 @@ export const FOLIAGE: Record<FlowerType, FoliageProfile> = {
     thickness: 0.013,
   },
   crocus: {
-    length: 1.12,
-    width: 0.046,
+    length: 0.85,
+    width: 0.025,
     color: "#466b4b",
     parallel: true,
     basal: true,

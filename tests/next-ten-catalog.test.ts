@@ -29,3 +29,9 @@ test("crocus is a typed specimen with dedicated anchored scapes", () => {
   assert.equal(getFlower(type).latin, "Crocus vernus");
   assert.equal(FLOWER_STRUCTURES[type].simulatedSurfaces, true);
 });
+test("freesia is a typed specimen with a bent spike and true funnels", () => {
+  const type = FLOWER_TYPES.find((t) => String(t) === "freesia");
+  assert.ok(type, "freesia catalog integration is missing");
+  assert.equal(getFlower(type).latin, "Freesia refracta");
+  assert.equal(FLOWER_STRUCTURES[type].simulatedSurfaces, true);
+});

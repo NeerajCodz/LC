@@ -21,6 +21,14 @@ export interface FoliageProfile {
 
 /** Cultivar-independent leaf traits; lotus has its own peltate blade generator. */
 export const FOLIAGE: Record<FlowerType, FoliageProfile> = {
+  freesia: {
+    length: 1.42,
+    width: 0.075,
+    color: "#59794f",
+    parallel: true,
+    basal: true,
+    thickness: 0.013,
+  },
   crocus: {
     length: 1.12,
     width: 0.046,

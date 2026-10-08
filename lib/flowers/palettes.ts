@@ -30,6 +30,15 @@ const palette = (
 });
 
 export const PETAL_PALETTES: Record<FlowerType, PetalPalette> = {
+  freesia: palette(
+    "#b9c38b",
+    "#eee8d7",
+    "#fff5e5",
+    "#aebd9b",
+    0.22,
+    0.79,
+    0.075,
+  ),
   crocus: palette("#5d417d", "#9880c1", "#c2afe0", "#604685", 0.28, 0.82, 0.15),
   anemone: palette(
     "#282344",

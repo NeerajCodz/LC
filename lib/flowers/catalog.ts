@@ -497,6 +497,16 @@ FLOWERS.push({
     "Six tepals surround three yellow stamens and three orange stigma branches above long basal tubes and narrow leaves.",
   color: PETAL_PALETTES.crocus.body,
 });
+FLOWERS.push({
+  type: "freesia",
+  name: "Freesia",
+  latin: "Freesia refracta",
+  family: "Iridaceae",
+  description: "Cream funnels follow the bend of a delicate flowering spike.",
+  detail:
+    "Fleshy six-lobed flowers with yellow lower guides, three stamens and bifid style branches rise above a stiff fan of sword-shaped leaves.",
+  color: PETAL_PALETTES.freesia.body,
+});
 FLOWERS.sort(
   (a, b) => FLOWER_TYPES.indexOf(a.type) - FLOWER_TYPES.indexOf(b.type),
 );

@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { createSpecimenMaterial } from "../lib/three/specimenMaterials";
-import { Color, type WebGLRenderer } from "three";
+import { Color, ShaderLib, type WebGLRenderer } from "three";
 import { FLOWER_TYPES } from "../lib/flowers/types";
 import { createBotanicalBladeMaterial } from "../lib/three/botanicalBladeMaterial";
 import type { SpecimenSurface } from "../lib/three/specimenModel";
@@ -10,9 +10,8 @@ import { TISSUE_RESPONSE } from "../lib/three/specimenTissue";
 function compile(material: ReturnType<typeof createSpecimenMaterial>) {
   const shader = {
     uniforms: {},
-    vertexShader: "#include <common>\n#include <begin_vertex>",
-    fragmentShader:
-      "#include <common>\n#include <color_fragment>\n#include <roughnessmap_fragment>",
+    vertexShader: ShaderLib.physical.vertexShader,
+    fragmentShader: ShaderLib.physical.fragmentShader,
   } as unknown as Parameters<typeof material.onBeforeCompile>[0];
   material.onBeforeCompile(shader, {} as WebGLRenderer);
   return shader;
@@ -53,8 +52,8 @@ test("new specimen tissue programs depend on shader source rather than organ lab
         material.dispose();
       }
   }
-  // Uniform-driven floral tissue, leaves and two calyx shader variants.
-  assert.equal(sources.size, 4);
+  // Uniform-driven floral tissue, shared base tissue and bicolored calyx.
+  assert.equal(sources.size, 3);
   const kinds = new Set<number>();
   for (const type of FLOWER_TYPES.filter((t) => TISSUE_RESPONSE[t])) {
     const material = createSpecimenMaterial(type, "petal");
@@ -149,11 +148,11 @@ test("leaf programs share venation code while retaining independent pigment unif
   }
 });
 
-test("optional tissue channels isolate shader programs without changing existing defaults", () => {
+test("unused tissue labels share source without changing existing optics", () => {
   const plain = createSpecimenMaterial("rose", "petal"),
     inner = createSpecimenMaterial("rose", "petal", undefined, "inner");
-  assert.equal(plain.customProgramCacheKey(), "specimen-rose-petal-v1");
-  assert.notEqual(plain.customProgramCacheKey(), inner.customProgramCacheKey());
+  assert.equal(plain.customProgramCacheKey(), inner.customProgramCacheKey());
+  assert.equal(compile(plain).fragmentShader, compile(inner).fragmentShader);
   assert.equal(plain.roughness, inner.roughness);
   plain.dispose();
   inner.dispose();
@@ -239,4 +238,32 @@ test("peltate venation radiates from the interior leaf hub", () => {
     "peltate veins must use the interior hub",
   );
   material.dispose();
+});
+
+test("legacy organ labels do not duplicate identical tissue shader sources", () => {
+  const sources = new Map<string, string>();
+  const programs = new Map<string, string>();
+  for (const type of FLOWER_TYPES) {
+    for (const role of [
+      "petal",
+      "tube",
+      "bract",
+      "banner",
+      "wing",
+      "keel",
+    ] as const) {
+      const material = createSpecimenMaterial(type, role);
+      const shader = compile(material);
+      const source = shader.vertexShader + shader.fragmentShader;
+      const key = material.customProgramCacheKey();
+      const previous = sources.get(source);
+      if (previous) assert.equal(key, previous, `${type}/${role}`);
+      else sources.set(source, key);
+      const program = programs.get(key);
+      if (program)
+        assert.equal(source, program, `${type}/${role} cache collision`);
+      else programs.set(key, source);
+      material.dispose();
+    }
+  }
 });

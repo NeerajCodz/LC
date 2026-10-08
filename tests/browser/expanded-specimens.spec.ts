@@ -14,7 +14,7 @@ const additions = [
 test("expanded specimens render on their routes and remain operable in garden macro", async ({
   page,
 }) => {
-  test.setTimeout(150000);
+  test.setTimeout(240000);
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
   await page.emulateMedia({ reducedMotion: "reduce" });
@@ -38,7 +38,11 @@ test("expanded specimens render on their routes and remain operable in garden ma
     ).toBeVisible();
   }
   await page.goto("/garden/");
-  await expect(page.locator(".bloom-loader")).toHaveCount(0);
+  // Full-catalog geometry and first-time shader linking can exceed the UI's
+  // default 15-second assertion window, especially under software rendering.
+  await expect(page.locator(".bloom-loader")).toHaveCount(0, {
+    timeout: 60000,
+  });
   for (const slug of additions) {
     await page.getByLabel("Explore a garden flower").selectOption(slug);
     await expect(

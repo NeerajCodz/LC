@@ -23,10 +23,10 @@ export function ranunculusPetal(index: number) {
     const roll = a + 0.13 * Math.sin(v * Math.PI) * (1 - open);
     const radius =
       root * (1 - v * 0.75) +
-      0.14 * (1 - open) * Math.sin(v * Math.PI) +
+      (0.14 + 0.1 * (1 - stage)) * (1 - open) * Math.sin(v * Math.PI) +
       length * open * Math.sin(v * 1.18);
     const y =
-      length * v * (1 - open * 0.74) +
+      length * v * (0.62 + 0.38 * stage - open * 0.74) +
       0.14 * v * v * open +
       0.12 * w * w * Math.sin(v * Math.PI) * open +
       0.01 * Math.sin(v * 37 + index) * open;
@@ -69,11 +69,14 @@ for (let i = 0; i < 5; i++) {
     cage: [2, 3],
     mobileCage: [1, 2],
     sample: (u, v, stage) => {
-      const width = (2 * u - 1) * (0.004 + 0.115 * Math.sin(v * Math.PI));
-      const r = 0.1 + (0.06 + 0.31 * stage) * v;
+      const width =
+        (2 * u - 1) * (0.004 + (0.24 - 0.125 * stage) * Math.sin(v * Math.PI));
+      const closed =
+        0.12 * (1 - v * 0.55) + 0.29 * Math.sin(v * Math.PI) ** 0.78;
+      const r = closed * (1 - stage) + (0.1 + 0.37 * v) * stage;
       return [
         Math.sin(a) * r + Math.cos(a) * width,
-        -0.07 + v * (0.3 - 0.45 * stage),
+        -0.07 + v * (0.61 - 0.76 * stage),
         Math.cos(a) * r - Math.sin(a) * width,
       ];
     },

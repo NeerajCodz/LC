@@ -8,6 +8,23 @@ import {
 } from "../components/flowers/ranunculus/ranunculusLeaf";
 
 verifySpecimen("ranunculus", RANUNCULUS_MODEL);
+test("ranunculus buds remain rounded and enclosed by their protective sepals", () => {
+  const petal = RANUNCULUS_MODEL.surfaces.find(
+    (s) => s.name === "cupped petal",
+  )!;
+  const body = petal.sample(0.5, 0.5, 0);
+  assert.ok(
+    body[1] < Math.hypot(body[0], body[2]) * 1.2,
+    "closed petal cup is too elongated",
+  );
+  const sepal = RANUNCULUS_MODEL.surfaces.find(
+    (s) => s.name === "protective sepal",
+  )!;
+  assert.ok(
+    sepal.sample(0.5, 1, 0)[1] > petal.sample(0.5, 0.8, 0)[1],
+    "protective sepals stop below the bud body",
+  );
+});
 verifySpecimen("ranunculus dissected foliage", {
   clusters: [],
   surfaces: [RANUNCULUS_LEAFLET],

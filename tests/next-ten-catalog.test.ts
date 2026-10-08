@@ -41,3 +41,9 @@ test("lisianthus preserves its sourced species name in the catalog", () => {
   assert.equal(getFlower(type).latin, "Eustoma russellianum");
   assert.equal(FLOWER_STRUCTURES[type].simulatedSurfaces, true);
 });
+test("camellia preserves its single-form woody specimen API", () => {
+  const type = FLOWER_TYPES.find((t) => String(t) === "camellia");
+  assert.ok(type, "camellia catalog integration is missing");
+  assert.equal(getFlower(type).latin, "Camellia japonica");
+  assert.equal(FLOWER_STRUCTURES[type].simulatedSurfaces, true);
+});

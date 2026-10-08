@@ -517,6 +517,16 @@ FLOWERS.push({
     "A single-flowered prairie gentian with five overlapping lobes, short fused corolla bases, five stamens and paired stigma lobes on a branching cyme.",
   color: PETAL_PALETTES.lisianthus.body,
 });
+FLOWERS.push({
+  type: "camellia",
+  name: "Camellia",
+  latin: "Camellia japonica",
+  family: "Theaceae",
+  description: "Rose-pink petals frame a bright crown of stamens.",
+  detail:
+    "A single Japanese camellia with fused inner petal and filament bases, protective scales and glossy serrulate leaves on a woody shoot.",
+  color: PETAL_PALETTES.camellia.body,
+});
 FLOWERS.sort(
   (a, b) => FLOWER_TYPES.indexOf(a.type) - FLOWER_TYPES.indexOf(b.type),
 );

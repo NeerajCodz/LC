@@ -3,6 +3,12 @@ import assert from "node:assert/strict";
 import { CAMELLIA_MODEL } from "../components/flowers/camellia/camelliaGeometry";
 import { verifySpecimen } from "./specimen-checks";
 verifySpecimen("camellia", CAMELLIA_MODEL);
+import { CAMELLIA_LEAF } from "../components/flowers/camellia/camelliaLeaf";
+verifySpecimen("camellia leathery foliage", {
+  clusters: [],
+  surfaces: [CAMELLIA_LEAF],
+  organs: [],
+});
 test("single camellia preserves seven petals, protective scales and fused filament collars", async () => {
   const a =
     await import("../components/flowers/camellia/camelliaGeometry").catch(

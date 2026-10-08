@@ -30,6 +30,15 @@ const palette = (
 });
 
 export const PETAL_PALETTES: Record<FlowerType, PetalPalette> = {
+  camellia: palette(
+    "#a33654",
+    "#d95877",
+    "#f2a0b0",
+    "#b44f69",
+    0.36,
+    0.79,
+    0.065,
+  ),
   lisianthus: palette(
     "#563473",
     "#b09acb",

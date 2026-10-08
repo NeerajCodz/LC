@@ -51,7 +51,9 @@ import { Anemone } from "./anemone/Anemone";
 import { Crocus } from "./crocus/Crocus";
 import { Freesia } from "./freesia/Freesia";
 import { Lisianthus } from "./lisianthus/Lisianthus";
+import { Camellia } from "./camellia/Camellia";
 const SPECIES = {
+  camellia: Camellia,
   lisianthus: Lisianthus,
   freesia: Freesia,
   crocus: Crocus,

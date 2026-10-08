@@ -94,7 +94,7 @@ export interface SpecimenInstanceGroup {
 }
 export function specimenGeometry(surface: SpecimenSurface, quality: Quality) {
   const resolution = {
-    overview: [8, 10],
+    overview: [6, 8],
     low: [12, 16],
     medium: [20, 24],
     high: [32, 32],
@@ -146,11 +146,11 @@ export function specimenOrganGeometry(organ: SpecimenOrgan, quality: Quality) {
     ...organ,
     segments:
       quality === "overview"
-        ? Math.max(5, organ.points.length * 2)
+        ? Math.max(4, organ.points.length)
         : quality === "low"
           ? 10
           : 24,
-    sides: quality === "overview" ? 5 : quality === "low" ? 7 : 12,
+    sides: quality === "overview" ? 4 : quality === "low" ? 7 : 12,
     grain: 0.025,
   };
   const geometry = createOrganicTube(options);

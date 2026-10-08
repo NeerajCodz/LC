@@ -112,7 +112,7 @@ export function createLotusReceptacle(
 }
 
 export function createLotusStamenParts(quality: Quality) {
-  const detail = quality === "overview" ? 10 : quality === "ultra" ? 44 : 28;
+  const detail = quality === "overview" ? 5 : quality === "ultra" ? 44 : 28;
   const filament = createOrganicTube({
     points: [
       [0, 0, 0],
@@ -122,6 +122,7 @@ export function createLotusStamenParts(quality: Quality) {
     radius: 0.003,
     endRadius: 0.0025,
     segments: detail,
+    sides: quality === "overview" ? 5 : 10,
     color: "#e6bc25",
     tipColor: "#f6d14c",
   });
@@ -137,7 +138,7 @@ export function createLotusStamenParts(quality: Quality) {
       flatten: 0.68,
       grain: 0.09,
       segments: detail,
-      sides: 12,
+      sides: quality === "overview" ? 5 : 12,
       color: "#dca915",
       tipColor: "#f7d24b",
     }),
@@ -152,7 +153,8 @@ export function createLotusStamenParts(quality: Quality) {
     ],
     radius: 0.003,
     endRadius: 0.004,
-    segments: 20,
+    segments: quality === "overview" ? 6 : 20,
+    sides: quality === "overview" ? 5 : 10,
     color: "#f1d66b",
     tipColor: "#f5edb9",
   });

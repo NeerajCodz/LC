@@ -7,6 +7,7 @@ import type { StemProps } from "../Stem";
 import type { FlowerOrgansProps } from "../FloralParts";
 import { MAGNOLIA_MODEL } from "./magnoliaGeometry";
 import { MagnoliaLeaf } from "./MagnoliaFoliage";
+import { MAGNOLIA_HEAD_CENTER } from "./magnoliaGeometry";
 const anatomy: StemAnatomy = {
   color: "#80694f",
   leafTilt: -1.04,
@@ -26,7 +27,7 @@ export const magnoliaStructure: FlowerStructure = {
   ...BASE_STRUCTURE,
   layers: [],
   headRadius: 1.6,
-  headCenter: [0, 0.49, 0],
+  headCenter: MAGNOLIA_HEAD_CENTER,
   headTilt: 0,
   stemLength: 2.1,
   stemRadius: 0.075,

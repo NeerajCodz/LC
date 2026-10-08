@@ -1,5 +1,10 @@
 import type { Vec3 } from "@/lib/flowers/types";
-import { SINGLE_CLUSTER, type SpecimenModel } from "@/lib/three/specimenModel";
+import {
+  SINGLE_CLUSTER,
+  type SpecimenModel,
+  anchoredHeadCluster,
+  specimenClusterPoint,
+} from "@/lib/three/specimenModel";
 import { floralStamens } from "@/lib/three/floralStamens";
 export function magnoliaReceptacleRadius(v: number) {
   const t = Math.max(0, Math.min(1, (v - 0.3) / 0.68));
@@ -181,3 +186,9 @@ MAGNOLIA_MODEL.instances = [
     }),
   },
 ];
+
+MAGNOLIA_MODEL.clusters[0] = anchoredHeadCluster(0.65, -0.1, 1, 0.006);
+export const MAGNOLIA_HEAD_CENTER = specimenClusterPoint(
+  MAGNOLIA_MODEL.clusters[0],
+  [0, 0.31, 0],
+);

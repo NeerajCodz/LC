@@ -7,6 +7,7 @@ import type { StemProps } from "../Stem";
 import type { FlowerOrgansProps } from "../FloralParts";
 import { GARDENIA_MODEL, GARDENIA_STALKS } from "./gardeniaGeometry";
 import { GardeniaLeaf } from "./GardeniaFoliage";
+import { GARDENIA_HEAD_CENTER } from "./gardeniaGeometry";
 const anatomy: StemAnatomy = {
   color: "#7d7854",
   leafTilt: -1.08,
@@ -29,7 +30,7 @@ export const gardeniaStructure: FlowerStructure = {
   ...BASE_STRUCTURE,
   layers: [],
   headRadius: 1.45,
-  headCenter: [0, 0.46, 0.02],
+  headCenter: GARDENIA_HEAD_CENTER,
   headTilt: 0,
   stemLength: 1.8,
   stemRadius: 0.05,

@@ -7,6 +7,7 @@ import type { StemProps } from "../Stem";
 import type { FlowerOrgansProps } from "../FloralParts";
 import { ANEMONE_MODEL } from "./anemoneGeometry";
 import { AnemoneLeaf } from "./AnemoneFoliage";
+import { ANEMONE_HEAD_CENTER } from "./anemoneGeometry";
 const anatomy: StemAnatomy = {
   color: "#718650",
   leafTilt: -1.0,
@@ -25,7 +26,7 @@ export const anemoneStructure: FlowerStructure = {
   ...BASE_STRUCTURE,
   layers: [],
   headRadius: 1.22,
-  headCenter: [0, 0.19, 0],
+  headCenter: ANEMONE_HEAD_CENTER,
   headTilt: 0,
   stemLength: 1.9,
   stemRadius: 0.023,

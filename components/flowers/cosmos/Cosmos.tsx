@@ -7,6 +7,7 @@ import type { StemProps } from "../Stem";
 import type { FlowerOrgansProps } from "../FloralParts";
 import { COSMOS_MODEL } from "./cosmosGeometry";
 import { CosmosLeaf } from "./CosmosFoliage";
+import { COSMOS_HEAD_CENTER } from "./cosmosGeometry";
 const anatomy: StemAnatomy = {
   color: "#758c53",
   leafTilt: -0.92,
@@ -28,7 +29,7 @@ export const cosmosStructure: FlowerStructure = {
   ...BASE_STRUCTURE,
   layers: [],
   headRadius: 1.15,
-  headCenter: [0, 0.14, 0],
+  headCenter: COSMOS_HEAD_CENTER,
   headTilt: 0,
   stemLength: 2.05,
   stemRadius: 0.025,

@@ -2,6 +2,8 @@ import {
   radialTube,
   type SpecimenModel,
   type SpecimenOrgan,
+  anchoredHeadCluster,
+  specimenClusterPoint,
 } from "@/lib/three/specimenModel";
 import { floralStamens } from "@/lib/three/floralStamens";
 export const CAMELLIA_MODEL: SpecimenModel = {
@@ -188,3 +190,9 @@ for (let c = 0; c < 2; c++) {
     });
   }
 }
+
+CAMELLIA_MODEL.clusters[0] = anchoredHeadCluster(0.9, 0, 0.89, 0.008);
+export const CAMELLIA_HEAD_CENTER = specimenClusterPoint(
+  CAMELLIA_MODEL.clusters[0],
+  [0, 0.36, 0],
+);

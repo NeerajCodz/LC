@@ -1,5 +1,10 @@
 import type { Vec3 } from "@/lib/flowers/types";
-import { SINGLE_CLUSTER, type SpecimenModel } from "@/lib/three/specimenModel";
+import {
+  SINGLE_CLUSTER,
+  type SpecimenModel,
+  anchoredHeadCluster,
+  specimenClusterPoint,
+} from "@/lib/three/specimenModel";
 import { floralStamens } from "@/lib/three/floralStamens";
 import { leafBlade } from "@/lib/three/botanicalBlades";
 
@@ -157,3 +162,12 @@ ANEMONE_MODEL.instances = [
     }),
   },
 ];
+
+ANEMONE_MODEL.clusters[0] = anchoredHeadCluster(0.92, -0.13, 1, 0.015);
+ANEMONE_MODEL.clusters.push({ ...SINGLE_CLUSTER, nod: 0 });
+for (const surface of ANEMONE_MODEL.surfaces)
+  if (surface.name === "involucral leaf") surface.cluster = 1;
+export const ANEMONE_HEAD_CENTER = specimenClusterPoint(
+  ANEMONE_MODEL.clusters[0],
+  [0, 0.18, 0],
+);

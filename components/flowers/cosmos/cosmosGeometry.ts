@@ -4,6 +4,8 @@ import {
   radialTube,
   type SpecimenModel,
   type SpecimenSurface,
+  anchoredHeadCluster,
+  specimenClusterPoint,
 } from "@/lib/three/specimenModel";
 import { floralStamens } from "@/lib/three/floralStamens";
 export const COSMOS_MODEL: SpecimenModel = {
@@ -190,3 +192,9 @@ COSMOS_MODEL.instances = [
     }),
   },
 ];
+
+COSMOS_MODEL.clusters[0] = anchoredHeadCluster(0.85, -0.14, 1, 0.015);
+export const COSMOS_HEAD_CENTER = specimenClusterPoint(
+  COSMOS_MODEL.clusters[0],
+  [0, 0.14, 0],
+);

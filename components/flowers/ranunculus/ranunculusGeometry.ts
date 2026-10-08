@@ -3,6 +3,8 @@ import {
   SINGLE_CLUSTER,
   radialTube,
   type SpecimenModel,
+  anchoredHeadCluster,
+  specimenClusterPoint,
 } from "@/lib/three/specimenModel";
 
 /** Nested double-form cups have narrow rolled inner blades and spreading outer blades. */
@@ -111,3 +113,9 @@ for (let i = 0; i < 12; i++) {
     color: "#7c9862",
   });
 }
+
+RANUNCULUS_MODEL.clusters[0] = anchoredHeadCluster(0.8, 0, 1, 0.015);
+export const RANUNCULUS_HEAD_CENTER = specimenClusterPoint(
+  RANUNCULUS_MODEL.clusters[0],
+  [0, 0.34, 0],
+);

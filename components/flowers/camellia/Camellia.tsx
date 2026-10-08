@@ -7,6 +7,7 @@ import type { StemProps } from "../Stem";
 import type { FlowerOrgansProps } from "../FloralParts";
 import { CAMELLIA_MODEL, CAMELLIA_STALKS } from "./camelliaGeometry";
 import { CamelliaLeaf } from "./CamelliaFoliage";
+import { CAMELLIA_HEAD_CENTER } from "./camelliaGeometry";
 const anatomy: StemAnatomy = {
   color: "#80674e",
   leafTilt: -1.12,
@@ -27,7 +28,7 @@ export const camelliaStructure: FlowerStructure = {
   ...BASE_STRUCTURE,
   layers: [],
   headRadius: 1.4,
-  headCenter: [0.08, 0.37, 0.03],
+  headCenter: CAMELLIA_HEAD_CENTER,
   headTilt: 0,
   stemLength: 1.95,
   stemRadius: 0.065,

@@ -1,5 +1,10 @@
 import type { Vec3 } from "@/lib/flowers/types";
-import type { SpecimenModel, SpecimenOrgan } from "@/lib/three/specimenModel";
+import {
+  type SpecimenModel,
+  type SpecimenOrgan,
+  anchoredHeadCluster,
+  specimenClusterPoint,
+} from "@/lib/three/specimenModel";
 import { floralStamens } from "@/lib/three/floralStamens";
 export const GARDENIA_MODEL: SpecimenModel = {
   clusters: [
@@ -156,3 +161,9 @@ for (let c = 0; c < 3; c++) {
       color: "#c9cda0",
     });
 }
+
+GARDENIA_MODEL.clusters[0] = anchoredHeadCluster(0.8, -0.17, 0.86, 0.008);
+export const GARDENIA_HEAD_CENTER = specimenClusterPoint(
+  GARDENIA_MODEL.clusters[0],
+  [0, 0.5, 0],
+);

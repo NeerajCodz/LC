@@ -7,6 +7,7 @@ import type { StemProps } from "../Stem";
 import type { FlowerOrgansProps } from "../FloralParts";
 import { RANUNCULUS_MODEL } from "./ranunculusGeometry";
 import { RanunculusLeaf } from "./RanunculusFoliage";
+import { RANUNCULUS_HEAD_CENTER } from "./ranunculusGeometry";
 const anatomy: StemAnatomy = {
   color: "#63824e",
   leafTilt: -1.05,
@@ -30,7 +31,7 @@ export const ranunculusStructure: FlowerStructure = {
   ...BASE_STRUCTURE,
   layers: [],
   headRadius: 1.22,
-  headCenter: [0, 0.34, 0],
+  headCenter: RANUNCULUS_HEAD_CENTER,
   headTilt: 0,
   stemLength: 2.1,
   stemRadius: 0.03,

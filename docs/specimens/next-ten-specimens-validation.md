@@ -5,10 +5,91 @@ merging PR #3 with its documented WebKit stress failure still open.
 
 The chosen batch is Ranunculus, Anemone, Crocus, Freesia, Lisianthus, Camellia,
 Magnolia, Gardenia, Nasturtium and Cosmos. All ten have research dossiers.
-**Only Ranunculus is implemented in this branch so far.** The remaining nine
-are tracked in the [working plan](../plans/next-ten-realistic-specimens.md).
+All ten now have dedicated geometry, foliage, pigments and anchored interaction.
+Work continued in the same `E:\codz\Projects\lc` repository on the user-requested
+`codex/complete-next-ten-specimens` branch. The eight initial research/Ranunculus
+commits are preserved. See the [working plan](../plans/next-ten-realistic-specimens.md).
 
-## Ranunculus slice
+## Dedicated anatomy and review
+
+Anemone retains eight petaloid sepals, dark stamens, individual carpels and divided
+involucral/basal leaves. Crocus has six tepals, three stamens, three stigma branches
+and a diagnostic white leaf stripe; review shortened the bare tubes to keep its
+flowers close to the basal foliage. Freesia keeps a bent unilateral spike, six-lobed
+continuous funnels, bifid style branches and a five-blade leaf fan. Lisianthus
+has five lobes on short fused bases, paired stigmas and clasping opposite foliage;
+review softened repeated folds.
+
+Camellia's seven-petalled single form includes fused petal/filament collars and
+protective scales. Magnolia retains nine thick tepals, 179 instanced stamens and
+60 carpels on a scaled floral torus, with glossy leaves and rough rusty undersides.
+Review reduced the torus, moved reproductive organs outside its surface and
+closed the axis apex. Gardenia has a long tube, six overlapping limbs, included
+anthers, an inferior ovary and separate pointed stipules. Nasturtium has two
+upper/three fringed lower petals, eight stamens, a hollow calyx spur and curved
+peltate leaves with interior petiole insertions. Cosmos keeps eight neuter rays,
+80 real five-lobed bisexual disk florets, two bract ranks and sealed bipinnate
+filiform foliage; review compacted and closed its buds.
+
+Head orientations pivot around their anatomical insertions; macro targets come
+from the same transformed coordinates. The stem and planting point remain fixed.
+No whole-plant head rotation, blurred macro treatment, photographed texture or
+generic substitute model was introduced. Counts/compositions, palettes, dimensions
+and mechanical constants remain authored as documented in the source dossiers.
+
+Rose plus all ten were captured in the development fixture at front, side, 45°,
+macro, bud, half and side bud: 11/11 captures passed and were inspected. Eight
+corrected specimens were recaptured (8/8), followed by the final two closure
+recaptures (2/2). These views complement numerical checks and do not establish
+photographic equivalence.
+
+The complete feature tree passes 250 unit tests, typecheck and full lint.
+Inventory generation/audit and six taxonomy tests pass: 56 catalog studies and
+52 unambiguous exact-name candidates, preserving four existing naming gaps and
+the false scientific-simulation flag. The production build passes with 56 flower
+routes / 63 static pages. The browser results and measured costs are recorded below.
+
+## Final production browser sweep
+
+The 52-case sweep against the production build completed in 36.2 minutes:
+**41 passed / 11 failed**. Desktop Chromium passed all 26 cases. Emulated
+iPhone 13 WebKit on Windows passed 15 of 26. This is not an all-green mobile result.
+The files exercised the new specimens, retention, rendering fallback, scrolling,
+lifecycle and the complete collection-to-garden performance journey.
+
+Both projects passed the focused loop through all ten species, including actual
+flower pixels, detailed cage limits, macro retention, keyboard/pointer pulse,
+pause/resume and reduced motion. Desktop also passed every individual species'
+bloom/theme/search/selected-garden journey and the full retained collection.
+Mobile Freesia and Nasturtium passed their individual journeys.
+
+The ten graphics failures have explicit `WebGL: context lost.` messages in their
+saved traces:
+
+- Ranunculus and Anemone reached the garden but its loading overlay did not clear.
+- Crocus, Lisianthus, Camellia, Magnolia, Gardenia and Cosmos failed the actual
+  garden-pixel assertion after context loss. Several then logged invalid-object
+  deletion messages during cleanup; these follow the loss rather than establish
+  its underlying cause.
+- The mobile performance journey and retention round trip both lost their context
+  in the collection and failed at Gardenia's missing rendered-preview marker.
+  The performance journey did not reach its garden stage.
+
+The eleventh failure, the simulated throwing WebGL probe, completed DOM browsing
+and retry assertions but collected a Next.js Marigold route-prefetch fetch error
+reported by WebKit as an access-control failure. It is separate from context loss;
+the error collection assertion remains intact. A fresh isolated rerun passed
+(1/1 in 5.6 seconds), without changing source or filtering errors. The original
+sweep remains recorded as 41/52; one isolated pass does not erase that failure.
+
+This extends the previously disclosed Windows WebKit collection/garden limitation.
+The first failing preview does not establish Gardenia as the sole cause: individual
+focused rendering passed, while retained accumulation and complete-garden startup
+remain unresolved. No scene-unmount workaround, weakened pixel assertion or
+error filter was introduced. Physical iPhone Safari is unmeasured, and Windows
+WebKit's reported `Apple GPU` is not evidence of a physical Apple device.
+
+## Initial Ranunculus slice (historical checks)
 
 - Dedicated cultivated-double anatomy: 48 cupped sealed petals in four layers,
   five protective sepals and enclosed carpels. Macro geometry preserves thickness
@@ -23,7 +104,7 @@ are tracked in the [working plan](../plans/next-ten-realistic-specimens.md).
   proportion/enclosure regression preceded their correction. Corrected captures
   show a rounded bud surrounded by longer green sepals; mature geometry is retained.
 
-## Checks completed on this slice
+## Checks completed before the remaining nine were implemented
 
 - Typecheck and full repository lint pass.
 - **171 unit tests pass**, including sealed/thickness/normal/count checks,
@@ -40,15 +121,112 @@ are tracked in the [working plan](../plans/next-ten-realistic-specimens.md).
   bloom, all three themes, catalog search and selected garden rendering.
 - Front, orbit 45-degree, side, macro, bud, half and full captures were inspected;
   corrected desktop bud/half and emulated-mobile macro/bud were reviewed again.
-  Exact seven-camera development-fixture comparison with Rose remains pending.
+  The exact seven-camera comparison with Rose had not yet run at this checkpoint;
+  it is now recorded in the completed review above.
 
-These cases do not resolve PR #3's full retained-gallery-to-garden WebKit stress
-failure. That journey and broad collection/fallback rechecks remain required
-for the whole batch. The new PR remains work in progress; there is no claim
-that all ten are implemented or that the inherited failure is fixed.
+These initial cases did not resolve PR #3's full retained-gallery-to-garden WebKit
+stress failure. The final sweep above exercises that journey and broad collection/
+fallback scenarios against all ten implemented models. The earlier four passing
+cases do not establish a fix.
 
-Physical-phone measurements, this batch's solver/rendering benchmarks and
-isolated GPU timing are pending. No WGSL changed. Do not infer 60 FPS or
-photographic equivalence from these checks. Logs and screenshots remain at
-`F:/codex-lc-validation/next-ten-specimens-2026-10-08/` and in the host's earlier
-validation folder, outside Git.
+## Measured CPU contact costs
+
+Measured on Windows with an Intel Core i7-13650HX (14 cores / 20 threads),
+Node 24.19.0 and the committed `benchmark-petal-physics.ts` driver. Each sample
+uses 30 warmup frames followed by 60 measured `step(1/60)` calls at full bloom,
+wind 0.7 and proximity 0.8. Desktop integrates at 1/120 second; constrained at
+1/60. Matrices use the final authored head poses and constrained midribs remain
+pinned. These are CPU solver timings, excluding drawing and texture preparation;
+they are not whole-app frame times.
+
+| Species    | Desktop nodes | Median / p95 ms | Constrained nodes | Median / p95 ms |
+| ---------- | ------------: | --------------: | ----------------: | --------------: |
+| Ranunculus |          1212 | 22.894 / 27.565 |               414 |   3.079 / 4.531 |
+| Anemone    |           280 |   3.219 / 4.173 |               120 |   0.546 / 1.333 |
+| Crocus     |           672 | 11.518 / 15.246 |               336 |   1.732 / 2.599 |
+| Freesia    |           728 | 15.951 / 17.511 |               294 |   1.465 / 1.832 |
+| Lisianthus |          1020 | 12.974 / 15.738 |               410 |   1.461 / 1.902 |
+| Camellia   |           850 | 21.924 / 27.557 |               348 |   2.464 / 5.006 |
+| Magnolia   |           385 |   5.581 / 7.659 |               138 |   0.797 / 1.160 |
+| Gardenia   |           792 | 21.103 / 24.302 |               312 |   1.944 / 2.929 |
+| Nasturtium |          1040 | 17.007 / 19.779 |               392 |   1.615 / 2.670 |
+| Cosmos     |           608 |   6.533 / 8.696 |               274 |   1.041 / 1.433 |
+
+Dense Ranunculus, Camellia and Gardenia desktop contact work alone exceeds a
+16.7 ms frame budget in this sample. Bounded node counts do not guarantee 60 FPS.
+Full garden and previews retain ambient motion; detailed contact runs only in
+focused/selected specimens. Fine instanced reproductive organs follow their
+carrier; they do not each own a cage, and sub-cage tissue detail is not guaranteed
+collision-free. Compliance and biological opening delays remain authored.
+
+## Rendering measurements
+
+The committed `benchmark-specimen-rendering.ts` driver completed all 40 samples:
+10 specimens, two views and two browser targets. No sampled page errors or context
+loss occurred. Each species uses a fresh page; specimen and macro share that page.
+Optional WebGPU is disabled, so both tissue and studio lighting report their
+WebGL fallbacks. All samples report detailed physics and the expected desktop or
+mobile render budget.
+
+After at least 60 warm frames and a new 30-frame counter boundary, each sample
+measures 120 subsequent draw-counter advances. Cadence includes CPU simulation,
+texture preparation and rendering; it is not isolated GPU execution or presented
+frames. The reported solver/transfer means are the renderer's latest batched
+telemetry. Transfer measures CPU displacement/normal texture preparation, excluding
+GPU upload execution. Slow frames may take more bounded fixed solver substeps
+than the single-input Node benchmark, so those figures are not directly equivalent.
+These are single sequential samples, not statistical device guarantees.
+
+Desktop Chromium used ANGLE / NVIDIA GeForce RTX 3050 6GB Laptop GPU / D3D11,
+a 1600 x 1000 CSS viewport and a budgeted 3098 x 1936 drawing buffer. Mobile used
+Playwright iPhone 13 WebKit emulation on Windows, a 390 x 440 specimen drawing buffer
+and the browser's `Apple GPU` renderer label. That label does not identify a real
+phone. Both buffers stayed unchanged between specimen and macro.
+
+### Desktop Chromium
+
+| Species    | Specimen / macro cadence FPS | Specimen / macro solver ms | Specimen / macro texture preparation ms |
+| ---------- | ---------------------------: | -------------------------: | --------------------------------------: |
+| Ranunculus |                  26.1 / 24.8 |              37.10 / 36.10 |                             0.13 / 0.13 |
+| Anemone    |                  48.1 / 48.0 |                4.50 / 3.84 |                             0.05 / 0.04 |
+| Crocus     |                  49.2 / 48.0 |                9.55 / 8.13 |                             0.04 / 0.04 |
+| Freesia    |                  47.9 / 47.2 |               9.79 / 10.80 |                             0.03 / 0.04 |
+| Lisianthus |                  48.7 / 49.1 |               10.22 / 9.60 |                             0.06 / 0.06 |
+| Camellia   |                  47.4 / 48.4 |              15.42 / 15.67 |                             0.05 / 0.04 |
+| Magnolia   |                  48.0 / 47.9 |                4.03 / 3.93 |                             0.03 / 0.03 |
+| Gardenia   |                  49.2 / 48.0 |              12.84 / 12.26 |                             0.04 / 0.04 |
+| Nasturtium |                  47.2 / 48.0 |               9.90 / 10.84 |                             0.05 / 0.06 |
+| Cosmos     |                  48.1 / 48.0 |                5.11 / 5.91 |                             0.06 / 0.04 |
+
+Navigation to 30 draw-counter frames ranged from 2.01 to 8.02 seconds.
+
+### Windows mobile WebKit emulation
+
+| Species    | Specimen / macro cadence FPS | Specimen / macro solver ms | Specimen / macro texture preparation ms |
+| ---------- | ---------------------------: | -------------------------: | --------------------------------------: |
+| Ranunculus |                  20.0 / 18.7 |                5.74 / 5.34 |                             0.05 / 0.05 |
+| Anemone    |                  26.3 / 24.1 |                0.93 / 0.93 |                             0.01 / 0.00 |
+| Crocus     |                  25.7 / 26.2 |                2.31 / 2.34 |                             0.02 / 0.03 |
+| Freesia    |                   12.5 / 9.6 |              14.17 / 17.36 |                             0.54 / 0.52 |
+| Lisianthus |                  23.6 / 19.3 |                2.91 / 4.19 |                             0.09 / 0.20 |
+| Camellia   |                   15.4 / 9.4 |              12.15 / 17.09 |                             0.48 / 0.60 |
+| Magnolia   |                  26.2 / 26.9 |                1.32 / 1.16 |                             0.03 / 0.02 |
+| Gardenia   |                  24.9 / 25.3 |                3.06 / 2.41 |                             0.05 / 0.05 |
+| Nasturtium |                  24.8 / 23.5 |                4.20 / 2.62 |                             0.20 / 0.07 |
+| Cosmos     |                  25.0 / 23.8 |                1.60 / 1.46 |                             0.04 / 0.02 |
+
+Navigation to 30 draw-counter frames ranged from 5.13 to 7.91 seconds.
+
+Focused-page samples do not resolve the retained collection/garden failures.
+Desktop cadence ranged from 24.8-49.2 FPS; mobile emulation from 9.4-26.9 FPS,
+including slow Freesia and Camellia macro samples. Neither result supports a
+sustained universal 60 FPS claim.
+
+Physical-phone measurements and isolated GPU timing remain unavailable. No WGSL
+changed; actual WebGL pixel checks exercised the updated GLSL materials. Logs,
+raw benchmark JSON, traces and screenshots remain at
+`F:/codex-lc-validation/next-ten-specimens-2026-10-08/`, outside Git. The production
+app continues to run on port 1607 for review. This PR remains a draft while the
+mobile collection/garden failures are unresolved. The geometry, sources and
+review captures represent authored botanical art, not a scientifically validated
+simulation or a claim of photographic equivalence.

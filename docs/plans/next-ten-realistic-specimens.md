@@ -19,7 +19,8 @@ Its validation remains historical evidence, not a claim that the failure is fixe
 | nasturtium | Tropaeolum majus                        | Three bilateral flowers plus bud; five sepals and dorsal nectar spur, two upper/three fringed lower petals, eight stamens, peltate leaves |
 | cosmos     | Cosmos bipinnatus                       | Eight ray florets, true five-lobed disk flowers, two involucral ranks, opposite finely divided foliage                                    |
 
-Counts, dimensions, colors, delays and mechanics are authored. Taxon-specific
+Composition counts, dimensions, colors, delays and mechanics are authored; per-flower
+organ counts follow the cited accounts where documented. Taxon-specific
 accounts and their evidence gaps live in the ten research dossiers. Keep source
 traits separate from our choices; Lisianthus's historical name needs explicit mapping.
 
@@ -43,15 +44,20 @@ sharp macro, port 1607, installed stack, retained previews and explicit retry.
 - [x] 2. Paired anther chambers with preserved open/folded attachments.
 - [x] 3. Ranunculus sealed anatomy and geometry/count/budget checks.
 - [x] 4. Ranunculus divided foliage, tissue, anchored motion and catalog API.
-- [ ] 5–22. Two slices for each remaining species: sealed anatomy plus tests, then dedicated
+- [x] 5–22. Two slices for each remaining species: sealed anatomy plus tests, then dedicated
       foliage/tissue/motion and exhaustive catalog integration. Run failing
       missing-model/count assertions before geometry, then geometry/normal/bloom
       tests, typecheck and affected lint before each completed slice.
-- [ ] 23. Transformed contact, attachments, reverse bloom and quality transitions.
-- [ ] 24. Framing, garden clearance, collection/search and all canonical routes.
-- [ ] 25. Rose-plus-ten seven-view review; desktop/mobile pixels, controls,
+- [x] 23. Transformed contact, attachments, reverse bloom and quality transitions.
+- [x] 24. Framing, garden clearance, collection/search and all canonical routes.
+- [x] 25. Execute Rose-plus-ten seven-view review; desktop/mobile pixels, controls,
       interaction, retention, lifecycle, fallback and full collection-to-garden.
-- [ ] 26. Inventory/audit, API documentation, production build and measured costs.
+      Review captures passed. Production sweep: 41/52 passed, with ten traced
+      mobile context losses and one route-prefetch error; see the validation record.
+- [x] 26. Inventory/audit, API documentation, production build and measured costs.
+- [ ] Resolve mobile retained-collection/garden context loss before marking the
+      new PR ready for merge. An isolated passing fallback rerun does not erase
+      the production sweep's failures. Physical-phone validation remains unavailable.
 
 Commit coherent completed slices throughout as Neeraj Sathish Kumar
 <neerajcodz@gmail.com>, both author and committer, without coauthor trailers.

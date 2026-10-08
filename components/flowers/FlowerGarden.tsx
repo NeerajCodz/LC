@@ -2,7 +2,7 @@
 import { Suspense, useState, useMemo } from "react";
 import { botanicalEvents } from "@/lib/three/events";
 import { PerformanceMonitor } from "@react-three/drei";
-import { PCFShadowMap } from "three";
+import { botanicalShadowOptions } from "@/lib/three/shadows";
 import type { FlowerType, Vec3 } from "@/lib/flowers/types";
 import { FLOWER_STRUCTURES } from "@/lib/flowers/structures";
 import { flowerHeadTarget } from "@/lib/flowers/framing";
@@ -56,7 +56,7 @@ export default function FlowerGarden({
     <SafeCanvas
       events={botanicalEvents}
       frameloop="never"
-      shadows={!constrained && !degraded}
+      shadows={botanicalShadowOptions(!constrained && !degraded)}
       dpr={1}
       camera={{ position: [0, 3.6, 11], fov: 39, near: 0.1, far: 50 }}
       gl={{
@@ -64,9 +64,6 @@ export default function FlowerGarden({
         powerPreference: constrained ? "low-power" : "high-performance",
       }}
       onUnavailable={onReady}
-      onCreated={({ gl }) => {
-        gl.shadowMap.type = PCFShadowMap;
-      }}
     >
       <RenderBudget constrained={constrained || degraded} macro={!!selected} />
       <SurfaceDetail />

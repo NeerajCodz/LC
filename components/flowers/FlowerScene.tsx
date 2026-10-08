@@ -2,7 +2,8 @@
 import { Suspense, useMemo, useState } from "react";
 import { botanicalEvents } from "@/lib/three/events";
 import { ContactShadows } from "@react-three/drei";
-import { ACESFilmicToneMapping, PCFShadowMap } from "three";
+import { ACESFilmicToneMapping } from "three";
+import { botanicalShadowOptions } from "@/lib/three/shadows";
 import type { FlowerType, Vec3 } from "@/lib/flowers/types";
 import { FLOWER_STRUCTURES } from "@/lib/flowers/structures";
 import { flowerHeadTarget } from "@/lib/flowers/framing";
@@ -62,7 +63,7 @@ export default function FlowerScene({
       className={hovered ? "flower-canvas is-hovered" : "flower-canvas"}
       frameloop="never"
       resize={{ scroll: false }}
-      shadows={quality !== "low"}
+      shadows={botanicalShadowOptions(quality !== "low")}
       dpr={1}
       camera={{ position: [0, 1.5, 7.5], fov: 38, near: 0.1, far: 45 }}
       gl={{
@@ -73,9 +74,6 @@ export default function FlowerScene({
         toneMappingExposure: 1.05,
       }}
       onUnavailable={onReady}
-      onCreated={({ gl }) => {
-        gl.shadowMap.type = PCFShadowMap;
-      }}
     >
       <RenderBudget active={active} constrained={constrained} macro={macro} />
       <SurfaceDetail />

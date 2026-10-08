@@ -4,6 +4,7 @@ import { useStore, useThree } from "@react-three/fiber";
 import { boundedDpr } from "@/lib/performance";
 import { bindRendererDocumentExit } from "@/lib/three/documentRenderer";
 import { GpuFrameGate } from "@/lib/three/gpuFrameGate";
+import { SceneProgramPreparation } from "@/lib/three/sceneProgramPreparation";
 import { markWebGL2Unavailable } from "./WebGLSupport";
 
 /** One capped clock per Canvas. Two startup frames release readiness; inactive scenes then stay at zero FPS. */
@@ -12,11 +13,13 @@ export function RenderBudget({
   constrained,
   macro = false,
   gpuPacing = false,
+  shaderScope,
 }: {
   active?: boolean;
   constrained: boolean;
   macro?: boolean;
   gpuPacing?: boolean;
+  shaderScope?: string;
 }) {
   const get = useThree((state) => state.get);
   const { subscribe } = useStore();
@@ -61,6 +64,36 @@ export function RenderBudget({
     const context = state.gl.getContext();
     const gate =
       gpuPacing && "fenceSync" in context ? new GpuFrameGate(context) : null;
+    const preparation = shaderScope
+      ? new SceneProgramPreparation(state.gl)
+      : null;
+    const before = state.scene.onBeforeRender,
+      after = state.scene.onAfterRender;
+    let hidden = false,
+      visibility = state.scene.visible;
+    const restoreVisibility = () => {
+      if (hidden) state.scene.visible = visibility;
+      hidden = false;
+    };
+    if (preparation) {
+      canvas.dataset.shaderPreparation = "pending";
+      state.scene.onBeforeRender = (...args) => {
+        before.apply(state.scene, args);
+        // Suspense can initially leave only an empty scene. Prepare the complete
+        // garden once its named scope and initialized instance morphs are present.
+        if (!state.scene.getObjectByName(shaderScope!)) return;
+        preparation.begin(state.scene, args[2]);
+        if (!preparation.ready()) {
+          visibility = state.scene.visible;
+          state.scene.visible = false;
+          hidden = true;
+        } else canvas.dataset.shaderPreparation = "ready";
+      };
+      state.scene.onAfterRender = (...args) => {
+        restoreVisibility();
+        after.apply(state.scene, args);
+      };
+    }
     let frame = 0,
       last = 0,
       lost = false;
@@ -79,6 +112,13 @@ export function RenderBudget({
             frame = requestAnimationFrame(tick);
             return;
           }
+          if (preparation?.started) {
+            if (!preparation.ready()) {
+              frame = requestAnimationFrame(tick);
+              return;
+            }
+            canvas.dataset.shaderPreparation = "ready";
+          }
           simulation.current += last
             ? Math.min((now - last) / 1000, 0.05)
             : 1 / 60;
@@ -89,6 +129,8 @@ export function RenderBudget({
           lost = true;
           frame = 0;
           gate?.dispose();
+          preparation?.reset();
+          restoreVisibility();
           console.warn("Project LC stopped a failed render loop.", error);
           markWebGL2Unavailable();
           return;
@@ -110,10 +152,13 @@ export function RenderBudget({
       event.preventDefault();
       lost = true;
       gate?.dispose();
+      preparation?.reset();
+      restoreVisibility();
       resume();
     };
     const onRestored = () => {
       lost = false;
+      if (preparation) canvas.dataset.shaderPreparation = "pending";
       resume();
     };
     document.addEventListener("visibilitychange", resume);
@@ -127,6 +172,8 @@ export function RenderBudget({
         cancelAnimationFrame(frame);
         frame = 0;
         gate?.dispose();
+        preparation?.reset();
+        restoreVisibility();
       },
     );
     resume();
@@ -134,10 +181,17 @@ export function RenderBudget({
       detachDocumentExit();
       cancelAnimationFrame(frame);
       gate?.dispose();
+      preparation?.reset();
+      restoreVisibility();
+      if (preparation) {
+        state.scene.onBeforeRender = before;
+        state.scene.onAfterRender = after;
+        delete canvas.dataset.shaderPreparation;
+      }
       document.removeEventListener("visibilitychange", resume);
       canvas.removeEventListener("webglcontextlost", onLost);
       canvas.removeEventListener("webglcontextrestored", onRestored);
     };
-  }, [get, active, constrained, gpuPacing]);
+  }, [get, active, constrained, gpuPacing, shaderScope]);
   return null;
 }

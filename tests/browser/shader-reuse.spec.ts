@@ -287,11 +287,15 @@ test("shadowless garden shader sources stay shared through canvas reconfiguratio
       ).shaderReuseStats(),
     );
   const initial = await stats();
+  await expect(canvas).toHaveAttribute("data-shader-preparation", "ready");
   await info.attach("initial-shader-reuse", {
     body: JSON.stringify(initial),
     contentType: "application/json",
   });
   expect(initial.duplicates).toEqual([]);
+  // Preparation must use the rendered color/light state, rather than creating
+  // another full set of unused variants (the rejected experiment compiled 94).
+  expect(initial.links).toBeLessThanOrEqual(52);
   expect(initial.sampledAtlasUploads).toBeGreaterThan(0);
   expect(initial.losses).toBe(0);
   expect(initial.maximumPendingFrames).toBe(1);
@@ -303,7 +307,7 @@ test("shadowless garden shader sources stay shared through canvas reconfiguratio
     body: JSON.stringify({ verticesPerFrame }),
     contentType: "application/json",
   });
-  expect(verticesPerFrame).toBeLessThan(15000000);
+  expect(verticesPerFrame).toBeLessThan(8000000);
   expect(verticesPerFrame).toBeGreaterThan(1000000);
   expect(settled.maximumDrawsPerFrame).toBeLessThan(1800);
   const size = page.viewportSize()!;

@@ -69,6 +69,7 @@ export default function FlowerGarden({
     >
       <RenderBudget
         gpuPacing={constrained}
+        shaderScope={constrained ? "garden-specimens" : undefined}
         constrained={constrained || degraded}
         macro={!!selected}
       />
@@ -106,37 +107,39 @@ export default function FlowerGarden({
           paused={paused}
           reducedMotion={reducedMotion}
         >
-          {plantings.map((plant, i) => (
-            <group
-              key={plant.type}
-              name={`garden-plant:${plant.type}`}
-              visible={!selected || selected === plant.type}
-            >
-              <RenderActivity value={!selected || selected === plant.type}>
-                <Flower
-                  {...plant}
-                  rooted
-                  physics={selected === plant.type ? "detailed" : "ambient"}
-                  bloom={bloom}
-                  quality={
-                    selected === plant.type
-                      ? constrained
-                        ? "medium"
-                        : "high"
-                      : "overview"
-                  }
-                  animationSpeed={0.85 + (i % 7) * 0.055}
-                  windStrength={0.85}
-                  cursorStrength={0.8}
-                  interactive={!selected || selected === plant.type}
-                  reducedMotion={reducedMotion}
-                  paused={paused}
-                  pulse={pulse}
-                  onClick={() => onSelect(plant.type)}
-                />
-              </RenderActivity>
-            </group>
-          ))}
+          <group name="garden-specimens">
+            {plantings.map((plant, i) => (
+              <group
+                key={plant.type}
+                name={`garden-plant:${plant.type}`}
+                visible={!selected || selected === plant.type}
+              >
+                <RenderActivity value={!selected || selected === plant.type}>
+                  <Flower
+                    {...plant}
+                    rooted
+                    physics={selected === plant.type ? "detailed" : "ambient"}
+                    bloom={bloom}
+                    quality={
+                      selected === plant.type
+                        ? constrained
+                          ? "medium"
+                          : "high"
+                        : "overview"
+                    }
+                    animationSpeed={0.85 + (i % 7) * 0.055}
+                    windStrength={0.85}
+                    cursorStrength={0.8}
+                    interactive={!selected || selected === plant.type}
+                    reducedMotion={reducedMotion}
+                    paused={paused}
+                    pulse={pulse}
+                    onClick={() => onSelect(plant.type)}
+                  />
+                </RenderActivity>
+              </group>
+            ))}
+          </group>
         </GardenDynamics>
         {!reducedMotion &&
           (!selected ||

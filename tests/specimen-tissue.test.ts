@@ -224,3 +224,19 @@ test("leathery leaf undersides retain a distinct roughness through a shared shad
   leaf.dispose();
   plain.dispose();
 });
+test("peltate venation radiates from the interior leaf hub", () => {
+  const pigment = {
+    color: "#63845d",
+    underside: "#98af87",
+    vein: "#cad1a4",
+    roughness: 0.7,
+    venation: "peltate" as const,
+  };
+  const material = createBotanicalBladeMaterial("lotus", pigment);
+  const shader = compile(material);
+  assert.ok(
+    shader.fragmentShader.includes("vPetalUv.y-.5+.0001"),
+    "peltate veins must use the interior hub",
+  );
+  material.dispose();
+});

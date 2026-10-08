@@ -7,7 +7,7 @@ export interface BladePigment {
   underside: string;
   vein: string;
   roughness: number;
-  venation: "parallel" | "palmate" | "pinnate";
+  venation: "parallel" | "palmate" | "pinnate" | "peltate";
   pubescence?: number;
   midstripe?: string;
   undersideRoughness?: number;
@@ -30,7 +30,9 @@ export function createBotanicalBladeMaterial(
       ? `float bladeVein=pow(.5+.5*cos(vPetalUv.x*57.),22.);`
       : pigment.venation === "palmate"
         ? `float bladeVein=pow(.5+.5*cos(atan(vPetalUv.x-.5,max(.04,vPetalUv.y))*16.),25.);`
-        : `float bladeVein=exp(-abs(vPetalUv.x-.5)*90.)+pow(.5+.5*cos((vPetalUv.y-abs(vPetalUv.x-.5)*.72)*53.),24.)*.4;`;
+        : pigment.venation === "peltate"
+          ? `float bladeVein=pow(.5+.5*cos(atan(vPetalUv.x-.5,vPetalUv.y-.5+.0001)*16.),25.);`
+          : `float bladeVein=exp(-abs(vPetalUv.x-.5)*90.)+pow(.5+.5*cos((vPetalUv.y-abs(vPetalUv.x-.5)*.72)*53.),24.)*.4;`;
   material.onBeforeCompile = (shader, renderer) => {
     previous.call(material, shader, renderer);
     shader.uniforms.uBladeUnderside = { value: underside };

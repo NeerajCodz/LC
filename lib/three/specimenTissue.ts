@@ -5,6 +5,7 @@ export const TISSUE_RESPONSE: Record<
   string,
   { roughness: number; sheen: number; coat: number; scatter: number }
 > = {
+  lisianthus: { roughness: 0.66, sheen: 0.2, coat: 0.008, scatter: 0.055 },
   freesia: { roughness: 0.48, sheen: 0.13, coat: 0.065, scatter: 0.045 },
   crocus: { roughness: 0.58, sheen: 0.16, coat: 0.025, scatter: 0.045 },
   anemone: { roughness: 0.69, sheen: 0.17, coat: 0.008, scatter: 0.065 },
@@ -37,6 +38,8 @@ export function specimenTissueColor(type: string, tissue?: SpecimenTissue) {
 export function specimenTissueShader(type: string, tissue?: SpecimenTissue) {
   if (tissue === "leaf") return "";
   switch (type) {
+    case "lisianthus":
+      return `float euPleat=pow(.5+.5*cos(vPetalUv.x*48.+vPetalUv.y*3.),22.); diffuseColor.rgb*=1.-euPleat*.043;`;
     case "freesia":
       return `float frGuide=pow(.5+.5*cos(vPetalUv.x*6.283185),12.)*smoothstep(.5,.77,vPetalUv.y); diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.89,.68,.18),frGuide*.66);`;
     case "crocus":

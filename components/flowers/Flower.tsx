@@ -50,7 +50,9 @@ import { Ranunculus } from "./ranunculus/Ranunculus";
 import { Anemone } from "./anemone/Anemone";
 import { Crocus } from "./crocus/Crocus";
 import { Freesia } from "./freesia/Freesia";
+import { Lisianthus } from "./lisianthus/Lisianthus";
 const SPECIES = {
+  lisianthus: Lisianthus,
   freesia: Freesia,
   crocus: Crocus,
   anemone: Anemone,

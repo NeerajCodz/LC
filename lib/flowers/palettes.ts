@@ -30,6 +30,15 @@ const palette = (
 });
 
 export const PETAL_PALETTES: Record<FlowerType, PetalPalette> = {
+  lisianthus: palette(
+    "#563473",
+    "#b09acb",
+    "#e2d5ed",
+    "#8977a9",
+    0.25,
+    0.79,
+    0.07,
+  ),
   freesia: palette(
     "#b9c38b",
     "#eee8d7",

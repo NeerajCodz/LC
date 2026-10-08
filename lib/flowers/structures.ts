@@ -63,9 +63,11 @@ import { zinniaStructure } from "../../components/flowers/zinnia/Zinnia";
 import { anemoneStructure } from "../../components/flowers/anemone/Anemone";
 import { crocusStructure } from "../../components/flowers/crocus/Crocus";
 import { freesiaStructure } from "../../components/flowers/freesia/Freesia";
+import { lisianthusStructure } from "../../components/flowers/lisianthus/Lisianthus";
 /** Authored anatomy shared by planting layout and geometry verification. */
 import { ranunculusStructure } from "../../components/flowers/ranunculus/Ranunculus";
 export const FLOWER_STRUCTURES: Record<FlowerType, FlowerStructure> = {
+  lisianthus: lisianthusStructure,
   freesia: freesiaStructure,
   crocus: crocusStructure,
   anemone: anemoneStructure,

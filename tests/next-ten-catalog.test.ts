@@ -35,3 +35,9 @@ test("freesia is a typed specimen with a bent spike and true funnels", () => {
   assert.equal(getFlower(type).latin, "Freesia refracta");
   assert.equal(FLOWER_STRUCTURES[type].simulatedSurfaces, true);
 });
+test("lisianthus preserves its sourced species name in the catalog", () => {
+  const type = FLOWER_TYPES.find((t) => String(t) === "lisianthus");
+  assert.ok(type, "lisianthus catalog integration is missing");
+  assert.equal(getFlower(type).latin, "Eustoma russellianum");
+  assert.equal(FLOWER_STRUCTURES[type].simulatedSurfaces, true);
+});

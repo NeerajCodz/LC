@@ -507,6 +507,16 @@ FLOWERS.push({
     "Fleshy six-lobed flowers with yellow lower guides, three stamens and bifid style branches rise above a stiff fan of sword-shaped leaves.",
   color: PETAL_PALETTES.freesia.body,
 });
+FLOWERS.push({
+  type: "lisianthus",
+  name: "Lisianthus",
+  latin: "Eustoma russellianum",
+  family: "Gentianaceae",
+  description: "Lavender cups unfold above waxy, blue-green leaves.",
+  detail:
+    "A single-flowered prairie gentian with five overlapping lobes, short fused corolla bases, five stamens and paired stigma lobes on a branching cyme.",
+  color: PETAL_PALETTES.lisianthus.body,
+});
 FLOWERS.sort(
   (a, b) => FLOWER_TYPES.indexOf(a.type) - FLOWER_TYPES.indexOf(b.type),
 );

@@ -3,6 +3,18 @@ import assert from "node:assert/strict";
 import { LISIANTHUS_MODEL } from "../components/flowers/lisianthus/lisianthusGeometry";
 import { verifySpecimen } from "./specimen-checks";
 verifySpecimen("lisianthus", LISIANTHUS_MODEL);
+import { LISIANTHUS_LEAF } from "../components/flowers/lisianthus/lisianthusLeaf";
+verifySpecimen("lisianthus clasping leaves", {
+  clusters: [],
+  surfaces: [LISIANTHUS_LEAF],
+  organs: [],
+});
+test("lisianthus blades retain broad stem-clasping insertions", () => {
+  assert.ok(
+    LISIANTHUS_LEAF.sample(1, 0, 1)[0] - LISIANTHUS_LEAF.sample(0, 0, 1)[0] >
+      0.09,
+  );
+});
 test("lisianthus retains short fused bases, five lobes and two stigma tips", async () => {
   const a =
     await import("../components/flowers/lisianthus/lisianthusGeometry").catch(

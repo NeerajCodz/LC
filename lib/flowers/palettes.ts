@@ -30,6 +30,15 @@ const palette = (
 });
 
 export const PETAL_PALETTES: Record<FlowerType, PetalPalette> = {
+  magnolia: palette(
+    "#c8c7a4",
+    "#eee8d3",
+    "#fff7e5",
+    "#c0c4ac",
+    0.24,
+    0.81,
+    0.05,
+  ),
   camellia: palette(
     "#a33654",
     "#d95877",

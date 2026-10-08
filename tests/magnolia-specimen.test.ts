@@ -3,6 +3,12 @@ import assert from "node:assert/strict";
 import { MAGNOLIA_MODEL } from "../components/flowers/magnolia/magnoliaGeometry";
 import { verifySpecimen } from "./specimen-checks";
 verifySpecimen("magnolia", MAGNOLIA_MODEL);
+import { MAGNOLIA_LEAF } from "../components/flowers/magnolia/magnoliaLeaf";
+verifySpecimen("magnolia leathery foliage", {
+  clusters: [],
+  surfaces: [MAGNOLIA_LEAF],
+  organs: [],
+});
 test("magnolia retains thick tepals and distinct spiral stamens and carpels", async () => {
   const a =
     await import("../components/flowers/magnolia/magnoliaGeometry").catch(

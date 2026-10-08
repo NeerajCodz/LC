@@ -527,6 +527,16 @@ FLOWERS.push({
     "A single Japanese camellia with fused inner petal and filament bases, protective scales and glossy serrulate leaves on a woody shoot.",
   color: PETAL_PALETTES.camellia.body,
 });
+FLOWERS.push({
+  type: "magnolia",
+  name: "Magnolia",
+  latin: "Magnolia grandiflora",
+  family: "Magnoliaceae",
+  description: "Substantial ivory tepals open around a spiral floral column.",
+  detail:
+    "A southern magnolia flower with an elongated receptacle, numerous stamens and individual carpels above glossy, rusty-backed leaves on a stout woody shoot.",
+  color: PETAL_PALETTES.magnolia.body,
+});
 FLOWERS.sort(
   (a, b) => FLOWER_TYPES.indexOf(a.type) - FLOWER_TYPES.indexOf(b.type),
 );

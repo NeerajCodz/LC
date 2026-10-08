@@ -47,3 +47,9 @@ test("camellia preserves its single-form woody specimen API", () => {
   assert.equal(getFlower(type).latin, "Camellia japonica");
   assert.equal(FLOWER_STRUCTURES[type].simulatedSurfaces, true);
 });
+test("magnolia is a typed specimen with genuine spiral floral organs", () => {
+  const type = FLOWER_TYPES.find((t) => String(t) === "magnolia");
+  assert.ok(type, "magnolia catalog integration is missing");
+  assert.equal(getFlower(type).latin, "Magnolia grandiflora");
+  assert.equal(FLOWER_STRUCTURES[type].simulatedSurfaces, true);
+});

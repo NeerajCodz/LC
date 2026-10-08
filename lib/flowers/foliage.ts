@@ -21,6 +21,14 @@ export interface FoliageProfile {
 
 /** Cultivar-independent leaf traits; lotus has its own peltate blade generator. */
 export const FOLIAGE: Record<FlowerType, FoliageProfile> = {
+  magnolia: {
+    length: 1.05,
+    width: 0.34,
+    color: "#355543",
+    thickness: 0.027,
+    roughness: 0.34,
+    pubescence: 0.6,
+  },
   camellia: {
     length: 0.89,
     width: 0.3,

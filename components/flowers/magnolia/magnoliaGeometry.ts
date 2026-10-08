@@ -10,6 +10,19 @@ export const MAGNOLIA_MODEL: SpecimenModel = {
   surfaces: [],
   organs: [],
 };
+MAGNOLIA_MODEL.surfaces.push({
+  name: "receptacular neck",
+  cluster: 0,
+  role: "bract",
+  tissue: "inner",
+  periodic: true,
+  thickness: 0.025,
+  sample: (u, v) => {
+    const a = u * Math.PI * 2,
+      r = 0.075 + 0.095 * v;
+    return [Math.sin(a) * r, -0.1 + 0.11 * v, Math.cos(a) * r];
+  },
+});
 for (let i = 0; i < 9; i++) {
   const layer = Math.floor(i / 3),
     a = ((i % 3) * Math.PI * 2) / 3 + layer * 0.66,

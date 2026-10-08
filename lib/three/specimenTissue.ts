@@ -5,6 +5,7 @@ export const TISSUE_RESPONSE: Record<
   string,
   { roughness: number; sheen: number; coat: number; scatter: number }
 > = {
+  magnolia: { roughness: 0.42, sheen: 0.14, coat: 0.075, scatter: 0.037 },
   camellia: { roughness: 0.53, sheen: 0.16, coat: 0.03, scatter: 0.043 },
   lisianthus: { roughness: 0.66, sheen: 0.2, coat: 0.008, scatter: 0.055 },
   freesia: { roughness: 0.48, sheen: 0.13, coat: 0.065, scatter: 0.045 },
@@ -30,6 +31,8 @@ export const TISSUE_RESPONSE: Record<
 export function specimenTissueColor(type: string, tissue?: SpecimenTissue) {
   if (type === "anemone" && tissue === "disc") return "#29243b";
   if (type === "camellia" && tissue === "inner") return "#eddda3";
+  if (type === "magnolia" && tissue === "inner") return "#9d8260";
+  if (type === "magnolia" && tissue === "disc") return "#87946b";
   if (type === "delphinium" && tissue === "inner") return "#dfdcc2";
   if (type === "alstroemeria" && tissue === "inner") return "#e8c971";
   if (tissue === "disc") {
@@ -40,6 +43,8 @@ export function specimenTissueColor(type: string, tissue?: SpecimenTissue) {
 export function specimenTissueShader(type: string, tissue?: SpecimenTissue) {
   if (tissue === "leaf") return "";
   switch (type) {
+    case "magnolia":
+      return `float magVein=pow(.5+.5*cos((vPetalUv.y-abs(vPetalUv.x-.5)*.35)*51.),26.);diffuseColor.rgb*=1.-magVein*.027;`;
     case "camellia":
       return `float camVein=pow(.5+.5*cos((vPetalUv.y-abs(vPetalUv.x-.5)*.45)*48.),26.);diffuseColor.rgb*=1.-camVein*.035;`;
     case "lisianthus":

@@ -1,6 +1,6 @@
 import { Color, MeshPhysicalMaterial, DoubleSide, FrontSide } from "three";
 import type { PetalPalette } from "../flowers/palettes";
-import { tissueUniforms } from "../gpu/tissue-atlas";
+import { tissueUniforms, prepareTissueFallback } from "../gpu/tissue-atlas";
 
 /** Veins and papillae are evaluated in petal UV space; no image assets are used. */
 export function createPetalMaterial(
@@ -34,6 +34,11 @@ export function createPetalMaterial(
     clearcoat: 0.015,
     clearcoatRoughness: 0.65,
   });
+  // Preserve Three's STANDARD/PHYSICAL defines. Static specialization avoids
+  // compiling the expensive field into sampled-atlas programs; allocation
+  // failure retains the complete procedural field.
+  if (prepareTissueFallback())
+    material.defines = { ...material.defines, LC_TISSUE_ATLAS: 1 };
   material.onBeforeCompile = (shader) => {
     Object.assign(shader.uniforms, tissueUniforms);
     shader.uniforms.uSpots = { value: spots };
@@ -77,8 +82,11 @@ export function createPetalMaterial(
       `#include <color_fragment>
       float v = vPetalUv.y;
       float u = abs(vPetalUv.x-.5)*2.0;
-      vec3 tissue = uTissueReady ? texture2D(uTissueAtlas, vPetalUv).rgb
-        : vec3(tissueNoise(vPetalUv*8.), tissueNoise(vPetalUv*vec2(11.,18.)), tissueNoise(vPetalUv*340.));
+      #ifdef LC_TISSUE_ATLAS
+        vec3 tissue = texture2D(uTissueAtlas, vPetalUv).rgb;
+      #else
+        vec3 tissue = vec3(tissueNoise(vPetalUv*8.), tissueNoise(vPetalUv*vec2(11.,18.)), tissueNoise(vPetalUv*340.));
+      #endif
       float veinPhase=(vPetalUv.x-.5)*93.0+sin(v*7.0)*1.8+tissue.r*.65;
       float veinVisibility=1.-smoothstep(.2,1.2,fwidth(veinPhase));
       float veins = pow(abs(sin(veinPhase)),20.0)*veinVisibility;

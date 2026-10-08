@@ -21,19 +21,35 @@ export const tissueUniforms = {
 };
 
 let pending: Promise<TissueBackend> | undefined;
+let fallbackAttempted = false;
+
+/** Complete the shared field before the first material compiles or draws. */
+export function prepareTissueFallback(): boolean {
+  if (tissueUniforms.uTissueReady.value) return true;
+  if (fallbackAttempted) return false;
+  fallbackAttempted = true;
+  try {
+    const size = isConstrainedDevice() ? 512 : TISSUE_SIZE;
+    texture.image = {
+      data: createTissueFallback(size),
+      width: size,
+      height: size,
+    };
+    texture.needsUpdate = true;
+    tissueUniforms.uTissueReady.value = true;
+    return true;
+  } catch {
+    // If allocation is unavailable, materials retain their complete GLSL field.
+    return false;
+  }
+}
 
 /** Bake once, read once, release WebGPU. No GPU readback in the animation loop. */
 async function bake(): Promise<TissueBackend> {
   const size = isConstrainedDevice() ? 512 : TISSUE_SIZE;
   // Every renderer can sample the same complete field, including when WebGPU
   // is absent or rejects startup. The procedural shader remains a safety net.
-  texture.image = {
-    data: createTissueFallback(size),
-    width: size,
-    height: size,
-  };
-  texture.needsUpdate = true;
-  tissueUniforms.uTissueReady.value = true;
+  prepareTissueFallback();
   if (typeof navigator === "undefined" || !navigator.gpu) return "webgl";
   const [{ init }, { default: source }, { renderTissue }] = await Promise.all([
     import("vgpu"),

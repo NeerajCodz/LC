@@ -3,6 +3,7 @@ import { useEffect, useLayoutEffect, useRef } from "react";
 import { useStore, useThree } from "@react-three/fiber";
 import { boundedDpr } from "@/lib/performance";
 import { bindRendererDocumentExit } from "@/lib/three/documentRenderer";
+import { GpuFrameGate } from "@/lib/three/gpuFrameGate";
 import { markWebGL2Unavailable } from "./WebGLSupport";
 
 /** One capped clock per Canvas. Two startup frames release readiness; inactive scenes then stay at zero FPS. */
@@ -10,10 +11,12 @@ export function RenderBudget({
   active = true,
   constrained,
   macro = false,
+  gpuPacing = false,
 }: {
   active?: boolean;
   constrained: boolean;
   macro?: boolean;
+  gpuPacing?: boolean;
 }) {
   const get = useThree((state) => state.get);
   const { subscribe } = useStore();
@@ -55,6 +58,9 @@ export function RenderBudget({
   useEffect(() => {
     const state = get();
     const canvas = state.gl.domElement;
+    const context = state.gl.getContext();
+    const gate =
+      gpuPacing && "fenceSync" in context ? new GpuFrameGate(context) : null;
     let frame = 0,
       last = 0,
       lost = false;
@@ -66,17 +72,23 @@ export function RenderBudget({
         return;
       }
       if (!last || now - last >= interval - 1) {
-        simulation.current += last
-          ? Math.min((now - last) / 1000, 0.05)
-          : 1 / 60;
-        last = now;
         // RAF exceptions are outside React error boundaries. Stop this clock
         // before notifying the DOM so a broken renderer cannot keep throwing.
         try {
+          if (gate && !gate.ready()) {
+            frame = requestAnimationFrame(tick);
+            return;
+          }
+          simulation.current += last
+            ? Math.min((now - last) / 1000, 0.05)
+            : 1 / 60;
+          last = now;
           state.advance(simulation.current, false);
+          gate?.submitted();
         } catch (error) {
           lost = true;
           frame = 0;
+          gate?.dispose();
           console.warn("Project LC stopped a failed render loop.", error);
           markWebGL2Unavailable();
           return;
@@ -97,6 +109,7 @@ export function RenderBudget({
     const onLost = (event: Event) => {
       event.preventDefault();
       lost = true;
+      gate?.dispose();
       resume();
     };
     const onRestored = () => {
@@ -113,16 +126,18 @@ export function RenderBudget({
         lost = true;
         cancelAnimationFrame(frame);
         frame = 0;
+        gate?.dispose();
       },
     );
     resume();
     return () => {
       detachDocumentExit();
       cancelAnimationFrame(frame);
+      gate?.dispose();
       document.removeEventListener("visibilitychange", resume);
       canvas.removeEventListener("webglcontextlost", onLost);
       canvas.removeEventListener("webglcontextrestored", onRestored);
     };
-  }, [get, active, constrained]);
+  }, [get, active, constrained, gpuPacing]);
   return null;
 }

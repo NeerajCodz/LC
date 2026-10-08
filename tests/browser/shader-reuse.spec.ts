@@ -50,6 +50,9 @@ test("shadowless garden shader sources stay shared through canvas reconfiguratio
         maximumVerticesPerFrame: number;
         drawCalls: number;
         maximumDrawsPerFrame: number;
+        pendingFrames: Set<WebGLSync>;
+        maximumPendingFrames: number;
+        fencesCreated: number;
       }
     >();
     const originalContext = HTMLCanvasElement.prototype.getContext;
@@ -69,6 +72,9 @@ test("shadowless garden shader sources stay shared through canvas reconfiguratio
           maximumVerticesPerFrame: 0,
           drawCalls: 0,
           maximumDrawsPerFrame: 0,
+          pendingFrames: new Set<WebGLSync>(),
+          maximumPendingFrames: 0,
+          fencesCreated: 0,
         };
         contexts.set(gl, state);
         this.addEventListener("webglcontextlost", () => state.losses++);
@@ -84,6 +90,8 @@ test("shadowless garden shader sources stay shared through canvas reconfiguratio
           losses: state.losses,
           maximumVerticesPerFrame: state.maximumVerticesPerFrame,
           maximumDrawsPerFrame: state.maximumDrawsPerFrame,
+          maximumPendingFrames: state.maximumPendingFrames,
+          fencesCreated: state.fencesCreated,
         });
         snapshots.push(snapshot);
         Object.defineProperty(this, "shaderReuseStats", {
@@ -125,6 +133,25 @@ test("shadowless garden shader sources stay shared through canvas reconfiguratio
       };
     });
     const prototype = WebGL2RenderingContext.prototype;
+    const fence = prototype.fenceSync,
+      deleteFence = prototype.deleteSync;
+    prototype.fenceSync = function (condition, flags) {
+      const result = fence.call(this, condition, flags),
+        state = contexts.get(this);
+      if (result && state) {
+        state.pendingFrames.add(result);
+        state.fencesCreated++;
+        state.maximumPendingFrames = Math.max(
+          state.maximumPendingFrames,
+          state.pendingFrames.size,
+        );
+      }
+      return result;
+    };
+    prototype.deleteSync = function (sync) {
+      if (sync) contexts.get(this)?.pendingFrames.delete(sync);
+      return deleteFence.call(this, sync);
+    };
     const elements = prototype.drawElements,
       instances = prototype.drawElementsInstanced,
       arrays = prototype.drawArrays,
@@ -253,6 +280,8 @@ test("shadowless garden shader sources stay shared through canvas reconfiguratio
             losses: number;
             maximumVerticesPerFrame: number;
             maximumDrawsPerFrame: number;
+            maximumPendingFrames: number;
+            fencesCreated: number;
           };
         }
       ).shaderReuseStats(),
@@ -265,6 +294,8 @@ test("shadowless garden shader sources stay shared through canvas reconfiguratio
   expect(initial.duplicates).toEqual([]);
   expect(initial.sampledAtlasUploads).toBeGreaterThan(0);
   expect(initial.losses).toBe(0);
+  expect(initial.maximumPendingFrames).toBe(1);
+  expect(initial.fencesCreated).toBeGreaterThanOrEqual(30);
   await expectRenderedFlower(canvas, 0.007);
   const settled = await stats();
   const verticesPerFrame = settled.maximumVerticesPerFrame;

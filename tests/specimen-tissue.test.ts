@@ -202,3 +202,25 @@ test("a diagnostic foliar midstripe uses independent uniforms within shared blad
   striped.dispose();
   plain.dispose();
 });
+test("leathery leaf undersides retain a distinct roughness through a shared shader", () => {
+  const pigment = {
+    color: "#355543",
+    underside: "#94704e",
+    vein: "#9aa779",
+    roughness: 0.34,
+    undersideRoughness: 0.86,
+    venation: "pinnate" as const,
+  };
+  const leaf = createBotanicalBladeMaterial("camellia", pigment),
+    plain = createBotanicalBladeMaterial("camellia", {
+      ...pigment,
+      undersideRoughness: undefined,
+    });
+  const a = compile(leaf),
+    b = compile(plain);
+  assert.equal(a.uniforms.uBladeBackRoughness?.value, 0.86);
+  assert.equal(b.uniforms.uBladeBackRoughness?.value, 0.34);
+  assert.equal(a.fragmentShader, b.fragmentShader);
+  leaf.dispose();
+  plain.dispose();
+});

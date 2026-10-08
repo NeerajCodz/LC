@@ -1,4 +1,3 @@
-import type { Vec3 } from "@/lib/flowers/types";
 import {
   radialTube,
   type SpecimenModel,

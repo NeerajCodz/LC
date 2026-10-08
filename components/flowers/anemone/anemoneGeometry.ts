@@ -55,7 +55,7 @@ for (let i = 0; i < 3; i++) {
     role: "calyx",
     sample: (u, v, stage) => {
       const [w, length, z] = blade.sample(u, v, 0.65 + stage * 0.35),
-        r = 0.08 + length;
+        r = 0.023 + length;
       return [
         Math.sin(a) * r + Math.cos(a) * w,
         -0.22 - length * 0.2 + z,
@@ -64,6 +64,18 @@ for (let i = 0; i < 3; i++) {
     },
   });
 }
+ANEMONE_MODEL.surfaces.push({
+  name: "receptacular neck",
+  cluster: 0,
+  role: "calyx",
+  periodic: true,
+  thickness: 0.011,
+  sample: (u, v) => {
+    const a = u * Math.PI * 2,
+      r = 0.023 + 0.1 * v;
+    return [Math.sin(a) * r, -0.13 + 0.13 * v, Math.cos(a) * r];
+  },
+});
 ANEMONE_MODEL.surfaces.push({
   name: "carpel receptacle",
   cluster: 0,

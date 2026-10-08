@@ -38,7 +38,7 @@ export const CROCUS_STALKS: SpecimenOrgan[] = CROCUS_MODEL.clusters.flatMap(
         c.position,
       ] as Vec3[],
       radius: 0.016,
-      endRadius: 0.014,
+      endRadius: 0.019,
       color: "#bac8a1",
     },
   ],
@@ -57,7 +57,7 @@ for (let c = 0; c < 4; c++) {
     mobileCage: [4, 2],
     sample: (u, v) => {
       const a = u * Math.PI * 2,
-        r = 0.033 + 0.025 * v * v;
+        r = 0.025 + 0.033 * v * v;
       return [Math.sin(a) * r, 0.38 * v, Math.cos(a) * r];
     },
   });

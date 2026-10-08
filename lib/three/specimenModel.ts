@@ -1,7 +1,7 @@
 import type { Quality, Vec3 } from "../flowers/types";
 import { createParametricShell } from "./parametricShell";
 import { createOrganicTube } from "./organicTube";
-import { Float32BufferAttribute } from "three";
+import { Float32BufferAttribute, Euler, Matrix4, Vector3 } from "three";
 import { createCagePatch } from "./petalDynamics";
 export type SpecimenTissue = "inner" | "guide" | "disc" | "leaf";
 export interface SpecimenSurface {
@@ -27,6 +27,36 @@ export interface SpecimenCluster {
   rotation: Vec3;
   scale: number;
   nod: number;
+}
+/** Authored head pose rotates about its insertion, keeping the rooted shoot intact. */
+export function anchoredHeadCluster(
+  angle: number,
+  anchorY = 0,
+  scale = 1,
+  nod = 0.015,
+): SpecimenCluster {
+  return {
+    position: [
+      0,
+      anchorY * scale * (1 - Math.cos(angle)),
+      -anchorY * scale * Math.sin(angle),
+    ],
+    rotation: [angle, 0, 0],
+    scale,
+    nod,
+  };
+}
+/** One-time anatomical framing calculation, never used in a frame callback. */
+export function specimenClusterPoint(
+  cluster: SpecimenCluster,
+  point: Vec3,
+): Vec3 {
+  const matrix = new Matrix4()
+      .makeRotationFromEuler(new Euler(...cluster.rotation))
+      .scale(new Vector3(cluster.scale, cluster.scale, cluster.scale))
+      .setPosition(...cluster.position),
+    p = new Vector3(...point).applyMatrix4(matrix);
+  return [p.x, p.y, p.z];
 }
 export interface SpecimenOrgan {
   fine?: boolean;

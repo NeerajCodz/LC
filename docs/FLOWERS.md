@@ -66,6 +66,7 @@ Generated from `lib/flowers/catalog.ts`; genus or ornamental studies never mark 
 | [Alstroemeria](http://localhost:1607/flower/alstroemeria/) | Alstroemeria aurea | Exact accepted-name match: `wfo-0000759057` |
 | [Gerbera](http://localhost:1607/flower/gerbera/) | Gerbera jamesonii | Taxonomic mapping requires review |
 | [Zinnia](http://localhost:1607/flower/zinnia/) | Zinnia elegans | Taxonomic mapping requires review |
+| [Ranunculus](http://localhost:1607/flower/ranunculus/) | Ranunculus asiaticus | Exact accepted-name match: `wfo-0000461243` |
 
 ## Reproduce and audit
 
@@ -340235,7 +340236,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Ranunculus arvidii — `wfo-0000461162`
 - Ranunculus arwidssonii — `wfo-0000461169`
 - Ranunculus ashibetsuensis — `wfo-0000461148`
-- Ranunculus asiaticus — `wfo-0000461243`
+- Ranunculus asiaticus — `wfo-0000461243` · authored study: `ranunculus`
 - Ranunculus asplundii — `wfo-0000461324`
 - Ranunculus asterodes — `wfo-0000461325`
 - Ranunculus astrantiifolius — `wfo-0001129945`

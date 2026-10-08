@@ -68,3 +68,27 @@ test("magnolia anthers remain outside the floral torus and its column stays prop
     );
   }
 });
+test("magnolia ovaries stay visible on the outside of the carpel-bearing torus", () => {
+  const body = MAGNOLIA_MODEL.surfaces.find(
+      (s) => s.name === "elongate floral receptacle",
+    )!,
+    y0 = body.sample(0, 0, 1)[1],
+    y1 = body.sample(0, 1, 1)[1],
+    group = MAGNOLIA_MODEL.instances!.find((g) => g.name === "spiral carpels")!,
+    ovary = group.organs.find((o) => o.name === "individual carpel ovary")!;
+  for (const index of [0, 30, 59]) {
+    const pose = group.poses[index],
+      object = new Object3D();
+    object.position.set(...pose.position);
+    object.rotation.set(...pose.rotation);
+    object.scale.setScalar(pose.scale);
+    object.updateMatrix();
+    const p = new Vector3(...ovary.points[1]).applyMatrix4(object.matrix),
+      skin = body.sample(0, (p.y - y0) / (y1 - y0), 1);
+    assert.ok(
+      Math.hypot(p.x, p.z) >
+        Math.hypot(skin[0], skin[2]) + body.thickness * 0.5 - 0.003,
+      "carpel is buried in the torus",
+    );
+  }
+});

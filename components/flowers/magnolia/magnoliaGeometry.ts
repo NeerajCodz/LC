@@ -173,10 +173,7 @@ MAGNOLIA_MODEL.instances = [
     poses: Array.from({ length: 60 }, (_, i) => {
       const a = i * 2.399963,
         y = 0.25 + (0.21 * i) / 60,
-        r =
-          magnoliaReceptacleRadius((y - 0.01) / 0.5) +
-          0.012 -
-          0.0525 * (0.86 + 0.14 * Math.sin(i * 0.61) ** 2);
+        r = magnoliaReceptacleRadius((y - 0.01) / 0.5) + 0.004;
       return {
         position: [Math.sin(a) * r, y, Math.cos(a) * r] as Vec3,
         foldedPosition: [

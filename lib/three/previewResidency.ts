@@ -1,4 +1,4 @@
-import type { BufferGeometry, Mesh, Object3D } from "three";
+import type { BufferGeometry, Material, Mesh, Object3D } from "three";
 
 /** The stage spans the whole gallery; only viewport intersections need buffers. */
 export function previewIntersectsViewport(
@@ -26,4 +26,21 @@ export function releaseSceneGeometry(scene: Object3D) {
   // Three removes native buffers, VAOs and packed morph textures on dispose.
   // BufferGeometry's attribute data remains available for lazy re-upload.
   for (const geometry of geometries) geometry.dispose();
+}
+
+/** Evict hidden plants' program references without disposing their shared atlas. */
+export function releaseSceneMaterialPrograms(scene: Object3D) {
+  const materials = new Set<Material>();
+  scene.traverse((object) => {
+    const mesh = object as Mesh;
+    for (const material of [
+      ...(Array.isArray(mesh.material) ? mesh.material : [mesh.material]),
+      mesh.customDepthMaterial,
+      mesh.customDistanceMaterial,
+    ])
+      if (material) materials.add(material);
+  });
+  // Three drops each material's native program references. Uniforms, texture
+  // objects and hooks remain intact for lazy recompilation on garden return.
+  for (const material of materials) material.dispose();
 }

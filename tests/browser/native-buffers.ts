@@ -6,6 +6,7 @@ export function trackNativeBuffers() {
       bindings: Map<number, WebGLBuffer | null>;
       sizes: WeakMap<WebGLBuffer, number>;
       bytes: number;
+      programs: Set<WebGLProgram>;
     }
   >();
   const original = HTMLCanvasElement.prototype.getContext;
@@ -15,10 +16,18 @@ export function trackNativeBuffers() {
   ) {
     const gl = Reflect.apply(original, this, args);
     if (args[0] === "webgl2" && gl && !contexts.has(gl)) {
-      const state = { bindings: new Map(), sizes: new WeakMap(), bytes: 0 };
+      const state = {
+        bindings: new Map(),
+        sizes: new WeakMap(),
+        bytes: 0,
+        programs: new Set<WebGLProgram>(),
+      };
       contexts.set(gl, state);
       Object.defineProperty(this, "nativeBufferBytes", {
         value: () => state.bytes,
+      });
+      Object.defineProperty(this, "nativeProgramCount", {
+        value: () => state.programs.size,
       });
     }
     return gl;
@@ -49,5 +58,16 @@ export function trackNativeBuffers() {
       state.sizes.delete(buffer);
     }
     return free.call(this, buffer);
+  };
+  const createProgram = prototype.createProgram,
+    deleteProgram = prototype.deleteProgram;
+  prototype.createProgram = function () {
+    const program = createProgram.call(this);
+    if (program) contexts.get(this)?.programs.add(program);
+    return program;
+  };
+  prototype.deleteProgram = function (program) {
+    if (program) contexts.get(this)?.programs.delete(program);
+    return deleteProgram.call(this, program);
   };
 }

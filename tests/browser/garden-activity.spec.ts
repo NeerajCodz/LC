@@ -5,7 +5,7 @@ import { trackNativeBuffers } from "./native-buffers";
 
 test("garden close-up freezes hidden plant geometry and resumes the retained plants", async ({
   page,
-}) => {
+}, info) => {
   test.setTimeout(180000);
   await page.addInitScript(trackNativeBuffers);
   await page.addInitScript(() => {
@@ -46,11 +46,29 @@ test("garden close-up freezes hidden plant geometry and resumes the retained pla
     );
   const fullBuffers = await bufferBytes();
   expect(fullBuffers).toBeGreaterThan(1_000_000);
+  const programs = () =>
+    canvas.evaluate((node) =>
+      (
+        node as HTMLCanvasElement & { nativeProgramCount: () => number }
+      ).nativeProgramCount(),
+    );
+  const fullPrograms = await programs();
+  expect(fullPrograms).toBeGreaterThan(10);
   await page
     .getByRole("combobox", { name: "Explore a garden flower" })
     .selectOption("rose");
   await expectRenderedFlower(canvas, 0.007);
+  await info.attach("selected-native-resources", {
+    body: JSON.stringify({
+      fullBuffers,
+      fullPrograms,
+      selectedBuffers: await bufferBytes(),
+      selectedPrograms: await programs(),
+    }),
+    contentType: "application/json",
+  });
   await expect.poll(bufferBytes).toBeLessThan(fullBuffers * 0.5);
+  await expect.poll(programs).toBeLessThan(fullPrograms * 0.5);
   const hiddenVersions = () =>
     page.evaluate(() => {
       const result: Record<string, number> = {};

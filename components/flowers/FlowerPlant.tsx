@@ -31,7 +31,10 @@ import { Branch } from "./Branch";
 import { Calyx } from "./Calyx";
 import type { FlowerOrgansProps } from "./FloralParts";
 import { FlowerInteraction } from "./FlowerInteraction";
-import { releaseSceneGeometry } from "@/lib/three/previewResidency";
+import {
+  releaseSceneGeometry,
+  releaseSceneMaterialPrograms,
+} from "@/lib/three/previewResidency";
 
 export function FlowerPlant({
   structure,
@@ -70,7 +73,10 @@ export function FlowerPlant({
   const garden = useContext(GardenEnvironment);
   const active = useContext(RenderActivity);
   useLayoutEffect(() => {
-    if (garden && !active && plant.current) releaseSceneGeometry(plant.current);
+    if (garden && !active && plant.current) {
+      releaseSceneGeometry(plant.current);
+      releaseSceneMaterialPrograms(plant.current);
+    }
   }, [garden, active]);
   const profile = WIND_PROFILES[type];
   const bendingLength = freeStemLength(structure);

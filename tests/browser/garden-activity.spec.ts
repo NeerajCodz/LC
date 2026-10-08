@@ -1,11 +1,13 @@
 import { expect, test } from "@playwright/test";
 import type { Mesh, Object3D } from "three";
 import { expectRenderedFlower } from "./pixel-content";
+import { trackNativeBuffers } from "./native-buffers";
 
 test("garden close-up freezes hidden plant geometry and resumes the retained plants", async ({
   page,
 }) => {
   test.setTimeout(180000);
+  await page.addInitScript(trackNativeBuffers);
   await page.addInitScript(() => {
     Object.defineProperty(navigator, "gpu", {
       value: undefined,
@@ -36,10 +38,19 @@ test("garden close-up freezes hidden plant geometry and resumes the retained pla
   await expect(canvas).toHaveAttribute("data-render-frames", /\d+/, {
     timeout: 120000,
   });
+  const bufferBytes = () =>
+    canvas.evaluate((node) =>
+      (
+        node as HTMLCanvasElement & { nativeBufferBytes: () => number }
+      ).nativeBufferBytes(),
+    );
+  const fullBuffers = await bufferBytes();
+  expect(fullBuffers).toBeGreaterThan(1_000_000);
   await page
     .getByRole("combobox", { name: "Explore a garden flower" })
     .selectOption("rose");
   await expectRenderedFlower(canvas, 0.007);
+  await expect.poll(bufferBytes).toBeLessThan(fullBuffers * 0.5);
   const hiddenVersions = () =>
     page.evaluate(() => {
       const result: Record<string, number> = {};

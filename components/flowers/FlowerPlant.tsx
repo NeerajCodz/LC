@@ -31,6 +31,7 @@ import { Branch } from "./Branch";
 import { Calyx } from "./Calyx";
 import type { FlowerOrgansProps } from "./FloralParts";
 import { FlowerInteraction } from "./FlowerInteraction";
+import { releaseSceneGeometry } from "@/lib/three/previewResidency";
 
 export function FlowerPlant({
   structure,
@@ -64,9 +65,13 @@ export function FlowerPlant({
   Organs?: ComponentType<FlowerOrgansProps>;
   StemComponent?: ComponentType<StemProps>;
 }) {
+  const plant = useRef<Group>(null);
   const head = useRef<Group>(null);
   const garden = useContext(GardenEnvironment);
   const active = useContext(RenderActivity);
+  useLayoutEffect(() => {
+    if (garden && !active && plant.current) releaseSceneGeometry(plant.current);
+  }, [garden, active]);
   const profile = WIND_PROFILES[type];
   const bendingLength = freeStemLength(structure);
   const motion = useRef<PlantMotion>({
@@ -225,7 +230,7 @@ export function FlowerPlant({
     }
   }, -2);
   return (
-    <group position={position} rotation={rotation} scale={scale}>
+    <group ref={plant} position={position} rotation={rotation} scale={scale}>
       <group position={rooted ? [0, structure.stemLength, 0] : undefined}>
         <group>
           {stem && (

@@ -92,3 +92,14 @@ test("magnolia ovaries stay visible on the outside of the carpel-bearing torus",
     );
   }
 });
+test("magnolia floral axes close at their apex", () => {
+  const cap = MAGNOLIA_MODEL.organs.find(
+    (o) => o.name === "apical floral axis",
+  );
+  assert.ok(cap, "floral receptacle has an open apex");
+  const body = MAGNOLIA_MODEL.surfaces.find(
+      (s) => s.name === "elongate floral receptacle",
+    )!,
+    tip = body.sample(0.5, 1, 1);
+  assert.ok(cap.radius > Math.hypot(tip[0], tip[2]) - body.thickness * 0.5);
+});

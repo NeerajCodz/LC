@@ -86,3 +86,13 @@ test("cosmos closed heads retain a compact rounded profile", () => {
     "closed cosmos head is too elongated",
   );
 });
+test("cosmos ray tips close over the preformed disk in bud", () => {
+  const ray = COSMOS_MODEL.surfaces.find(
+      (s) => s.name === "neuter ray ligule",
+    )!,
+    tip = ray.sample(0.5, 1, 0);
+  assert.ok(
+    Math.hypot(tip[0], tip[2]) < 0.015,
+    "closed ray tips leave an open central aperture",
+  );
+});

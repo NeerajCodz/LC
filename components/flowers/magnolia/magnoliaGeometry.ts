@@ -191,6 +191,18 @@ MAGNOLIA_MODEL.instances = [
 ];
 
 MAGNOLIA_MODEL.clusters[0] = anchoredHeadCluster(0.65, -0.1, 1, 0.006);
+MAGNOLIA_MODEL.organs.push({
+  name: "apical floral axis",
+  cluster: 0,
+  points: [
+    [0, 0.48, 0],
+    [0, 0.507, 0],
+    [0, 0.523, 0],
+  ],
+  radius: 0.032,
+  endRadius: 0.018,
+  color: "#87946b",
+});
 export const MAGNOLIA_HEAD_CENTER = specimenClusterPoint(
   MAGNOLIA_MODEL.clusters[0],
   [0, 0.31, 0],

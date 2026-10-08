@@ -33,7 +33,7 @@ for (let i = 0; i < 8; i++) {
         tooth =
           0.032 * (0.5 + 0.5 * Math.cos((u - 0.5) * Math.PI * 6)) * v ** 10,
         r =
-          0.2 * (1 - v * 0.65) +
+          0.2 * (1 - v * (0.98 - 0.33 * open)) +
           0.14 * (1 - open) * Math.sin(v * Math.PI) +
           open * (0.72 * Math.sin(v * 1.35) - tooth);
       return [

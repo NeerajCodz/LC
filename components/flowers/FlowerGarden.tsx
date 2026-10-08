@@ -67,7 +67,11 @@ export default function FlowerGarden({
       }}
       onUnavailable={onReady}
     >
-      <RenderBudget constrained={constrained || degraded} macro={!!selected} />
+      <RenderBudget
+        prepareShaders
+        constrained={constrained || degraded}
+        macro={!!selected}
+      />
       <SurfaceDetail />
       <color attach="background" args={[THEME_BACKGROUNDS[theme]]} />
       <fog

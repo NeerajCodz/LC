@@ -3,6 +3,7 @@ import { useEffect, useLayoutEffect, useRef } from "react";
 import { useStore, useThree } from "@react-three/fiber";
 import { boundedDpr } from "@/lib/performance";
 import { bindRendererDocumentExit } from "@/lib/three/documentRenderer";
+import { primeSceneShaders } from "@/lib/three/shaderPrimer";
 import { markWebGL2Unavailable } from "./WebGLSupport";
 
 /** One capped clock per Canvas. Two startup frames release readiness; inactive scenes then stay at zero FPS. */
@@ -10,10 +11,12 @@ export function RenderBudget({
   active = true,
   constrained,
   macro = false,
+  prepareShaders = false,
 }: {
   active?: boolean;
   constrained: boolean;
   macro?: boolean;
+  prepareShaders?: boolean;
 }) {
   const get = useThree((state) => state.get);
   const { subscribe } = useStore();
@@ -73,6 +76,8 @@ export function RenderBudget({
         // RAF exceptions are outside React error boundaries. Stop this clock
         // before notifying the DOM so a broken renderer cannot keep throwing.
         try {
+          if (prepareShaders)
+            primeSceneShaders(state.gl, state.scene, state.camera);
           state.advance(simulation.current, false);
         } catch (error) {
           lost = true;
@@ -123,6 +128,6 @@ export function RenderBudget({
       canvas.removeEventListener("webglcontextlost", onLost);
       canvas.removeEventListener("webglcontextrestored", onRestored);
     };
-  }, [get, active, constrained]);
+  }, [get, active, constrained, prepareShaders]);
   return null;
 }

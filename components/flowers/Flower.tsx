@@ -53,7 +53,9 @@ import { Freesia } from "./freesia/Freesia";
 import { Lisianthus } from "./lisianthus/Lisianthus";
 import { Camellia } from "./camellia/Camellia";
 import { Magnolia } from "./magnolia/Magnolia";
+import { Gardenia } from "./gardenia/Gardenia";
 const SPECIES = {
+  gardenia: Gardenia,
   magnolia: Magnolia,
   camellia: Camellia,
   lisianthus: Lisianthus,

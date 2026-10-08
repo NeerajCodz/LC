@@ -3,6 +3,15 @@ import assert from "node:assert/strict";
 import { GARDENIA_MODEL } from "../components/flowers/gardenia/gardeniaGeometry";
 import { verifySpecimen } from "./specimen-checks";
 verifySpecimen("gardenia", GARDENIA_MODEL);
+import {
+  GARDENIA_LEAF,
+  GARDENIA_STIPULE,
+} from "../components/flowers/gardenia/gardeniaLeaf";
+verifySpecimen("gardenia leaves and stipules", {
+  clusters: [],
+  surfaces: [GARDENIA_LEAF, GARDENIA_STIPULE],
+  organs: [],
+});
 test("gardenia retains long fused tubes, overlapping limbs and included anthers", async () => {
   const a =
     await import("../components/flowers/gardenia/gardeniaGeometry").catch(

@@ -5,6 +5,7 @@ export const TISSUE_RESPONSE: Record<
   string,
   { roughness: number; sheen: number; coat: number; scatter: number }
 > = {
+  gardenia: { roughness: 0.43, sheen: 0.15, coat: 0.075, scatter: 0.04 },
   magnolia: { roughness: 0.42, sheen: 0.14, coat: 0.075, scatter: 0.037 },
   camellia: { roughness: 0.53, sheen: 0.16, coat: 0.03, scatter: 0.043 },
   lisianthus: { roughness: 0.66, sheen: 0.2, coat: 0.008, scatter: 0.055 },
@@ -43,6 +44,8 @@ export function specimenTissueColor(type: string, tissue?: SpecimenTissue) {
 export function specimenTissueShader(type: string, tissue?: SpecimenTissue) {
   if (tissue === "leaf") return "";
   switch (type) {
+    case "gardenia":
+      return `float garVein=pow(.5+.5*cos((vPetalUv.y-abs(vPetalUv.x-.5)*.5)*57.),25.);diffuseColor.rgb*=1.-garVein*.032;`;
     case "magnolia":
       return `float magVein=pow(.5+.5*cos((vPetalUv.y-abs(vPetalUv.x-.5)*.35)*51.),26.);diffuseColor.rgb*=1.-magVein*.027;`;
     case "camellia":

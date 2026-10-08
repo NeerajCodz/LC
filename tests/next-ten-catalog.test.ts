@@ -53,3 +53,9 @@ test("magnolia is a typed specimen with genuine spiral floral organs", () => {
   assert.equal(getFlower(type).latin, "Magnolia grandiflora");
   assert.equal(FLOWER_STRUCTURES[type].simulatedSurfaces, true);
 });
+test("gardenia is a typed specimen with a long fused corolla", () => {
+  const type = FLOWER_TYPES.find((t) => String(t) === "gardenia");
+  assert.ok(type, "gardenia catalog integration is missing");
+  assert.equal(getFlower(type).latin, "Gardenia jasminoides");
+  assert.equal(FLOWER_STRUCTURES[type].simulatedSurfaces, true);
+});

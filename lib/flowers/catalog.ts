@@ -537,6 +537,16 @@ FLOWERS.push({
     "A southern magnolia flower with an elongated receptacle, numerous stamens and individual carpels above glossy, rusty-backed leaves on a stout woody shoot.",
   color: PETAL_PALETTES.magnolia.body,
 });
+FLOWERS.push({
+  type: "gardenia",
+  name: "Gardenia",
+  latin: "Gardenia jasminoides",
+  family: "Rubiaceae",
+  description: "Ivory pinwheel lobes unfold above dark, glossy foliage.",
+  detail:
+    "A single gardenia with a long fused tube, six overlapping lobes, included anthers and an inferior ovary above opposite leaves and pointed stipules.",
+  color: PETAL_PALETTES.gardenia.body,
+});
 FLOWERS.sort(
   (a, b) => FLOWER_TYPES.indexOf(a.type) - FLOWER_TYPES.indexOf(b.type),
 );

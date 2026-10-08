@@ -66,9 +66,11 @@ import { freesiaStructure } from "../../components/flowers/freesia/Freesia";
 import { lisianthusStructure } from "../../components/flowers/lisianthus/Lisianthus";
 import { camelliaStructure } from "../../components/flowers/camellia/Camellia";
 import { magnoliaStructure } from "../../components/flowers/magnolia/Magnolia";
+import { gardeniaStructure } from "../../components/flowers/gardenia/Gardenia";
 /** Authored anatomy shared by planting layout and geometry verification. */
 import { ranunculusStructure } from "../../components/flowers/ranunculus/Ranunculus";
 export const FLOWER_STRUCTURES: Record<FlowerType, FlowerStructure> = {
+  gardenia: gardeniaStructure,
   magnolia: magnoliaStructure,
   camellia: camelliaStructure,
   lisianthus: lisianthusStructure,

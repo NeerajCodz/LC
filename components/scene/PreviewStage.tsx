@@ -18,7 +18,10 @@ import {
 } from "@react-three/fiber";
 import { Scene } from "three";
 import { botanicalEvents } from "@/lib/three/events";
-import { releaseSceneGeometry } from "@/lib/three/previewResidency";
+import {
+  previewIntersectsViewport,
+  releaseSceneGeometry,
+} from "@/lib/three/previewResidency";
 import { RenderActivity } from "@/hooks/useActiveFrame";
 import { BotanicalView } from "../flowers/BotanicalView";
 import type { FlowerType } from "@/lib/flowers/types";
@@ -132,9 +135,6 @@ function ClearStage() {
 
 function RetainedView({ entry }: { entry: PreviewEntry }) {
   const [scene] = useState(() => new Scene());
-  useLayoutEffect(() => {
-    if (!entry.visible) releaseSceneGeometry(scene);
-  }, [entry.visible, scene]);
   const compute = useCallback(
     (event: MouseEvent, state: RootState) => {
       const rect = entry.node.getBoundingClientRect();
@@ -175,6 +175,15 @@ const RetainedFlower = memo(
 function DrawView({ entry }: { entry: PreviewEntry }) {
   const getState = useThree((state) => state.get);
   const lastRect = useRef("");
+  const resident = useRef(false);
+  const release = useCallback(() => {
+    if (!resident.current) return;
+    releaseSceneGeometry(getState().scene);
+    resident.current = false;
+  }, [getState]);
+  useLayoutEffect(() => {
+    if (!entry.visible) release();
+  }, [entry.visible, release]);
   useLayoutEffect(() => {
     // Pointer coordinates feed the flower's damped tracking without a global listener.
     const move = (event: PointerEvent) => {
@@ -192,7 +201,14 @@ function DrawView({ entry }: { entry: PreviewEntry }) {
     if (!entry.visible) return;
     const rect = entry.node.getBoundingClientRect();
     const canvas = gl.domElement.getBoundingClientRect();
-    if (!rect.width || !rect.height) return;
+    // The initialization observer includes a margin and the card's caption.
+    // Neither should keep an entirely offscreen preview resident on the GPU.
+    if (
+      !previewIntersectsViewport(rect, window.innerWidth, window.innerHeight)
+    ) {
+      release();
+      return;
+    }
     // Both bounds are sampled together. No debounced viewport offset, and no
     // fixed overlay: the browser compositor moves the entire surface naturally.
     const left = rect.left - canvas.left;
@@ -208,6 +224,7 @@ function DrawView({ entry }: { entry: PreviewEntry }) {
     gl.setScissorTest(true);
     gl.clear(true, true, true);
     gl.render(scene, camera);
+    resident.current = true;
     gl.setScissorTest(false);
     const key = `${left.toFixed(2)},${top.toFixed(2)},${rect.width},${rect.height}`;
     if (lastRect.current !== key) {

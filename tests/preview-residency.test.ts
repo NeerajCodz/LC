@@ -8,6 +8,69 @@ import {
   SphereGeometry,
 } from "three";
 
+test("preview residency follows the visible viewport, including partial views", async () => {
+  const residency = await import("../lib/three/previewResidency");
+  assert.equal(typeof residency.previewIntersectsViewport, "function");
+  const visible = residency.previewIntersectsViewport;
+  const viewport = { width: 1280, height: 720 };
+  assert.equal(
+    visible(
+      { left: 10, top: 20, width: 300, height: 400 },
+      viewport.width,
+      viewport.height,
+    ),
+    true,
+  );
+  assert.equal(
+    visible(
+      { left: 10, top: -399, width: 300, height: 400 },
+      viewport.width,
+      viewport.height,
+    ),
+    true,
+  );
+  assert.equal(
+    visible(
+      { left: 10, top: -400, width: 300, height: 400 },
+      viewport.width,
+      viewport.height,
+    ),
+    false,
+  );
+  assert.equal(
+    visible(
+      { left: 10, top: 720, width: 300, height: 400 },
+      viewport.width,
+      viewport.height,
+    ),
+    false,
+  );
+  assert.equal(
+    visible(
+      { left: 1280, top: 20, width: 300, height: 400 },
+      viewport.width,
+      viewport.height,
+    ),
+    false,
+  );
+  assert.equal(
+    visible(
+      { left: -300, top: 20, width: 300, height: 400 },
+      viewport.width,
+      viewport.height,
+    ),
+    false,
+  );
+  assert.equal(
+    visible(
+      { left: 10, top: 20, width: 0, height: 400 },
+      viewport.width,
+      viewport.height,
+    ),
+    false,
+  );
+});
+
 test("GPU eviction keeps retained meshes, folded attributes and shared materials intact", async () => {
   const modulePath = "../lib/three/previewResidency";
   const residency = (await import(modulePath).catch(() => null)) as {

@@ -9,6 +9,8 @@ selected garden rendering for all ten. Their geometry, arrangement and transform
 contact tests are in the corresponding `*-specimen.test.ts` files and
 `next-ten-specimen-dynamics.test.ts` / `flower-head-pose.test.ts`.
 
+`garden-overview.test.ts` checks the distant garden tier across classical petals and dense organ prototypes. Overview retains all authored organ counts and sealed bloom geometry; selected specimens restore their original detail. `shader-reuse.spec.ts` counts native submitted vertices at exact render boundaries, detects duplicate live shader sources and spontaneous context loss, and checks actual garden/selected pixels through resize.
+
 `ten-specimen-geometry.test.ts` checks all ten recent models, their defining organs and sealed dense-floret prototypes. `ten-specimen-dynamics.test.ts` stresses transformed/pinned cages at both budgets; `ten-specimen-arrangement.test.ts` checks assembled dorsal orientation, the ascending Delphinium spur and Zinnia peduncle clearance. `botanical-blades.test.ts` / `specimen-tissue.test.ts` verify continuous palmate surfaces, required color attributes, distinct tissue channels and independent leaf pigments.
 
 The material regression also compares shader source across organ/tissue combinations, preserves Zinnia's bicolored calyx program, and verifies independent species/region/scatter and blade pigment uniforms. Shared program keys must never merge different source code or embed per-material colors as shared GLSL literals.
@@ -81,7 +83,9 @@ $env:PLAYWRIGHT_CHANNEL = 'chrome'
 pnpm exec playwright test --project=desktop --workers=1
 ```
 
-The mobile project still requires Playwright WebKit. The config starts the development server on 1607 when needed and reuses an existing server locally. First shader compilation can take longer under software rendering; assertions allow 15 seconds. Traces from failed tests are saved under the ignored `test-results/` directory.
+The mobile project still requires Playwright WebKit. The test tooling is pinned to `1.65.0-alpha-2026-10-08`, with WebKit build 2373, because Windows WebKit 2359 in Playwright 1.63 produces blank WebGL captures after drawing-buffer resize. The [upstream fix](https://github.com/WebKit/WebKit/pull/75957) repairs native display-buffer readiness; the app does not reset contexts or change its rendering stack to work around it. Keep this exact tooling pin until a stable Playwright release includes that fix. Reinstall WebKit after changing the test dependency. `webgl-resize.spec.ts` checks the native compositor with a plain WebGL 2 control before and after resize; `shader-reuse.spec.ts` checks actual garden and close-up screenshots, shader reuse, atlas sampling and submitted geometry budgets.
+
+The config starts the development server on 1607 when needed and reuses an existing server locally. First shader compilation can take longer under software rendering; assertions allow 15 seconds. Traces from failed tests are saved under the ignored `test-results/` directory.
 
 - `expanded-specimens.spec.ts`: new specimen routes, bloom and macro controls, and garden macro selection.
 - `viewer.spec.ts`: garden macro selection, orbit drag, wheel zoom, and return without leaving the route.
@@ -110,7 +114,7 @@ Useful runtime diagnostics:
 
 | Attribute / element                       | Meaning                                                       |
 | ----------------------------------------- | ------------------------------------------------------------- |
-| `canvas[data-surface-detail]`             | Tissue source: `vgpu` or the `webgl` shader fallback.         |
+| `canvas[data-surface-detail]`             | Tissue source: `vgpu` or the cached `webgl` CPU atlas.         |
 | `canvas[data-lighting-backend]`           | HDR studio source: `vgpu` or the `webgl` CPU fallback.        |
 | `.preview-stage[data-retained-scenes]`    | Number of lazily initialized scenes retained in this gallery. |
 | `[data-flower-preview][data-scene-id]`    | Stable scene identity across offscreen pauses.                |

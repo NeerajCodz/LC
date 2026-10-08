@@ -65,3 +65,9 @@ test("nasturtium is a typed specimen with bilateral floral anatomy", () => {
   assert.equal(getFlower(type).latin, "Tropaeolum majus");
   assert.equal(FLOWER_STRUCTURES[type].simulatedSurfaces, true);
 });
+test("cosmos is a typed specimen with neuter rays and true disk florets", () => {
+  const type = FLOWER_TYPES.find((t) => String(t) === "cosmos");
+  assert.ok(type, "cosmos catalog integration is missing");
+  assert.equal(getFlower(type).latin, "Cosmos bipinnatus");
+  assert.equal(FLOWER_STRUCTURES[type].simulatedSurfaces, true);
+});

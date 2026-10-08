@@ -68,9 +68,11 @@ import { camelliaStructure } from "../../components/flowers/camellia/Camellia";
 import { magnoliaStructure } from "../../components/flowers/magnolia/Magnolia";
 import { gardeniaStructure } from "../../components/flowers/gardenia/Gardenia";
 import { nasturtiumStructure } from "../../components/flowers/nasturtium/Nasturtium";
+import { cosmosStructure } from "../../components/flowers/cosmos/Cosmos";
 /** Authored anatomy shared by planting layout and geometry verification. */
 import { ranunculusStructure } from "../../components/flowers/ranunculus/Ranunculus";
 export const FLOWER_STRUCTURES: Record<FlowerType, FlowerStructure> = {
+  cosmos: cosmosStructure,
   nasturtium: nasturtiumStructure,
   gardenia: gardeniaStructure,
   magnolia: magnoliaStructure,

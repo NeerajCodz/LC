@@ -557,6 +557,17 @@ FLOWERS.push({
     "Upper guide petals and fringed lower claws surround eight stamens, with a hollow dorsal calyx spur and leaves attached at interior hubs.",
   color: PETAL_PALETTES.nasturtium.body,
 });
+FLOWERS.push({
+  type: "cosmos",
+  name: "Cosmos",
+  latin: "Cosmos bipinnatus",
+  family: "Asteraceae",
+  description:
+    "Eight pink rays float around a golden constellation of florets.",
+  detail:
+    "Neuter ray flowers and true five-lobed bisexual disk florets sit above two ranks of bracts and opposite, finely divided foliage.",
+  color: PETAL_PALETTES.cosmos.body,
+});
 FLOWERS.sort(
   (a, b) => FLOWER_TYPES.indexOf(a.type) - FLOWER_TYPES.indexOf(b.type),
 );

@@ -21,6 +21,15 @@ export interface FoliageProfile {
 
 /** Cultivar-independent leaf traits; lotus has its own peltate blade generator. */
 export const FOLIAGE: Record<FlowerType, FoliageProfile> = {
+  cosmos: {
+    length: 0.84,
+    width: 0.3,
+    color: "#537b4d",
+    opposite: true,
+    leaflets: 48,
+    thickness: 0.006,
+    roughness: 0.8,
+  },
   nasturtium: {
     length: 0.95,
     width: 0.48,

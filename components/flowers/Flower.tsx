@@ -55,7 +55,9 @@ import { Camellia } from "./camellia/Camellia";
 import { Magnolia } from "./magnolia/Magnolia";
 import { Gardenia } from "./gardenia/Gardenia";
 import { Nasturtium } from "./nasturtium/Nasturtium";
+import { Cosmos } from "./cosmos/Cosmos";
 const SPECIES = {
+  cosmos: Cosmos,
   nasturtium: Nasturtium,
   gardenia: Gardenia,
   magnolia: Magnolia,

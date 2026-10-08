@@ -5,6 +5,7 @@ export const TISSUE_RESPONSE: Record<
   string,
   { roughness: number; sheen: number; coat: number; scatter: number }
 > = {
+  cosmos: { roughness: 0.72, sheen: 0.14, coat: 0, scatter: 0.065 },
   nasturtium: { roughness: 0.63, sheen: 0.18, coat: 0.015, scatter: 0.06 },
   gardenia: { roughness: 0.43, sheen: 0.15, coat: 0.075, scatter: 0.04 },
   magnolia: { roughness: 0.42, sheen: 0.14, coat: 0.075, scatter: 0.037 },
@@ -36,6 +37,7 @@ export function specimenTissueColor(type: string, tissue?: SpecimenTissue) {
   if (type === "magnolia" && tissue === "inner") return "#9d8260";
   if (type === "magnolia" && tissue === "disc") return "#87946b";
   if (type === "nasturtium" && tissue === "inner") return "#ba9c5c";
+  if (type === "cosmos" && tissue === "disc") return "#e3b95a";
   if (type === "delphinium" && tissue === "inner") return "#dfdcc2";
   if (type === "alstroemeria" && tissue === "inner") return "#e8c971";
   if (tissue === "disc") {
@@ -46,6 +48,8 @@ export function specimenTissueColor(type: string, tissue?: SpecimenTissue) {
 export function specimenTissueShader(type: string, tissue?: SpecimenTissue) {
   if (tissue === "leaf") return "";
   switch (type) {
+    case "cosmos":
+      return `float cosVein=pow(.5+.5*cos(vPetalUv.x*46.),24.);diffuseColor.rgb*=1.-cosVein*.045;`;
     case "nasturtium":
       return `float nastVein=pow(.5+.5*cos((vPetalUv.x-.5)*35.+vPetalUv.y*3.),22.);diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.52,.11,.04),nastVein*smoothstep(.1,.35,vPetalUv.y)*.16);`;
     case "gardenia":

@@ -1,5 +1,14 @@
 # Development and verification
 
+`next-ten-inspection.spec.ts` covers Rose plus Ranunculus, Anemone, Crocus, Freesia,
+Lisianthus, Camellia, Magnolia, Gardenia, Nasturtium and Cosmos. Use
+`DEV_INSPECTION=1` on a development port-1607 server and optionally filter with
+`SPECIMENS_TO_INSPECT`. `next-ten-specimens.spec.ts` exercises actual pixels,
+macro cage retention, pulse, pause, reduced motion, bloom, themes, search and
+selected garden rendering for all ten. Their geometry, arrangement and transformed
+contact tests are in the corresponding `*-specimen.test.ts` files and
+`next-ten-specimen-dynamics.test.ts` / `flower-head-pose.test.ts`.
+
 `ten-specimen-geometry.test.ts` checks all ten recent models, their defining organs and sealed dense-floret prototypes. `ten-specimen-dynamics.test.ts` stresses transformed/pinned cages at both budgets; `ten-specimen-arrangement.test.ts` checks assembled dorsal orientation, the ascending Delphinium spur and Zinnia peduncle clearance. `botanical-blades.test.ts` / `specimen-tissue.test.ts` verify continuous palmate surfaces, required color attributes, distinct tissue channels and independent leaf pigments.
 
 The material regression also compares shader source across organ/tissue combinations, preserves Zinnia's bicolored calyx program, and verifies independent species/region/scatter and blade pigment uniforms. Shared program keys must never merge different source code or embed per-material colors as shared GLSL literals.

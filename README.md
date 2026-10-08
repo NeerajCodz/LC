@@ -94,6 +94,8 @@ Research dossiers: [Carnation](docs/specimens/carnation-research.md), [Plumeria]
 
 Recent additions expose `hellebore`, `primrose`, `petunia`, `lily-of-the-valley`, `snowdrop`, `gladiolus`, `delphinium`, `alstroemeria`, `gerbera`, and `zinnia`. They preserve distinct nectar cups, fused corollas, unequal tepal whorls, spurs, resupinate or divided leaves, and true ray/disk florets. Gerbera's central flowers are bilateral; Zinnia's are five-lobed. Dense flowers retain all authored instances at constrained quality while their main rays/shells use bounded contact cages.
 
+`ranunculus` begins the next batch with a cultivated double form: 48 individually curved cupped petals, five sepals and divided foliage. Its [dossier](docs/specimens/ranunculus-research.md) separates source traits from authored counts, pigments and mechanics. The [next-batch plan](docs/plans/next-ten-realistic-specimens.md) lists nine further specimens under research; their dossier presence does not imply implementation. The [working validation record](docs/specimens/next-ten-specimens-validation.md) reports the completed slice and remaining checks.
+
 Their [research dossiers](docs/botanical-references.md) distinguish anatomical evidence from authored counts, dimensions, pigments and mechanical parameters. The [validation record](docs/specimens/ten-specimens-validation.md) records geometry/contact checks, botanical view review, browser coverage and measured costs, including taxonomy and physical-device gaps. Collection pages continue to show up to 15 flowers each.
 
 ## Architecture

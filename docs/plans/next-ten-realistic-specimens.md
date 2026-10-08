@@ -40,8 +40,10 @@ sharp macro, port 1607, installed stack, retained previews and explicit retry.
 ## Commit slices and validation
 
 - [x] 1. Research dossiers, provenance and this record.
-- [ ] 2. Shared construction extensions only where anatomy requires them.
-- [ ] 3–22. Two slices per species: sealed anatomy plus tests, then dedicated
+- [x] 2. Paired anther chambers with preserved open/folded attachments.
+- [x] 3. Ranunculus sealed anatomy and geometry/count/budget checks.
+- [x] 4. Ranunculus divided foliage, tissue, anchored motion and catalog API.
+- [ ] 5–22. Two slices for each remaining species: sealed anatomy plus tests, then dedicated
       foliage/tissue/motion and exhaustive catalog integration. Run failing
       missing-model/count assertions before geometry, then geometry/normal/bloom
       tests, typecheck and affected lint before each completed slice.

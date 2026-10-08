@@ -18,6 +18,7 @@ import {
 } from "@react-three/fiber";
 import { Scene } from "three";
 import { botanicalEvents } from "@/lib/three/events";
+import { releaseSceneGeometry } from "@/lib/three/previewResidency";
 import { RenderActivity } from "@/hooks/useActiveFrame";
 import { BotanicalView } from "../flowers/BotanicalView";
 import type { FlowerType } from "@/lib/flowers/types";
@@ -131,6 +132,9 @@ function ClearStage() {
 
 function RetainedView({ entry }: { entry: PreviewEntry }) {
   const [scene] = useState(() => new Scene());
+  useLayoutEffect(() => {
+    if (!entry.visible) releaseSceneGeometry(scene);
+  }, [entry.visible, scene]);
   const compute = useCallback(
     (event: MouseEvent, state: RootState) => {
       const rect = entry.node.getBoundingClientRect();

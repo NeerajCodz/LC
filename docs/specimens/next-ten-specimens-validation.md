@@ -43,13 +43,14 @@ corrected specimens were recaptured (8/8), followed by the final two closure
 recaptures (2/2). These views complement numerical checks and do not establish
 photographic equivalence.
 
-The complete feature tree passes 250 unit tests, typecheck and full lint.
+At the original production-sweep checkpoint, the feature tree passed 250 unit
+tests, typecheck and full lint.
 Inventory generation/audit and six taxonomy tests pass: 56 catalog studies and
 52 unambiguous exact-name candidates, preserving four existing naming gaps and
 the false scientific-simulation flag. The production build passes with 56 flower
 routes / 63 static pages. The browser results and measured costs are recorded below.
 
-## Final production browser sweep
+## Original production browser sweep
 
 The 52-case sweep against the production build completed in 36.2 minutes:
 **41 passed / 11 failed**. Desktop Chromium passed all 26 cases. Emulated
@@ -226,7 +227,121 @@ Physical-phone measurements and isolated GPU timing remain unavailable. No WGSL
 changed; actual WebGL pixel checks exercised the updated GLSL materials. Logs,
 raw benchmark JSON, traces and screenshots remain at
 `F:/codex-lc-validation/next-ten-specimens-2026-10-08/`, outside Git. The production
-app continues to run on port 1607 for review. This PR remains a draft while the
-mobile collection/garden failures are unresolved. The geometry, sources and
+app continued to run on port 1607 for review. At that checkpoint the PR remained
+a draft while the mobile collection/garden failures were unresolved. The geometry, sources and
 review captures represent authored botanical art, not a scientifically validated
 simulation or a claim of photographic equivalence.
+
+## Recovery measurements — 9 October 2026
+
+Recovery work retains the CPU scenes, geometry, morphs, materials and animation
+refs. Native geometry buffers are released for previews outside the actual
+viewport and for hidden garden plants. Hidden garden materials also release
+their native program references, retaining uniforms, shader hooks and shared
+atlas textures for garden return. A real native-allocation regression failed
+before each release change and passes afterward; identity and resume checks
+remain in place.
+
+The CPU tissue atlas now exists before the first tissue program compiles and
+matches the optional GPU field to within one byte. Compatible tissue programs
+share their source while retaining species-specific uniforms. Stable shadow
+configuration avoids unnecessary program variants. Distant shells share meshes,
+with independent bloom and pressure attributes in color and shadow passes.
+
+Constrained gardens submit at most one unfinished GPU frame. Visible material
+programs prepare inside Three r185's actual color pass; readiness is polled from
+the guarded clock and resets on context loss, document exit and unmount. The
+preparation view does not reparent objects or add a render target. Early selection
+and real context loss/retry have dedicated browser cases. The rejected earlier
+preparation experiment generated 94 programs and was reverted; this implementation
+uses 47 in the native constrained-garden sample.
+
+| Native measurement                                                    | Full garden | Rose close-up |
+| --------------------------------------------------------------------- | ----------: | ------------: |
+| Desktop geometry buffer bytes, before the final density reduction     |  58,842,884 |     3,766,084 |
+| Desktop live programs                                                 |          66 |            22 |
+| Constrained geometry buffer bytes, before the final density reduction |  58,837,892 |     2,441,732 |
+| Constrained live programs                                             |          47 |             6 |
+
+These are measured native allocations/program counts, not estimates of total GPU
+memory. Shared atlas and environment resources remain available. Returning to the
+garden reuploads geometry and recompiles needed programs while retaining the
+same CPU geometry identities.
+
+The full-catalog constrained draw initially submitted 10,067,520 indexed vertices
+per frame. Bounding only distant petal and tiny-organ tessellation reduces this
+to **6,522,204**, retaining all plants, petals, florets, paired anthers and
+appendages. Close-up quality levels retain their existing sampling. Native
+Chromium and WebKit checks enforce an 8,000,000 input ceiling, observe 1,456 draw
+calls, 47 shader programs, no duplicate sources, one pending frame and no context
+loss in these samples. Actual garden and close-up compositor PNG checks pass.
+The new Lotus prototype test retains all 156 stamens, closed surfaces, paired
+anthers, appendages and matching extents.
+
+Playwright is pinned to `1.65.0-alpha-2026-10-08` / WebKit 2373. A plain WebGL
+control reproduced Windows WebKit 2359's blank capture after buffer resize; the
+[upstream native display-buffer fix](https://github.com/WebKit/WebKit/pull/75957)
+and a raw resize/compositor regression distinguish that engine issue from LC's
+resource work. No context reset or pixel-check relaxation substitutes for that fix.
+
+Shared-process Windows WebKit sequences still produced intermittent context loss
+between tests, including retry after interrupted preparation. Driver diagnostics
+on an isolated passing reproduction found no cross-context resource mismatches.
+Tracing on/off and filmstrip-only changes did not explain the failure; explicit
+blank-document teardown stalled a later sequence and was removed. Each of the
+eight targeted cases passes with normal tracing in a fresh browser process.
+The complete production matrix and development inspection matrix use this same
+process isolation, with every assertion intact. Shared-process failures remain
+historical evidence and are not a claim of a resolved browser-driver issue.
+
+## Final recovery validation — 9 October 2026
+
+| Check                                                              | Result                                                              |
+| ------------------------------------------------------------------ | ------------------------------------------------------------------- |
+| TypeScript and full ESLint                                         | Passed                                                              |
+| Geometry, contact, motion, material and lifecycle unit tests       | 273/273 passed; no skips                                            |
+| Production browser matrix, desktop Chromium                        | 66/66 passed                                                        |
+| Production browser matrix, Windows mobile WebKit emulation         | 66/66 passed                                                        |
+| Development seven-view inspection, desktop Chromium                | 28/28 passed                                                        |
+| Development seven-view inspection, Windows mobile WebKit emulation | 28/28 passed                                                        |
+| Overview rendering captures, desktop and mobile emulation          | All 56 catalog specimens per engine rendered; no page/shader errors |
+| Actual WebGPU shader validation and GPU reference tests            | 2/2 and 2/2 passed                                                  |
+| Taxonomy tests and generated inventory audit                       | 6/6 passed; inventory audit passed                                  |
+| Production build                                                   | Passed; all canonical specimen routes generated                     |
+
+The **188 browser cases** span every case in 25 files: 22 production files and
+three development inspection files. Each case uses a fresh native browser process,
+the installed Playwright project options, normal retain-on-failure tracing, one
+worker and its original assertions. There are no retries, skipped, flaky or
+unexpected cases, or report-level errors. Within-case journeys still exercise
+the entire retained catalog, multi-specimen physics, garden selection/return,
+renderer failure/retry and context loss. This is a complete process-isolated
+matrix, not a passing default shared-process WebKit sweep.
+
+The committed `test:browser:isolated` command derives cases from Playwright's
+JSON listing, checks that every subprocess executes exactly one case and retains
+its report. During private validation the uniqueness guard caught an unbounded
+Rose selector also matching Primrose; after adding a title boundary, the affected
+case and remaining matrix completed without duplicate selection. An integration
+run of the committed runner independently passed each of the three Rose cases
+and selected no Primrose case. The earlier 41/52 sweep and shared-process failures
+remain recorded above rather than being replaced by isolated passes.
+
+The ten new species and Rose were visually reviewed in both engines at front,
+side, 45 degrees, macro, bud, half bloom and side bud. The overview capture set
+adds all catalog species, with front/45-degree/bud/half contact-sheet review in
+both engines. It preserves distinctive silhouettes, counts and attachments;
+numerical tests cover sealed shells, folded normals and repeated organ extents.
+The fixture's inherited fixed framing crops the upper portions of several older
+upright specimens, including Tulip; these overview captures are not evidence of
+complete visual coverage of every organ of those older specimens. The focused
+public pages and new-specimen review have their separate framing checks.
+
+Final reports are retained outside Git under
+`F:/codex-lc-validation/next-ten-specimens-2026-10-08/`: the
+`recovery-per-case-production/` and `recovery-per-case-inspection/` folders contain
+per-case JSON, captures and aggregate results; `overview-review-desktop/` and
+`overview-review-mobile/` contain the additional quality-tier review. Unit, GPU,
+build and native-resource logs accompany them. The local production app uses
+port 1607. Physical-phone validation and isolated GPU timing remain unavailable;
+the measurements above do not support a universal 60 FPS claim.

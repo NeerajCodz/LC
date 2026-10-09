@@ -55,9 +55,20 @@ sharp macro, port 1607, installed stack, retained previews and explicit retry.
       Review captures passed. Production sweep: 41/52 passed, with ten traced
       mobile context losses and one route-prefetch error; see the validation record.
 - [x] 26. Inventory/audit, API documentation, production build and measured costs.
-- [ ] Resolve mobile retained-collection/garden context loss before marking the
-      new PR ready for merge. An isolated passing fallback rerun does not erase
-      the production sweep's failures. Physical-phone validation remains unavailable.
+- [x] Complete the expanded functional browser gate after resource recovery:
+      132 production cases (66 per engine) and 56 development inspection cases
+      (28 per engine), each in a fresh browser process with normal tracing,
+      no retries, skips, flaky cases or assertion changes. Typecheck, lint and
+      all 273 unit tests pass. See the final recovery table in the validation record.
+- [x] Review the ten new specimens and Rose in both engines, and capture all
+      catalog specimens at overview quality in both engines. Verify the isolated
+      runner against the Rose/Primrose title collision before publishing it.
+
+This complete isolated matrix supports review of the feature and resource fixes;
+it does not erase the original production sweep or establish a resolved
+shared-process Windows WebKit driver issue. That limitation remains documented,
+along with unavailable physical-phone validation. The PR can be ready for review
+on this evidence; merging still requires a later user request.
 
 Commit coherent completed slices throughout as Neeraj Sathish Kumar
 <neerajcodz@gmail.com>, both author and committer, without coauthor trailers.

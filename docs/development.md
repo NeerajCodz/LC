@@ -85,7 +85,11 @@ pnpm exec playwright test --project=desktop --workers=1
 
 The mobile project still requires Playwright WebKit. The test tooling is pinned to `1.65.0-alpha-2026-10-08`, with WebKit build 2373, because Windows WebKit 2359 in Playwright 1.63 produces blank WebGL captures after drawing-buffer resize. The [upstream fix](https://github.com/WebKit/WebKit/pull/75957) repairs native display-buffer readiness; the app does not reset contexts or change its rendering stack to work around it. Keep this exact tooling pin until a stable Playwright release includes that fix. Reinstall WebKit after changing the test dependency. `webgl-resize.spec.ts` checks the native compositor with a plain WebGL 2 control before and after resize; `shader-reuse.spec.ts` checks actual garden and close-up screenshots, shader reuse, atlas sampling and submitted geometry budgets.
 
-The config starts the development server on 1607 when needed and reuses an existing server locally. First shader compilation can take longer under software rendering; assertions allow 15 seconds. Traces from failed tests are saved under the ignored `test-results/` directory.
+The config starts the development server on 1607 when needed and reuses an existing server locally. Ordinary UI assertions allow 15 seconds; full-catalog garden startup has a bounded 60-second readiness window because initial geometry upload and shader compilation can exceed the ordinary deadline. Pixel, error, contact and retention assertions still run after readiness. Traces from failed tests are saved under the ignored `test-results/` directory.
+
+On a memory-constrained host, serialize GPU checks with `--workers=1` and run each browser file separately for each project. This gives each file a fresh browser while preserving every case and assertion. Collect a JSON report and exit status for every file; account for all tests rather than treating a passing rerun as a completed sweep. Run the three development inspection files separately with `DEV_INSPECTION=1` against the development server, with no species filter. Production and development checks both use port 1607.
+
+For GPU lifecycle checks on Windows WebKit, a fresh browser process per case avoids carrying native graphics state between closed browser contexts. `npm run test:browser:isolated` derives the complete production matrix from Playwright's JSON listing and runs every case with one worker, normal tracing and the existing project options. It verifies that each selection executes exactly one case and retains per-case reports. `npm run test:browser:isolated -- --inspection` runs every development inspection case against a development server on 1607; `--list`, `--project=mobile` and `--grep=<expression>` support explicit inspection and diagnosis. Keep all assertion, pixel and error checks intact. Shared-process failures remain separate evidence and must not be described as fixed merely because isolated cases pass.
 
 - `expanded-specimens.spec.ts`: new specimen routes, bloom and macro controls, and garden macro selection.
 - `viewer.spec.ts`: garden macro selection, orbit drag, wheel zoom, and return without leaving the route.
@@ -93,6 +97,11 @@ The config starts the development server on 1607 when needed and reuses an exist
 - `scroll.spec.ts`: flower pixels and captions move together on the collection, specimen hero, and specimen angle gallery.
 - `retention.spec.ts`: every catalog scene ID survives return scrolling; specimen angle scenes, scroll-study Canvas, and bloom controls retain their state.
 - `mobile-performance.spec.ts`: constrained buffers and continuing frames across specimen, macro, collection, and garden.
+- `gpu-residency.spec.ts`: native preview buffer allocation stays within visible geometry plus bounded renderer overhead; hiding every preview releases buffers while retaining all scene identities. The constrained absolute buffer ceiling remains enforced.
+- `garden-activity.spec.ts`: hidden plants freeze their geometry updates, release native geometry buffers and material program references during selection and resume with the same geometry identities. Native allocation measurements must fall below half the full garden's buffer bytes and program count; CPU materials, uniforms and shared textures remain retained.
+- `garden-preparation.spec.ts`: early selection while shader completion is pending, loading readiness, cancellation during real context loss and explicit retry. Controlled completion only delays the test's readiness signal; subsequent flower pixels come from the real renderer.
+- `shader-reuse.spec.ts`: native shader reuse, atlas sampling, submitted geometry, actual compositor screenshots and a maximum of one pending constrained-garden GPU fence.
+- `document-lifecycle.spec.ts`: discarded documents release renderer resources while browser history-cache retention stays intact.
 - `lifecycle.spec.ts`: rapid scrolling/navigation without null event-target crashes; macro rendering with WebGPU unavailable.
 - `rendering-fallback.spec.ts`: null/throwing capability probes across all public routes, actual renderer initialization failure after a successful probe, real context loss and retry with retained bloom state, and a thrown draw call. Recovery checks actual flower pixels as well as frames. Runs on desktop Chromium and mobile WebKit.
 
@@ -108,13 +117,15 @@ Confirm that each route's `rel="icon"` link resolves to `app/icon.svg` and that 
 
 Use [the development inspection fixture](http://localhost:1607/dev/inspection/) for every affected species at front, side, 45 degrees, macro, bud, half bloom, and full bloom. Inspect petal edge thickness, folded normals, underside attachments, foliage, stamens, shadows, gaps, and intersections. The fixture is heavier than the public single-specimen page; use the public page for representative performance measurements.
 
+The fixture's Detail control selects specimen detail or the distant garden overview tier. Overview changes still need visual review; inspect organ counts, paired structures, curved attachments and closed buds as well as their numerical geometry checks. Selecting a public garden flower restores its existing close-up detail.
+
 Check a narrow viewport and actual touch interaction when available. Keep the main flower sharp in macro mode. Test pointer motion, cursor-light locking, tap/click pulses, reverse bloom, theme changes, and pause/reduced-motion behavior. No automated pixel or geometry test establishes botanical realism on its own.
 
 Useful runtime diagnostics:
 
 | Attribute / element                       | Meaning                                                       |
 | ----------------------------------------- | ------------------------------------------------------------- |
-| `canvas[data-surface-detail]`             | Tissue source: `vgpu` or the cached `webgl` CPU atlas.         |
+| `canvas[data-surface-detail]`             | Tissue source: `vgpu` or the cached `webgl` CPU atlas.        |
 | `canvas[data-lighting-backend]`           | HDR studio source: `vgpu` or the `webgl` CPU fallback.        |
 | `.preview-stage[data-retained-scenes]`    | Number of lazily initialized scenes retained in this gallery. |
 | `[data-flower-preview][data-scene-id]`    | Stable scene identity across offscreen pauses.                |

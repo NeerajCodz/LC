@@ -2,7 +2,7 @@
 import { Suspense, useState, useMemo } from "react";
 import { botanicalEvents } from "@/lib/three/events";
 import { PerformanceMonitor } from "@react-three/drei";
-import { PCFShadowMap } from "three";
+import { botanicalShadowOptions } from "@/lib/three/shadows";
 import type { FlowerType, Vec3 } from "@/lib/flowers/types";
 import { FLOWER_STRUCTURES } from "@/lib/flowers/structures";
 import { flowerHeadTarget } from "@/lib/flowers/framing";
@@ -25,6 +25,8 @@ import {
 import { GardenDynamics } from "../scene/GardenDynamics";
 import { useTheme } from "@/hooks/useTheme";
 import { THEME_BACKGROUNDS } from "@/lib/theme";
+import { RenderActivity } from "@/hooks/useActiveFrame";
+
 export default function FlowerGarden({
   bloom,
   paused,
@@ -42,7 +44,7 @@ export default function FlowerGarden({
   onSelect: (type: FlowerType) => void;
   reset: number;
 }) {
-  const { quality, reducedMotion, constrained } = useExperienceSettings();
+  const { reducedMotion, constrained } = useExperienceSettings();
   const { theme } = useTheme();
   const [degraded, setDegraded] = useState(false);
   const plantings = constrained ? MOBILE_GARDEN_PLANTINGS : GARDEN_PLANTINGS;
@@ -56,7 +58,7 @@ export default function FlowerGarden({
     <SafeCanvas
       events={botanicalEvents}
       frameloop="never"
-      shadows={!constrained && !degraded}
+      shadows={botanicalShadowOptions(!constrained && !degraded)}
       dpr={1}
       camera={{ position: [0, 3.6, 11], fov: 39, near: 0.1, far: 50 }}
       gl={{
@@ -64,11 +66,13 @@ export default function FlowerGarden({
         powerPreference: constrained ? "low-power" : "high-performance",
       }}
       onUnavailable={onReady}
-      onCreated={({ gl }) => {
-        gl.shadowMap.type = PCFShadowMap;
-      }}
     >
-      <RenderBudget constrained={constrained || degraded} macro={!!selected} />
+      <RenderBudget
+        gpuPacing={constrained}
+        shaderScope={constrained ? "garden-specimens" : undefined}
+        constrained={constrained || degraded}
+        macro={!!selected}
+      />
       <SurfaceDetail />
       <color attach="background" args={[THEME_BACKGROUNDS[theme]]} />
       <fog
@@ -103,36 +107,39 @@ export default function FlowerGarden({
           paused={paused}
           reducedMotion={reducedMotion}
         >
-          {plantings.map((plant, i) => (
-            <group
-              key={plant.type}
-              visible={!selected || selected === plant.type}
-            >
-              <Flower
-                {...plant}
-                rooted
-                physics={selected === plant.type ? "detailed" : "ambient"}
-                bloom={bloom}
-                quality={
-                  selected === plant.type
-                    ? constrained
-                      ? "medium"
-                      : "high"
-                    : quality === "low" || degraded
-                      ? "low"
-                      : "medium"
-                }
-                animationSpeed={0.85 + (i % 7) * 0.055}
-                windStrength={0.85}
-                cursorStrength={0.8}
-                interactive={!selected || selected === plant.type}
-                reducedMotion={reducedMotion}
-                paused={paused}
-                pulse={pulse}
-                onClick={() => onSelect(plant.type)}
-              />
-            </group>
-          ))}
+          <group name="garden-specimens">
+            {plantings.map((plant, i) => (
+              <group
+                key={plant.type}
+                name={`garden-plant:${plant.type}`}
+                visible={!selected || selected === plant.type}
+              >
+                <RenderActivity value={!selected || selected === plant.type}>
+                  <Flower
+                    {...plant}
+                    rooted
+                    physics={selected === plant.type ? "detailed" : "ambient"}
+                    bloom={bloom}
+                    quality={
+                      selected === plant.type
+                        ? constrained
+                          ? "medium"
+                          : "high"
+                        : "overview"
+                    }
+                    animationSpeed={0.85 + (i % 7) * 0.055}
+                    windStrength={0.85}
+                    cursorStrength={0.8}
+                    interactive={!selected || selected === plant.type}
+                    reducedMotion={reducedMotion}
+                    paused={paused}
+                    pulse={pulse}
+                    onClick={() => onSelect(plant.type)}
+                  />
+                </RenderActivity>
+              </group>
+            ))}
+          </group>
         </GardenDynamics>
         {!reducedMotion &&
           (!selected ||

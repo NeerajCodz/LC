@@ -43,6 +43,7 @@ export function specimenInstanceGeometry(
   quality: Quality,
 ) {
   const [columns, rows] = {
+    overview: [6, 3],
     low: [6, 5],
     medium: [8, 7],
     high: [12, 9],
@@ -59,7 +60,11 @@ export function specimenInstanceGeometry(
   const organs = group.organs.map((organ) => {
     const g = specimenOrganGeometry(
       organ,
-      quality === "ultra" ? "medium" : "low",
+      quality === "overview"
+        ? "overview"
+        : quality === "ultra"
+          ? "medium"
+          : "low",
     );
     if (!g.morphAttributes.position?.length) {
       g.morphAttributes.position = [g.getAttribute("position").clone()];

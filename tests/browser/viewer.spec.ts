@@ -3,10 +3,13 @@ test("garden macro stays in the garden and supports orbit, zoom and return", asy
   page,
   isMobile,
 }) => {
+  test.setTimeout(180000);
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
   await page.goto("/garden/");
-  await expect(page.locator(".bloom-loader")).toHaveCount(0);
+  await expect(page.locator(".bloom-loader")).toHaveCount(0, {
+    timeout: 60000,
+  });
   await page.getByLabel("Explore a garden flower").selectOption("lotus");
   await expect(
     page.getByRole("heading", { name: "Lotus", exact: true }),

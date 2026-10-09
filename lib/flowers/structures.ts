@@ -60,8 +60,28 @@ import { gerberaStructure } from "../../components/flowers/gerbera/Gerbera";
 
 import { zinniaStructure } from "../../components/flowers/zinnia/Zinnia";
 
+import { anemoneStructure } from "../../components/flowers/anemone/Anemone";
+import { crocusStructure } from "../../components/flowers/crocus/Crocus";
+import { freesiaStructure } from "../../components/flowers/freesia/Freesia";
+import { lisianthusStructure } from "../../components/flowers/lisianthus/Lisianthus";
+import { camelliaStructure } from "../../components/flowers/camellia/Camellia";
+import { magnoliaStructure } from "../../components/flowers/magnolia/Magnolia";
+import { gardeniaStructure } from "../../components/flowers/gardenia/Gardenia";
+import { nasturtiumStructure } from "../../components/flowers/nasturtium/Nasturtium";
+import { cosmosStructure } from "../../components/flowers/cosmos/Cosmos";
 /** Authored anatomy shared by planting layout and geometry verification. */
+import { ranunculusStructure } from "../../components/flowers/ranunculus/Ranunculus";
 export const FLOWER_STRUCTURES: Record<FlowerType, FlowerStructure> = {
+  cosmos: cosmosStructure,
+  nasturtium: nasturtiumStructure,
+  gardenia: gardeniaStructure,
+  magnolia: magnoliaStructure,
+  camellia: camelliaStructure,
+  lisianthus: lisianthusStructure,
+  freesia: freesiaStructure,
+  crocus: crocusStructure,
+  anemone: anemoneStructure,
+  ranunculus: ranunculusStructure,
   zinnia: zinniaStructure,
   gerbera: gerberaStructure,
   alstroemeria: alstroemeriaStructure,

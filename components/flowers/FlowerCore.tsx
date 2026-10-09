@@ -5,6 +5,7 @@ import { GOLDEN_ANGLE, seededRandom } from "@/lib/three/noise";
 import type { FlowerStructure, FlowerType, Quality } from "@/lib/flowers/types";
 import { LotusHeart } from "./lotus/LotusHeart";
 import { StamenHeart } from "./StamenHeart";
+import { createCoreGrainGeometry } from "@/lib/three/coreGeometry";
 
 export function FlowerCore({
   type,
@@ -28,19 +29,25 @@ export function FlowerCore({
         quality={quality}
       />
     );
-  return <StandardFlowerCore structure={structure} bloom={bloom} />;
+  return (
+    <StandardFlowerCore structure={structure} bloom={bloom} quality={quality} />
+  );
 }
 
 function StandardFlowerCore({
   structure,
   bloom,
+  quality,
 }: {
   structure: FlowerStructure;
   bloom: RefObject<number>;
+  quality: Quality;
 }) {
   const group = useRef<Group>(null);
   const mesh = useRef<InstancedMesh>(null);
   const filaments = useRef<InstancedMesh>(null);
+  const grain = useMemo(() => createCoreGrainGeometry(quality), [quality]);
+  useEffect(() => () => grain.dispose(), [grain]);
   const {
     center,
     centerRadius: r,
@@ -138,7 +145,9 @@ function StandardFlowerCore({
           castShadow
           receiveShadow
         >
-          <sphereGeometry args={[1, 40, 20]} />
+          <sphereGeometry
+            args={quality === "overview" ? [1, 16, 8] : [1, 40, 20]}
+          />
           <meshStandardMaterial
             color={center === "seeds" ? "#291d12" : "#b78720"}
             roughness={0.92}
@@ -154,15 +163,23 @@ function StandardFlowerCore({
       <instancedMesh
         ref={mesh}
         args={[undefined, undefined, count]}
+        geometry={grain}
         castShadow
         frustumCulled={false}
       >
-        <sphereGeometry args={[1, 20, 14]} />
         <meshStandardMaterial roughness={0.86} />
       </instancedMesh>
       {stamens && (
         <instancedMesh ref={filaments} args={[undefined, undefined, count]}>
-          <cylinderGeometry args={[0.65, 1, 1, 12, 3]} />
+          <cylinderGeometry
+            args={[
+              0.65,
+              1,
+              1,
+              quality === "overview" ? 6 : 12,
+              quality === "overview" ? 1 : 3,
+            ]}
+          />
           <meshStandardMaterial color="#e4c8ad" roughness={0.7} />
         </instancedMesh>
       )}

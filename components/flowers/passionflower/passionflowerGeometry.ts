@@ -16,8 +16,18 @@ export function createCoronaFilament(quality: Quality, ring: number) {
   const spec = PASSION_CORONA[ring];
   const long = ring < 2;
   const length = spec.length;
-  const segments = quality === "low" ? 12 : quality === "medium" ? 20 : 36;
-  const sides = quality === "low" ? 6 : quality === "medium" ? 8 : 12;
+  const segments =
+    quality === "overview" || quality === "low"
+      ? 12
+      : quality === "medium"
+        ? 20
+        : 36;
+  const sides =
+    quality === "overview" || quality === "low"
+      ? 6
+      : quality === "medium"
+        ? 8
+        : 12;
   const open: Vec3[] = long
     ? [
         [0, 0, 0],
@@ -100,8 +110,8 @@ export function createPassionAxis(quality: Quality) {
       endRadius: 0.057,
       color: "#b5b789",
       tipColor: "#8e9f67",
-      segments: quality === "low" ? 16 : 36,
-      sides: quality === "low" ? 10 : 20,
+      segments: quality === "overview" || quality === "low" ? 16 : 36,
+      sides: quality === "overview" || quality === "low" ? 10 : 20,
       grain: 0.035,
     }),
   );
@@ -139,7 +149,7 @@ export function createPassionAxis(quality: Quality) {
         radius: thickness,
         endRadius: thickness,
         color,
-        segments: quality === "low" ? 40 : 80,
+        segments: quality === "overview" || quality === "low" ? 40 : 80,
         sides: 8,
       }),
     );
@@ -193,8 +203,8 @@ export function createPassionStamen(quality: Quality) {
         color: "#aaa355",
         tipColor: "#b7b26d",
         flatten: 0.74,
-        segments: quality === "low" ? 12 : 28,
-        sides: quality === "low" ? 8 : 14,
+        segments: quality === "overview" || quality === "low" ? 12 : 28,
+        sides: quality === "overview" || quality === "low" ? 8 : 14,
         grain: 0.06,
       }),
     );
@@ -215,8 +225,8 @@ export function createPassionStyle(quality: Quality) {
       endRadius: 0.023,
       color: "#8c6287",
       tipColor: "#725674",
-      segments: quality === "low" ? 14 : 30,
-      sides: quality === "low" ? 8 : 14,
+      segments: quality === "overview" || quality === "low" ? 14 : 30,
+      sides: quality === "overview" || quality === "low" ? 8 : 14,
     }),
   ];
   // Slightly lobed receptive pad, with fine geometric relief at macro scale.
@@ -233,8 +243,8 @@ export function createPassionStyle(quality: Quality) {
       tipColor: "#b9b593",
       flatten: 0.65,
       grain: 0.075,
-      segments: quality === "low" ? 12 : 26,
-      sides: quality === "low" ? 8 : 16,
+      segments: quality === "overview" || quality === "low" ? 12 : 26,
+      sides: quality === "overview" || quality === "low" ? 8 : 16,
     }),
   );
   return joinOrgans(parts);
@@ -242,8 +252,18 @@ export function createPassionStyle(quality: Quality) {
 
 /** One continuous five-lobed simple blade, sealed around its entire margin. */
 export function createPassionLeaf(quality: Quality) {
-  const sectors = quality === "low" ? 100 : quality === "medium" ? 160 : 240;
-  const rings = quality === "low" ? 10 : quality === "medium" ? 16 : 24;
+  const sectors =
+    quality === "overview" || quality === "low"
+      ? 100
+      : quality === "medium"
+        ? 160
+        : 240;
+  const rings =
+    quality === "overview" || quality === "low"
+      ? 10
+      : quality === "medium"
+        ? 16
+        : 24;
   const positions: number[] = [],
     colors: number[] = [],
     uv: number[] = [],
@@ -408,7 +428,7 @@ export function createPassionTendril(
     endRadius: 0.003,
     color: "#657d46",
     tipColor: "#8b9a61",
-    segments: quality === "low" ? 64 : 128,
-    sides: quality === "low" ? 6 : 9,
+    segments: quality === "overview" || quality === "low" ? 64 : 128,
+    sides: quality === "overview" || quality === "low" ? 6 : 9,
   });
 }

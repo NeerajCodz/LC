@@ -46,7 +46,27 @@ import { Delphinium } from "./delphinium/Delphinium";
 import { Alstroemeria } from "./alstroemeria/Alstroemeria";
 import { Gerbera } from "./gerbera/Gerbera";
 import { Zinnia } from "./zinnia/Zinnia";
+import { Ranunculus } from "./ranunculus/Ranunculus";
+import { Anemone } from "./anemone/Anemone";
+import { Crocus } from "./crocus/Crocus";
+import { Freesia } from "./freesia/Freesia";
+import { Lisianthus } from "./lisianthus/Lisianthus";
+import { Camellia } from "./camellia/Camellia";
+import { Magnolia } from "./magnolia/Magnolia";
+import { Gardenia } from "./gardenia/Gardenia";
+import { Nasturtium } from "./nasturtium/Nasturtium";
+import { Cosmos } from "./cosmos/Cosmos";
 const SPECIES = {
+  cosmos: Cosmos,
+  nasturtium: Nasturtium,
+  gardenia: Gardenia,
+  magnolia: Magnolia,
+  camellia: Camellia,
+  lisianthus: Lisianthus,
+  freesia: Freesia,
+  crocus: Crocus,
+  anemone: Anemone,
+  ranunculus: Ranunculus,
   zinnia: Zinnia,
   gerbera: Gerbera,
   alstroemeria: Alstroemeria,

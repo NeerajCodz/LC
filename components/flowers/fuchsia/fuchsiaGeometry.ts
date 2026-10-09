@@ -80,8 +80,18 @@ export function createFuchsiaBlade(
   index: number,
 ) {
   return createParametricShell({
-    columns: quality === "low" ? 14 : quality === "medium" ? 22 : 36,
-    rows: quality === "low" ? 28 : quality === "medium" ? 42 : 64,
+    columns:
+      quality === "overview" || quality === "low"
+        ? 14
+        : quality === "medium"
+          ? 22
+          : 36,
+    rows:
+      quality === "overview" || quality === "low"
+        ? 28
+        : quality === "medium"
+          ? 42
+          : 64,
     thickness: kind === "sepal" ? 0.011 : 0.006,
     sample: (u, t, open) =>
       (kind === "sepal" ? fuchsiaSepalPoint : fuchsiaPetalPoint)(
@@ -94,8 +104,8 @@ export function createFuchsiaBlade(
 }
 export function createFuchsiaHypanthium(quality: Quality) {
   return createParametricShell({
-    columns: quality === "low" ? 24 : 48,
-    rows: quality === "low" ? 20 : 36,
+    columns: quality === "overview" || quality === "low" ? 24 : 48,
+    rows: quality === "overview" || quality === "low" ? 20 : 36,
     thickness: 0.01,
     periodic: true,
     sample: (u, t) => {
@@ -114,8 +124,8 @@ export function createFuchsiaOvary(quality: Quality) {
     ],
     radius: 0.035,
     endRadius: 0.035,
-    segments: quality === "low" ? 14 : 28,
-    sides: quality === "low" ? 10 : 20,
+    segments: quality === "overview" || quality === "low" ? 14 : 28,
+    sides: quality === "overview" || quality === "low" ? 10 : 20,
     color: "#587543",
     tipColor: "#914247",
     grain: 0.018,
@@ -135,8 +145,8 @@ const tube = (
     endRadius,
     color,
     tipColor: color,
-    segments: quality === "low" ? 14 : 28,
-    sides: quality === "low" ? 7 : 12,
+    segments: quality === "overview" || quality === "low" ? 14 : 28,
+    sides: quality === "overview" || quality === "low" ? 7 : 12,
     grain: 0.025,
   });
 /** The same vertex ordering in both poses keeps filaments and anthers attached during bloom. */
@@ -246,8 +256,8 @@ export function createFuchsiaWood(quality: Quality, length: number) {
     ),
     radius: 0.035,
     endRadius: 0.023,
-    segments: quality === "low" ? 36 : 64,
-    sides: quality === "low" ? 10 : 18,
+    segments: quality === "overview" || quality === "low" ? 36 : 64,
+    sides: quality === "overview" || quality === "low" ? 10 : 18,
     color: "#62513d",
     tipColor: "#873e4f",
     grain: 0.12,

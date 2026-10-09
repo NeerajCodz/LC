@@ -63,8 +63,8 @@ export function BotanicalStem({
       radius: structure.stemRadius * 1.2,
       endRadius: structure.stemRadius,
       color: anatomy.color,
-      segments: quality === "low" ? 40 : 80,
-      sides: quality === "low" ? 10 : 18,
+      segments: quality === "overview" || quality === "low" ? 40 : 80,
+      sides: quality === "overview" || quality === "low" ? 10 : 18,
       grain: 0.05,
     });
     const p = g.getAttribute("position");
@@ -101,8 +101,8 @@ export function BotanicalStem({
       parts.push(
         createOrganicTube({
           ...extra,
-          segments: quality === "low" ? 22 : 44,
-          sides: quality === "low" ? 6 : 10,
+          segments: quality === "overview" || quality === "low" ? 22 : 44,
+          sides: quality === "overview" || quality === "low" ? 6 : 10,
           grain: 0.06,
         }),
       );

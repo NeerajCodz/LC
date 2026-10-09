@@ -6,6 +6,7 @@ import {
   type ComponentType,
 } from "react";
 import { useActiveFrame as useFrame } from "@/hooks/useActiveFrame";
+import { RenderActivity } from "@/hooks/useActiveFrame";
 import { Group, Vector3 } from "three";
 import type { FlowerProps, FlowerStructure } from "@/lib/flowers/types";
 import { getFlower } from "@/lib/flowers/catalog";
@@ -30,6 +31,10 @@ import { Branch } from "./Branch";
 import { Calyx } from "./Calyx";
 import type { FlowerOrgansProps } from "./FloralParts";
 import { FlowerInteraction } from "./FlowerInteraction";
+import {
+  releaseSceneGeometry,
+  releaseSceneMaterialPrograms,
+} from "@/lib/three/previewResidency";
 
 export function FlowerPlant({
   structure,
@@ -63,8 +68,16 @@ export function FlowerPlant({
   Organs?: ComponentType<FlowerOrgansProps>;
   StemComponent?: ComponentType<StemProps>;
 }) {
+  const plant = useRef<Group>(null);
   const head = useRef<Group>(null);
   const garden = useContext(GardenEnvironment);
+  const active = useContext(RenderActivity);
+  useLayoutEffect(() => {
+    if (garden && !active && plant.current) {
+      releaseSceneGeometry(plant.current);
+      releaseSceneMaterialPrograms(plant.current);
+    }
+  }, [garden, active]);
   const profile = WIND_PROFILES[type];
   const bendingLength = freeStemLength(structure);
   const motion = useRef<PlantMotion>({
@@ -115,7 +128,7 @@ export function FlowerPlant({
     Math.max(2.2, envelope * 1.5),
   );
   useLayoutEffect(() => {
-    if (!garden) return;
+    if (!garden || !active) return;
     const entry = body.current;
     entry.commit = () => {
       if (!head.current?.parent || !entry.pressure) return;
@@ -146,7 +159,7 @@ export function FlowerPlant({
       const index = entries.indexOf(entry);
       if (index !== -1) entries.splice(index, 1);
     };
-  }, [garden, world, structure, bendingLength]);
+  }, [garden, active, world, structure, bendingLength]);
   useFrame(({ pointer }, dt) => {
     if (paused) return;
     const delta = Math.min(dt, 0.05);
@@ -223,7 +236,7 @@ export function FlowerPlant({
     }
   }, -2);
   return (
-    <group position={position} rotation={rotation} scale={scale}>
+    <group ref={plant} position={position} rotation={rotation} scale={scale}>
       <group position={rooted ? [0, structure.stemLength, 0] : undefined}>
         <group>
           {stem && (
@@ -242,7 +255,9 @@ export function FlowerPlant({
             <FlowerInteraction
               enabled={interactive}
               proxyRadius={
-                quality === "low" || structure.simulatedSurfaces
+                quality === "overview" ||
+                quality === "low" ||
+                structure.simulatedSurfaces
                   ? envelope
                   : undefined
               }

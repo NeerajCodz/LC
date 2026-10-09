@@ -467,6 +467,107 @@ FLOWERS.push({
   type: "zinnia",
   color: "#b96188",
 });
+FLOWERS.push({
+  type: "ranunculus",
+  name: "Ranunculus",
+  latin: "Ranunculus asiaticus",
+  family: "Ranunculaceae",
+  color: PETAL_PALETTES.ranunculus.body,
+  description: "Apricot petals unfold into a close-packed cup.",
+  detail:
+    "A cultivated double form with nested curved petals, five protective sepals and finely divided green foliage.",
+});
+FLOWERS.push({
+  type: "anemone",
+  name: "Anemone",
+  latin: "Anemone coronaria",
+  family: "Ranunculaceae",
+  description: "Violet sepals surround a dark, finely textured heart.",
+  detail:
+    "A single poppy anemone with petaloid sepals, many stamens, individual carpels and a leafy involucre above divided basal foliage.",
+  color: PETAL_PALETTES.anemone.body,
+});
+FLOWERS.push({
+  type: "crocus",
+  name: "Crocus",
+  latin: "Crocus vernus",
+  family: "Iridaceae",
+  description: "Violet cups rise among fine, silver-striped leaves.",
+  detail:
+    "Six tepals surround three yellow stamens and three orange stigma branches above long basal tubes and narrow leaves.",
+  color: PETAL_PALETTES.crocus.body,
+});
+FLOWERS.push({
+  type: "freesia",
+  name: "Freesia",
+  latin: "Freesia refracta",
+  family: "Iridaceae",
+  description: "Cream funnels follow the bend of a delicate flowering spike.",
+  detail:
+    "Fleshy six-lobed flowers with yellow lower guides, three stamens and bifid style branches rise above a stiff fan of sword-shaped leaves.",
+  color: PETAL_PALETTES.freesia.body,
+});
+FLOWERS.push({
+  type: "lisianthus",
+  name: "Lisianthus",
+  latin: "Eustoma russellianum",
+  family: "Gentianaceae",
+  description: "Lavender cups unfold above waxy, blue-green leaves.",
+  detail:
+    "A single-flowered prairie gentian with five overlapping lobes, short fused corolla bases, five stamens and paired stigma lobes on a branching cyme.",
+  color: PETAL_PALETTES.lisianthus.body,
+});
+FLOWERS.push({
+  type: "camellia",
+  name: "Camellia",
+  latin: "Camellia japonica",
+  family: "Theaceae",
+  description: "Rose-pink petals frame a bright crown of stamens.",
+  detail:
+    "A single Japanese camellia with fused inner petal and filament bases, protective scales and glossy serrulate leaves on a woody shoot.",
+  color: PETAL_PALETTES.camellia.body,
+});
+FLOWERS.push({
+  type: "magnolia",
+  name: "Magnolia",
+  latin: "Magnolia grandiflora",
+  family: "Magnoliaceae",
+  description: "Substantial ivory tepals open around a spiral floral column.",
+  detail:
+    "A southern magnolia flower with an elongated receptacle, numerous stamens and individual carpels above glossy, rusty-backed leaves on a stout woody shoot.",
+  color: PETAL_PALETTES.magnolia.body,
+});
+FLOWERS.push({
+  type: "gardenia",
+  name: "Gardenia",
+  latin: "Gardenia jasminoides",
+  family: "Rubiaceae",
+  description: "Ivory pinwheel lobes unfold above dark, glossy foliage.",
+  detail:
+    "A single gardenia with a long fused tube, six overlapping lobes, included anthers and an inferior ovary above opposite leaves and pointed stipules.",
+  color: PETAL_PALETTES.gardenia.body,
+});
+FLOWERS.push({
+  type: "nasturtium",
+  name: "Nasturtium",
+  latin: "Tropaeolum majus",
+  family: "Tropaeolaceae",
+  description: "Orange bilateral flowers lean above rounded, veined leaves.",
+  detail:
+    "Upper guide petals and fringed lower claws surround eight stamens, with a hollow dorsal calyx spur and leaves attached at interior hubs.",
+  color: PETAL_PALETTES.nasturtium.body,
+});
+FLOWERS.push({
+  type: "cosmos",
+  name: "Cosmos",
+  latin: "Cosmos bipinnatus",
+  family: "Asteraceae",
+  description:
+    "Eight pink rays float around a golden constellation of florets.",
+  detail:
+    "Neuter ray flowers and true five-lobed bisexual disk florets sit above two ranks of bracts and opposite, finely divided foliage.",
+  color: PETAL_PALETTES.cosmos.body,
+});
 FLOWERS.sort(
   (a, b) => FLOWER_TYPES.indexOf(a.type) - FLOWER_TYPES.indexOf(b.type),
 );

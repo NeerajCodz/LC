@@ -15,7 +15,12 @@ export function createPubescence(
     p = surface.getAttribute("position"),
     n = surface.getAttribute("normal"),
     uv = surface.getAttribute("uv");
-  const count = quality === "low" ? 45 : quality === "medium" ? 85 : 150;
+  const count =
+    quality === "overview" || quality === "low"
+      ? 45
+      : quality === "medium"
+        ? 85
+        : 150;
   const parts: BufferGeometry[] = [];
   for (let i = 0; i < count; i++) {
     const index = Math.floor(random() * p.count),

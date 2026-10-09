@@ -1,7 +1,7 @@
 import type { Quality, Vec3 } from "../flowers/types";
 import { createParametricShell } from "./parametricShell";
 import { createOrganicTube } from "./organicTube";
-import { Float32BufferAttribute } from "three";
+import { Float32BufferAttribute, Euler, Matrix4, Vector3 } from "three";
 import { createCagePatch } from "./petalDynamics";
 export type SpecimenTissue = "inner" | "guide" | "disc" | "leaf";
 export interface SpecimenSurface {
@@ -27,6 +27,36 @@ export interface SpecimenCluster {
   rotation: Vec3;
   scale: number;
   nod: number;
+}
+/** Authored head pose rotates about its insertion, keeping the rooted shoot intact. */
+export function anchoredHeadCluster(
+  angle: number,
+  anchorY = 0,
+  scale = 1,
+  nod = 0.015,
+): SpecimenCluster {
+  return {
+    position: [
+      0,
+      anchorY * scale * (1 - Math.cos(angle)),
+      -anchorY * scale * Math.sin(angle),
+    ],
+    rotation: [angle, 0, 0],
+    scale,
+    nod,
+  };
+}
+/** One-time anatomical framing calculation, never used in a frame callback. */
+export function specimenClusterPoint(
+  cluster: SpecimenCluster,
+  point: Vec3,
+): Vec3 {
+  const matrix = new Matrix4()
+      .makeRotationFromEuler(new Euler(...cluster.rotation))
+      .scale(new Vector3(cluster.scale, cluster.scale, cluster.scale))
+      .setPosition(...cluster.position),
+    p = new Vector3(...point).applyMatrix4(matrix);
+  return [p.x, p.y, p.z];
 }
 export interface SpecimenOrgan {
   fine?: boolean;
@@ -64,13 +94,17 @@ export interface SpecimenInstanceGroup {
 }
 export function specimenGeometry(surface: SpecimenSurface, quality: Quality) {
   const resolution = {
+    overview: [6, 8],
     low: [12, 16],
     medium: [20, 24],
     high: [32, 32],
     ultra: [48, 44],
   }[quality];
+  // Small fused corollas still need enough angular samples to preserve their lobes.
+  const columns =
+    surface.periodic && quality === "overview" ? 24 : resolution[0];
   const g = createParametricShell({
-    columns: resolution[0],
+    columns,
     rows: resolution[1],
     ...surface,
   });
@@ -79,7 +113,7 @@ export function specimenGeometry(surface: SpecimenSurface, quality: Quality) {
   g.setAttribute("tissueSide", new Float32BufferAttribute(side, 1));
   if (surface.pressureSample) {
     const pressed = createParametricShell({
-      columns: resolution[0],
+      columns,
       rows: resolution[1],
       ...surface,
       sample: surface.pressureSample,
@@ -110,8 +144,13 @@ export function specimenCages(model: SpecimenModel, constrained: boolean) {
 export function specimenOrganGeometry(organ: SpecimenOrgan, quality: Quality) {
   const options = {
     ...organ,
-    segments: quality === "low" ? 10 : 24,
-    sides: quality === "low" ? 7 : 12,
+    segments:
+      quality === "overview"
+        ? Math.max(4, organ.points.length)
+        : quality === "low"
+          ? 10
+          : 24,
+    sides: quality === "overview" ? 4 : quality === "low" ? 7 : 12,
     grain: 0.025,
   };
   const geometry = createOrganicTube(options);

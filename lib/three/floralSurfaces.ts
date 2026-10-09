@@ -67,7 +67,7 @@ export function createFloralSurface(
   quality: Quality,
 ): BufferGeometry {
   const columns =
-    quality === "low"
+    quality === "overview" || quality === "low"
       ? 22
       : quality === "medium"
         ? 34

@@ -77,7 +77,7 @@ SafeCanvas and WebGL-compatible tissue/HDR fallbacks. No WGSL change is planned.
       selection. Extend the seven-view inspection fixture to Rose plus all ten.
       Commit genuine visual corrections separately after reference review.
       Coverage is committed and exercised; the full retained-gallery-to-garden
-      WebKit journey remains a draft blocker in the validation record.
+      WebKit journey remains unresolved after the user's explicit PR #3 merge request.
 - [x] 26. `docs:` generated inventory, API/dossier links and measured validation.
       Extend CPU/rendering drivers with these models; measure sequentially on a
       production port-1607 server. Record solver, transfer and total drawing costs,

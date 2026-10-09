@@ -169,7 +169,7 @@ export function PetalWhorl({
       ref={mesh}
       args={[geometry, material, layer.count]}
       castShadow
-      receiveShadow={quality !== "low"}
+      receiveShadow={quality !== "overview" && quality !== "low"}
       frustumCulled={false}
     />
   );

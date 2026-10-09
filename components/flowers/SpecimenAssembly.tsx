@@ -23,6 +23,8 @@ import { createSpecimenMaterial } from "@/lib/three/specimenMaterials";
 import { joinOrgans } from "@/lib/three/floralOrgans";
 import { useThree } from "@react-three/fiber";
 import { FloretInstances } from "./FloretInstances";
+import { OverviewSurfaces, type OverviewDraw } from "./OverviewSurfaces";
+import { surfaceBatchGroups } from "@/lib/three/surfaceBatch";
 
 /** Dedicated anatomy shares only rendering and cage transfer, not its shape. */
 export function SpecimenAssembly({
@@ -50,6 +52,12 @@ export function SpecimenAssembly({
   });
   const groups = useRef<(Group | null)[]>([]),
     meshes = useRef<(Mesh | null)[]>([]);
+  const batching = quality === "overview" && physics !== "detailed";
+  const batches = useMemo(
+    () => (batching ? surfaceBatchGroups(model) : []),
+    [model, batching],
+  );
+  const overviewDraws = useRef<(OverviewDraw | null)[]>([]);
   const resources = useMemo(() => {
     if (physics !== "detailed") return null;
     const { indices, patches } = specimenCages(model, constrained);
@@ -178,6 +186,15 @@ export function SpecimenAssembly({
           : 0;
       mesh.updateMatrix();
     });
+    for (const draw of overviewDraws.current) {
+      if (!draw) continue;
+      const pressure = articulation.current[draw.group.cluster].value;
+      draw.uniforms.uBatchBloom.value = bloom.current;
+      draw.uniforms.uBatchPressure.value = Math.max(0, pressure) / 0.35;
+      draw.mesh.rotation.x =
+        draw.group.role === "wing" || draw.group.role === "keel" ? pressure : 0;
+      draw.mesh.updateMatrix();
+    }
     if (!resources) return;
     const { sim, deformation, indices, matrices, inverses, clock } = resources;
     for (let p = 0; p < indices.length; p++) {
@@ -251,22 +268,36 @@ export function SpecimenAssembly({
           rotation={c.rotation}
           scale={c.scale}
         >
-          {model.surfaces.map((s, i) =>
-            s.cluster === k ? (
-              <Surface
-                key={i}
-                surface={s}
-                index={i}
-                assign={(m) => {
-                  meshes.current[i] = m;
-                }}
-                quality={quality}
-                type={type}
-                color={color}
-                resources={resources}
-              />
-            ) : null,
-          )}
+          {batching
+            ? batches.map((batch, i) =>
+                batch.cluster === k ? (
+                  <OverviewSurfaces
+                    key={i}
+                    group={batch}
+                    type={type}
+                    color={color}
+                    assign={(draw) => {
+                      overviewDraws.current[i] = draw;
+                    }}
+                  />
+                ) : null,
+              )
+            : model.surfaces.map((s, i) =>
+                s.cluster === k ? (
+                  <Surface
+                    key={i}
+                    surface={s}
+                    index={i}
+                    assign={(m) => {
+                      meshes.current[i] = m;
+                    }}
+                    quality={quality}
+                    type={type}
+                    color={color}
+                    resources={resources}
+                  />
+                ) : null,
+              )}
           <Organs model={model} cluster={k} quality={quality} bloom={bloom} />
           {model.instances
             ?.filter((g) => g.cluster === k)

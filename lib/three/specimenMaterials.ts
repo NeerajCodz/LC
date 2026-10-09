@@ -216,10 +216,25 @@ export function createSpecimenMaterial(
       return type === "zinnia"
         ? "specimen-calyx-zinnia-v2"
         : "specimen-calyx-v2";
-    if (!green && tissue === "leaf" && response) return "specimen-leaf-v2";
+    if (!green && tissue === "leaf" && response) return "specimen-calyx-v2";
     // Pigments are uniforms. Organ names alone must not compile duplicate programs.
     if (!green && response) return "specimen-shared-tissue-v3";
-    return `specimen-${type}-${role}-v1${tissue ? `-${tissue}` : ""}`;
+    // Legacy organs also share a program when only their uniform pigments differ.
+    // Three adds material features (sheen, clearcoat, morphs, instancing) itself.
+    if (type === "king-protea") return "specimen-protea-fibers-v2";
+    if (type === "hydrangea" && role === "bract")
+      return "specimen-hydrangea-veins-v2";
+    if (type === "hardy-begonia") return "specimen-begonia-tissue-v2";
+    if (type === "snapdragon") return "specimen-snapdragon-guides-v2";
+    if (type === "cyclamen") return "specimen-cyclamen-tissue-v2";
+    if (type === "bougainvillea" && role === "bract")
+      return "specimen-bract-veins-v2";
+    if (type === "sweet-pea" && (role === "wing" || role === "keel"))
+      return "specimen-pea-wings-v2";
+    if (type === "foxglove") return "specimen-foxglove-interior-v2";
+    if (type === "plumeria") return "specimen-plumeria-margins-v2";
+    if (type === "carnation") return "specimen-carnation-folds-v2";
+    return "specimen-calyx-v2";
   };
   return m;
 }

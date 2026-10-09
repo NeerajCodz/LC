@@ -66,6 +66,16 @@ Generated from `lib/flowers/catalog.ts`; genus or ornamental studies never mark 
 | [Alstroemeria](http://localhost:1607/flower/alstroemeria/) | Alstroemeria aurea | Exact accepted-name match: `wfo-0000759057` |
 | [Gerbera](http://localhost:1607/flower/gerbera/) | Gerbera jamesonii | Taxonomic mapping requires review |
 | [Zinnia](http://localhost:1607/flower/zinnia/) | Zinnia elegans | Taxonomic mapping requires review |
+| [Ranunculus](http://localhost:1607/flower/ranunculus/) | Ranunculus asiaticus | Exact accepted-name match: `wfo-0000461243` |
+| [Anemone](http://localhost:1607/flower/anemone/) | Anemone coronaria | Exact accepted-name match: `wfo-0000535196` |
+| [Crocus](http://localhost:1607/flower/crocus/) | Crocus vernus | Exact accepted-name match: `wfo-0000789185` |
+| [Freesia](http://localhost:1607/flower/freesia/) | Freesia refracta | Exact accepted-name match: `wfo-0000789545` |
+| [Lisianthus](http://localhost:1607/flower/lisianthus/) | Eustoma russellianum | Exact accepted-name match: `wfo-0000683529` |
+| [Camellia](http://localhost:1607/flower/camellia/) | Camellia japonica | Exact accepted-name match: `wfo-0000582404` |
+| [Magnolia](http://localhost:1607/flower/magnolia/) | Magnolia grandiflora | Exact accepted-name match: `wfo-0000233174` |
+| [Gardenia](http://localhost:1607/flower/gardenia/) | Gardenia jasminoides | Exact accepted-name match: `wfo-0000970976` |
+| [Nasturtium](http://localhost:1607/flower/nasturtium/) | Tropaeolum majus | Exact accepted-name match: `wfo-0000459744` |
+| [Cosmos](http://localhost:1607/flower/cosmos/) | Cosmos bipinnatus | Exact accepted-name match: `wfo-0000066682` |
 
 ## Reproduce and audit
 
@@ -55697,7 +55707,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Corymbium villosum — `wfo-0000024617`
 - Corymbium villosum — `wfo-0000091407`
 - Cosmos atrosanguineus — `wfo-0000021167`
-- Cosmos bipinnatus — `wfo-0000066682`
+- Cosmos bipinnatus — `wfo-0000066682` · authored study: `cosmos`
 - Cosmos carvifolius — `wfo-0000121318`
 - Cosmos caudatus — `wfo-0000137673`
 - Cosmos concolor — `wfo-0000026159`
@@ -193116,7 +193126,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Enicostema elizabethae — `wfo-0000668041`
 - Enicostema verticillatum — `wfo-0000668046`
 - Eustoma exaltatum — `wfo-0001063724`
-- Eustoma russellianum — `wfo-0000683529`
+- Eustoma russellianum — `wfo-0000683529` · authored study: `lisianthus`
 - Exaculum pusillum — `wfo-0000684166`
 - Exacum affine — `wfo-0000684167`
 - Exacum alberti-grimaldii — `wfo-0001315061`
@@ -205639,7 +205649,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Crocus variegatus — `wfo-0000789177`
 - Crocus veluchensis — `wfo-0000789182`
 - Crocus veneris — `wfo-0000789183`
-- Crocus vernus — `wfo-0000789185`
+- Crocus vernus — `wfo-0000789185` · authored study: `crocus`
 - Crocus versicolor — `wfo-0000789190`
 - Crocus vitellinus — `wfo-0000789198`
 - Crocus wattiorum — `wfo-0000789201`
@@ -205813,7 +205823,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Freesia marginata — `wfo-0000795363`
 - Freesia occidentalis — `wfo-0000789540`
 - Freesia praecox — `wfo-0001041376`
-- Freesia refracta — `wfo-0000789545`
+- Freesia refracta — `wfo-0000789545` · authored study: `freesia`
 - Freesia sparrmanii — `wfo-0000789549`
 - Freesia speciosa — `wfo-0000789550`
 - Freesia verrucosa — `wfo-0000789551`
@@ -228140,7 +228150,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Magnolia globosa — `wfo-0000233165`
 - Magnolia gloriensis — `wfo-0000233169`
 - Magnolia granbarrancae — `wfo-1000027802`
-- Magnolia grandiflora — `wfo-0000233174`
+- Magnolia grandiflora — `wfo-0000233174` · authored study: `magnolia`
 - Magnolia grandis — `wfo-0000806095`
 - Magnolia griffithii — `wfo-0000233182`
 - Magnolia guanacastensis — `wfo-0001329600`
@@ -338438,7 +338448,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Anemone caroliniana — `wfo-0000535164`
 - Anemone cathayensis — `wfo-0000535167`
 - Anemone cathayensis var. hispida — `wfo-0000535168` · variety
-- Anemone coronaria — `wfo-0000535196`
+- Anemone coronaria — `wfo-0000535196` · authored study: `anemone`
 - Anemone cylindrica — `wfo-0000535215`
 - Anemone debilis — `wfo-0000535222`
 - Anemone debilis — `wfo-0001129235`
@@ -340235,7 +340245,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Ranunculus arvidii — `wfo-0000461162`
 - Ranunculus arwidssonii — `wfo-0000461169`
 - Ranunculus ashibetsuensis — `wfo-0000461148`
-- Ranunculus asiaticus — `wfo-0000461243`
+- Ranunculus asiaticus — `wfo-0000461243` · authored study: `ranunculus`
 - Ranunculus asplundii — `wfo-0000461324`
 - Ranunculus asterodes — `wfo-0000461325`
 - Ranunculus astrantiifolius — `wfo-0001129945`
@@ -356247,7 +356257,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Gardenia invaginata — `wfo-0000970968`
 - Gardenia ixorifolia — `wfo-0000970969`
 - Gardenia jabiluka — `wfo-0000970970`
-- Gardenia jasminoides — `wfo-0000970976`
+- Gardenia jasminoides — `wfo-0000970976` · authored study: `gardenia`
 - Gardenia kabaenensis — `wfo-0001336537`
 - Gardenia kakaduensis — `wfo-0000970981`
 - Gardenia kamialiensis — `wfo-0000336186`
@@ -386526,7 +386536,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Camellia ingens — `wfo-1000048868`
 - Camellia insularis — `wfo-0001344310`
 - Camellia inusitata — `wfo-0001333414`
-- Camellia japonica — `wfo-0000582404`
+- Camellia japonica — `wfo-0000582404` · authored study: `camellia`
 - Camellia kirinoi — `wfo-1000036260`
 - Camellia kissi — `wfo-0000582438`
 - Camellia kissi var. confusa — `wfo-0000582439` · variety
@@ -388332,7 +388342,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Tropaeolum longifolium — `wfo-0000413617`
 - Tropaeolum looseri — `wfo-0000458361`
 - Tropaeolum magnificum — `wfo-0001142919`
-- Tropaeolum majus — `wfo-0000459744`
+- Tropaeolum majus — `wfo-0000459744` · authored study: `nasturtium`
 - Tropaeolum mexiae — `wfo-0000458358`
 - Tropaeolum meyeri — `wfo-0001142955`
 - Tropaeolum minus — `wfo-0001142906`

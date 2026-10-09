@@ -1,6 +1,7 @@
 import { DataTexture, LinearFilter, LinearMipmapLinearFilter } from "three";
 import { isConstrainedDevice } from "../performance";
 import { queueBake } from "./bake-queue";
+import { createTissueFallback } from "./tissue-fallback";
 
 export type TissueBackend = "vgpu" | "webgl";
 export const TISSUE_SIZE = 1024;
@@ -20,9 +21,35 @@ export const tissueUniforms = {
 };
 
 let pending: Promise<TissueBackend> | undefined;
+let fallbackAttempted = false;
+
+/** Complete the shared field before the first material compiles or draws. */
+export function prepareTissueFallback(): boolean {
+  if (tissueUniforms.uTissueReady.value) return true;
+  if (fallbackAttempted) return false;
+  fallbackAttempted = true;
+  try {
+    const size = isConstrainedDevice() ? 512 : TISSUE_SIZE;
+    texture.image = {
+      data: createTissueFallback(size),
+      width: size,
+      height: size,
+    };
+    texture.needsUpdate = true;
+    tissueUniforms.uTissueReady.value = true;
+    return true;
+  } catch {
+    // If allocation is unavailable, materials retain their complete GLSL field.
+    return false;
+  }
+}
 
 /** Bake once, read once, release WebGPU. No GPU readback in the animation loop. */
 async function bake(): Promise<TissueBackend> {
+  const size = isConstrainedDevice() ? 512 : TISSUE_SIZE;
+  // Every renderer can sample the same complete field, including when WebGPU
+  // is absent or rejects startup. The procedural shader remains a safety net.
+  prepareTissueFallback();
   if (typeof navigator === "undefined" || !navigator.gpu) return "webgl";
   const [{ init }, { default: source }, { renderTissue }] = await Promise.all([
     import("vgpu"),
@@ -31,7 +58,6 @@ async function bake(): Promise<TissueBackend> {
   ]);
   const gpu = await init({ powerPreference: "low-power" });
   try {
-    const size = isConstrainedDevice() ? 512 : TISSUE_SIZE;
     const pixels = await renderTissue(gpu, source, size);
     // DataTexture does not flip rows. Row zero is sampled at v=0, preserving
     // the numeric UV field produced by vgpu's top-origin effect coordinates.
@@ -46,8 +72,8 @@ async function bake(): Promise<TissueBackend> {
 
 export function prepareTissueAtlas(): Promise<TissueBackend> {
   return (pending ??= queueBake(bake).catch((error: unknown) => {
-    // WebGPU may be disabled, unavailable, or lose its device. The complete
-    // procedural GLSL material remains active; flower viewing never suspends.
+    // WebGPU may be disabled, unavailable, or lose its device. The CPU atlas
+    // stays available; the procedural GLSL field remains its final safety net.
     if (process.env.NODE_ENV === "development")
       console.info("Petal detail uses the WebGL shader:", error);
     return "webgl";

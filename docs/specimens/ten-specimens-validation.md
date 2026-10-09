@@ -119,9 +119,10 @@ Shader warmup, progressive startup and diagnostic suppression experiments were
 discarded. The final implementation retains normal lifecycle and diagnostic
 handling, plus the independently verified material-program reduction.
 
-The PR remains a draft until this journey is resolved and rechecked. Do not mark
-the browser suite universally passing or describe this batch as a mobile crash
-fix. Logs and traces are kept in ignored `dist/ten-specimens/` and
+PR #3 was merged at the user's explicit request on 8 October 2026 with this
+journey still unresolved. The failing case remains required for subsequent
+batches. Do not mark the browser suite universally passing or describe this batch
+as a mobile crash fix. Logs and traces are kept in ignored `dist/ten-specimens/` and
 `F:/codex-lc-validation/ten-specimens-2026-10-08/` on the validation host. Low-disk
 trace failures in the initial run were moved to the F: artifact/temp location;
 subsequent context-loss reproductions did not report ENOSPC.

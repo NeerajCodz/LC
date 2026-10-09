@@ -25,7 +25,7 @@ export function HelleboreLeaf({ quality }: { quality: Quality }) {
         radius: 0.01,
         endRadius: 0.008,
         color: "#5a7753",
-        segments: quality === "low" ? 8 : 16,
+        segments: quality === "overview" || quality === "low" ? 8 : 16,
         sides: 7,
       }),
     [quality],

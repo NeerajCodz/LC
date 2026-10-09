@@ -12,6 +12,7 @@
     "typecheck": "tsc --noEmit",
     "test": "tsx --test tests/*.test.ts",
     "test:browser": "playwright test",
+    "test:browser:isolated": "tsx scripts/test-browser-isolated.ts",
     "test:gpu": "tsx --test tests/gpu/*.test.mts",
     "flowers:inventory": "tsx scripts/export-flower-catalog.ts && python scripts/flower_inventory.py",
     "flowers:check": "tsx scripts/export-flower-catalog.ts && python scripts/flower_inventory.py --check",
@@ -33,7 +34,7 @@
     "vgpu": "0.4.1"
   },
   "devDependencies": {
-    "@playwright/test": "1.63.0",
+    "@playwright/test": "1.65.0-alpha-2026-10-08",
     "@types/node": "26.5.0",
     "@types/react": "19.2.18",
     "@types/react-dom": "19.2.7",

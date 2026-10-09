@@ -3,8 +3,8 @@ import type { Quality } from "@/lib/flowers/types";
 
 /** Peltate blade: continuous upper/lower surfaces, a sealed margin and radial veins. */
 export function createLotusLeaf(quality: Quality) {
-  const sides = quality === "ultra" ? 192 : 128,
-    rows = 32;
+  const sides = quality === "overview" ? 48 : quality === "ultra" ? 192 : 128,
+    rows = quality === "overview" ? 12 : 32;
   const positions: number[] = [],
     colors: number[] = [],
     indices: number[] = [];

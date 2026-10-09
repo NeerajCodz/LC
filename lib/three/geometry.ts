@@ -3,6 +3,7 @@ import type { PetalProfile, Quality } from "../flowers/types";
 import { seededRandom } from "./noise";
 
 const RESOLUTION: Record<Quality, [number, number]> = {
+  overview: [6, 8],
   low: [20, 28],
   medium: [30, 44],
   high: [42, 64],
@@ -16,9 +17,12 @@ export function createPetalGeometry(
   quality: Quality = "high",
 ): BufferGeometry {
   const [maximumColumns, baseRows] = RESOLUTION[quality];
-  const rows = Math.max(baseRows, (profile.marginTeeth ?? 0) * 6);
+  const rows = Math.max(
+    baseRows,
+    (profile.marginTeeth ?? 0) * (quality === "overview" ? 3 : 6),
+  );
   const columns = Math.max(
-    12,
+    quality === "overview" ? 6 : 12,
     Math.round(
       maximumColumns * Math.min(1, Math.sqrt(profile.width / profile.length)),
     ),

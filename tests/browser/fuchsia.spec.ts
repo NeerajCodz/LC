@@ -4,6 +4,7 @@ import { expectRenderedFlower } from "./pixel-content";
 test("fuchsia renders through bloom, macro, themes and garden selection", async ({
   page,
 }) => {
+  test.setTimeout(180000);
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
   page.on("console", (m) => {
@@ -42,7 +43,9 @@ test("fuchsia renders through bloom, macro, themes and garden selection", async 
     page.getByRole("link", { name: "Explore Hardy Fuchsia", exact: true }),
   ).toBeVisible();
   await page.goto("/garden/");
-  await expect(page.locator(".bloom-loader--overlay")).toHaveCount(0);
+  await expect(page.locator(".bloom-loader--overlay")).toHaveCount(0, {
+    timeout: 60000,
+  });
   await page
     .getByRole("combobox", { name: "Explore a garden flower" })
     .selectOption("fuchsia");

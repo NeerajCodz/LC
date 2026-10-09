@@ -50,7 +50,7 @@ export function MorningVine({
         radius: 0.012,
         endRadius: 0.007,
         color: "#75834e",
-        segments: quality === "low" ? 12 : 24,
+        segments: quality === "overview" || quality === "low" ? 12 : 24,
         sides: 7,
       }),
     }),

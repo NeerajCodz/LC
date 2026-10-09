@@ -6,7 +6,7 @@ export function createSpadix(
   quality: Quality,
   anthurium = false,
 ): BufferGeometry {
-  const low = quality === "low",
+  const low = quality === "overview" || quality === "low",
     ultra = quality === "ultra";
   const around = low ? 16 : ultra ? 32 : 24;
   const tiers = low ? 32 : ultra ? 64 : 48;

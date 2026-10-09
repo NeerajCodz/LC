@@ -3,6 +3,7 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 import { init } from "vgpu/node";
 import { renderTissue } from "../../lib/gpu/render-tissue";
+import { createTissueFallback } from "../../lib/gpu/tissue-fallback";
 
 function hash(x: number, y: number) {
   let h = (Math.imul(x, 374761393) + Math.imul(y, 668265263) + 93) >>> 0;
@@ -31,6 +32,7 @@ test("real vgpu tissue pixels match the WebGL field at all three detail scales",
     const size = 1024;
     const pixels = await renderTissue(gpu, source, size);
     const repeated = await renderTissue(gpu, source, size);
+    const fallback = createTissueFallback(size);
     assert.deepEqual(repeated, pixels, "the bake is deterministic");
     for (let y = 0; y < size; y += 37) {
       for (let x = 0; x < size; x += 37) {
@@ -42,6 +44,13 @@ test("real vgpu tissue pixels match the WebGL field at all three detail scales",
           noise(u * 340, v * 340),
         ];
         expected.forEach((value, channel) => {
+          assert.ok(
+            Math.abs(
+              pixels[(y * size + x) * 4 + channel] -
+                fallback[(y * size + x) * 4 + channel],
+            ) <= 1,
+            `CPU and GPU atlas disagree at ${x},${y}, channel ${channel}`,
+          );
           assert.ok(
             Math.abs(pixels[(y * size + x) * 4 + channel] - value * 255) < 1.1,
             `UV ${u},${v}, channel ${channel} differs from the field reference`,

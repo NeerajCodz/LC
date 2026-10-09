@@ -24,6 +24,7 @@ export default function Inspection() {
   const container = useRef<HTMLDivElement>(null);
   const [type, setType] = useState<FlowerType>("rose");
   const [wind, setWind] = useState(false);
+  const [overview, setOverview] = useState(false);
   const structure = FLOWER_STRUCTURES[type];
   const target = flowerHeadTarget(structure, [
       0,
@@ -55,6 +56,17 @@ export default function Inspection() {
                 {f.name}
               </option>
             ))}
+          </select>
+        </label>
+        <label>
+          Detail{" "}
+          <select
+            aria-label="Inspection detail"
+            value={overview ? "overview" : "specimen"}
+            onChange={(event) => setOverview(event.target.value === "overview")}
+          >
+            <option value="specimen">Specimen detail</option>
+            <option value="overview">Garden overview</option>
           </select>
         </label>
         <button aria-pressed={wind} onClick={() => setWind(!wind)}>
@@ -95,11 +107,11 @@ export default function Inspection() {
               <Lighting shadows={false} followCursor={false} />
               <group rotation={[0, v.angle, 0]}>
                 <Flower
-                  key={type}
+                  key={`${type}:${overview}`}
                   type={type}
                   bloom={v.bloom}
                   position={[0, 0.25, 0]}
-                  quality={v.macro ? "ultra" : "high"}
+                  quality={overview ? "overview" : v.macro ? "ultra" : "high"}
                   windStrength={wind ? 2 : 0}
                   animateEntrance={false}
                   reducedMotion={!wind}

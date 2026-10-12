@@ -29,3 +29,33 @@ A cultivated pink single form is selected. Counts, exact lobe curvature, stage d
 available. Full seasonal growth, pollinator action and fertilization are outside
 this study. Review front, side, 45 degrees, macro, closed bud and half bloom before
 calling the specimen finished.
+
+## Construction and verification
+
+The dedicated model retains eighteen open single flowers and three terminal
+buds, distributed around all sides of one stout raceme. A continuous thick tube
+opens into six strongly reflexed lobes. Each radial flower axis is aligned at
+construction time to its own outward direction; short pedicels end exactly at
+their flower insertions. Every flower retains six included filaments, twelve
+paired anther chambers, a central style and three small stigma lobes. Five sealed
+fleshy leaves have raised margins, a lower keel and parallel venation.
+
+The NC State account above was re-read on 12 October 2026. It directly supports
+the many-flowered cylindrical raceme, six waxy reflexed lobes and four to six
+fleshy leaves with raised margins. The reproductive dimensions, pink pattern,
+twenty-one-flower composition and growth stages are authored; reproductive
+proportions have not been checked against a dissected species specimen.
+
+Focused cages measure 1,260 desktop and 504 constrained nodes, retaining twelve
+angular sectors at both budgets to distinguish six tips and six notches. Unit
+checks cover full cylindrical distribution, outward orientations, exact pedicel
+attachments, included organs, six-lobed continuity, terminal bud enclosure,
+leaf keel, sealed edges, thickness, normals and stable closed/half/open geometry.
+Browser and seven-view visual inspection follow catalog integration; these unit
+checks do not establish visual realism.
+
+Each younger bud has six overlapping, sealed terminal tepal tips, continuous in
+position with its tube rim and retaining the same waxy thickness. Their finite
+width extends past the axis to close the apex without a collapsed ring or solid
+proxy. The small tips inherit cluster motion and opening state without separate
+contact cages; the constrained node count remains 504.

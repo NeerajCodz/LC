@@ -72,7 +72,9 @@ import { cosmosStructure } from "../../components/flowers/cosmos/Cosmos";
 /** Authored anatomy shared by planting layout and geometry verification. */
 import { ranunculusStructure } from "../../components/flowers/ranunculus/Ranunculus";
 import { pansyStructure } from "../../components/flowers/pansy/Pansy";
+import { africanVioletStructure } from "../../components/flowers/african-violet/AfricanViolet";
 export const FLOWER_STRUCTURES: Record<FlowerType, FlowerStructure> = {
+  "african-violet": africanVioletStructure,
   pansy: pansyStructure,
   cosmos: cosmosStructure,
   nasturtium: nasturtiumStructure,

@@ -57,7 +57,9 @@ import { Gardenia } from "./gardenia/Gardenia";
 import { Nasturtium } from "./nasturtium/Nasturtium";
 import { Cosmos } from "./cosmos/Cosmos";
 import { Pansy } from "./pansy/Pansy";
+import { AfricanViolet } from "./african-violet/AfricanViolet";
 const SPECIES = {
+  "african-violet": AfricanViolet,
   pansy: Pansy,
   cosmos: Cosmos,
   nasturtium: Nasturtium,

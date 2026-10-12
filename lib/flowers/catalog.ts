@@ -13,6 +13,16 @@ export interface FlowerInfo {
 
 export const FLOWERS: FlowerInfo[] = [
   {
+    type: "african-violet",
+    name: "African Violet",
+    latin: "Streptocarpus ionanthus",
+    family: "Gesneriaceae",
+    color: "#7865b8",
+    description: "Violet above velvet.\nA quiet circle of leaves.",
+    detail:
+      "Short, five-lobed flowers rise above a thick hairy rosette. Two joined yellow anthers and a lateral style sit within each bilateral corolla, beside younger furled buds.",
+  },
+  {
     type: "pansy",
     name: "Pansy",
     latin: "Viola tricolor",

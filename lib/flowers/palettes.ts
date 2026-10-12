@@ -30,6 +30,15 @@ const palette = (
 });
 
 export const PETAL_PALETTES: Record<FlowerType, PetalPalette> = {
+  "african-violet": palette(
+    "#e1d6bc",
+    "#7865b8",
+    "#b3a2d1",
+    "#493b78",
+    0.19,
+    0.82,
+    0.065,
+  ),
   pansy: palette("#d6b142", "#ede5cc", "#fff3dc", "#76548b", 0.23, 0.8, 0.055),
   cosmos: palette(
     "#9a3f68",

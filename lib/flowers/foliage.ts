@@ -21,6 +21,15 @@ export interface FoliageProfile {
 
 /** Cultivar-independent leaf traits; lotus has its own peltate blade generator. */
 export const FOLIAGE: Record<FlowerType, FoliageProfile> = {
+  "african-violet": {
+    length: 0.65,
+    width: 0.31,
+    color: "#3b6549",
+    thickness: 0.023,
+    roughness: 0.82,
+    basal: true,
+    pubescence: 0.7,
+  },
   pansy: {
     length: 0.62,
     width: 0.19,

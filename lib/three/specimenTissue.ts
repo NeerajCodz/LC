@@ -5,6 +5,7 @@ export const TISSUE_RESPONSE: Record<
   string,
   { roughness: number; sheen: number; coat: number; scatter: number }
 > = {
+  "african-violet": { roughness: 0.74, sheen: 0.23, coat: 0, scatter: 0.048 },
   pansy: { roughness: 0.73, sheen: 0.2, coat: 0.005, scatter: 0.058 },
   cosmos: { roughness: 0.72, sheen: 0.14, coat: 0, scatter: 0.065 },
   nasturtium: { roughness: 0.63, sheen: 0.18, coat: 0.015, scatter: 0.06 },
@@ -51,6 +52,8 @@ export function specimenTissueColor(type: string, tissue?: SpecimenTissue) {
 export function specimenTissueShader(type: string, tissue?: SpecimenTissue) {
   if (tissue === "leaf") return "";
   switch (type) {
+    case "african-violet":
+      return `float avThroat=1.-smoothstep(.22,.58,vPetalUv.y); float avVein=pow(.5+.5*cos(vPetalUv.x*31.416),20.); diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.69,.64,.8),avThroat*.32); diffuseColor.rgb*=1.-avVein*.046;`;
     case "pansy":
       return `float pansyGuide=exp(-abs(vPetalUv.x-.5)*9.)*(1.-smoothstep(.34,.74,vPetalUv.y)); float pansyLine=pow(.5+.5*cos((vPetalUv.x-.5)*42.+vPetalUv.y*4.),16.); diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.14,.045,.2),pansyGuide*pansyLine*.74);`;
     case "cosmos":

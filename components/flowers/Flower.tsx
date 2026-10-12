@@ -63,7 +63,9 @@ import { Wisteria } from "./wisteria/Wisteria";
 import { Bottlebrush } from "./bottlebrush/Bottlebrush";
 import { Scabiosa } from "./scabiosa/Scabiosa";
 import { Hyacinth } from "./hyacinth/Hyacinth";
+import { Amaryllis } from "./amaryllis/Amaryllis";
 const SPECIES = {
+  amaryllis: Amaryllis,
   hyacinth: Hyacinth,
   scabiosa: Scabiosa,
   bottlebrush: Bottlebrush,

@@ -137,3 +137,18 @@ verifySpecimen("amaryllis foliage", {
   surfaces: [AMARYLLIS_LEAF],
   organs: [],
 });
+
+test("amaryllis is complete throughout the typed botanical catalog", async () => {
+  const { FLOWER_TYPES } = await import("../lib/flowers/types");
+  const { getFlower } = await import("../lib/flowers/catalog");
+  const { FLOWER_STRUCTURES } = await import("../lib/flowers/structures");
+  const { WIND_PROFILES } = await import("../lib/flowers/wind");
+  const type = FLOWER_TYPES.find((t) => String(t) === "amaryllis");
+  assert.ok(type, "amaryllis catalog integration is missing");
+  assert.equal(getFlower(type).latin, "Hippeastrum puniceum");
+  assert.equal(FLOWER_STRUCTURES[type].simulatedSurfaces, true);
+  assert.equal(FLOWER_STRUCTURES[type].airbornePollen, false);
+  assert.equal(FLOWER_STRUCTURES[type].layers.length, 0);
+  assert.ok(FLOWER_STRUCTURES[type].leafCount > 0);
+  assert.ok(WIND_PROFILES[type].compliance > 0);
+});

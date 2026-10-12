@@ -62,6 +62,7 @@ export const FLOWER_TYPES = [
   "bottlebrush",
   "scabiosa",
   "hyacinth",
+  "amaryllis",
 ] as const;
 
 export type FlowerType = (typeof FLOWER_TYPES)[number];

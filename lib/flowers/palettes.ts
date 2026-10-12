@@ -30,6 +30,15 @@ const palette = (
 });
 
 export const PETAL_PALETTES: Record<FlowerType, PetalPalette> = {
+  amaryllis: {
+    root: "#bdcc8e",
+    body: "#e06c43",
+    tip: "#f19061",
+    vein: "#ac4431",
+    rootFalloff: 0.28,
+    tipStart: 0.82,
+    veinStrength: 0.055,
+  },
   hyacinth: {
     root: "#b96587",
     body: "#df99b0",

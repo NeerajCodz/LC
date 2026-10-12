@@ -21,6 +21,15 @@ export interface FoliageProfile {
 
 /** Cultivar-independent leaf traits; lotus has its own peltate blade generator. */
 export const FOLIAGE: Record<FlowerType, FoliageProfile> = {
+  amaryllis: {
+    length: 2.35,
+    width: 0.165,
+    color: "#46724b",
+    thickness: 0.028,
+    roughness: 0.42,
+    parallel: true,
+    basal: true,
+  },
   hyacinth: {
     length: 1.45,
     width: 0.18,

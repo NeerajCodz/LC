@@ -13,6 +13,16 @@ export interface FlowerInfo {
 
 export const FLOWERS: FlowerInfo[] = [
   {
+    type: "amaryllis",
+    name: "Amaryllis",
+    latin: "Hippeastrum puniceum",
+    family: "Amaryllidaceae",
+    color: "#e06c43",
+    description: "Orange trumpets, held high.\nA bright promise.",
+    detail:
+      "Two broad Hippeastrum trumpets rise beside a younger bud. Six arched stamens and a branching stigma emerge from each short fused tube, above smooth strap leaves.",
+  },
+  {
     type: "hyacinth",
     name: "Hyacinth",
     latin: "Hyacinthus orientalis",

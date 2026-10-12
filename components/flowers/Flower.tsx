@@ -65,7 +65,9 @@ import { Scabiosa } from "./scabiosa/Scabiosa";
 import { Hyacinth } from "./hyacinth/Hyacinth";
 import { Amaryllis } from "./amaryllis/Amaryllis";
 import { Canna } from "./canna/Canna";
+import { Agapanthus } from "./agapanthus/Agapanthus";
 const SPECIES = {
+  agapanthus: Agapanthus,
   canna: Canna,
   amaryllis: Amaryllis,
   hyacinth: Hyacinth,

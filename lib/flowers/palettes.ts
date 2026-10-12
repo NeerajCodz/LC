@@ -30,6 +30,15 @@ const palette = (
 });
 
 export const PETAL_PALETTES: Record<FlowerType, PetalPalette> = {
+  agapanthus: {
+    root: "#4f529a",
+    body: "#828cdb",
+    tip: "#b0bced",
+    vein: "#4b549e",
+    rootFalloff: 0.3,
+    tipStart: 0.77,
+    veinStrength: 0.045,
+  },
   canna: {
     root: "#e8a146",
     body: "#d93a24",

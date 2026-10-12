@@ -13,6 +13,16 @@ export interface FlowerInfo {
 
 export const FLOWERS: FlowerInfo[] = [
   {
+    type: "agapanthus",
+    name: "Agapanthus",
+    latin: "Agapanthus praecox",
+    family: "Amaryllidaceae",
+    color: "#828cdb",
+    description: "A blue constellation.\nEvery stalk meets at the heart.",
+    detail:
+      "An umbel of blue six-lobed funnels spreads from one shared insertion. Fine individual stalks hold each flower and bud above arching strap leaves.",
+  },
+  {
     type: "canna",
     name: "Canna",
     latin: "Canna indica",

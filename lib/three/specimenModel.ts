@@ -100,13 +100,14 @@ export interface SpecimenInstanceGroup {
 }
 export function specimenGeometry(surface: SpecimenSurface, quality: Quality) {
   const resolution = {
-    overview: [6, 8],
+    overview: [6, 6],
     low: [12, 16],
     medium: [20, 24],
     high: [32, 32],
     ultra: [48, 44],
   }[quality];
-  // Small fused corollas still need enough angular samples to preserve their lobes.
+  // Distant shells use fewer axial strips; the focused tiers retain their curves.
+  // Fused corollas keep their angular samples so five/six lobes remain distinct.
   const columns =
     surface.periodic && quality === "overview" ? 24 : resolution[0];
   const g = createParametricShell({

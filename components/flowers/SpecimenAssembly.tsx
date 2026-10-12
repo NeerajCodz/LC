@@ -10,11 +10,12 @@ import {
 import { SurfaceClock } from "@/lib/three/surfaceClock";
 import {
   specimenGeometry,
-  specimenOrganGeometry,
+  specimenOrganParts,
   specimenOrganCarrier,
   type SpecimenModel,
   type SpecimenSurface,
   specimenCages,
+  applySpecimenPins,
 } from "@/lib/three/specimenModel";
 import { petalOpenness, stepSpring } from "@/lib/three/easing";
 import type { FlowerOrgansProps } from "./FloralParts";
@@ -63,14 +64,7 @@ export function SpecimenAssembly({
     if (physics !== "detailed") return null;
     const { indices, patches } = specimenCages(model, constrained);
     const sim = new PetalDynamics(patches, constrained);
-    patches.forEach((p, i) => {
-      if (!model.surfaces[indices[i]].pinMidrib) return;
-      const stride = p.columns + 1;
-      for (let row = 0; row <= p.rows; row++)
-        sim.inverseMass[
-          sim.offsets[i] + row * stride + Math.floor(stride / 2)
-        ] = 0;
-    });
+    applySpecimenPins(sim, model, indices);
     const deformation = new CageDeformation(sim),
       shadows = deformation.shadows();
     return {
@@ -385,22 +379,9 @@ function Organs({
   included?: boolean;
 }) {
   const g = useMemo(() => {
-    const parts = model.organs
-      .filter(
-        (o, i) =>
-          o.cluster === cluster &&
-          /stamen|anther|style|pistil|hair/.test(o.name) === included &&
-          (!o.fine || quality === "high" || quality === "ultra" || i % 3 === 0),
-      )
-      .map((o) => specimenOrganGeometry(o, quality));
-    if (parts.some((part) => part.morphAttributes.position?.length))
-      for (const part of parts)
-        if (!part.morphAttributes.position?.length) {
-          part.morphAttributes.position = [
-            part.getAttribute("position").clone(),
-          ];
-          part.morphAttributes.normal = [part.getAttribute("normal").clone()];
-        }
+    const parts = specimenOrganParts(model, cluster, quality, included).map(
+      (part) => part.geometry,
+    );
     return parts.length ? joinOrgans(parts) : null;
   }, [model, cluster, quality, included]);
   const mesh = useRef<Mesh>(null);

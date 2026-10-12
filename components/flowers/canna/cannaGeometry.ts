@@ -154,14 +154,22 @@ export const CANNA_STALKS: SpecimenOrgan[] = [
     endRadius: 0.02,
     color: "#718455",
   },
-  ...CANNA_MODEL.clusters.map((c) => ({
+  ...CANNA_MODEL.clusters.map((c, i) => ({
     name: "short cincinnus branch",
     cluster: 0,
-    points: [
-      [0.014, c.position[1] - 0.04, -0.016],
-      [c.position[0] * 0.65, c.position[1] - 0.018, c.position[2] * 0.7],
-      c.position,
-    ] as Vec3[],
+    // The downward-facing lowest cincinnus grows from the shoot/head junction.
+    // A short negative-Y bridge would invert its tissue during entrance growth.
+    points: (i === 0
+      ? [
+          [0, 0, 0],
+          [c.position[0] * 0.5, c.position[1] * 0.4, c.position[2] * 0.45],
+          c.position,
+        ]
+      : [
+          [0.014, c.position[1] - 0.04, -0.016],
+          [c.position[0] * 0.65, c.position[1] - 0.018, c.position[2] * 0.7],
+          c.position,
+        ]) as Vec3[],
     radius: 0.018,
     endRadius: 0.012,
     color: "#7e885c",

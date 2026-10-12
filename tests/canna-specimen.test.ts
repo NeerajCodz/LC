@@ -1,6 +1,15 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { Euler, Matrix4, Vector3 } from "three";
+import {
+  DoubleSide,
+  Euler,
+  Matrix4,
+  Mesh,
+  MeshBasicMaterial,
+  Raycaster,
+  Vector3,
+  type BufferGeometry,
+} from "three";
 import {
   CANNA_MODEL,
   CANNA_STALKS,
@@ -18,7 +27,13 @@ import {
   specimenOrganGeometry,
 } from "../lib/three/specimenModel";
 import { verifySpecimen } from "./specimen-checks";
-import { writeStemNodeMatrix } from "../lib/three/plantAttachments";
+import {
+  writeHeadAttachmentVertex,
+  writeStemNodeMatrix,
+  writeStemVertex,
+  type PlantAttachmentState,
+} from "../lib/three/plantAttachments";
+import { createOrganicTube } from "../lib/three/organicTube";
 
 verifySpecimen("canna", CANNA_MODEL);
 verifySpecimen("canna sheathing leaves", {
@@ -275,6 +290,191 @@ test("canna: a real basal neck joins the unpitched shoot insertion to the existi
   }
   verifyNeck(neck);
 });
+
+test("canna: the lowest rendered branch keeps positive volume throughout entrance and wind", () => {
+  const branch = CANNA_STALKS.find((s) => s.name === "short cincinnus branch")!;
+  for (const [segments, sides] of [
+    [22, 6],
+    [44, 10],
+  ]) {
+    const original = createOrganicTube({
+        ...branch,
+        segments,
+        sides,
+        grain: 0.06,
+      }),
+      volume = signedVolume(original);
+    assert.ok(Math.abs(volume) > 1e-7);
+    for (const growth of [0.03, 0.2, 0.5, 5 / 9, 1])
+      for (const windy of [false, true]) {
+        const state = cannaAttachmentState(growth, windy),
+          generated = original.clone();
+        deformCannaTube(generated, state, branch);
+        const transformedVolume = signedVolume(generated);
+        assert.ok(
+          transformedVolume * volume > 0,
+          `growth ${growth}, wind ${windy}: real closed branch orientation inverts (${transformedVolume / volume})`,
+        );
+        assert.ok(
+          Math.abs(transformedVolume / volume - 1) < 0.002,
+          "a head-owned short branch retains its finite tube volume",
+        );
+        for (const name of ["position", "normal"])
+          assert.ok(
+            Array.from(generated.getAttribute(name).array).every(
+              Number.isFinite,
+            ),
+          );
+        const n = generated.getAttribute("normal");
+        for (let i = 0; i < n.count; i++)
+          assert.ok(
+            Math.abs(Math.hypot(n.getX(i), n.getY(i), n.getZ(i)) - 1) < 0.002,
+          );
+        generated.dispose();
+      }
+    original.dispose();
+  }
+});
+
+test("canna: lowest branch tissue physically overlaps the generated main shoot and raceme axis", () => {
+  const branch = CANNA_STALKS.find((s) => s.name === "short cincinnus branch")!,
+    axis = CANNA_STALKS.find((s) => s.name === "terminal raceme axis")!,
+    material = new MeshBasicMaterial({ side: DoubleSide });
+  for (const [segments, sides, stemSegments, stemSides] of [
+    [22, 6, 40, 10],
+    [44, 10, 80, 18],
+  ])
+    for (const growth of [0.03, 0.2, 0.5, 5 / 9, 1])
+      for (const windy of [false, true]) {
+        const state = cannaAttachmentState(growth, windy),
+          stalk = createOrganicTube({
+            ...branch,
+            segments,
+            sides,
+            grain: 0.06,
+          }),
+          upper = createOrganicTube({ ...axis, segments, sides, grain: 0.06 }),
+          stem = createOrganicTube({
+            points: [
+              [0, -2.25, 0],
+              [0.025, -2.25 * 0.55, 0],
+              [0, 0, 0],
+            ],
+            radius: 0.046 * 1.2,
+            endRadius: 0.046,
+            color: "#6a8051",
+            segments: stemSegments,
+            sides: stemSides,
+            grain: 0.05,
+          });
+        deformCannaTube(stalk, state, branch);
+        deformCannaTube(upper, state, axis);
+        deformCannaTube(stem, state);
+        const p = stalk.getAttribute("position");
+        for (const [name, g] of [
+          ["shoot", stem],
+          ["raceme", upper],
+        ] as const) {
+          const mesh = new Mesh(g, material);
+          mesh.updateMatrixWorld(true);
+          let overlap = 0;
+          for (let i = 0; i < 2 * sides; i++)
+            if (
+              insideGeneratedMesh(
+                new Vector3(p.getX(i), p.getY(i), p.getZ(i)),
+                mesh,
+              )
+            )
+              overlap++;
+          assert.ok(
+            overlap >= 2,
+            `growth ${growth}, wind ${windy}: real branch wall must penetrate ${name} tissue beyond a shared centroid (${overlap})`,
+          );
+        }
+        stalk.dispose();
+        upper.dispose();
+        stem.dispose();
+      }
+  material.dispose();
+  assert.deepEqual(branch.points.at(-1), CANNA_MODEL.clusters[0].position);
+});
+
+function cannaAttachmentState(
+  growth: number,
+  windy: boolean,
+): PlantAttachmentState {
+  const motion = windy
+      ? { x: 0.13, z: -0.09, drop: 0.018 }
+      : { x: 0, z: 0, drop: 0 },
+    head = new Matrix4()
+      .makeRotationFromEuler(
+        new Euler(
+          Math.atan2(motion.z * 1.5, 2.25) + (windy ? 0.012 : 0),
+          0,
+          -Math.atan2(motion.x * 1.5, 2.25),
+        ),
+      )
+      .setPosition(motion.x, -(1 - growth) * 2.25 - motion.drop, motion.z);
+  return { stemLength: 2.25, supportHeight: 0, growth, motion, head };
+}
+function deformCannaTube(
+  g: BufferGeometry,
+  state: PlantAttachmentState,
+  organ?: (typeof CANNA_STALKS)[number],
+) {
+  const p = g.getAttribute("position"),
+    n = g.getAttribute("normal"),
+    point = new Vector3(),
+    normal = new Vector3();
+  for (let i = 0; i < p.count; i++) {
+    point.fromBufferAttribute(p, i);
+    normal.fromBufferAttribute(n, i);
+    if (organ)
+      writeHeadAttachmentVertex(
+        point,
+        normal,
+        organ.points[0],
+        organ.points.at(-1)!,
+        state,
+      );
+    else writeStemVertex(point, normal, state);
+    p.setXYZ(i, point.x, point.y, point.z);
+    n.setXYZ(i, normal.x, normal.y, normal.z);
+  }
+  g.computeBoundingSphere();
+}
+function signedVolume(g: BufferGeometry) {
+  const p = g.getAttribute("position"),
+    ix = g.index!.array,
+    a = new Vector3(),
+    b = new Vector3(),
+    c = new Vector3(),
+    cross = new Vector3();
+  let volume = 0;
+  for (let i = 0; i < ix.length; i += 3) {
+    a.fromBufferAttribute(p, ix[i]);
+    b.fromBufferAttribute(p, ix[i + 1]);
+    c.fromBufferAttribute(p, ix[i + 2]);
+    volume += a.dot(cross.crossVectors(b, c)) / 6;
+  }
+  return volume;
+}
+function insideGeneratedMesh(point: Vector3, mesh: Mesh) {
+  const ray = new Raycaster(
+      point,
+      new Vector3(0.814, 0.363, 0.452).normalize(),
+      1e-6,
+    ),
+    hits = ray.intersectObject(mesh, false);
+  let distinct = 0,
+    last = -Infinity;
+  for (const hit of hits)
+    if (hit.distance - last > 1e-7) {
+      distinct++;
+      last = hit.distance;
+    }
+  return distinct % 2 === 1;
+}
 
 function verifyNeck(
   neck: import("../lib/three/specimenModel").SpecimenSurface,

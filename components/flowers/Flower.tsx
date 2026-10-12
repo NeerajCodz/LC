@@ -58,7 +58,9 @@ import { Nasturtium } from "./nasturtium/Nasturtium";
 import { Cosmos } from "./cosmos/Cosmos";
 import { Pansy } from "./pansy/Pansy";
 import { AfricanViolet } from "./african-violet/AfricanViolet";
+import { Bluebell } from "./bluebell/Bluebell";
 const SPECIES = {
+  bluebell: Bluebell,
   "african-violet": AfricanViolet,
   pansy: Pansy,
   cosmos: Cosmos,

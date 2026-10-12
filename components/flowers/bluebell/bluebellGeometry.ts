@@ -89,6 +89,34 @@ for (let cluster = 0; cluster < 10; cluster++) {
     compliance: 0.000045,
     shapeCompliance: 0.0003,
   });
+  if (young)
+    for (let i = 0; i < 6; i++) {
+      const a = (i * Math.PI) / 3;
+      BLUEBELL_MODEL.surfaces.push({
+        name: "imbricated closed-bud tepal tip",
+        cluster,
+        role: "petal",
+        thickness: 0.015,
+        delay: cluster * 0.022,
+        sample: (u, v, stage) => {
+          const w = 2 * u - 1,
+            rim = bluebellPerianth(
+              (a + w * 0.57) / (Math.PI * 2),
+              1,
+              stage,
+              true,
+            ),
+            tipWidth = w * (0.004 + 0.013 * Math.sin(Math.PI * v));
+          return [
+            (1 - v) * rim[0] +
+              v * (-Math.cos(a) * 0.005 - Math.sin(a) * tipWidth),
+            rim[1] + 0.043 * v,
+            (1 - v) * rim[2] +
+              v * (-Math.sin(a) * 0.005 + Math.cos(a) * tipWidth),
+          ];
+        },
+      });
+    }
   BLUEBELL_MODEL.surfaces.push({
     name: "superior three-celled ovary",
     cluster,

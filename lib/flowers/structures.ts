@@ -73,7 +73,9 @@ import { cosmosStructure } from "../../components/flowers/cosmos/Cosmos";
 import { ranunculusStructure } from "../../components/flowers/ranunculus/Ranunculus";
 import { pansyStructure } from "../../components/flowers/pansy/Pansy";
 import { africanVioletStructure } from "../../components/flowers/african-violet/AfricanViolet";
+import { bluebellStructure } from "../../components/flowers/bluebell/Bluebell";
 export const FLOWER_STRUCTURES: Record<FlowerType, FlowerStructure> = {
+  bluebell: bluebellStructure,
   "african-violet": africanVioletStructure,
   pansy: pansyStructure,
   cosmos: cosmosStructure,

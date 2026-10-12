@@ -21,6 +21,15 @@ export interface FoliageProfile {
 
 /** Cultivar-independent leaf traits; lotus has its own peltate blade generator. */
 export const FOLIAGE: Record<FlowerType, FoliageProfile> = {
+  bluebell: {
+    length: 1.58,
+    width: 0.105,
+    color: "#4b744d",
+    thickness: 0.016,
+    roughness: 0.59,
+    parallel: true,
+    basal: true,
+  },
   "african-violet": {
     length: 0.65,
     width: 0.31,

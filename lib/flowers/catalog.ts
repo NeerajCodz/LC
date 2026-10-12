@@ -13,6 +13,16 @@ export interface FlowerInfo {
 
 export const FLOWERS: FlowerInfo[] = [
   {
+    type: "bluebell",
+    name: "English Bluebell",
+    latin: "Hyacinthoides non-scripta",
+    family: "Asparagaceae",
+    color: "#4b53b7",
+    description: "Blue bells, quietly bowed.\nAn arch above the leaves.",
+    detail:
+      "A one-sided raceme carries nodding blue bells with six recurved tips and white pollen. Narrow basal leaves frame the curved scape and its younger terminal buds.",
+  },
+  {
     type: "african-violet",
     name: "African Violet",
     latin: "Streptocarpus ionanthus",

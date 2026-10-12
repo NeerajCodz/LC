@@ -30,6 +30,15 @@ const palette = (
 });
 
 export const PETAL_PALETTES: Record<FlowerType, PetalPalette> = {
+  bluebell: {
+    root: "#423d8a",
+    body: "#4b53b7",
+    tip: "#777dce",
+    vein: "#333c81",
+    rootFalloff: 0.28,
+    tipStart: 0.78,
+    veinStrength: 0.045,
+  },
   "african-violet": palette(
     "#e1d6bc",
     "#7865b8",

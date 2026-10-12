@@ -52,3 +52,9 @@ six-lobed continuity, bud enclosure, both foliage morph states, sealed edges,
 positive thickness, unit normals and nondegenerate full/half/closed triangles.
 Browser and seven-view visual inspection are recorded separately after catalog
 integration; these unit checks do not establish visual realism.
+
+The terminal buds additionally close with six imbricated sealed tepal-tip blades
+per bell. Each grows directly from its periodic wall rim and overlaps across the
+axis with finite width, rather than collapsing a ring of vertices to one point.
+These tiny tips inherit their flower pose and opening state; they do not receive
+separate contact cages, so the node measurements above remain unchanged.

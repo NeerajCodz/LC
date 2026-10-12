@@ -72,33 +72,57 @@ export const SCABIOSA_TERMINAL_TISSUE: SpecimenSurface[] = Array.from(
       sample: (u, v, open) => {
         const across = 2 * u - 1,
           angle = direction + across * 0.7,
-          rootClosed = scabiosaCorolla(angle / (Math.PI * 2), 1, 0),
-          rootOpen = scabiosaCorolla(angle / (Math.PI * 2), 1, 1),
-          axial = 0.043 * Math.cos(across * 0.7) * (1 - v) - 0.016 * v,
-          width =
-            0.043 * Math.sin(across * 0.7) * (1 - v) +
-            across * (0.012 + 0.007 * Math.sin(Math.PI * v)) * v,
-          closed: Vec3 = [
-            Math.sin(direction) * axial + Math.cos(direction) * width,
-            rootClosed[1] +
-              0.044 * Math.sin((v * Math.PI) / 2) +
-              0.0011 * i * v +
-              0.006 * across ** 2 * v,
-            Math.cos(direction) * axial - Math.sin(direction) * width,
-          ],
-          radial = Math.hypot(rootOpen[0], rootOpen[2]) + 0.014 * v,
-          full: Vec3 = [
+          shoulderProgress = Math.min(1, v / 0.72),
+          shoulder = 0.84 + 0.16 * shoulderProgress,
+          turn = Math.max(0, (v - 0.72) / 0.28),
+          // Finite tissue reserve covers independent carrier/cage motion at coarse tessellation.
+          // Zero slopes preserve the shoulder root and mature endpoint/tangent.
+          reserve =
+            0.008 *
+            (v <= 0.72
+              ? shoulderProgress ** 2 * (3 - 2 * shoulderProgress)
+              : 1 - turn ** 2 * (3 - 2 * turn)),
+          closedBase = scabiosaCorolla(angle / (Math.PI * 2), shoulder, 0),
+          openBase = scabiosaCorolla(angle / (Math.PI * 2), shoulder, 1);
+        let closed: Vec3, full: Vec3;
+        if (v <= 0.72) {
+          // A substantial real underlap follows the limb, including the bud wall.
+          const radial = Math.hypot(closedBase[0], closedBase[2]) - 0.0015;
+          closed = [
             Math.sin(angle) * radial,
-            rootOpen[1] -
-              0.018 * v +
-              0.01 * Math.sin(Math.PI * v) +
-              0.006 * across ** 2 * Math.sin(Math.PI * v),
+            closedBase[1],
             Math.cos(angle) * radial,
           ];
+          full = [openBase[0], openBase[1] - 0.0015, openBase[2]];
+        } else {
+          const axial =
+              0.0415 * Math.cos(across * 0.7) * (1 - turn) - 0.016 * turn,
+            width =
+              0.0415 * Math.sin(across * 0.7) * (1 - turn) +
+              across * (0.012 + 0.007 * Math.sin(Math.PI * turn)) * turn,
+            radial = Math.hypot(openBase[0], openBase[2]) + 0.014 * turn;
+          closed = [
+            Math.sin(direction) * axial + Math.cos(direction) * width,
+            closedBase[1] +
+              0.044 * Math.sin((turn * Math.PI) / 2) +
+              0.0011 * i * turn +
+              0.006 * across ** 2 * turn,
+            Math.cos(direction) * axial - Math.sin(direction) * width,
+          ];
+          full = [
+            Math.sin(angle) * radial,
+            openBase[1] -
+              0.0015 * (1 - turn) -
+              0.018 * turn +
+              0.01 * Math.sin(Math.PI * turn) +
+              0.006 * across ** 2 * Math.sin(Math.PI * turn),
+            Math.cos(angle) * radial,
+          ];
+        }
         return [
-          closed[0] + (full[0] - closed[0]) * open,
+          closed[0] + (full[0] - closed[0]) * open + Math.sin(angle) * reserve,
           closed[1] + (full[1] - closed[1]) * open,
-          closed[2] + (full[2] - closed[2]) * open,
+          closed[2] + (full[2] - closed[2]) * open + Math.cos(angle) * reserve,
         ];
       },
     };

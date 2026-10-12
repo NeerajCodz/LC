@@ -12,6 +12,7 @@ test("scabiosa: typed catalog preserves its scientific study", () => {
 import {
   SCABIOSA_MODEL,
   scabiosaCorolla,
+  SCABIOSA_TERMINAL_TISSUE,
 } from "../components/flowers/scabiosa/scabiosaGeometry";
 import {
   SCABIOSA_UPPER_LEAF,
@@ -169,6 +170,39 @@ test("scabiosa: fused corolla stays continuous around five unequal lobes rather 
   assert.equal(mobile, 462);
 });
 
+test("scabiosa: finite underlap preserves the original mature radial envelope and endpoints", () => {
+  for (let tip = 0; tip < 5; tip++)
+    for (const u of [0, 0.25, 0.5, 0.75, 1]) {
+      const across = 2 * u - 1,
+        angle = (tip * Math.PI * 2) / 5 + across * 0.7,
+        oldRim = scabiosaCorolla(angle / (Math.PI * 2), 1, 1),
+        end = SCABIOSA_TERMINAL_TISSUE[tip].sample(u, 1, 1),
+        radius = Math.hypot(oldRim[0], oldRim[2]) + 0.014;
+      assert.ok(
+        Math.hypot(
+          end[0] - Math.sin(angle) * radius,
+          end[1] - (oldRim[1] - 0.018),
+          end[2] - Math.cos(angle) * radius,
+        ) < 1e-10,
+      );
+      let upper = -Infinity;
+      for (let j = 0; j <= 1000; j++) {
+        const v = j / 1000;
+        upper = Math.max(
+          upper,
+          oldRim[1] -
+            0.018 * v +
+            (0.01 + 0.006 * across ** 2) * Math.sin(Math.PI * v),
+        );
+      }
+      for (let j = 0; j <= 100; j++) {
+        const p = SCABIOSA_TERMINAL_TISSUE[tip].sample(u, j / 100, 1);
+        assert.ok(Math.hypot(p[0], p[2]) <= radius + 1e-10);
+        assert.ok(p[1] <= upper + 1e-7 && p[1] >= oldRim[1] - 0.018 - 1e-7);
+      }
+    }
+});
+
 test("scabiosa: marginal reproductive organs follow the moving corolla insertion through reversed bloom", () => {
   const group = SCABIOSA_MODEL.instances![0];
   group.poses.forEach((pose, i) => {
@@ -297,7 +331,7 @@ test("scabiosa: actual finite-width terminal tissue occludes each closed floret 
 });
 
 test("scabiosa: all five terminal sheets stay finite, sealed and nondegenerate in actual low-cost prototypes", () => {
-  for (const quality of ["overview", "low", "high"] as const)
+  for (const quality of ["overview", "low", "medium", "high", "ultra"] as const)
     for (const group of SCABIOSA_MODEL.instances!) {
       assert.equal(
         group.surfaces.filter(
@@ -404,11 +438,26 @@ test("scabiosa: every instanced tip root stays with its enclosing floret through
             const expected =
               groupIndex === 0
                 ? new Vector3(
-                    ...SCABIOSA_MODEL.surfaces[i].sample(tip / 5, 1, open),
+                    ...SCABIOSA_MODEL.surfaces[i].sample(tip / 5, 0.84, open),
                   )
                 : new Vector3(
-                    ...scabiosaCorolla(tip / 5, 1, open),
+                    ...scabiosaCorolla(tip / 5, 0.84, open),
                   ).applyMatrix4(matrix);
+            const angle =
+                (tip * Math.PI * 2) / 5 +
+                (groupIndex === 0 ? pose.rotation[1] : 0),
+              inset = new Vector3(
+                Math.sin(angle) * 0.0015 * (1 - open),
+                0.0015 * open,
+                Math.cos(angle) * 0.0015 * (1 - open),
+              );
+            if (groupIndex === 0) expected.sub(inset);
+            else {
+              const local = new Vector3(
+                ...scabiosaCorolla(tip / 5, 0.84, open),
+              ).sub(inset);
+              expected.copy(local.applyMatrix4(matrix));
+            }
             assert.ok(
               root.distanceTo(expected) <
                 (groupIndex === 0 && wind ? 0.0035 : 1e-6),

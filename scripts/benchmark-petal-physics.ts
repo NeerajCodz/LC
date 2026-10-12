@@ -1,7 +1,18 @@
 import { performance } from "node:perf_hooks";
+import os from "node:os";
 import { Matrix4, Quaternion, Euler, Vector3 } from "three";
 import { PetalDynamics } from "../lib/three/petalDynamics";
-import { specimenCages } from "../lib/three/specimenModel";
+import { applySpecimenPins, specimenCages } from "../lib/three/specimenModel";
+import { PANSY_MODEL } from "../components/flowers/pansy/pansyGeometry";
+import { AFRICAN_VIOLET_MODEL } from "../components/flowers/african-violet/africanVioletGeometry";
+import { BLUEBELL_MODEL } from "../components/flowers/bluebell/bluebellGeometry";
+import { HYACINTH_MODEL } from "../components/flowers/hyacinth/hyacinthGeometry";
+import { AMARYLLIS_MODEL } from "../components/flowers/amaryllis/amaryllisGeometry";
+import { CANNA_MODEL } from "../components/flowers/canna/cannaGeometry";
+import { AGAPANTHUS_MODEL } from "../components/flowers/agapanthus/agapanthusGeometry";
+import { WISTERIA_MODEL } from "../components/flowers/wisteria/wisteriaGeometry";
+import { BOTTLEBRUSH_MODEL } from "../components/flowers/bottlebrush/bottlebrushGeometry";
+import { SCABIOSA_MODEL } from "../components/flowers/scabiosa/scabiosaGeometry";
 import { CARNATION_MODEL } from "../components/flowers/carnation/carnationGeometry";
 import { PLUMERIA_MODEL } from "../components/flowers/plumeria/plumeriaGeometry";
 import { FOXGLOVE_MODEL } from "../components/flowers/foxglove/foxgloveGeometry";
@@ -33,7 +44,27 @@ import { GARDENIA_MODEL } from "../components/flowers/gardenia/gardeniaGeometry"
 import { NASTURTIUM_MODEL } from "../components/flowers/nasturtium/nasturtiumGeometry";
 import { COSMOS_MODEL } from "../components/flowers/cosmos/cosmosGeometry";
 const results = [];
+const startedAt = new Date().toISOString();
+const environment = {
+  platform: process.platform,
+  arch: process.arch,
+  osRelease: os.release(),
+  cpu: os.cpus()[0]?.model,
+  logicalProcessors: os.cpus().length,
+  totalMemoryGiB: os.totalmem() / 2 ** 30,
+  availableMemoryMiBAtStart: os.freemem() / 2 ** 20,
+};
 for (const [name, model] of Object.entries({
+  pansy: PANSY_MODEL,
+  "african-violet": AFRICAN_VIOLET_MODEL,
+  bluebell: BLUEBELL_MODEL,
+  hyacinth: HYACINTH_MODEL,
+  amaryllis: AMARYLLIS_MODEL,
+  canna: CANNA_MODEL,
+  agapanthus: AGAPANTHUS_MODEL,
+  wisteria: WISTERIA_MODEL,
+  bottlebrush: BOTTLEBRUSH_MODEL,
+  scabiosa: SCABIOSA_MODEL,
   ranunculus: RANUNCULUS_MODEL,
   anemone: ANEMONE_MODEL,
   crocus: CROCUS_MODEL,
@@ -80,15 +111,8 @@ for (const [name, model] of Object.entries({
     });
     for (let i = 0; i < indices.length; i++) {
       sim.setRest(i, 1, matrices[i].elements);
-      if (model.surfaces[indices[i]].pinMidrib) {
-        const p = patches[i],
-          stride = p.columns + 1;
-        for (let row = 0; row <= p.rows; row++)
-          sim.inverseMass[
-            sim.offsets[i] + row * stride + Math.floor(stride / 2)
-          ] = 0;
-      }
     }
+    applySpecimenPins(sim, model, indices);
     sim.reset();
     const forces = {
       wind: 0.7,
@@ -106,22 +130,36 @@ for (const [name, model] of Object.entries({
       sim.step(1 / 60, forces);
       if (frame >= 30) samples.push(performance.now() - start);
     }
-    samples.sort((a, b) => a - b);
+    const sorted = [...samples].sort((a, b) => a - b);
     results.push({
       name,
       device: constrained ? "constrained" : "desktop",
       nodes: sim.inverseMass.length,
-      medianMs: +samples[30].toFixed(3),
-      p95Ms: +samples[57].toFixed(3),
+      medianMs: +((sorted[29] + sorted[30]) / 2).toFixed(3),
+      p95Ms: +sorted[56].toFixed(3),
+      meanMs: +(
+        samples.reduce((sum, value) => sum + value, 0) / samples.length
+      ).toFixed(3),
+      samplesMs: samples,
     });
   }
 console.log(
   JSON.stringify(
     {
       runtime: process.version,
+      startedAt,
+      finishedAt: new Date().toISOString(),
+      environment,
+      warmupFrames: 30,
       framesPerSample: 60,
       step: "1/60 input; 1/120 desktop or 1/60 constrained integration",
       scope: "CPU solver only, after 30 warmup frames; no draw/upload cost",
+      rest: "full bloom with authored cluster transforms and shared production pin initialization",
+      forces: { wind: 0.7, pulse: 0, x: 0, y: 0.4, z: 0.2, proximity: 0.8 },
+      percentile:
+        "median averages samples29/30; p95 nearest rank uses sample56 after sorting sixty samples (zero-indexed)",
+      limits:
+        "both cage tiers run on this same CPU; excludes per-frame rest/articulation preparation, deformation transfer, instanced tissue, browser/GPU cost and render cadence; no physical-phone/FPS claim",
       results,
     },
     null,

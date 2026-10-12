@@ -29,3 +29,26 @@ Bell count, nod angles, leaf dimensions and opening delays are authored; this is
 available. Full seasonal growth, pollinator action and fertilization are outside
 this study. Review front, side, 45 degrees, macro, closed bud and half bloom before
 calling the specimen finished.
+
+## Construction and verification
+
+The dedicated `BLUEBELL_MODEL` uses ten independently posed, continuous periodic
+perianths: eight open bells and two narrow terminal buds. Six strongly recurved
+tips remain connected to the tube. Every flower retains six included filaments,
+two chambers per white anther and a central style; alternating filament heights
+are deliberately unequal. The one-sided pedicels end at their exact flower
+insertions on the same arched axis. Five sealed strap leaves have parallel
+venation, shallow transverse cupping and independently posed drooping ends.
+
+The Oxford account above was re-read on 12 October 2026 and directly supports the
+one-sided dark-blue flowers, unequal filaments and white pollen. Small paired
+bracts, the modeled ovary proportions and central style length remain authored
+interpretations, rather than measurements from that account. There are no
+separate decorative green sepals on the fused perianth.
+
+Focused cages measure 720 desktop and 320 constrained nodes. The dedicated unit
+checks cover the one-sided downward axes, attached pedicels, organ counts,
+six-lobed continuity, bud enclosure, both foliage morph states, sealed edges,
+positive thickness, unit normals and nondegenerate full/half/closed triangles.
+Browser and seven-view visual inspection are recorded separately after catalog
+integration; these unit checks do not establish visual realism.

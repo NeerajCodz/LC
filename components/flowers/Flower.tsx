@@ -60,7 +60,9 @@ import { Pansy } from "./pansy/Pansy";
 import { AfricanViolet } from "./african-violet/AfricanViolet";
 import { Bluebell } from "./bluebell/Bluebell";
 import { Wisteria } from "./wisteria/Wisteria";
+import { Bottlebrush } from "./bottlebrush/Bottlebrush";
 const SPECIES = {
+  bottlebrush: Bottlebrush,
   wisteria: Wisteria,
   bluebell: Bluebell,
   "african-violet": AfricanViolet,

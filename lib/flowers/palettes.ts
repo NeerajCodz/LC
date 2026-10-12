@@ -30,6 +30,15 @@ const palette = (
 });
 
 export const PETAL_PALETTES: Record<FlowerType, PetalPalette> = {
+  bottlebrush: {
+    root: "#96313a",
+    body: "#c82e3c",
+    tip: "#ee6370",
+    vein: "#9e2834",
+    rootFalloff: 0.2,
+    tipStart: 0.83,
+    veinStrength: 0.045,
+  },
   wisteria: {
     root: "#ded1b8",
     body: "#a08acb",

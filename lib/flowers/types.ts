@@ -59,6 +59,7 @@ export const FLOWER_TYPES = [
   "african-violet",
   "bluebell",
   "wisteria",
+  "bottlebrush",
 ] as const;
 
 export type FlowerType = (typeof FLOWER_TYPES)[number];

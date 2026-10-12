@@ -21,6 +21,13 @@ export interface FoliageProfile {
 
 /** Cultivar-independent leaf traits; lotus has its own peltate blade generator. */
 export const FOLIAGE: Record<FlowerType, FoliageProfile> = {
+  bottlebrush: {
+    length: 0.79,
+    width: 0.07,
+    color: "#587449",
+    thickness: 0.017,
+    roughness: 0.61,
+  },
   wisteria: {
     length: 1.13,
     width: 0.43,

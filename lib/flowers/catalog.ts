@@ -13,6 +13,16 @@ export interface FlowerInfo {
 
 export const FLOWERS: FlowerInfo[] = [
   {
+    type: "bottlebrush",
+    name: "Crimson Bottlebrush",
+    latin: "Melaleuca citrina",
+    family: "Myrtaceae",
+    color: "#c82e3c",
+    description: "Fine red threads.\nThe quiet of a woody shoot.",
+    detail:
+      "Rows of tiny true flowers surround a woody shoot. Long red stamens and dark anthers form the brush, with small petals at their bases and narrow stiff leaves beyond.",
+  },
+  {
     type: "wisteria",
     name: "Chinese Wisteria",
     latin: "Wisteria sinensis",

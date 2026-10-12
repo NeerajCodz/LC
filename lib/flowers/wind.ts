@@ -10,6 +10,12 @@ export interface WindProfile {
 // Art-directed response classes informed by habit, stem construction and head load.
 // These are not measured species-specific elastic constants. See wind-and-contact.md.
 export const WIND_PROFILES: Record<FlowerType, WindProfile> = {
+  bottlebrush: {
+    compliance: 0.057,
+    stiffness: 63,
+    damping: 0.92,
+    flutter: 0.34,
+  },
   wisteria: { compliance: 0.085, stiffness: 44, damping: 0.86, flutter: 0.64 },
   bluebell: { compliance: 0.16, stiffness: 41, damping: 0.86, flutter: 0.4 },
   "african-violet": {

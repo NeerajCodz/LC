@@ -22,6 +22,11 @@ export function leafBlade(
     role: "bract",
     tissue: "leaf",
     thickness: options.thickness ?? 0.009,
+    // Deep divisions need their notch minima and lobe peaks on the distant grid.
+    overviewRows:
+      (options.depth ?? 0) >= 0.5 && (options.teeth ?? 0) > 0
+        ? Math.max(6, Math.ceil((options.teeth ?? 0) * 4))
+        : undefined,
     sample: (u, v, open) => {
       const w = 2 * u - 1,
         margin =

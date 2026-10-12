@@ -40,6 +40,95 @@ import {
 } from "three";
 import { verifySpecimen } from "./specimen-checks";
 import { petalOpenness } from "../lib/three/easing";
+import { createParametricShell } from "../lib/three/parametricShell";
+
+test("scabiosa: actual overview upper blades preserve five lobes and four deep pinnatifid notches", () => {
+  const geometry = createScabiosaUpperLeaf("overview"),
+    uv = geometry.getAttribute("uv"),
+    p = geometry.getAttribute("position"),
+    folded = geometry.morphAttributes.position![0],
+    half = p.count / 2;
+  for (const open of [0, 0.5, 1]) {
+    const widths: number[] = [];
+    for (let i = 0; i < half; i++)
+      if (uv.getX(i) === 1) {
+        // Read the real shell's middle surface rather than its offset edge.
+        const x =
+          (p.getX(i) + p.getX(i + half)) * 0.5 * open +
+          (folded.getX(i) + folded.getX(i + half)) * 0.5 * (1 - open);
+        widths.push(Math.abs(x));
+      }
+    const peaks = widths.flatMap((width, i) =>
+        i > 0 &&
+        i < widths.length - 1 &&
+        width > widths[i - 1] &&
+        width > widths[i + 1]
+          ? [i]
+          : [],
+      ),
+      notches = widths.flatMap((width, i) =>
+        i > 0 &&
+        i < widths.length - 1 &&
+        width < widths[i - 1] &&
+        width < widths[i + 1]
+          ? [i]
+          : [],
+      );
+    assert.equal(
+      peaks.length,
+      5,
+      `bloom${open}: pinnatifid blade retains five lobes`,
+    );
+    assert.equal(
+      notches.length,
+      4,
+      `bloom${open}: four real inner margin cuts`,
+    );
+    notches.forEach((notch, i) => {
+      assert.ok(notch > peaks[i] && notch < peaks[i + 1]);
+      assert.ok(
+        widths[notch] < 0.4 * Math.min(widths[peaks[i]], widths[peaks[i + 1]]),
+        `bloom${open}: notch${i} reaches the narrow connected midrib`,
+      );
+    });
+  }
+  assert.ok(
+    geometry.index!.count * 6 <= 11000,
+    "six opposite shoot blades retain a small actual indexed workload",
+  );
+  geometry.dispose();
+});
+
+test("scabiosa: the anatomy-specific overview sampling leaves all four focused blade buffers unchanged", () => {
+  for (const [quality, columns, rows] of [
+    ["low", 12, 16],
+    ["medium", 20, 24],
+    ["high", 32, 32],
+    ["ultra", 48, 44],
+  ] as const) {
+    const actual = createScabiosaUpperLeaf(quality),
+      original = createParametricShell({
+        ...SCABIOSA_UPPER_LEAF,
+        columns,
+        rows,
+      });
+    for (const name of ["position", "normal", "uv", "color"])
+      assert.deepEqual(
+        actual.getAttribute(name).array,
+        original.getAttribute(name).array,
+        `${quality} ${name}`,
+      );
+    assert.deepEqual(actual.index!.array, original.index!.array);
+    for (const name of ["position", "normal"] as const)
+      assert.deepEqual(
+        actual.morphAttributes[name]![0].array,
+        original.morphAttributes[name]![0].array,
+        `${quality} folded${name}`,
+      );
+    actual.dispose();
+    original.dispose();
+  }
+});
 
 verifySpecimen("scabiosa", SCABIOSA_MODEL);
 verifySpecimen("scabiosa divided leaf", {

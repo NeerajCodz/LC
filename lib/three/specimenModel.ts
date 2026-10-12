@@ -25,6 +25,8 @@ export interface SpecimenSurface {
   compliance?: number;
   shapeCompliance?: number;
   pinMidrib?: boolean;
+  /** Axial landmarks that must survive the distant overview grid. */
+  overviewRows?: number;
   cage?: [number, number];
   mobileCage?: [number, number];
 }
@@ -110,9 +112,13 @@ export function specimenGeometry(surface: SpecimenSurface, quality: Quality) {
   // Fused corollas keep their angular samples so five/six lobes remain distinct.
   const columns =
     surface.periodic && quality === "overview" ? 24 : resolution[0];
+  const rows =
+    quality === "overview"
+      ? (surface.overviewRows ?? resolution[1])
+      : resolution[1];
   const g = createParametricShell({
     columns,
-    rows: resolution[1],
+    rows,
     ...surface,
   });
   const side = new Float32Array(g.getAttribute("position").count);
@@ -121,7 +127,7 @@ export function specimenGeometry(surface: SpecimenSurface, quality: Quality) {
   if (surface.pressureSample) {
     const pressed = createParametricShell({
       columns,
-      rows: resolution[1],
+      rows,
       ...surface,
       sample: surface.pressureSample,
     });

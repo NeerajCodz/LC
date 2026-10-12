@@ -50,7 +50,12 @@ export function specimenInstanceGeometry(
     ultra: [16, 12],
   }[quality];
   const surfaces = group.surfaces.map((surface) => {
-    const g = createParametricShell({ ...surface, columns, rows });
+    // Six angular samples alias a true five/six-lobed fused corolla into a cone.
+    const g = createParametricShell({
+      ...surface,
+      columns: surface.periodic ? Math.max(24, columns) : columns,
+      rows,
+    });
     const side = new Float32Array(g.getAttribute("position").count);
     for (let i = 0; i < side.length; i++)
       side[i] = i < side.length / 2 ? 1 : -1;

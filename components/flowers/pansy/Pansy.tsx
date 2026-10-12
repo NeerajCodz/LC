@@ -17,7 +17,7 @@ const anatomy: StemAnatomy = {
     { t: 0.5, angle: 4.8, scale: 0.85 },
     { t: 0.7, angle: 7.2, scale: 0.7 },
   ],
-  extras: PANSY_STALKS,
+  headExtras: PANSY_STALKS,
 };
 function PansyStem(props: StemProps) {
   return (

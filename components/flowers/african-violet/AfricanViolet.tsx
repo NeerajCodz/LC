@@ -20,7 +20,7 @@ const anatomy: StemAnatomy = {
     angle: i * 2.399,
     scale: 0.86 + (i % 3) * 0.075,
   })),
-  extras: AFRICAN_VIOLET_STALKS,
+  headExtras: AFRICAN_VIOLET_STALKS,
 };
 function AfricanVioletStem(props: StemProps) {
   return (

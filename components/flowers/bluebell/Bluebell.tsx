@@ -11,7 +11,7 @@ const anatomy: StemAnatomy = {
   color: "#6c8551",
   leafTilt: -0.1,
   nodes: [{ t: 0.045, angle: 0 }],
-  extras: BLUEBELL_STALKS,
+  headExtras: BLUEBELL_STALKS,
 };
 function BluebellStem(props: StemProps) {
   return (

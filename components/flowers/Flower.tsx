@@ -62,7 +62,9 @@ import { Bluebell } from "./bluebell/Bluebell";
 import { Wisteria } from "./wisteria/Wisteria";
 import { Bottlebrush } from "./bottlebrush/Bottlebrush";
 import { Scabiosa } from "./scabiosa/Scabiosa";
+import { Hyacinth } from "./hyacinth/Hyacinth";
 const SPECIES = {
+  hyacinth: Hyacinth,
   scabiosa: Scabiosa,
   bottlebrush: Bottlebrush,
   wisteria: Wisteria,

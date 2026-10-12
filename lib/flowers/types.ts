@@ -61,6 +61,7 @@ export const FLOWER_TYPES = [
   "wisteria",
   "bottlebrush",
   "scabiosa",
+  "hyacinth",
 ] as const;
 
 export type FlowerType = (typeof FLOWER_TYPES)[number];
@@ -135,6 +136,8 @@ export interface FlowerStructure {
   /** Conservative head bounds for non-radial organs. */
   headRadius?: number;
   headCenter?: Vec3;
+  /** Full-plant bounds relative to its head insertion, for a complete portrait. */
+  portraitBounds?: { min: Vec3; max: Vec3 };
   /** Extra camera distance for tall or forward-projecting preview silhouettes. */
   previewScale?: number;
   /** Included pollen stays on organs rather than releasing decorative bursts. */

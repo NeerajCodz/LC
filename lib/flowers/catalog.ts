@@ -13,6 +13,16 @@ export interface FlowerInfo {
 
 export const FLOWERS: FlowerInfo[] = [
   {
+    type: "hyacinth",
+    name: "Hyacinth",
+    latin: "Hyacinthus orientalis",
+    family: "Asparagaceae",
+    color: "#df99b0",
+    description: "Fragrant spring.\nPink around a green spire.",
+    detail:
+      "Thick, six-lobed flowers gather around a stout scape. Their recurved waxy tips reveal included stamens, above a fan of fleshy keeled leaves.",
+  },
+  {
     type: "scabiosa",
     name: "Pincushion Flower",
     latin: "Scabiosa columbaria",

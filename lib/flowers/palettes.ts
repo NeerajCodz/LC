@@ -30,6 +30,15 @@ const palette = (
 });
 
 export const PETAL_PALETTES: Record<FlowerType, PetalPalette> = {
+  hyacinth: {
+    root: "#b96587",
+    body: "#df99b0",
+    tip: "#efbfcc",
+    vein: "#a6547b",
+    rootFalloff: 0.34,
+    tipStart: 0.78,
+    veinStrength: 0.038,
+  },
   scabiosa: {
     root: "#7771a5",
     body: "#a193c9",

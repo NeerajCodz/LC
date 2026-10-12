@@ -1,7 +1,11 @@
 import type { Quality, Vec3 } from "@/lib/flowers/types";
 import { specimenGeometry } from "@/lib/three/specimenModel";
 import { BotanicalBlade, type BladePigment } from "../BotanicalBlade";
-import { PANSY_LEAF, PANSY_STIPULE } from "./pansyLeaf";
+import {
+  PANSY_LEAF,
+  PANSY_STIPULE,
+  PANSY_LEAF_FACE_ROTATION,
+} from "./pansyLeaf";
 const create = (q: Quality) => specimenGeometry(PANSY_LEAF, q);
 const createStipule = (q: Quality) => specimenGeometry(PANSY_STIPULE, q);
 const pigment: BladePigment = {
@@ -19,7 +23,7 @@ const stipules = [-1, 1].map((sign) => ({
 }));
 export function PansyLeaf({ quality }: { quality: Quality }) {
   return (
-    <group>
+    <group rotation={PANSY_LEAF_FACE_ROTATION}>
       <BotanicalBlade
         type="pansy"
         quality={quality}

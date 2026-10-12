@@ -5,6 +5,7 @@ import { specimenGeometry } from "@/lib/three/specimenModel";
 import { BotanicalBlade, type BladePigment } from "../BotanicalBlade";
 import {
   AFRICAN_VIOLET_LEAF,
+  AFRICAN_VIOLET_LEAF_FACE_ROTATION,
   createAfricanVioletHairs,
 } from "./africanVioletLeaf";
 const create = (q: Quality) => specimenGeometry(AFRICAN_VIOLET_LEAF, q);
@@ -25,7 +26,7 @@ export function AfricanVioletLeaf({ quality }: { quality: Quality }) {
   useEffect(() => () => hairs.dispose(), [hairs]);
   useEffect(() => () => hairMaterial.dispose(), [hairMaterial]);
   return (
-    <group dispose={null}>
+    <group rotation={AFRICAN_VIOLET_LEAF_FACE_ROTATION} dispose={null}>
       <BotanicalBlade
         type="african-violet"
         quality={quality}

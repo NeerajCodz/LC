@@ -44,16 +44,18 @@ for (let c = 0; c < 6; c++) {
     compliance: 0.000055,
     shapeCompliance: 0.0007,
     sample: (u, v, stage) => {
-      const open = c === 5 ? stage * 0.13 : stage,
+      const open = c === 5 ? stage * 0.008 : stage,
         a = u * Math.PI * 2,
         lobe = 0.5 + 0.5 * Math.cos(a * 5),
         upper = Math.max(0, -Math.cos(a)),
         edge = 0.76 + 0.24 * lobe,
         limb = Math.max(0, (v - 0.17) / 0.83),
-        r =
-          0.046 +
-          0.43 * open * limb ** 0.72 * edge * (1 - 0.2 * upper) +
-          0.09 * (1 - open) * Math.sin(v * Math.PI),
+        fullRadius = 0.046 + 0.43 * limb ** 0.72 * edge * (1 - 0.2 * upper),
+        // Keep the narrow basal tube, tapering the closed limb to a rounded apex.
+        // Its finite radius stays wider than the normal-offset inner shell.
+        foldedRadius =
+          0.046 * (1 - v) + 0.008 * v + 0.09 * Math.sin(v * Math.PI),
+        r = fullRadius * open + foldedRadius * (1 - open),
         h =
           0.07 * Math.min(1, v / 0.17) +
           0.37 * (1 - open) * limb +

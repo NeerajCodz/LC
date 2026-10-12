@@ -10,10 +10,11 @@ import {
   AFRICAN_VIOLET_STALKS,
 } from "./africanVioletGeometry";
 import { AfricanVioletLeaf } from "./AfricanVioletFoliage";
+import { AFRICAN_VIOLET_LEAF_TILT } from "./africanVioletLeaf";
 const anatomy: StemAnatomy = {
   axis: false,
   color: "#84976e",
-  leafTilt: 1.08,
+  leafTilt: AFRICAN_VIOLET_LEAF_TILT,
   nodes: Array.from({ length: 9 }, (_, i) => ({
     t: 0.035,
     angle: i * 2.399,

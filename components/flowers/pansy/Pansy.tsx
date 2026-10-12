@@ -7,9 +7,10 @@ import type { StemProps } from "../Stem";
 import type { FlowerOrgansProps } from "../FloralParts";
 import { PANSY_MODEL, PANSY_STALKS } from "./pansyGeometry";
 import { PansyLeaf } from "./PansyFoliage";
+import { PANSY_LEAF_TILT } from "./pansyLeaf";
 const anatomy: StemAnatomy = {
   color: "#6b865b",
-  leafTilt: 0.9,
+  leafTilt: PANSY_LEAF_TILT,
   nodes: [
     { t: 0.12, angle: 0 },
     { t: 0.3, angle: 2.4 },

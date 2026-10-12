@@ -106,6 +106,30 @@ for (let c = 0; c < PANSY_MODEL.clusters.length; c++) {
       },
     });
   }
+  const lowerPetal = PANSY_MODEL.surfaces.find(
+    (s) => s.cluster === c && s.role === "petal" && s.tissue === "guide",
+  )!;
+  const spurMouth = (a: number, stage: number): Vec3 => {
+    const u = 0.5 + 0.17 * Math.sin(a),
+      v = 0.065 + 0.04 * Math.cos(a),
+      p = lowerPetal.sample(u, v, stage),
+      left = lowerPetal.sample(u - 0.0001, v, stage),
+      right = lowerPetal.sample(u + 0.0001, v, stage),
+      below = lowerPetal.sample(u, v - 0.0001, stage),
+      above = lowerPetal.sample(u, v + 0.0001, stage),
+      ux = right[0] - left[0],
+      uy = right[1] - left[1],
+      uz = right[2] - left[2],
+      vx = above[0] - below[0],
+      vy = above[1] - below[1],
+      vz = above[2] - below[2],
+      nx = uy * vz - uz * vy,
+      ny = uz * vx - ux * vz,
+      nz = ux * vy - uy * vx,
+      offset =
+        (lowerPetal.thickness * (1 - 0.2 * v) * 0.5) / Math.hypot(nx, ny, nz);
+    return [p[0] + nx * offset, p[1] + ny * offset, p[2] + nz * offset];
+  };
   PANSY_MODEL.surfaces.push({
     name: "lower petal nectar spur",
     cluster: c,
@@ -116,13 +140,18 @@ for (let c = 0; c < PANSY_MODEL.clusters.length; c++) {
     contactObstacle: true,
     cage: [4, 3],
     mobileCage: [3, 2],
-    sample: (u, v) => {
+    sample: (u, v, stage) => {
       const a = u * Math.PI * 2,
-        r = 0.043 * (1 - 0.64 * v);
+        mouth = spurMouth(a, stage);
+      // The lower-petal backing is the real insertion, including during folding.
+      // Retain the blind apex and its positive-radius section as the neck tapers.
       return [
-        Math.sin(a) * r,
-        -0.025 - 0.31 * v,
-        0.065 + 0.1 * Math.sin((v * Math.PI) / 2) + Math.cos(a) * r,
+        mouth[0] * (1 - v) + 0.015 * Math.sin(a) * v,
+        mouth[1] * (1 - v) - 0.335 * v,
+        mouth[2] * (1 - v) +
+          0.165 * v +
+          0.025 * Math.sin(v * Math.PI) +
+          0.015 * Math.cos(a) * v,
       ];
     },
   });

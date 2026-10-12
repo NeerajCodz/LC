@@ -1,4 +1,8 @@
 import { leafBlade } from "@/lib/three/botanicalBlades";
+import type { Vec3 } from "@/lib/flowers/types";
+export const PANSY_LEAF_TILT = 0.9;
+// Preserve the petiole-to-tip +Y axis while facing green upper tissue upward.
+export const PANSY_LEAF_FACE_ROTATION: Vec3 = [0, Math.PI, 0];
 export const PANSY_LEAF = leafBlade("crenate pansy blade", 0.62, 0.19, {
   teeth: 9,
   depth: 0.1,

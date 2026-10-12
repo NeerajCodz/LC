@@ -3,11 +3,17 @@ import type { SpecimenModel, SpecimenOrgan } from "@/lib/three/specimenModel";
 import { floralStamens } from "@/lib/three/floralStamens";
 
 /** The raceme bends to one side; every pedicel is attached to this same axis. */
-export const bluebellAxis = (t: number): Vec3 => [
-  0.04 + 0.5 * t * t,
-  0.04 + 1.58 * t - 0.27 * t * t,
-  -0.025 * Math.sin(Math.PI * t),
-];
+export const bluebellAxis = (t: number): Vec3 => {
+  // The first axis segment rises from the actual shoot insertion. Retain the
+  // authored raceme and terminal flower positions above its first nonzero node.
+  const base = Math.max(0, Math.min(1, t * 9)),
+    rise = base * base * (3 - 2 * base);
+  return [
+    0.04 * rise + 0.5 * t * t,
+    0.04 * rise + 1.58 * t - 0.27 * t * t,
+    -0.025 * Math.sin(Math.PI * t),
+  ];
+};
 
 /** A narrow fused bell with six deeply recurved lobes, not six separate petals. */
 export function bluebellPerianth(

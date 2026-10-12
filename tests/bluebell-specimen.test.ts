@@ -9,7 +9,15 @@ test("bluebell is registered with its English bluebell taxon", () => {
     "Hyacinthoides non-scripta",
   );
 });
-import { Euler, Vector3 } from "three";
+import {
+  DoubleSide,
+  Euler,
+  Mesh,
+  MeshBasicMaterial,
+  Object3D,
+  Raycaster,
+  Vector3,
+} from "three";
 import {
   BLUEBELL_MODEL,
   BLUEBELL_STALKS,
@@ -22,6 +30,12 @@ import {
 } from "../components/flowers/bluebell/bluebellLeaf";
 import { verifySpecimen } from "./specimen-checks";
 import { specimenGeometry } from "../lib/three/specimenModel";
+import { createOrganicTube } from "../lib/three/organicTube";
+import {
+  writeHeadAttachmentVertex,
+  writeStemVertex,
+  type PlantAttachmentState,
+} from "../lib/three/plantAttachments";
 
 test("bluebell: adaxial green faces upward on the composed drooping basal blades", () => {
   const geometry = specimenGeometry(BLUEBELL_LEAF, "low");
@@ -140,4 +154,141 @@ verifySpecimen("bluebell foliage", {
   clusters: BLUEBELL_MODEL.clusters.slice(0, 1),
   surfaces: [BLUEBELL_LEAF],
   organs: [],
+});
+
+test("bluebell: generated raceme root intersects the actual main shoot at full and early growth with wind", () => {
+  const axis = BLUEBELL_STALKS.find(
+      (s) => s.name === "one-sided arched raceme axis",
+    )!,
+    point = new Vector3(),
+    normal = new Vector3(),
+    end = new Vector3(),
+    direction = new Vector3(),
+    ray = new Raycaster(),
+    material = new MeshBasicMaterial({ side: DoubleSide });
+  for (const detail of [
+    { segments: 22, sides: 6, stemSegments: 40, stemSides: 10 },
+    { segments: 44, sides: 10, stemSegments: 80, stemSides: 18 },
+  ])
+    for (const growth of [0.03, 0.2, 0.5, 1])
+      for (const windy of [false, true]) {
+        const motion = windy
+            ? { x: 0.13, z: -0.09, drop: 0.018 }
+            : { x: 0, z: 0, drop: 0 },
+          head = new Object3D();
+        head.position.set(
+          motion.x,
+          -(1 - growth) * 1.8 - motion.drop,
+          motion.z,
+        );
+        head.rotation.set(
+          Math.atan2(motion.z * 1.5, 1.8),
+          0,
+          -Math.atan2(motion.x * 1.5, 1.8),
+        );
+        head.updateMatrix();
+        const state: PlantAttachmentState = {
+            stemLength: 1.8,
+            supportHeight: 0,
+            growth,
+            motion,
+            head: head.matrix,
+          },
+          stem = createOrganicTube({
+            points: [
+              [0, -1.8, 0],
+              [0.025, -0.99, 0],
+              [0, 0, 0],
+            ],
+            radius: 0.023 * 1.2,
+            endRadius: 0.023,
+            segments: detail.stemSegments,
+            sides: detail.stemSides,
+            grain: 0.05,
+          }),
+          raceme = createOrganicTube({
+            ...axis,
+            segments: detail.segments,
+            sides: detail.sides,
+            grain: 0.06,
+          });
+        for (const [geometry, isRaceme] of [
+          [stem, false],
+          [raceme, true],
+        ] as const) {
+          const positions = geometry.getAttribute("position"),
+            normals = geometry.getAttribute("normal");
+          for (let i = 0; i < positions.count; i++) {
+            point.fromBufferAttribute(positions, i);
+            normal.fromBufferAttribute(normals, i);
+            if (isRaceme)
+              writeHeadAttachmentVertex(
+                point,
+                normal,
+                axis.points[0],
+                axis.points.at(-1)!,
+                state,
+              );
+            else writeStemVertex(point, normal, state);
+            assert.ok(
+              Number.isFinite(
+                point.x + point.y + point.z + normal.x + normal.y + normal.z,
+              ),
+            );
+            assert.ok(Math.abs(normal.length() - 1) < 1e-10);
+            positions.setXYZ(i, point.x, point.y, point.z);
+            normals.setXYZ(i, normal.x, normal.y, normal.z);
+          }
+          geometry.computeBoundingBox();
+          geometry.computeBoundingSphere();
+        }
+        const sp = stem.getAttribute("position"),
+          rp = raceme.getAttribute("position"),
+          root = new Vector3().fromBufferAttribute(rp, rp.count - 2),
+          shootEnd = new Vector3().fromBufferAttribute(sp, sp.count - 1);
+        assert.ok(
+          root.distanceTo(shootEnd) < 1e-6,
+          `growth ${growth}/wind ${windy}: actual cap-center gap ${root.distanceTo(shootEnd)}`,
+        );
+        const mesh = new Mesh(stem, material);
+        mesh.updateMatrixWorld(true);
+        const edges = new Set<string>(),
+          ix = raceme.index!.array;
+        let intersection = false;
+        for (let i = 0; i < ix.length && !intersection; i += 3)
+          for (let side = 0; side < 3; side++) {
+            const a = ix[i + side],
+              b = ix[i + ((side + 1) % 3)];
+            if (
+              a >= detail.sides * 2 &&
+              b >= detail.sides * 2 &&
+              a !== rp.count - 2 &&
+              b !== rp.count - 2
+            )
+              continue;
+            const key = a < b ? `${a}:${b}` : `${b}:${a}`;
+            if (edges.has(key)) continue;
+            edges.add(key);
+            point.fromBufferAttribute(rp, a);
+            end.fromBufferAttribute(rp, b);
+            direction.subVectors(end, point);
+            const length = direction.length();
+            if (length < 1e-12) continue;
+            ray.set(point, direction.multiplyScalar(1 / length));
+            ray.near = 0;
+            ray.far = length + 1e-8;
+            intersection = ray
+              .intersectObject(mesh, false)
+              .some(
+                (hit) => hit.distance > 1e-7 && hit.distance < length - 1e-7,
+              );
+          }
+        assert.ok(
+          intersection,
+          `growth ${growth}/wind ${windy}: real root-ring edges must intersect the sealed shoot mesh`,
+        );
+        stem.dispose();
+        raceme.dispose();
+      }
+  material.dispose();
 });

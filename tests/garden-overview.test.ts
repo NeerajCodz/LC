@@ -90,6 +90,43 @@ test("all catalog dedicated heads leave room for stems and foliage within the na
   );
 });
 
+test("compatible overview tissues batch across independently posed flowers within the native draw-call budget", async () => {
+  const directory = fileURLToPath(
+    new URL("../components/flowers/", import.meta.url),
+  );
+  let draws = 0;
+  for (const file of await readdir(directory, { recursive: true })) {
+    if (!file.endsWith("Geometry.ts")) continue;
+    const type = file.split(/[\\/]/)[0];
+    if (!FLOWER_TYPES.includes(type as (typeof FLOWER_TYPES)[number])) continue;
+    const exports = await import(pathToFileURL(resolve(directory, file)).href);
+    for (const [name, value] of Object.entries(exports)) {
+      if (!name.endsWith("_MODEL")) continue;
+      const model = value as SpecimenModel;
+      draws += surfaceBatchGroups(model, true).length;
+      for (let cluster = 0; cluster < model.clusters.length; cluster++)
+        for (const included of [false, true]) {
+          const parts = specimenOrganParts(
+            model,
+            cluster,
+            "overview",
+            included,
+          );
+          if (parts.length) draws++;
+          parts.forEach(({ geometry }) => geometry.dispose());
+        }
+      for (const group of model.instances ?? []) {
+        const parts = specimenInstanceGeometry(group, "overview");
+        draws += parts.surfaces.length + parts.organs.length;
+        [...parts.surfaces, ...parts.organs].forEach((g) => g.dispose());
+      }
+    }
+  }
+  // The old dedicated-head path submits1,137 of2,102 measured native draws.
+  // Leave the other965 root, foliage, radial-head and environment draws intact.
+  assert.ok(draws < 800, `${draws} dedicated overview head draws`);
+});
+
 test("distant fused limbs retain five and six lobes, sealed thickness and folded normals while focused buffers stay unchanged", () => {
   for (const lobes of [5, 6]) {
     const surface: SpecimenSurface = {

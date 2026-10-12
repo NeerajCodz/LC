@@ -7,6 +7,11 @@ import {
 } from "three";
 import type { FlowerType } from "@/lib/flowers/types";
 import { createSpecimenMaterial } from "@/lib/three/specimenMaterials";
+import type { SpecimenModel } from "@/lib/three/specimenModel";
+import {
+  bindSurfaceBatchVertices,
+  type SurfaceBatchPoses,
+} from "@/lib/three/surfaceBatchPose";
 import {
   bindSurfaceBatch,
   createSurfaceBatch,
@@ -26,16 +31,31 @@ export function OverviewSurfaces({
   type,
   color,
   assign,
+  clusters,
+  poses,
 }: {
   group: SurfaceBatchGroup;
   type: FlowerType;
   color?: string;
   assign: (draw: OverviewDraw | null) => void;
+  clusters: SpecimenModel["clusters"];
+  poses: SurfaceBatchPoses;
 }) {
-  const geometry = useMemo(() => createSurfaceBatch(group.entries), [group]);
+  const geometry = useMemo(
+    () => createSurfaceBatch(group.entries, clusters),
+    [group, clusters],
+  );
   const uniforms = useMemo<SurfaceBatchUniforms>(
-    () => ({ uBatchBloom: { value: 1 }, uBatchPressure: { value: 0 } }),
-    [],
+    () => ({
+      uBatchBloom: { value: 1 },
+      uBatchPressure: { value: 0 },
+      uBatchPoses: { value: poses.texture },
+      uBatchPoseRows: { value: clusters.length },
+      uBatchHinge: {
+        value: group.role === "wing" || group.role === "keel" ? 1 : 0,
+      },
+    }),
+    [poses, clusters, group.role],
   );
   const materials = useMemo(() => {
     const tissue = createSpecimenMaterial(
@@ -61,13 +81,17 @@ export function OverviewSurfaces({
   );
   return (
     <mesh
-      ref={(mesh) => assign(mesh ? { mesh, group, uniforms } : null)}
+      ref={(mesh) => {
+        if (mesh) bindSurfaceBatchVertices(mesh, uniforms);
+        assign(mesh ? { mesh, group, uniforms } : null);
+      }}
       geometry={geometry}
       material={materials.tissue}
       customDepthMaterial={materials.depth}
       customDistanceMaterial={materials.distance}
       castShadow
       receiveShadow
+      frustumCulled={false}
     />
   );
 }

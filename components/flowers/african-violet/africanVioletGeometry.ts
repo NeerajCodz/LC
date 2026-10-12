@@ -1,5 +1,9 @@
 import type { Vec3 } from "@/lib/flowers/types";
-import type { SpecimenModel, SpecimenOrgan } from "@/lib/three/specimenModel";
+import type {
+  SpecimenModel,
+  SpecimenOrgan,
+  SpecimenSurface,
+} from "@/lib/three/specimenModel";
 export const AFRICAN_VIOLET_MODEL: SpecimenModel = {
   clusters: Array.from({ length: 6 }, (_, i) => ({
     position: [
@@ -17,6 +21,7 @@ export const AFRICAN_VIOLET_MODEL: SpecimenModel = {
   })),
   surfaces: [],
   organs: [],
+  instances: [],
 };
 export const AFRICAN_VIOLET_STALKS: SpecimenOrgan[] =
   AFRICAN_VIOLET_MODEL.clusters.map((c) => ({
@@ -64,6 +69,52 @@ for (let c = 0; c < 6; c++) {
       return [Math.sin(a) * r, h, Math.cos(a) * r];
     },
   });
+  {
+    const corolla = AFRICAN_VIOLET_MODEL.surfaces.at(-1)!;
+    const tips: SpecimenSurface[] = [];
+    for (let i = 0; i < 5; i++) {
+      const a = (i * Math.PI * 2) / 5;
+      tips.push({
+        name: "imbricated corolla apex tissue",
+        cluster: c,
+        role: "petal",
+        thickness: 0.011,
+        sample: (u, v, stage) => {
+          const across = 2 * u - 1,
+            angle = (a + across * 0.68) / (Math.PI * 2),
+            rim = corolla.sample(angle, 1, c === 5 ? stage : 0),
+            width = across * (0.004 + 0.006 * Math.sin(v * Math.PI));
+          // Five real lobe ends continue from the narrow rim and overlap past
+          // its axis; finite distal widths avoid a collapsed parametric pole.
+          const folded: Vec3 = [
+            rim[0] * (1 - v) + v * (-Math.sin(a) * 0.005 + Math.cos(a) * width),
+            rim[1] + (0.025 + i * 0.0008) * v,
+            rim[2] * (1 - v) + v * (-Math.cos(a) * 0.005 - Math.sin(a) * width),
+          ];
+          if (c === 5) return folded;
+          const unfolded = corolla.sample(angle, 0.9 + 0.085 * v, 1);
+          return folded.map(
+            (p, axis) => p * (1 - stage) + unfolded[axis] * stage,
+          ) as Vec3;
+        },
+      });
+    }
+    AFRICAN_VIOLET_MODEL.instances!.push({
+      name: "five imbricated perianth tips",
+      cluster: c,
+      surfaces: tips,
+      organs: [],
+      poses: [
+        {
+          position: [0, 0, 0],
+          rotation: [0, 0, 0],
+          scale: 1,
+          delay: 0,
+          phase: c * 6 * 0.31,
+        },
+      ],
+    });
+  }
   for (let i = 0; i < 5; i++) {
     const a = (i * Math.PI * 2) / 5;
     AFRICAN_VIOLET_MODEL.surfaces.push({

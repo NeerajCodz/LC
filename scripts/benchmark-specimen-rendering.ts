@@ -1,7 +1,10 @@
 import { chromium, webkit, devices, expect } from "@playwright/test";
 import { captureRenderingCost } from "../tests/browser/render-costs";
+import { expectRenderedFlower } from "../tests/browser/pixel-content";
+import { FLOWER_STRUCTURES } from "../lib/flowers/structures";
+import { FLOWER_TYPES, type FlowerType } from "../lib/flowers/types";
 
-// Run against an already started port-1607 server; each sample owns a fresh page.
+// One fresh page per species/device, with warmed specimen and macro samples.
 const species = (process.argv[2] ?? "rose,carnation,foxglove").split(",");
 const targets = (process.argv[3] ?? "desktop,mobile").split(",");
 async function main() {
@@ -15,14 +18,31 @@ async function main() {
           });
     try {
       for (const slug of species) {
+        if (!FLOWER_TYPES.includes(slug as FlowerType))
+          throw new Error(`Unknown specimen: ${slug}`);
+        const expectedDetailed =
+          FLOWER_STRUCTURES[slug as FlowerType].simulatedSurfaces === true;
         const page = await browser.newPage(
           target === "mobile"
             ? devices["iPhone 13"]
             : { viewport: { width: 1600, height: 1000 } },
         );
         const errors: string[] = [];
+        // tsx preserves local callback names using this helper; evaluated browser
+        // callbacks do not inherit the Node module's compiler-generated scope.
+        await page.addInitScript(
+          "globalThis.__name = (target, value) => Object.defineProperty(target, 'name', { value, configurable: true });",
+        );
+        await page.emulateMedia({ reducedMotion: "no-preference" });
         page.setDefaultTimeout(120000);
         page.on("pageerror", (e) => errors.push(e.message));
+        page.on("console", (message) => {
+          if (
+            message.type() === "error" &&
+            /shader|WebGLProgram/.test(message.text())
+          )
+            errors.push(message.text());
+        });
         await page.addInitScript(() =>
           Object.defineProperty(navigator, "gpu", {
             value: undefined,
@@ -50,7 +70,23 @@ async function main() {
             await page
               .getByRole("button", { name: "Explore close-up", exact: true })
               .click();
+          await expectRenderedFlower(canvas, 0.007);
           const cost = await captureRenderingCost(canvas);
+          expect(cost.contextLost).toBe(false);
+          expect(errors).toEqual([]);
+          expect(Number.isFinite(cost.fps) && cost.fps > 0).toBe(true);
+          expect(cost.budget).toBe(target === "mobile" ? "mobile" : "desktop");
+          expect(cost.tissue).toBe("webgl");
+          expect(cost.lighting).toBe("webgl");
+          if (expectedDetailed) {
+            expect(cost.physics).toBe("detailed");
+            expect(cost.nodes).toBeGreaterThan(0);
+            expect(cost.nodes).toBeLessThanOrEqual(
+              target === "mobile" ? 512 : 2048,
+            );
+            expect(cost.solverSteps).toBeGreaterThan(0);
+            expect(cost.solverStepDelta).toBeGreaterThan(0);
+          }
           const sample = {
             target,
             slug,
@@ -76,7 +112,7 @@ async function main() {
       {
         timestamp: new Date().toISOString(),
         scope:
-          "Playwright emulation; drawn frames include solver, texture transfer and rendering; optional WebGPU disabled",
+          "Playwright emulation; approximate R3F advance cadence through 30-frame bins and 50ms polling/RPC; each view warms at least 60 new advances then samples 120; live solver/CPU texture preparation counters become EWMA after 60 calls and carry across views; optional WebGPU disabled",
         results,
       },
       null,

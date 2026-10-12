@@ -28,10 +28,10 @@
     "variety": 23147
   },
   "familyHeadings": 430,
-  "matchedAuthoredStudies": 52,
-  "catalogStudies": 56,
+  "matchedAuthoredStudies": 62,
+  "catalogStudies": 66,
   "exactBiologicalSimulationVerified": false,
-  "documentSha256": "00172e5fc34aef095c8a29bd7e0c5a3539851518d98be7f8165217ee363fd0e0",
-  "catalogSha256": "fbeda5980f11819d9317f806f2987b9dd8cece0dde6b1082089caf6917fe69a4",
+  "documentSha256": "5c384bbd2a950952b81d7062cce4864e520a74068010a471fbaea2386fa1f71a",
+  "catalogSha256": "ec72c60e05e67c39440109b3f49ace6a53299372dcb3c865a1eddc6b9404b888",
   "archiveSha256": "75f1ad1f371978c9e46f3044152c07ed276fe57be9fb9a15b3621b19cf231987"
 }

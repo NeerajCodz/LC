@@ -5,6 +5,7 @@ export const TISSUE_RESPONSE: Record<
   string,
   { roughness: number; sheen: number; coat: number; scatter: number }
 > = {
+  wisteria: { roughness: 0.65, sheen: 0.21, coat: 0.012, scatter: 0.058 },
   bluebell: { roughness: 0.5, sheen: 0.23, coat: 0.035, scatter: 0.075 },
   "african-violet": { roughness: 0.74, sheen: 0.23, coat: 0, scatter: 0.048 },
   pansy: { roughness: 0.73, sheen: 0.2, coat: 0.005, scatter: 0.058 },
@@ -35,6 +36,7 @@ export const TISSUE_RESPONSE: Record<
   zinnia: { roughness: 0.78, sheen: 0.16, coat: 0, scatter: 0.055 },
 };
 export function specimenTissueColor(type: string, tissue?: SpecimenTissue) {
+  if (type === "wisteria" && tissue === "inner") return "#8270b3";
   if (type === "pansy" && tissue === "inner") return "#73519a";
   if (type === "pansy" && tissue === "guide") return "#e2b849";
   if (type === "anemone" && tissue === "disc") return "#29243b";
@@ -53,6 +55,8 @@ export function specimenTissueColor(type: string, tissue?: SpecimenTissue) {
 export function specimenTissueShader(type: string, tissue?: SpecimenTissue) {
   if (tissue === "leaf") return "";
   switch (type) {
+    case "wisteria":
+      return `float wisVein=pow(.5+.5*cos((vPetalUv.y-abs(vPetalUv.x-.5)*.45)*58.),24.); float wisGuide=exp(-pow((vPetalUv.x-.5)*8.,2.))*(1.-smoothstep(.18,.45,vPetalUv.y)); diffuseColor.rgb*=1.-wisVein*.038; diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.86,.76,.44),wisGuide*.38);`;
     case "bluebell":
       return `float bellRib=pow(.5+.5*cos(vPetalUv.x*37.6991118),20.)*sin(vPetalUv.y*3.14159); diffuseColor.rgb*=1.-bellRib*.095;`;
     case "african-violet":

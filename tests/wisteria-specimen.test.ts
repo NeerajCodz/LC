@@ -1,5 +1,14 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { FLOWERS } from "../lib/flowers/catalog";
+import { FLOWER_TYPES } from "../lib/flowers/types";
+test("wisteria: typed catalog preserves its scientific study", () => {
+  assert.ok((FLOWER_TYPES as readonly string[]).includes("wisteria"));
+  assert.equal(
+    FLOWERS.find((f) => (f.type as string) === "wisteria")?.latin,
+    "Wisteria sinensis",
+  );
+});
 import {
   WISTERIA_MODEL,
   WISTERIA_FLOWER_POSITIONS,

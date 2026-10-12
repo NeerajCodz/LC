@@ -59,7 +59,9 @@ import { Cosmos } from "./cosmos/Cosmos";
 import { Pansy } from "./pansy/Pansy";
 import { AfricanViolet } from "./african-violet/AfricanViolet";
 import { Bluebell } from "./bluebell/Bluebell";
+import { Wisteria } from "./wisteria/Wisteria";
 const SPECIES = {
+  wisteria: Wisteria,
   bluebell: Bluebell,
   "african-violet": AfricanViolet,
   pansy: Pansy,

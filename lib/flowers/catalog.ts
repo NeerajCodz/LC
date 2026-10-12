@@ -13,6 +13,16 @@ export interface FlowerInfo {
 
 export const FLOWERS: FlowerInfo[] = [
   {
+    type: "wisteria",
+    name: "Chinese Wisteria",
+    latin: "Wisteria sinensis",
+    family: "Fabaceae",
+    color: "#a08acb",
+    description: "Violet rain.\nA curtain of flowers.",
+    detail:
+      "Sixteen pea-shaped flowers hang from a curved raceme beside pinnate foliage. Banners, wings and paired keels surround enclosed organs; the woody shoot twines around its support.",
+  },
+  {
     type: "bluebell",
     name: "English Bluebell",
     latin: "Hyacinthoides non-scripta",

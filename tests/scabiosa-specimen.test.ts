@@ -21,7 +21,7 @@ import {
   createScabiosaUpperLeaf,
   createScabiosaBasalLeaf,
 } from "../components/flowers/scabiosa/scabiosaLeaf";
-import { specimenCages } from "../lib/three/specimenModel";
+import { specimenCages, specimenGeometry } from "../lib/three/specimenModel";
 import {
   specimenInstanceGeometry,
   updateFloretInstances,
@@ -33,6 +33,9 @@ import {
   Object3D,
   Euler,
   Vector3,
+  Ray,
+  Triangle,
+  Matrix4,
 } from "three";
 import { verifySpecimen } from "./specimen-checks";
 import { petalOpenness } from "../lib/three/easing";
@@ -224,6 +227,198 @@ test("scabiosa: marginal reproductive organs follow the moving corolla insertion
     assert.equal(texture.image.height, group.poses.length);
     texture.dispose();
     mesh.dispose();
+    material.dispose();
+    [...parts.surfaces, ...parts.organs].forEach((g) => g.dispose());
+  }
+});
+
+test("scabiosa: actual finite-width terminal tissue occludes each closed floret apex rather than leaving a pipe mouth", () => {
+  for (const quality of ["overview", "low", "high"] as const) {
+    const outer = specimenInstanceGeometry(
+        SCABIOSA_MODEL.instances![0],
+        quality,
+      ),
+      inner = specimenInstanceGeometry(SCABIOSA_MODEL.instances![1], quality),
+      outerTube = specimenGeometry(SCABIOSA_MODEL.surfaces[0], quality),
+      outerOrigin = new Vector3(
+        ...SCABIOSA_MODEL.instances![0].poses[0].foldedPosition!,
+      ),
+      fixtures = [
+        [
+          ...outer.surfaces.map((geometry) => ({
+            geometry,
+            origin: new Vector3(),
+          })),
+          { geometry: outerTube, origin: outerOrigin },
+        ],
+        inner.surfaces.map((geometry) => ({ geometry, origin: new Vector3() })),
+      ];
+    for (const fixture of fixtures)
+      for (const x of [-0.036, -0.024, -0.012, 0, 0.012, 0.024, 0.036])
+        for (const z of [-0.036, -0.024, -0.012, 0, 0.012, 0.024, 0.036]) {
+          if (Math.hypot(x, z) > 0.039) continue;
+          const ray = new Ray(new Vector3(x, 0.4, z), new Vector3(0, -1, 0)),
+            triangle = new Triangle(),
+            hit = new Vector3();
+          let covered = false;
+          for (const { geometry, origin } of fixture) {
+            const folded = geometry.morphAttributes.position![0],
+              index = geometry.index!.array;
+            for (let i = 0; i < index.length && !covered; i += 3) {
+              triangle.a.fromBufferAttribute(folded, index[i]).sub(origin);
+              triangle.b.fromBufferAttribute(folded, index[i + 1]).sub(origin);
+              triangle.c.fromBufferAttribute(folded, index[i + 2]).sub(origin);
+              if (
+                ray.intersectTriangle(
+                  triangle.a,
+                  triangle.b,
+                  triangle.c,
+                  false,
+                  hit,
+                ) &&
+                hit.y > 0.22
+              )
+                covered = true;
+            }
+          }
+          assert.ok(
+            covered,
+            `${quality}: closed mouth remains open at ${x},${z}`,
+          );
+        }
+    [
+      ...outer.surfaces,
+      ...outer.organs,
+      ...inner.surfaces,
+      ...inner.organs,
+      outerTube,
+    ].forEach((g) => g.dispose());
+  }
+});
+
+test("scabiosa: all five terminal sheets stay finite, sealed and nondegenerate in actual low-cost prototypes", () => {
+  for (const quality of ["overview", "low", "high"] as const)
+    for (const group of SCABIOSA_MODEL.instances!) {
+      assert.equal(
+        group.surfaces.filter(
+          (s) => s.name === "imbricated terminal corolla tissue",
+        ).length,
+        5,
+      );
+      const parts = specimenInstanceGeometry(group, quality);
+      for (let k = 0; k < group.surfaces.length; k++) {
+        if (group.surfaces[k].name !== "imbricated terminal corolla tissue")
+          continue;
+        const geometry = parts.surfaces[k],
+          p = geometry.getAttribute("position"),
+          folded = geometry.morphAttributes.position![0],
+          index = geometry.index!.array,
+          triangle = new Triangle(),
+          temp = new Vector3(),
+          edges = new Map<string, number>();
+        for (const normal of [
+          geometry.getAttribute("normal"),
+          geometry.morphAttributes.normal![0],
+        ])
+          for (let i = 0; i < normal.count; i++)
+            assert.ok(
+              Math.abs(
+                Math.hypot(normal.getX(i), normal.getY(i), normal.getZ(i)) - 1,
+              ) < 0.002,
+            );
+        for (let i = 0; i < index.length; i += 3)
+          for (let j = 0; j < 3; j++) {
+            const a = index[i + j],
+              b = index[i + ((j + 1) % 3)],
+              key = a < b ? `${a}:${b}` : `${b}:${a}`;
+            edges.set(key, (edges.get(key) ?? 0) + 1);
+          }
+        assert.ok([...edges.values()].every((count) => count === 2));
+        for (const open of [0, 0.5, 1]) {
+          const vertex = (i: number, output: Vector3) =>
+            output
+              .fromBufferAttribute(folded, i)
+              .lerp(temp.fromBufferAttribute(p, i), open);
+          for (let i = 0; i < index.length; i += 3) {
+            vertex(index[i], triangle.a);
+            vertex(index[i + 1], triangle.b);
+            vertex(index[i + 2], triangle.c);
+            assert.ok(
+              triangle.getArea() > 5e-12,
+              `terminal sheet degenerates at bloom ${open}`,
+            );
+          }
+        }
+      }
+      [...parts.surfaces, ...parts.organs].forEach((g) => g.dispose());
+    }
+});
+
+test("scabiosa: every instanced tip root stays with its enclosing floret through reverse bloom and ambient bend", () => {
+  for (
+    let groupIndex = 0;
+    groupIndex < SCABIOSA_MODEL.instances!.length;
+    groupIndex++
+  ) {
+    const group = SCABIOSA_MODEL.instances![groupIndex],
+      parts = specimenInstanceGeometry(group, "low"),
+      material = new MeshStandardMaterial();
+    for (let k = 0; k < group.surfaces.length; k++) {
+      if (group.surfaces[k].name !== "imbricated terminal corolla tissue")
+        continue;
+      const tip = groupIndex === 0 ? k : k - 1,
+        geometry = parts.surfaces[k],
+        p = geometry.getAttribute("position"),
+        folded = geometry.morphAttributes.position![0],
+        half = p.count / 2,
+        mesh = new InstancedMesh(geometry, material, group.poses.length),
+        target = new Mesh(geometry, material),
+        dummy = new Object3D(),
+        matrix = new Matrix4();
+      for (const bloom of [0, 0.5, 1, 0.5, 0])
+        for (const wind of [0, 1]) {
+          updateFloretInstances(
+            mesh,
+            target,
+            group.poses,
+            bloom,
+            7,
+            wind,
+            wind === 0,
+            dummy,
+          );
+          group.poses.forEach((pose, i) => {
+            mesh.getMatrixAt(i, matrix);
+            mesh.getMorphAt(i, target);
+            const weight = target.morphTargetInfluences![0],
+              open = petalOpenness(bloom, pose.delay, pose.phase),
+              root = new Vector3()
+                .fromBufferAttribute(p, 3)
+                .add(new Vector3().fromBufferAttribute(p, 3 + half))
+                .multiplyScalar(0.5),
+              closed = new Vector3()
+                .fromBufferAttribute(folded, 3)
+                .add(new Vector3().fromBufferAttribute(folded, 3 + half))
+                .multiplyScalar(0.5);
+            root.lerp(closed, weight).applyMatrix4(matrix);
+            const expected =
+              groupIndex === 0
+                ? new Vector3(
+                    ...SCABIOSA_MODEL.surfaces[i].sample(tip / 5, 1, open),
+                  )
+                : new Vector3(
+                    ...scabiosaCorolla(tip / 5, 1, open),
+                  ).applyMatrix4(matrix);
+            assert.ok(
+              root.distanceTo(expected) <
+                (groupIndex === 0 && wind ? 0.0035 : 1e-6),
+              `tip ${tip}, floret ${i}, bloom ${bloom} drifts from its carrier`,
+            );
+          });
+        }
+      mesh.morphTexture?.dispose();
+      mesh.dispose();
+    }
     material.dispose();
     [...parts.surfaces, ...parts.organs].forEach((g) => g.dispose());
   }

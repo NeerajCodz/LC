@@ -59,6 +59,52 @@ export function scabiosaCorolla(u: number, v: number, open: number): Vec3 {
   return [Math.sin(angle) * radius, height, Math.cos(angle) * radius];
 }
 
+/** Five real finite-width corolla apices overlap in the bud and extend their mature lobes. */
+export const SCABIOSA_TERMINAL_TISSUE: SpecimenSurface[] = Array.from(
+  { length: 5 },
+  (_, i) => {
+    const direction = (i * Math.PI * 2) / 5;
+    return {
+      name: "imbricated terminal corolla tissue",
+      cluster: 0,
+      role: "petal",
+      thickness: 0.005,
+      sample: (u, v, open) => {
+        const across = 2 * u - 1,
+          angle = direction + across * 0.7,
+          rootClosed = scabiosaCorolla(angle / (Math.PI * 2), 1, 0),
+          rootOpen = scabiosaCorolla(angle / (Math.PI * 2), 1, 1),
+          axial = 0.043 * Math.cos(across * 0.7) * (1 - v) - 0.016 * v,
+          width =
+            0.043 * Math.sin(across * 0.7) * (1 - v) +
+            across * (0.012 + 0.007 * Math.sin(Math.PI * v)) * v,
+          closed: Vec3 = [
+            Math.sin(direction) * axial + Math.cos(direction) * width,
+            rootClosed[1] +
+              0.044 * Math.sin((v * Math.PI) / 2) +
+              0.0011 * i * v +
+              0.006 * across ** 2 * v,
+            Math.cos(direction) * axial - Math.sin(direction) * width,
+          ],
+          radial = Math.hypot(rootOpen[0], rootOpen[2]) + 0.014 * v,
+          full: Vec3 = [
+            Math.sin(angle) * radial,
+            rootOpen[1] -
+              0.018 * v +
+              0.01 * Math.sin(Math.PI * v) +
+              0.006 * across ** 2 * Math.sin(Math.PI * v),
+            Math.cos(angle) * radial,
+          ];
+        return [
+          closed[0] + (full[0] - closed[0]) * open,
+          closed[1] + (full[1] - closed[1]) * open,
+          closed[2] + (full[2] - closed[2]) * open,
+        ];
+      },
+    };
+  },
+);
+
 function marginPoint(index: number, [x, y, z]: Vec3, open: number): Vec3 {
   const pose = SCABIOSA_MARGIN_POSES[index],
     angle = pose.rotation[1],
@@ -240,14 +286,20 @@ export const SCABIOSA_MODEL: SpecimenModel = {
     {
       name: "marginal four-stamen florets",
       cluster: 0,
-      surfaces: [],
+      surfaces: SCABIOSA_TERMINAL_TISSUE,
       organs: fineOrgans,
       poses: SCABIOSA_MARGIN_POSES,
     },
     {
       name: "smaller central four-stamen florets",
       cluster: 0,
-      surfaces: [innerCorolla],
+      surfaces: [
+        innerCorolla,
+        ...SCABIOSA_TERMINAL_TISSUE.map((surface) => ({
+          ...surface,
+          tissue: "inner" as const,
+        })),
+      ],
       organs: fineOrgans,
       poses: SCABIOSA_INNER_POSES,
     },

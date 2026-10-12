@@ -21,6 +21,14 @@ export interface FoliageProfile {
 
 /** Cultivar-independent leaf traits; lotus has its own peltate blade generator. */
 export const FOLIAGE: Record<FlowerType, FoliageProfile> = {
+  canna: {
+    length: 1.66,
+    width: 0.39,
+    color: "#406d44",
+    thickness: 0.021,
+    parallel: true,
+    roughness: 0.54,
+  },
   amaryllis: {
     length: 2.35,
     width: 0.165,

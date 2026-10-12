@@ -30,6 +30,15 @@ const palette = (
 });
 
 export const PETAL_PALETTES: Record<FlowerType, PetalPalette> = {
+  canna: {
+    root: "#e8a146",
+    body: "#d93a24",
+    tip: "#ed6840",
+    vein: "#a82d25",
+    rootFalloff: 0.25,
+    tipStart: 0.84,
+    veinStrength: 0.035,
+  },
   amaryllis: {
     root: "#bdcc8e",
     body: "#e06c43",

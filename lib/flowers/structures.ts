@@ -79,7 +79,9 @@ import { bottlebrushStructure } from "../../components/flowers/bottlebrush/Bottl
 import { scabiosaStructure } from "../../components/flowers/scabiosa/Scabiosa";
 import { hyacinthStructure } from "../../components/flowers/hyacinth/Hyacinth";
 import { amaryllisStructure } from "../../components/flowers/amaryllis/Amaryllis";
+import { cannaStructure } from "../../components/flowers/canna/Canna";
 export const FLOWER_STRUCTURES: Record<FlowerType, FlowerStructure> = {
+  canna: cannaStructure,
   amaryllis: amaryllisStructure,
   hyacinth: hyacinthStructure,
   scabiosa: scabiosaStructure,

@@ -542,3 +542,18 @@ function verifyNeck(
     g.dispose();
   }
 }
+
+test("canna is complete throughout the typed botanical catalog", async () => {
+  const { FLOWER_TYPES } = await import("../lib/flowers/types");
+  const { getFlower } = await import("../lib/flowers/catalog");
+  const { FLOWER_STRUCTURES } = await import("../lib/flowers/structures");
+  const { WIND_PROFILES } = await import("../lib/flowers/wind");
+  const type = FLOWER_TYPES.find((t) => String(t) === "canna");
+  assert.ok(type, "canna catalog integration is missing");
+  assert.equal(getFlower(type).latin, "Canna indica");
+  assert.equal(FLOWER_STRUCTURES[type].simulatedSurfaces, true);
+  assert.equal(FLOWER_STRUCTURES[type].airbornePollen, false);
+  assert.equal(FLOWER_STRUCTURES[type].layers.length, 0);
+  assert.ok(FLOWER_STRUCTURES[type].leafCount > 0);
+  assert.ok(WIND_PROFILES[type].compliance > 0);
+});

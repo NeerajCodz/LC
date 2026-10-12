@@ -13,6 +13,16 @@ export interface FlowerInfo {
 
 export const FLOWERS: FlowerInfo[] = [
   {
+    type: "canna",
+    name: "Canna",
+    latin: "Canna indica",
+    family: "Cannaceae",
+    color: "#d93a24",
+    description: "Red ribbons in summer.\nBroad leaves beneath.",
+    detail:
+      "Narrow true petals sit beneath petaloid staminodes and a reflexed lip. A single fertile half-stamen and flat style distinguish each asymmetric Canna flower, above broad sheathing leaves.",
+  },
+  {
     type: "amaryllis",
     name: "Amaryllis",
     latin: "Hippeastrum puniceum",

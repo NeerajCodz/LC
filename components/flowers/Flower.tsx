@@ -64,7 +64,9 @@ import { Bottlebrush } from "./bottlebrush/Bottlebrush";
 import { Scabiosa } from "./scabiosa/Scabiosa";
 import { Hyacinth } from "./hyacinth/Hyacinth";
 import { Amaryllis } from "./amaryllis/Amaryllis";
+import { Canna } from "./canna/Canna";
 const SPECIES = {
+  canna: Canna,
   amaryllis: Amaryllis,
   hyacinth: Hyacinth,
   scabiosa: Scabiosa,

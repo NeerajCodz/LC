@@ -25,6 +25,7 @@ import { useThree } from "@react-three/fiber";
 import { FloretInstances } from "./FloretInstances";
 import { OverviewSurfaces, type OverviewDraw } from "./OverviewSurfaces";
 import { surfaceBatchGroups } from "@/lib/three/surfaceBatch";
+import { specimenPressTarget } from "@/lib/three/specimenMotion";
 
 /** Dedicated anatomy shares only rendering and cage transfer, not its shape. */
 export function SpecimenAssembly({
@@ -124,10 +125,7 @@ export function SpecimenAssembly({
     };
   }, [canvas, resources]);
   useActiveFrame(() => {
-    const touch = interaction?.current,
-      press = reducedMotion
-        ? 0
-        : (touch?.proximity ?? 0) * 0.24 + (pulse?.current ?? 0) * 0.35;
+    const touch = interaction?.current;
     const articulationDt = articulationClock.current.delta(
       time.current,
       reducedMotion,
@@ -135,19 +133,6 @@ export function SpecimenAssembly({
     model.clusters.forEach((c, i) => {
       const group = groups.current[i];
       if (!group) return;
-      const point = touch?.point,
-        near = point
-          ? Math.max(
-              0,
-              1 -
-                Math.hypot(
-                  point[0] - c.position[0],
-                  point[1] - c.position[1],
-                  point[2] - c.position[2],
-                ) /
-                  1.2,
-            )
-          : 1;
       const spring = articulation.current[i];
       if (reducedMotion) {
         spring.value = 0;
@@ -155,7 +140,13 @@ export function SpecimenAssembly({
       } else
         stepSpring(
           spring,
-          Math.max(-0.25, Math.min(0.35, press * near)),
+          specimenPressTarget(
+            c.position,
+            touch?.point,
+            touch?.proximity ?? 0,
+            pulse?.current ?? 0,
+            reducedMotion,
+          ),
           articulationDt,
           65,
         );

@@ -5,6 +5,7 @@ export const TISSUE_RESPONSE: Record<
   string,
   { roughness: number; sheen: number; coat: number; scatter: number }
 > = {
+  scabiosa: { roughness: 0.74, sheen: 0.17, coat: 0.003, scatter: 0.063 },
   bottlebrush: { roughness: 0.61, sheen: 0.12, coat: 0.015, scatter: 0.032 },
   wisteria: { roughness: 0.65, sheen: 0.21, coat: 0.012, scatter: 0.058 },
   bluebell: { roughness: 0.5, sheen: 0.23, coat: 0.035, scatter: 0.075 },
@@ -37,6 +38,7 @@ export const TISSUE_RESPONSE: Record<
   zinnia: { roughness: 0.78, sheen: 0.16, coat: 0, scatter: 0.055 },
 };
 export function specimenTissueColor(type: string, tissue?: SpecimenTissue) {
+  if (type === "scabiosa" && tissue === "inner") return "#9483bd";
   if (type === "bottlebrush" && tissue === "inner") return "#d0c0a0";
   if (type === "wisteria" && tissue === "inner") return "#8270b3";
   if (type === "pansy" && tissue === "inner") return "#73519a";
@@ -57,6 +59,8 @@ export function specimenTissueColor(type: string, tissue?: SpecimenTissue) {
 export function specimenTissueShader(type: string, tissue?: SpecimenTissue) {
   if (tissue === "leaf") return "";
   switch (type) {
+    case "scabiosa":
+      return `float scaThroat=1.-smoothstep(.25,.64,vPetalUv.y); float scaVein=pow(.5+.5*cos(vPetalUv.x*31.416),24.)*smoothstep(.35,.77,vPetalUv.y); diffuseColor.rgb*=1.-scaVein*.075; diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.65,.60,.76),scaThroat*.24);`;
     case "bottlebrush":
       return `float botVein=pow(.5+.5*cos(vPetalUv.x*38.+vPetalUv.y*6.),23.); diffuseColor.rgb*=1.-botVein*.034;`;
     case "wisteria":

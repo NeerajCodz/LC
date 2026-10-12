@@ -30,6 +30,15 @@ const palette = (
 });
 
 export const PETAL_PALETTES: Record<FlowerType, PetalPalette> = {
+  scabiosa: {
+    root: "#7771a5",
+    body: "#a193c9",
+    tip: "#d4c5e9",
+    vein: "#8175ad",
+    rootFalloff: 0.22,
+    tipStart: 0.81,
+    veinStrength: 0.08,
+  },
   bottlebrush: {
     root: "#96313a",
     body: "#c82e3c",

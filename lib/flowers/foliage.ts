@@ -21,6 +21,16 @@ export interface FoliageProfile {
 
 /** Cultivar-independent leaf traits; lotus has its own peltate blade generator. */
 export const FOLIAGE: Record<FlowerType, FoliageProfile> = {
+  scabiosa: {
+    length: 0.84,
+    width: 0.19,
+    color: "#5c7e50",
+    opposite: true,
+    lobes: 5,
+    depth: 0.86,
+    thickness: 0.009,
+    roughness: 0.74,
+  },
   bottlebrush: {
     length: 0.79,
     width: 0.07,

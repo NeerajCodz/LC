@@ -61,7 +61,9 @@ import { AfricanViolet } from "./african-violet/AfricanViolet";
 import { Bluebell } from "./bluebell/Bluebell";
 import { Wisteria } from "./wisteria/Wisteria";
 import { Bottlebrush } from "./bottlebrush/Bottlebrush";
+import { Scabiosa } from "./scabiosa/Scabiosa";
 const SPECIES = {
+  scabiosa: Scabiosa,
   bottlebrush: Bottlebrush,
   wisteria: Wisteria,
   bluebell: Bluebell,

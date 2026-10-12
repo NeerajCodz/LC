@@ -13,6 +13,16 @@ export interface FlowerInfo {
 
 export const FLOWERS: FlowerInfo[] = [
   {
+    type: "scabiosa",
+    name: "Pincushion Flower",
+    latin: "Scabiosa columbaria",
+    family: "Caprifoliaceae",
+    color: "#a193c9",
+    description: "A lilac pincushion.\nTiny flowers, raised anthers.",
+    detail:
+      "Unequal five-lobed marginal flowers surround smaller central florets. Four protruding stamens per flower form a lilac pincushion, above opposite divided leaves.",
+  },
+  {
     type: "bottlebrush",
     name: "Crimson Bottlebrush",
     latin: "Melaleuca citrina",

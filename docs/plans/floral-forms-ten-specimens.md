@@ -1,7 +1,9 @@
 # Ten additional floral forms implementation plan
 
-> Implement inline, following the established approved specimen workflow and the
-> user's same-folder preference. Do not delegate without user authorization.
+> Follow the established approved specimen workflow and the user's same-folder
+> preference. The user explicitly authorized parallel subagents with ultra reasoning;
+> specimen owners work on separate files while integration, commits and browser checks
+> remain coordinated here.
 
 **Goal:** Add the accepted Pansy, African Violet, Bluebell, Hyacinth, Amaryllis,
 Canna, Agapanthus, Wisteria, Bottlebrush and Scabiosa studies to Living Colors.
@@ -17,55 +19,55 @@ E:/codz/Projects/lc on the new feat branch naming all ten accepted slugs.
 ## Coherent slices
 
 - [x] 1. Research dossiers, provenance and this plan.
-- [ ] 2. Pansy: dedicated pansyGeometry.ts model plus anatomy, sealed
+- [x] 2. Pansy: dedicated pansyGeometry.ts model plus anatomy, sealed
       geometry, normal, transition and cage-budget tests.
-- [ ] 3. Pansy: Pansy.tsx, dedicated foliage module, optical response,
+- [x] 3. Pansy: Pansy.tsx, dedicated foliage module, optical response,
       pigments and exhaustive FlowerType/catalog/structure/wind registration.
-- [ ] 4. African Violet: dedicated africanVioletGeometry.ts model plus anatomy, sealed
+- [x] 4. African Violet: dedicated africanVioletGeometry.ts model plus anatomy, sealed
       geometry, normal, transition and cage-budget tests.
-- [ ] 5. African Violet: AfricanViolet.tsx, dedicated foliage module, optical response,
+- [x] 5. African Violet: AfricanViolet.tsx, dedicated foliage module, optical response,
       pigments and exhaustive FlowerType/catalog/structure/wind registration.
-- [ ] 6. English Bluebell: dedicated bluebellGeometry.ts model plus anatomy, sealed
+- [x] 6. English Bluebell: dedicated bluebellGeometry.ts model plus anatomy, sealed
       geometry, normal, transition and cage-budget tests.
-- [ ] 7. English Bluebell: Bluebell.tsx, dedicated foliage module, optical response,
+- [x] 7. English Bluebell: Bluebell.tsx, dedicated foliage module, optical response,
       pigments and exhaustive FlowerType/catalog/structure/wind registration.
-- [ ] 8. Hyacinth: dedicated hyacinthGeometry.ts model plus anatomy, sealed
+- [x] 8. Hyacinth: dedicated hyacinthGeometry.ts model plus anatomy, sealed
       geometry, normal, transition and cage-budget tests.
-- [ ] 9. Hyacinth: Hyacinth.tsx, dedicated foliage module, optical response,
+- [x] 9. Hyacinth: Hyacinth.tsx, dedicated foliage module, optical response,
       pigments and exhaustive FlowerType/catalog/structure/wind registration.
-- [ ] 10. Amaryllis: dedicated amaryllisGeometry.ts model plus anatomy, sealed
+- [x] 10. Amaryllis: dedicated amaryllisGeometry.ts model plus anatomy, sealed
       geometry, normal, transition and cage-budget tests.
-- [ ] 11. Amaryllis: Amaryllis.tsx, dedicated foliage module, optical response,
+- [x] 11. Amaryllis: Amaryllis.tsx, dedicated foliage module, optical response,
       pigments and exhaustive FlowerType/catalog/structure/wind registration.
-- [ ] 12. Canna: dedicated cannaGeometry.ts model plus anatomy, sealed
+- [x] 12. Canna: dedicated cannaGeometry.ts model plus anatomy, sealed
       geometry, normal, transition and cage-budget tests.
-- [ ] 13. Canna: Canna.tsx, dedicated foliage module, optical response,
+- [x] 13. Canna: Canna.tsx, dedicated foliage module, optical response,
       pigments and exhaustive FlowerType/catalog/structure/wind registration.
-- [ ] 14. Agapanthus: dedicated agapanthusGeometry.ts model plus anatomy, sealed
+- [x] 14. Agapanthus: dedicated agapanthusGeometry.ts model plus anatomy, sealed
       geometry, normal, transition and cage-budget tests.
-- [ ] 15. Agapanthus: Agapanthus.tsx, dedicated foliage module, optical response,
+- [x] 15. Agapanthus: Agapanthus.tsx, dedicated foliage module, optical response,
       pigments and exhaustive FlowerType/catalog/structure/wind registration.
-- [ ] 16. Chinese Wisteria: dedicated wisteriaGeometry.ts model plus anatomy, sealed
+- [x] 16. Chinese Wisteria: dedicated wisteriaGeometry.ts model plus anatomy, sealed
       geometry, normal, transition and cage-budget tests.
-- [ ] 17. Chinese Wisteria: Wisteria.tsx, dedicated foliage module, optical response,
+- [x] 17. Chinese Wisteria: Wisteria.tsx, dedicated foliage module, optical response,
       pigments and exhaustive FlowerType/catalog/structure/wind registration.
-- [ ] 18. Crimson Bottlebrush: dedicated bottlebrushGeometry.ts model plus anatomy, sealed
+- [x] 18. Crimson Bottlebrush: dedicated bottlebrushGeometry.ts model plus anatomy, sealed
       geometry, normal, transition and cage-budget tests.
-- [ ] 19. Crimson Bottlebrush: Bottlebrush.tsx, dedicated foliage module, optical response,
+- [x] 19. Crimson Bottlebrush: Bottlebrush.tsx, dedicated foliage module, optical response,
       pigments and exhaustive FlowerType/catalog/structure/wind registration.
-- [ ] 20. Pincushion Flower: dedicated scabiosaGeometry.ts model plus anatomy, sealed
+- [x] 20. Pincushion Flower: dedicated scabiosaGeometry.ts model plus anatomy, sealed
       geometry, normal, transition and cage-budget tests.
-- [ ] 21. Pincushion Flower: Scabiosa.tsx, dedicated foliage module, optical response,
+- [x] 21. Pincushion Flower: Scabiosa.tsx, dedicated foliage module, optical response,
       pigments and exhaustive FlowerType/catalog/structure/wind registration.
-- [ ] 22. Whole-plant transformed contact, reverse bloom, reduced-motion and
+- [x] 22. Whole-plant transformed contact, reverse bloom, reduced-motion and
       supported-vine attachment coverage across the ten models.
-- [ ] 23. Catalog-derived framing, both garden layouts, collection/search,
+- [x] 23. Catalog-derived framing, both garden layouts, collection/search,
       taxonomy mapping and overview budget review.
-- [ ] 24. Browser coverage for routes, controls, actual pixels, full collection,
+- [x] 24. Browser coverage for routes, controls, actual pixels, full collection,
       selection, retained scenes and renderer failure/retry in both engines.
-- [ ] 25. Front/side/45-degree/macro/bud/half/full inspection against the dossiers
+- [x] 25. Front/side/45-degree/macro/bud/half/full inspection against the dossiers
       and Rose; correct geometry/pigments found wanting in genuine fix commits.
-- [ ] 26. Generated inventory, API docs, measured cost and complete validation
+- [x] 26. Generated inventory, API docs, measured cost and complete validation
       record; publish a separate PR for review, without merging it.
 
 ## Interfaces and gates

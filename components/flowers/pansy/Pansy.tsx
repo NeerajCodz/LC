@@ -28,6 +28,7 @@ export const pansyStructure: FlowerStructure = {
   ...BASE_STRUCTURE,
   layers: [],
   headRadius: 1.22,
+  portraitBounds: { min: [-1.05, -1.34, -0.85], max: [1.05, 1.4, 1.05] },
   headCenter: [0, 0.36, 0.15],
   headTilt: 0,
   stemLength: 1.3,

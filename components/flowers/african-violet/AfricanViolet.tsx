@@ -35,6 +35,7 @@ export const africanVioletStructure: FlowerStructure = {
   ...BASE_STRUCTURE,
   layers: [],
   headRadius: 0.97,
+  portraitBounds: { min: [-0.9, -0.58, -0.9], max: [0.9, 0.85, 0.9] },
   headCenter: [0, 0.2, 0.09],
   headTilt: 0,
   stemLength: 0.54,

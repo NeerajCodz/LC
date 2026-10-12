@@ -18,8 +18,9 @@ import {
 export const bottlebrushStructure: FlowerStructure = {
   ...BASE_STRUCTURE,
   layers: [],
-  headRadius: 1.3,
+  headRadius: 1.6,
   headCenter: [0, 0.89, 0],
+  portraitBounds: { min: [-0.85, -2.9, -0.85], max: [0.85, 2.5, 0.85] },
   previewScale: 1.18,
   headTilt: 0,
   stemLength: BOTTLEBRUSH_STEM_LENGTH,

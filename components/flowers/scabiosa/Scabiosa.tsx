@@ -13,6 +13,7 @@ export const scabiosaStructure: FlowerStructure = {
   ...BASE_STRUCTURE,
   layers: [],
   headRadius: 0.94,
+  portraitBounds: { min: [-1.15, -2.46, -1.15], max: [1.15, 1.0, 1.15] },
   headCenter: SCABIOSA_HEAD_CENTER,
   previewScale: 1.03,
   headTilt: 0,

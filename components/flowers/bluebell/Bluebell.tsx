@@ -22,6 +22,7 @@ export const bluebellStructure: FlowerStructure = {
   ...BASE_STRUCTURE,
   layers: [],
   headRadius: 1.32,
+  portraitBounds: { min: [-0.8, -1.84, -0.95], max: [0.95, 1.5, 0.95] },
   headCenter: [0.43, 0.58, 0.2],
   headTilt: 0,
   stemLength: 1.8,

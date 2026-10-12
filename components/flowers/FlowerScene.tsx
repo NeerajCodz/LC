@@ -129,6 +129,7 @@ export default function FlowerScene({
       </Suspense>
       <CameraRig
         specimenTarget={specimenTarget}
+        specimenStructure={FLOWER_STRUCTURES[type]}
         specimenScale={FLOWER_STRUCTURES[type].previewScale ?? 1}
         macro={macro}
         reducedMotion={reducedMotion}

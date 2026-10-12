@@ -1,8 +1,9 @@
-import { useEffect, useRef, type ComponentRef } from "react";
+import { useEffect, useMemo, useRef, type ComponentRef } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import { Vector3 } from "three";
-import type { Vec3 } from "@/lib/flowers/types";
+import type { FlowerStructure, Vec3 } from "@/lib/flowers/types";
+import { flowerPortraitPose } from "@/lib/flowers/framing";
 export type ViewAngle = "portrait" | "front" | "side" | "three-quarter";
 export function CameraRig({
   macro = false,
@@ -14,6 +15,7 @@ export function CameraRig({
   focusScale = 1,
   specimenTarget,
   specimenScale = 1,
+  specimenStructure,
   reset = 0,
 }: {
   macro?: boolean;
@@ -26,6 +28,7 @@ export function CameraRig({
   focusScale?: number;
   specimenTarget?: Vec3;
   specimenScale?: number;
+  specimenStructure?: FlowerStructure;
   reset?: number;
 }) {
   const controls = useRef<ComponentRef<typeof OrbitControls>>(null);
@@ -37,8 +40,37 @@ export function CameraRig({
   const x = target?.[0],
     y = target?.[1],
     z = target?.[2];
+  const portrait = useMemo(() => {
+    if (focus || garden || macro || !specimenStructure) return undefined;
+    const azimuth =
+      angle === "side"
+        ? Math.PI / 2
+        : angle === "three-quarter"
+          ? Math.PI / 4
+          : 0;
+    return flowerPortraitPose(
+      specimenStructure,
+      [0, -1.78, 0],
+      size.width / size.height,
+      38,
+      azimuth,
+      size.width >= 700,
+    );
+  }, [focus, garden, macro, specimenStructure, angle, size.width, size.height]);
   useEffect(() => {
     const mobile = size.width < 700;
+    const azimuth =
+      angle === "side"
+        ? Math.PI / 2
+        : angle === "three-quarter"
+          ? Math.PI / 4
+          : 0;
+    if (portrait) {
+      destination.current.set(...portrait.position);
+      lookAt.current.set(...portrait.target);
+      transitioning.current = true;
+      return;
+    }
     const distance = focus
       ? focusScale * (mobile ? 7 : 4.2)
       : garden
@@ -49,12 +81,6 @@ export function CameraRig({
           : mobile
             ? 6.8 * specimenScale
             : 6.15 * specimenScale;
-    const azimuth =
-      angle === "side"
-        ? Math.PI / 2
-        : angle === "three-quarter"
-          ? Math.PI / 4
-          : 0;
     lookAt.current.set(
       x ?? (garden || macro || mobile ? 0 : -0.75),
       y ?? (garden ? -0.9 : macro ? 0.55 : -0.14),
@@ -81,6 +107,8 @@ export function CameraRig({
     z,
     focusScale,
     specimenScale,
+    specimenStructure,
+    portrait,
     reset,
     focus,
     gardenDistance,
@@ -104,7 +132,18 @@ export function CameraRig({
       rotateSpeed={0.65}
       zoomSpeed={0.7}
       minDistance={focus ? focusScale * 1.4 : 1.2}
-      maxDistance={garden ? Math.max(30, (gardenDistance ?? 14) * 1.8) : 15}
+      maxDistance={
+        garden
+          ? Math.max(30, (gardenDistance ?? 14) * 1.8)
+          : portrait
+            ? Math.max(
+                15,
+                Math.hypot(
+                  ...portrait.position.map((v, i) => v - portrait.target[i]),
+                ) * 1.8,
+              )
+            : 15
+      }
       minPolarAngle={0.08}
       maxPolarAngle={Math.PI * 0.87}
       onStart={() => {

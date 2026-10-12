@@ -18,6 +18,7 @@ export const wisteriaStructure: FlowerStructure = {
   ...BASE_STRUCTURE,
   layers: [],
   headRadius: 1.34,
+  portraitBounds: { min: [-1.3, -3.44, -1.3], max: [1.3, 0.6, 1.3] },
   headCenter: [0, -0.82, 0.03],
   previewScale: 1.5,
   headTilt: 0,

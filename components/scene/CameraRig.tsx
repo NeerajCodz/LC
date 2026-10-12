@@ -1,9 +1,12 @@
 import { useEffect, useMemo, useRef, type ComponentRef } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
-import { Vector3 } from "three";
+import { Fog, PerspectiveCamera, Vector3 } from "three";
 import type { FlowerStructure, Vec3 } from "@/lib/flowers/types";
-import { flowerPortraitPose } from "@/lib/flowers/framing";
+import {
+  flowerPortraitPose,
+  flowerPortraitVisibility,
+} from "@/lib/flowers/framing";
 export type ViewAngle = "portrait" | "front" | "side" | "three-quarter";
 export function CameraRig({
   macro = false,
@@ -36,6 +39,7 @@ export function CameraRig({
   const lookAt = useRef(new Vector3());
   const transitioning = useRef(true);
   const { size, gl } = useThree();
+  const resetVisibility = useRef(false);
   const target = focus ?? (macro ? specimenTarget : undefined);
   const x = target?.[0],
     y = target?.[1],
@@ -57,6 +61,18 @@ export function CameraRig({
       size.width >= 700,
     );
   }, [focus, garden, macro, specimenStructure, angle, size.width, size.height]);
+  const visibility = useMemo(
+    () =>
+      portrait && specimenStructure
+        ? flowerPortraitVisibility(specimenStructure, portrait, [0, -1.78, 0])
+        : undefined,
+    [portrait, specimenStructure],
+  );
+  useEffect(() => {
+    if (visibility) resetVisibility.current = true;
+    // Keep the widened envelope during a macro or legacy-specimen transition.
+    // Once it completes, explicitly restore defaults on the retained scene.
+  }, [visibility]);
   useEffect(() => {
     const mobile = size.width < 700;
     const azimuth =
@@ -113,14 +129,45 @@ export function CameraRig({
     focus,
     gardenDistance,
   ]);
-  useFrame(({ camera }, dt) => {
-    if (!transitioning.current || !controls.current) return;
-    const alpha = reducedMotion ? 1 : 1 - Math.exp(-4 * Math.min(dt, 0.05));
-    camera.position.lerp(destination.current, alpha);
-    controls.current.target.lerp(lookAt.current, alpha);
-    controls.current.update();
-    if (camera.position.distanceToSquared(destination.current) < 0.00001)
-      transitioning.current = false;
+  useFrame(({ camera, scene }, dt) => {
+    // Theme changes replace the attached Fog object after React renders.
+    // Reapply the envelope to that object before drawing the current frame.
+    if (visibility) {
+      if (scene.fog instanceof Fog) {
+        scene.fog.near = visibility.fogNear;
+        scene.fog.far = visibility.fogFar;
+      }
+      if (
+        camera instanceof PerspectiveCamera &&
+        camera.far !== visibility.cameraFar
+      ) {
+        camera.far = visibility.cameraFar;
+        camera.updateProjectionMatrix();
+      }
+    }
+    if (!controls.current) return;
+    if (transitioning.current) {
+      const alpha = reducedMotion ? 1 : 1 - Math.exp(-4 * Math.min(dt, 0.05));
+      camera.position.lerp(destination.current, alpha);
+      controls.current.target.lerp(lookAt.current, alpha);
+      controls.current.update();
+      if (camera.position.distanceToSquared(destination.current) < 0.00001)
+        transitioning.current = false;
+    }
+    if (!visibility && resetVisibility.current && !transitioning.current) {
+      // Manual input can interrupt a distant transition; retain visibility until
+      // the camera returns inside the established standalone viewing range.
+      if (camera.position.distanceTo(controls.current.target) > 15) return;
+      if (scene.fog instanceof Fog) {
+        scene.fog.near = 11;
+        scene.fog.far = 25;
+      }
+      if (camera instanceof PerspectiveCamera) {
+        camera.far = 45;
+        camera.updateProjectionMatrix();
+      }
+      resetVisibility.current = false;
+    }
   });
   return (
     <OrbitControls
@@ -135,13 +182,8 @@ export function CameraRig({
       maxDistance={
         garden
           ? Math.max(30, (gardenDistance ?? 14) * 1.8)
-          : portrait
-            ? Math.max(
-                15,
-                Math.hypot(
-                  ...portrait.position.map((v, i) => v - portrait.target[i]),
-                ) * 1.8,
-              )
+          : visibility
+            ? visibility.maxDistance
             : 15
       }
       minPolarAngle={0.08}

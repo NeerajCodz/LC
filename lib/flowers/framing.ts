@@ -58,3 +58,34 @@ export function flowerPortraitPose(
     target,
   };
 }
+
+/** Keep fitted anatomy visible through the entire permitted portrait orbit. */
+export function flowerPortraitVisibility(
+  structure: FlowerStructure,
+  pose: { position: Vec3; target: Vec3 },
+  root: Vec3,
+) {
+  const maxDistance = Math.max(
+    15,
+    Math.hypot(...pose.position.map((v, i) => v - pose.target[i])) * 1.8,
+  );
+  let radius = 0;
+  const bounds = structure.portraitBounds;
+  if (bounds)
+    for (let corner = 0; corner < 8; corner++)
+      radius = Math.max(
+        radius,
+        Math.hypot(
+          ...root.map(
+            (v, i) =>
+              v +
+              (i === 1 ? structure.stemLength : 0) +
+              (corner & (1 << i) ? bounds.max[i] : bounds.min[i]) -
+              pose.target[i],
+          ),
+        ),
+      );
+  const fogNear = Math.max(11, maxDistance + radius + 1),
+    fogFar = Math.max(25, fogNear + 14);
+  return { maxDistance, fogNear, fogFar, cameraFar: Math.max(45, fogFar + 1) };
+}

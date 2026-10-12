@@ -21,6 +21,13 @@ export interface FoliageProfile {
 
 /** Cultivar-independent leaf traits; lotus has its own peltate blade generator. */
 export const FOLIAGE: Record<FlowerType, FoliageProfile> = {
+  pansy: {
+    length: 0.62,
+    width: 0.19,
+    color: "#4c7048",
+    thickness: 0.011,
+    roughness: 0.7,
+  },
   cosmos: {
     length: 0.84,
     width: 0.3,

@@ -13,6 +13,16 @@ export interface FlowerInfo {
 
 export const FLOWERS: FlowerInfo[] = [
   {
+    type: "pansy",
+    name: "Pansy",
+    latin: "Viola tricolor",
+    family: "Violaceae",
+    color: "#e3b846",
+    description: "Three colors, one face.\nA small garden conversation.",
+    detail:
+      "Three wild pansy flowers display unequal violet, ivory and yellow petals with dark nectar guides. Each lower petal carries a hidden spur, above crenate leaves and divided stipules.",
+  },
+  {
     type: "fuchsia",
     name: "Hardy Fuchsia",
     latin: "Fuchsia magellanica",

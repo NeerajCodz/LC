@@ -5,6 +5,7 @@ export const TISSUE_RESPONSE: Record<
   string,
   { roughness: number; sheen: number; coat: number; scatter: number }
 > = {
+  pansy: { roughness: 0.73, sheen: 0.2, coat: 0.005, scatter: 0.058 },
   cosmos: { roughness: 0.72, sheen: 0.14, coat: 0, scatter: 0.065 },
   nasturtium: { roughness: 0.63, sheen: 0.18, coat: 0.015, scatter: 0.06 },
   gardenia: { roughness: 0.43, sheen: 0.15, coat: 0.075, scatter: 0.04 },
@@ -32,6 +33,8 @@ export const TISSUE_RESPONSE: Record<
   zinnia: { roughness: 0.78, sheen: 0.16, coat: 0, scatter: 0.055 },
 };
 export function specimenTissueColor(type: string, tissue?: SpecimenTissue) {
+  if (type === "pansy" && tissue === "inner") return "#73519a";
+  if (type === "pansy" && tissue === "guide") return "#e2b849";
   if (type === "anemone" && tissue === "disc") return "#29243b";
   if (type === "camellia" && tissue === "inner") return "#eddda3";
   if (type === "magnolia" && tissue === "inner") return "#9d8260";
@@ -48,6 +51,8 @@ export function specimenTissueColor(type: string, tissue?: SpecimenTissue) {
 export function specimenTissueShader(type: string, tissue?: SpecimenTissue) {
   if (tissue === "leaf") return "";
   switch (type) {
+    case "pansy":
+      return `float pansyGuide=exp(-abs(vPetalUv.x-.5)*9.)*(1.-smoothstep(.34,.74,vPetalUv.y)); float pansyLine=pow(.5+.5*cos((vPetalUv.x-.5)*42.+vPetalUv.y*4.),16.); diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.14,.045,.2),pansyGuide*pansyLine*.74);`;
     case "cosmos":
       return `float cosVein=pow(.5+.5*cos(vPetalUv.x*46.),24.);diffuseColor.rgb*=1.-cosVein*.045;`;
     case "nasturtium":

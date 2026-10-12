@@ -71,7 +71,9 @@ import { nasturtiumStructure } from "../../components/flowers/nasturtium/Nasturt
 import { cosmosStructure } from "../../components/flowers/cosmos/Cosmos";
 /** Authored anatomy shared by planting layout and geometry verification. */
 import { ranunculusStructure } from "../../components/flowers/ranunculus/Ranunculus";
+import { pansyStructure } from "../../components/flowers/pansy/Pansy";
 export const FLOWER_STRUCTURES: Record<FlowerType, FlowerStructure> = {
+  pansy: pansyStructure,
   cosmos: cosmosStructure,
   nasturtium: nasturtiumStructure,
   gardenia: gardeniaStructure,

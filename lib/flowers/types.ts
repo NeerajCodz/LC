@@ -55,6 +55,7 @@ export const FLOWER_TYPES = [
   "gardenia",
   "nasturtium",
   "cosmos",
+  "pansy",
 ] as const;
 
 export type FlowerType = (typeof FLOWER_TYPES)[number];

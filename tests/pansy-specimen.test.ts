@@ -2,7 +2,26 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { verifySpecimen } from "./specimen-checks";
 import { PANSY_MODEL } from "../components/flowers/pansy/pansyGeometry";
+import { FLOWERS } from "../lib/flowers/catalog";
+import { FLOWER_TYPES } from "../lib/flowers/types";
+import {
+  PANSY_LEAF,
+  PANSY_STIPULE,
+} from "../components/flowers/pansy/pansyLeaf";
+verifySpecimen("pansy foliage", {
+  clusters: [],
+  surfaces: [PANSY_LEAF, PANSY_STIPULE],
+  organs: [],
+});
 verifySpecimen("pansy", PANSY_MODEL);
+test("pansy appears throughout the typed catalog", () => {
+  assert.ok((FLOWER_TYPES as readonly string[]).includes("pansy"));
+  assert.ok(
+    FLOWERS.some(
+      (f) => (f.type as string) === "pansy" && f.latin === "Viola tricolor",
+    ),
+  );
+});
 test("pansy differentiates its paired upper blades and lower spurred blade", () => {
   for (let cluster = 0; cluster < 4; cluster++) {
     const petals = PANSY_MODEL.surfaces.filter(

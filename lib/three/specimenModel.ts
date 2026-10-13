@@ -25,6 +25,8 @@ export interface SpecimenSurface {
   compliance?: number;
   shapeCompliance?: number;
   pinMidrib?: boolean;
+  /** Authored angular landmarks or a smooth circumference in the distant grid. */
+  overviewColumns?: number;
   /** Axial landmarks that must survive the distant overview grid. */
   overviewRows?: number;
   cage?: [number, number];
@@ -111,7 +113,9 @@ export function specimenGeometry(surface: SpecimenSurface, quality: Quality) {
   // Distant shells use fewer axial strips; the focused tiers retain their curves.
   // Fused corollas keep their angular samples so five/six lobes remain distinct.
   const columns =
-    surface.periodic && quality === "overview" ? 24 : resolution[0];
+    quality === "overview"
+      ? (surface.overviewColumns ?? (surface.periodic ? 24 : resolution[0]))
+      : resolution[0];
   const rows =
     quality === "overview"
       ? (surface.overviewRows ?? resolution[1])

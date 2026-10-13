@@ -71,7 +71,27 @@ import { nasturtiumStructure } from "../../components/flowers/nasturtium/Nasturt
 import { cosmosStructure } from "../../components/flowers/cosmos/Cosmos";
 /** Authored anatomy shared by planting layout and geometry verification. */
 import { ranunculusStructure } from "../../components/flowers/ranunculus/Ranunculus";
+import { pansyStructure } from "../../components/flowers/pansy/Pansy";
+import { africanVioletStructure } from "../../components/flowers/african-violet/AfricanViolet";
+import { bluebellStructure } from "../../components/flowers/bluebell/Bluebell";
+import { wisteriaStructure } from "../../components/flowers/wisteria/Wisteria";
+import { bottlebrushStructure } from "../../components/flowers/bottlebrush/Bottlebrush";
+import { scabiosaStructure } from "../../components/flowers/scabiosa/Scabiosa";
+import { hyacinthStructure } from "../../components/flowers/hyacinth/Hyacinth";
+import { amaryllisStructure } from "../../components/flowers/amaryllis/Amaryllis";
+import { cannaStructure } from "../../components/flowers/canna/Canna";
+import { agapanthusStructure } from "../../components/flowers/agapanthus/Agapanthus";
 export const FLOWER_STRUCTURES: Record<FlowerType, FlowerStructure> = {
+  agapanthus: agapanthusStructure,
+  canna: cannaStructure,
+  amaryllis: amaryllisStructure,
+  hyacinth: hyacinthStructure,
+  scabiosa: scabiosaStructure,
+  bottlebrush: bottlebrushStructure,
+  wisteria: wisteriaStructure,
+  bluebell: bluebellStructure,
+  "african-violet": africanVioletStructure,
+  pansy: pansyStructure,
   cosmos: cosmosStructure,
   nasturtium: nasturtiumStructure,
   gardenia: gardeniaStructure,

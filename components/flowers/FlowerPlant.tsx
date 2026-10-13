@@ -7,7 +7,7 @@ import {
 } from "react";
 import { useActiveFrame as useFrame } from "@/hooks/useActiveFrame";
 import { RenderActivity } from "@/hooks/useActiveFrame";
-import { Group, Vector3 } from "three";
+import { Group, Matrix4, Vector3 } from "three";
 import type { FlowerProps, FlowerStructure } from "@/lib/flowers/types";
 import { getFlower } from "@/lib/flowers/catalog";
 import { PETAL_PALETTES } from "@/lib/flowers/palettes";
@@ -31,6 +31,7 @@ import { Branch } from "./Branch";
 import { Calyx } from "./Calyx";
 import type { FlowerOrgansProps } from "./FloralParts";
 import { FlowerInteraction } from "./FlowerInteraction";
+import { HeadAttachmentPose } from "./BotanicalStem";
 import {
   releaseSceneGeometry,
   releaseSceneMaterialPrograms,
@@ -70,6 +71,12 @@ export function FlowerPlant({
 }) {
   const plant = useRef<Group>(null);
   const head = useRef<Group>(null);
+  const attachmentHeadPose = useMemo(() => new Matrix4(), []);
+  useLayoutEffect(() => {
+    if (!head.current) return;
+    head.current.updateMatrix();
+    attachmentHeadPose.copy(head.current.matrix);
+  }, [attachmentHeadPose, structure.headTilt]);
   const garden = useContext(GardenEnvironment);
   const active = useContext(RenderActivity);
   useLayoutEffect(() => {
@@ -152,6 +159,8 @@ export function FlowerPlant({
         motion.current.x * 1.5,
         bendingLength,
       );
+      head.current.updateMatrix();
+      attachmentHeadPose.copy(head.current.matrix);
     };
     const entries = garden.current.bodies;
     entries.push(entry);
@@ -159,7 +168,7 @@ export function FlowerPlant({
       const index = entries.indexOf(entry);
       if (index !== -1) entries.splice(index, 1);
     };
-  }, [garden, active, world, structure, bendingLength]);
+  }, [garden, active, world, structure, bendingLength, attachmentHeadPose]);
   useFrame(({ pointer }, dt) => {
     if (paused) return;
     const delta = Math.min(dt, 0.05);
@@ -223,6 +232,8 @@ export function FlowerPlant({
         -(1 - growth.current) * structure.stemLength - motion.current.drop,
         motion.current.z,
       );
+      head.current.updateMatrix();
+      attachmentHeadPose.copy(head.current.matrix);
       if (!garden) return;
       head.current.getWorldPosition(world);
       head.current.getWorldScale(worldScale);
@@ -240,18 +251,24 @@ export function FlowerPlant({
       <group position={rooted ? [0, structure.stemLength, 0] : undefined}>
         <group>
           {stem && (
-            <StemComponent
-              type={type}
-              structure={structure}
-              quality={quality}
-              growth={growth}
-              time={time}
-              wind={wind}
-              motion={motion}
-              leaves={leaves}
-            />
+            <HeadAttachmentPose.Provider value={attachmentHeadPose}>
+              <StemComponent
+                type={type}
+                structure={structure}
+                quality={quality}
+                growth={growth}
+                time={time}
+                wind={wind}
+                motion={motion}
+                leaves={leaves}
+              />
+            </HeadAttachmentPose.Provider>
           )}
-          <group ref={head} rotation={[structure.headTilt, 0, 0]}>
+          <group
+            ref={head}
+            name="flower-head"
+            rotation={[structure.headTilt, 0, 0]}
+          >
             <FlowerInteraction
               enabled={interactive}
               proxyRadius={

@@ -1,5 +1,24 @@
 # Development and verification
 
+`floral-forms-inspection.spec.ts` adds Rose and the Pansy, African Violet,
+Bluebell, Hyacinth, Amaryllis, Canna, Agapanthus, Wisteria, Bottlebrush and
+Scabiosa seven-view boards. `floral-forms.spec.ts` checks their public routes,
+focused physics lifecycle, pulses, bloom, themes, search and selected garden,
+plus tall portrait fog and macro restoration. The corresponding specimen tests,
+`floral-forms-dynamics.test.ts`, real stalk/junction tests and portrait tests check
+the production geometry and transformations. The [validation record](specimens/floral-forms-validation.md)
+separates anatomical evidence, authored mechanics, visual refinements and measured
+costs. Use the same isolated browser runner and port 1607 described below.
+
+`garden-overview-inspection.spec.ts` derives its seven-view coverage from the
+dedicated catalog specimens. Inspect deeply cut foliage as well as heads when
+changing overview resolution. `surface-batch.test.ts` checks independent cluster
+poses, bloom/pressure normals, animated bounds and matching shadow deformation;
+the native shader suite remains the authority for whole-garden indexed inputs
+and draw calls. The rendering cost sampler warms each view independently and
+reports approximate advance cadence with active solver progress; its live timing
+counters become EWMAs after sixty calls.
+
 `next-ten-inspection.spec.ts` covers Rose plus Ranunculus, Anemone, Crocus, Freesia,
 Lisianthus, Camellia, Magnolia, Gardenia, Nasturtium and Cosmos. Use
 `DEV_INSPECTION=1` on a development port-1607 server and optionally filter with

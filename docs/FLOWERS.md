@@ -76,6 +76,16 @@ Generated from `lib/flowers/catalog.ts`; genus or ornamental studies never mark 
 | [Gardenia](http://localhost:1607/flower/gardenia/) | Gardenia jasminoides | Exact accepted-name match: `wfo-0000970976` |
 | [Nasturtium](http://localhost:1607/flower/nasturtium/) | Tropaeolum majus | Exact accepted-name match: `wfo-0000459744` |
 | [Cosmos](http://localhost:1607/flower/cosmos/) | Cosmos bipinnatus | Exact accepted-name match: `wfo-0000066682` |
+| [Pansy](http://localhost:1607/flower/pansy/) | Viola tricolor | Exact accepted-name match: `wfo-0000424643` |
+| [African Violet](http://localhost:1607/flower/african-violet/) | Streptocarpus ionanthus | Exact accepted-name match: `wfo-0001429506` |
+| [English Bluebell](http://localhost:1607/flower/bluebell/) | Hyacinthoides non-scripta | Exact accepted-name match: `wfo-0000664295` |
+| [Chinese Wisteria](http://localhost:1607/flower/wisteria/) | Wisteria sinensis | Exact accepted-name match: `wfo-0000214070` |
+| [Crimson Bottlebrush](http://localhost:1607/flower/bottlebrush/) | Melaleuca citrina | Exact accepted-name match: `wfo-0000239474` |
+| [Pincushion Flower](http://localhost:1607/flower/scabiosa/) | Scabiosa columbaria | Exact accepted-name match: `wfo-0000500277` |
+| [Hyacinth](http://localhost:1607/flower/hyacinth/) | Hyacinthus orientalis | Exact accepted-name match: `wfo-0000665369` |
+| [Amaryllis](http://localhost:1607/flower/amaryllis/) | Hippeastrum puniceum | Exact accepted-name match: `wfo-0000661183` |
+| [Canna](http://localhost:1607/flower/canna/) | Canna indica | Exact accepted-name match: `wfo-0000343805` |
+| [Agapanthus](http://localhost:1607/flower/agapanthus/) | Agapanthus praecox | Exact accepted-name match: `wfo-0000754090` |
 
 ## Reproduce and audit
 
@@ -10751,7 +10761,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Agapanthus inapertus subsp. intermedius — `wfo-0000754077` · subspecies
 - Agapanthus inapertus subsp. parviflorus — `wfo-0001421070` · subspecies
 - Agapanthus inapertus subsp. pendulus — `wfo-0000754079` · subspecies
-- Agapanthus praecox — `wfo-0000754090`
+- Agapanthus praecox — `wfo-0000754090` · authored study: `agapanthus`
 - Agapanthus praecox subsp. minimus — `wfo-0000754091` · subspecies
 - Agapanthus praecox subsp. orientalis — `wfo-0000754092` · subspecies
 - Agapanthus praecox subsp. praecox — `wfo-0000772050` · subspecies
@@ -12504,7 +12514,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Hippeastrum petiolatum — `wfo-0000661053`
 - Hippeastrum pseudopardinum — `wfo-0001341758`
 - Hippeastrum psittacinum — `wfo-0000661151`
-- Hippeastrum puniceum — `wfo-0000661183`
+- Hippeastrum puniceum — `wfo-0000661183` · authored study: `amaryllis`
 - Hippeastrum puniceum subsp. puniceum — `wfo-0001427017` · subspecies
 - Hippeastrum puniceum subsp. quentinianum — `wfo-0001363437` · subspecies
 - Hippeastrum reginae — `wfo-0000661288`
@@ -42764,12 +42774,12 @@ This large file contains the complete selected snapshot for local search. Search
 - Hyacinthoides kroumiriensis — `wfo-0001340652`
 - Hyacinthoides lingulata — `wfo-0000664252`
 - Hyacinthoides mauritanica — `wfo-0000664273`
-- Hyacinthoides non-scripta — `wfo-0000664295`
+- Hyacinthoides non-scripta — `wfo-0000664295` · authored study: `bluebell`
 - Hyacinthoides paivae — `wfo-0000664317`
 - Hyacinthoides reverchonii — `wfo-0000664351`
 - Hyacinthoides × massartiana — `wfo-0000664262`
 - Hyacinthus litwinovii — `wfo-0000665112`
-- Hyacinthus orientalis — `wfo-0000665369`
+- Hyacinthus orientalis — `wfo-0000665369` · authored study: `hyacinth`
 - Hyacinthus orientalis subsp. chionophilus — `wfo-0001364667` · subspecies
 - Hyacinthus orientalis subsp. orientalis — `wfo-0000772785` · subspecies
 - Hyacinthus transcaspicus — `wfo-0000665819`
@@ -114567,7 +114577,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Canna bangii — `wfo-0000343742`
 - Canna flaccida — `wfo-0000343781`
 - Canna glauca — `wfo-0000343792`
-- Canna indica — `wfo-0000343805`
+- Canna indica — `wfo-0000343805` · authored study: `canna`
 - Canna iridiflora — `wfo-0000343819`
 - Canna jaegeriana — `wfo-0000343823`
 - Canna liliiflora — `wfo-0000343835`
@@ -115756,7 +115766,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Scabiosa cinerea — `wfo-0000500355`
 - Scabiosa cinerea subsp. hladnikiana — `wfo-0000500351` · subspecies
 - Scabiosa colchica — `wfo-0000500353`
-- Scabiosa columbaria — `wfo-0000500277`
+- Scabiosa columbaria — `wfo-0000500277` · authored study: `scabiosa`
 - Scabiosa columbaria subsp. banatica — `wfo-0001364372` · subspecies
 - Scabiosa columbaria subsp. caespitosa — `wfo-0001365852` · subspecies
 - Scabiosa columbaria subsp. portae — `wfo-0000745468` · subspecies
@@ -191083,7 +191093,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Wisteria frutescens — `wfo-0000178771`
 - Wisteria frutescens subsp. frutescens — `wfo-0001449871` · subspecies
 - Wisteria frutescens subsp. macrostachya — `wfo-0001449872` · subspecies
-- Wisteria sinensis — `wfo-0000214070`
+- Wisteria sinensis — `wfo-0000214070` · authored study: `wisteria`
 - Wisteria × formosa — `wfo-0000181618`
 - Wisteria × valderi — `wfo-0001444205`
 - Wisteriopsis championii — `wfo-0001444206`
@@ -200290,7 +200300,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Streptocarpus inflatus — `wfo-0001277683`
 - Streptocarpus insularis — `wfo-0001244197`
 - Streptocarpus integrifolius — `wfo-0001064497`
-- Streptocarpus ionanthus — `wfo-0001429506`
+- Streptocarpus ionanthus — `wfo-0001429506` · authored study: `african-violet`
 - Streptocarpus ionanthus subsp. grandifolius — `wfo-0001362130` · subspecies
 - Streptocarpus ionanthus subsp. grotei — `wfo-0001362131` · subspecies
 - Streptocarpus ionanthus subsp. ionanthus — `wfo-1200116925` · subspecies
@@ -252496,7 +252506,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Melaleuca chrysantherea — `wfo-0001340064`
 - Melaleuca ciliosa — `wfo-0000239473`
 - Melaleuca cinerea — `wfo-0001340037`
-- Melaleuca citrina — `wfo-0000239474`
+- Melaleuca citrina — `wfo-0000239474` · authored study: `bottlebrush`
 - Melaleuca citrolens — `wfo-0000239476`
 - Melaleuca clarksonii — `wfo-0000239477`
 - Melaleuca clavifolia — `wfo-0000239478`
@@ -393928,7 +393938,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Viola triangulifolia — `wfo-0001145214`
 - Viola trichopetala — `wfo-0001145074`
 - Viola trichosepala — `wfo-0001144938`
-- Viola tricolor — `wfo-0000424643`
+- Viola tricolor — `wfo-0000424643` · authored study: `pansy`
 - Viola tricolor subsp. curtisii — `wfo-0000743162` · subspecies
 - Viola tricolor subsp. subalpina — `wfo-0000747998` · subspecies
 - Viola tridentata — `wfo-0000424640`

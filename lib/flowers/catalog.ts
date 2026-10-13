@@ -13,6 +13,106 @@ export interface FlowerInfo {
 
 export const FLOWERS: FlowerInfo[] = [
   {
+    type: "agapanthus",
+    name: "Agapanthus",
+    latin: "Agapanthus praecox",
+    family: "Amaryllidaceae",
+    color: "#828cdb",
+    description: "A blue constellation.\nEvery stalk meets at the heart.",
+    detail:
+      "An umbel of blue six-lobed funnels spreads from one shared insertion. Fine individual stalks hold each flower and bud above arching strap leaves.",
+  },
+  {
+    type: "canna",
+    name: "Canna",
+    latin: "Canna indica",
+    family: "Cannaceae",
+    color: "#d93a24",
+    description: "Red ribbons in summer.\nBroad leaves beneath.",
+    detail:
+      "Narrow true petals sit beneath petaloid staminodes and a reflexed lip. A single fertile half-stamen and flat style distinguish each asymmetric Canna flower, above broad sheathing leaves.",
+  },
+  {
+    type: "amaryllis",
+    name: "Amaryllis",
+    latin: "Hippeastrum puniceum",
+    family: "Amaryllidaceae",
+    color: "#e06c43",
+    description: "Orange trumpets, held high.\nA bright promise.",
+    detail:
+      "Two broad Hippeastrum trumpets rise beside a younger bud. Six arched stamens and a branching stigma emerge from each short fused tube, above smooth strap leaves.",
+  },
+  {
+    type: "hyacinth",
+    name: "Hyacinth",
+    latin: "Hyacinthus orientalis",
+    family: "Asparagaceae",
+    color: "#df99b0",
+    description: "Fragrant spring.\nPink around a green spire.",
+    detail:
+      "Thick, six-lobed flowers gather around a stout scape. Their recurved waxy tips reveal included stamens, above a fan of fleshy keeled leaves.",
+  },
+  {
+    type: "scabiosa",
+    name: "Pincushion Flower",
+    latin: "Scabiosa columbaria",
+    family: "Caprifoliaceae",
+    color: "#a193c9",
+    description: "A lilac pincushion.\nTiny flowers, raised anthers.",
+    detail:
+      "Unequal five-lobed marginal flowers surround smaller central florets. Four protruding stamens per flower form a lilac pincushion, above opposite divided leaves.",
+  },
+  {
+    type: "bottlebrush",
+    name: "Crimson Bottlebrush",
+    latin: "Melaleuca citrina",
+    family: "Myrtaceae",
+    color: "#c82e3c",
+    description: "Fine red threads.\nThe quiet of a woody shoot.",
+    detail:
+      "Rows of tiny true flowers surround a woody shoot. Long red stamens and dark anthers form the brush, with small petals at their bases and narrow stiff leaves beyond.",
+  },
+  {
+    type: "wisteria",
+    name: "Chinese Wisteria",
+    latin: "Wisteria sinensis",
+    family: "Fabaceae",
+    color: "#a08acb",
+    description: "Violet rain.\nA curtain of flowers.",
+    detail:
+      "Sixteen pea-shaped flowers hang from a curved raceme beside pinnate foliage. Banners, wings and paired keels surround enclosed organs; the woody shoot twines around its support.",
+  },
+  {
+    type: "bluebell",
+    name: "English Bluebell",
+    latin: "Hyacinthoides non-scripta",
+    family: "Asparagaceae",
+    color: "#4b53b7",
+    description: "Blue bells, quietly bowed.\nAn arch above the leaves.",
+    detail:
+      "A one-sided raceme carries nodding blue bells with six recurved tips and white pollen. Narrow basal leaves frame the curved scape and its younger terminal buds.",
+  },
+  {
+    type: "african-violet",
+    name: "African Violet",
+    latin: "Streptocarpus ionanthus",
+    family: "Gesneriaceae",
+    color: "#7865b8",
+    description: "Violet above velvet.\nA quiet circle of leaves.",
+    detail:
+      "Short, five-lobed flowers rise above a thick hairy rosette. Two joined yellow anthers and a lateral style sit within each bilateral corolla, beside younger furled buds.",
+  },
+  {
+    type: "pansy",
+    name: "Pansy",
+    latin: "Viola tricolor",
+    family: "Violaceae",
+    color: "#e3b846",
+    description: "Three colors, one face.\nA small garden conversation.",
+    detail:
+      "Three wild pansy flowers display unequal violet, ivory and yellow petals with dark nectar guides. Each lower petal carries a hidden spur, above crenate leaves and divided stipules.",
+  },
+  {
     type: "fuchsia",
     name: "Hardy Fuchsia",
     latin: "Fuchsia magellanica",

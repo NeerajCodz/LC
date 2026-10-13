@@ -1,15 +1,21 @@
 import { expect, type Locator } from "@playwright/test";
 
-/** Counters update in 30-frame batches; start at a fresh boundary after warmup. */
+/** Approximate advance cadence in 30-frame bins, with a fresh warmup per view. */
 export async function captureRenderingCost(canvas: Locator, frames = 120) {
   const count = async () =>
     Number(await canvas.getAttribute("data-render-frames"));
-  await expect.poll(count, { timeout: 120000 }).toBeGreaterThanOrEqual(60);
+  const viewStart = await count();
+  // A published count can lag by 29 advances. Ninety guarantees at least
+  // sixty fresh advances even when the view changes within an unpublished bin.
+  await expect
+    .poll(count, { timeout: 120000 })
+    .toBeGreaterThanOrEqual(viewStart + 90);
   const warm = await count();
   await expect
     .poll(count, { timeout: 60000, intervals: [50] })
     .toBeGreaterThan(warm);
   const first = await count(),
+    solverStartSteps = Number(await canvas.getAttribute("data-petal-steps")),
     start = performance.now();
   await expect
     .poll(count, { timeout: 120000, intervals: [50] })
@@ -37,11 +43,14 @@ export async function captureRenderingCost(canvas: Locator, frames = 120) {
         nodes: Number(c.dataset.petalNodes ?? 0),
         solverMeanMs: Number(c.dataset.petalMs ?? 0),
         solverSteps: Number(c.dataset.petalSteps ?? 0),
+        solverStepDelta:
+          Number(c.dataset.petalSteps ?? 0) - sample.solverStartSteps,
       };
     },
     {
       frames: last - first,
       elapsedMs,
+      solverStartSteps,
       fps: ((last - first) * 1000) / elapsedMs,
     },
   );

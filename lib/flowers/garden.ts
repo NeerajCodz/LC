@@ -1,6 +1,6 @@
 import { FLOWER_TYPES, type FlowerType, type Vec3 } from "./types";
 import { FLOWER_STRUCTURES } from "./structures";
-import { flowerEnvelope, resolvePlantContacts } from "./wind";
+import { flowerEnvelope } from "./wind";
 
 export const GARDEN_GROUND = -1.8;
 interface Planting {
@@ -11,7 +11,7 @@ interface Planting {
 // Every catalog species is planted on both layouts. A deterministic spiral
 // gives the collection room to grow without a separate hand-maintained subset.
 function collectionPlantings(mobile: boolean): Planting[] {
-  return arrange(
+  return arrangePlantings(
     FLOWER_TYPES.map((type, index) => {
       const angle = index * Math.PI * (3 - Math.sqrt(5));
       const radius = Math.sqrt(index + 0.5);
@@ -30,19 +30,41 @@ function collectionPlantings(mobile: boolean): Planting[] {
 export const GARDEN_PLANTINGS = collectionPlantings(false);
 export const MOBILE_GARDEN_PLANTINGS = collectionPlantings(true);
 
-function arrange(plants: Planting[]): Planting[] {
+export function arrangePlantings(plants: readonly Planting[]): Planting[] {
   const bounds = plants.map((plant) => ({
     x: plant.position[0],
     y: GARDEN_GROUND + FLOWER_STRUCTURES[plant.type].stemLength * plant.scale,
     z: plant.position[2],
     radius: flowerEnvelope(FLOWER_STRUCTURES[plant.type]) * plant.scale + 0.08,
-    compliance: 1,
-    dx: 0,
-    dz: 0,
-    pressure: 0,
   }));
-  // Solve spacing before planting. Runtime contact bends stems, never moves roots.
-  for (let pass = 0; pass < 16; pass++) resolvePlantContacts(bounds);
+  // Placement resolves the full overlap once; runtime head contact keeps its
+  // small displacement cap and never moves these planted roots.
+  for (let pass = 0; pass < Math.max(64, plants.length * 4); pass++) {
+    let largest = 0;
+    for (let i = 0; i < bounds.length; i++)
+      for (let j = i + 1; j < bounds.length; j++) {
+        const a = bounds[i],
+          b = bounds[j],
+          dy = (b.y - a.y) * 1.65,
+          reach = a.radius + b.radius;
+        if (Math.abs(dy) >= reach) continue;
+        const dx = b.x - a.x,
+          dz = b.z - a.z,
+          distance = Math.hypot(dx, dz);
+        const overlap = Math.sqrt(reach * reach - dy * dy) - distance;
+        if (overlap <= 0) continue;
+        largest = Math.max(largest, overlap);
+        const angle = (i + j * 0.5) * Math.PI * (3 - Math.sqrt(5));
+        const nx = distance > 1e-6 ? dx / distance : Math.cos(angle),
+          nz = distance > 1e-6 ? dz / distance : Math.sin(angle);
+        const push = (overlap + 0.002) / 2;
+        a.x -= nx * push;
+        a.z -= nz * push;
+        b.x += nx * push;
+        b.z += nz * push;
+      }
+    if (largest < 0.00001) break;
+  }
   return plants.map((plant, i) => ({
     ...plant,
     position: [bounds[i].x, GARDEN_GROUND, bounds[i].z],

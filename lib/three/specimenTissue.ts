@@ -5,6 +5,16 @@ export const TISSUE_RESPONSE: Record<
   string,
   { roughness: number; sheen: number; coat: number; scatter: number }
 > = {
+  agapanthus: { roughness: 0.59, sheen: 0.13, coat: 0.025, scatter: 0.044 },
+  canna: { roughness: 0.56, sheen: 0.15, coat: 0.035, scatter: 0.047 },
+  amaryllis: { roughness: 0.51, sheen: 0.19, coat: 0.05, scatter: 0.054 },
+  hyacinth: { roughness: 0.4, sheen: 0.15, coat: 0.1, scatter: 0.042 },
+  scabiosa: { roughness: 0.74, sheen: 0.17, coat: 0.003, scatter: 0.063 },
+  bottlebrush: { roughness: 0.61, sheen: 0.12, coat: 0.015, scatter: 0.032 },
+  wisteria: { roughness: 0.65, sheen: 0.21, coat: 0.012, scatter: 0.058 },
+  bluebell: { roughness: 0.5, sheen: 0.23, coat: 0.035, scatter: 0.075 },
+  "african-violet": { roughness: 0.74, sheen: 0.23, coat: 0, scatter: 0.048 },
+  pansy: { roughness: 0.73, sheen: 0.2, coat: 0.005, scatter: 0.058 },
   cosmos: { roughness: 0.72, sheen: 0.14, coat: 0, scatter: 0.065 },
   nasturtium: { roughness: 0.63, sheen: 0.18, coat: 0.015, scatter: 0.06 },
   gardenia: { roughness: 0.43, sheen: 0.15, coat: 0.075, scatter: 0.04 },
@@ -32,6 +42,16 @@ export const TISSUE_RESPONSE: Record<
   zinnia: { roughness: 0.78, sheen: 0.16, coat: 0, scatter: 0.055 },
 };
 export function specimenTissueColor(type: string, tissue?: SpecimenTissue) {
+  if (type === "agapanthus" && tissue === "disc") return "#b9bd98";
+  if (type === "canna" && tissue === "guide") return "#d94a23";
+  if (type === "canna" && tissue === "inner") return "#eaa255";
+  if (type === "amaryllis" && tissue === "disc") return "#b5a87b";
+  if (type === "amaryllis" && tissue === "inner") return "#c3d498";
+  if (type === "scabiosa" && tissue === "inner") return "#9483bd";
+  if (type === "bottlebrush" && tissue === "inner") return "#d0c0a0";
+  if (type === "wisteria" && tissue === "inner") return "#8270b3";
+  if (type === "pansy" && tissue === "inner") return "#73519a";
+  if (type === "pansy" && tissue === "guide") return "#e2b849";
   if (type === "anemone" && tissue === "disc") return "#29243b";
   if (type === "camellia" && tissue === "inner") return "#eddda3";
   if (type === "magnolia" && tissue === "inner") return "#9d8260";
@@ -48,6 +68,30 @@ export function specimenTissueColor(type: string, tissue?: SpecimenTissue) {
 export function specimenTissueShader(type: string, tissue?: SpecimenTissue) {
   if (tissue === "leaf") return "";
   switch (type) {
+    case "agapanthus":
+      if (tissue === "disc")
+        return `float agSpatheFiber=pow(.5+.5*cos(vPetalUv.x*71.+vPetalUv.y*5.),22.);diffuseColor.rgb*=1.-agSpatheFiber*.065;`;
+      return `float agMid=pow(.5+.5*cos(vPetalUv.x*37.6991),28.)*smoothstep(.31,.53,vPetalUv.y);diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.30,.34,.65),agMid*.27);`;
+    case "canna":
+      if (tissue === "guide")
+        return `float canLipSpot=pow(max(0.,sin(vPetalUv.x*61.)*sin(vPetalUv.y*57.)),13.)*smoothstep(.18,.42,vPetalUv.y);diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.96,.65,.17),canLipSpot*.65);`;
+      return `float canVein=pow(.5+.5*cos(vPetalUv.x*47.+vPetalUv.y*3.),25.);diffuseColor.rgb*=1.-canVein*.032;`;
+    case "amaryllis":
+      return `if(uSpecimenRegion!=3){float amRoot=1.-smoothstep(.05,.27,vPetalUv.y);float amVein=pow(.5+.5*cos((vPetalUv.x-.5)*48.+vPetalUv.y*2.),22.);diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.76,.79,.49),amRoot*.72);diffuseColor.rgb*=1.-amVein*.065;}`;
+    case "hyacinth":
+      return `float hyRib=pow(.5+.5*cos(vPetalUv.x*37.6991118),22.); float hyThroat=1.-smoothstep(.28,.58,vPetalUv.y); diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.70,.37,.53),hyThroat*.25); diffuseColor.rgb*=1.-hyRib*.065;`;
+    case "scabiosa":
+      return `float scaThroat=1.-smoothstep(.25,.64,vPetalUv.y); float scaVein=pow(.5+.5*cos(vPetalUv.x*31.416),24.)*smoothstep(.35,.77,vPetalUv.y); diffuseColor.rgb*=1.-scaVein*.075; diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.65,.60,.76),scaThroat*.24);`;
+    case "bottlebrush":
+      return `float botVein=pow(.5+.5*cos(vPetalUv.x*38.+vPetalUv.y*6.),23.); diffuseColor.rgb*=1.-botVein*.034;`;
+    case "wisteria":
+      return `float wisVein=pow(.5+.5*cos((vPetalUv.y-abs(vPetalUv.x-.5)*.45)*58.),24.); float wisGuide=exp(-pow((vPetalUv.x-.5)*8.,2.))*(1.-smoothstep(.18,.45,vPetalUv.y)); diffuseColor.rgb*=1.-wisVein*.038; diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.86,.76,.44),wisGuide*.38);`;
+    case "bluebell":
+      return `float bellRib=pow(.5+.5*cos(vPetalUv.x*37.6991118),20.)*sin(vPetalUv.y*3.14159); diffuseColor.rgb*=1.-bellRib*.095;`;
+    case "african-violet":
+      return `float avThroat=1.-smoothstep(.22,.58,vPetalUv.y); float avVein=pow(.5+.5*cos(vPetalUv.x*31.416),20.); diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.69,.64,.8),avThroat*.32); diffuseColor.rgb*=1.-avVein*.046;`;
+    case "pansy":
+      return `float pansyGuide=exp(-abs(vPetalUv.x-.5)*9.)*(1.-smoothstep(.34,.74,vPetalUv.y)); float pansyLine=pow(.5+.5*cos((vPetalUv.x-.5)*42.+vPetalUv.y*4.),16.); diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.14,.045,.2),pansyGuide*pansyLine*.74);`;
     case "cosmos":
       return `float cosVein=pow(.5+.5*cos(vPetalUv.x*46.),24.);diffuseColor.rgb*=1.-cosVein*.045;`;
     case "nasturtium":

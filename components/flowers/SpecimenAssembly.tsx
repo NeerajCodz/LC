@@ -10,11 +10,12 @@ import {
 import { SurfaceClock } from "@/lib/three/surfaceClock";
 import {
   specimenGeometry,
-  specimenOrganGeometry,
+  specimenOrganParts,
   specimenOrganCarrier,
   type SpecimenModel,
   type SpecimenSurface,
   specimenCages,
+  applySpecimenPins,
 } from "@/lib/three/specimenModel";
 import { petalOpenness, stepSpring } from "@/lib/three/easing";
 import type { FlowerOrgansProps } from "./FloralParts";
@@ -25,6 +26,12 @@ import { useThree } from "@react-three/fiber";
 import { FloretInstances } from "./FloretInstances";
 import { OverviewSurfaces, type OverviewDraw } from "./OverviewSurfaces";
 import { surfaceBatchGroups } from "@/lib/three/surfaceBatch";
+import {
+  createSurfaceBatchPoses,
+  updateSurfaceBatchPoses,
+  refreshSurfaceBatchBounds,
+} from "@/lib/three/surfaceBatchPose";
+import { specimenPressTarget } from "@/lib/three/specimenMotion";
 
 /** Dedicated anatomy shares only rendering and cage transfer, not its shape. */
 export function SpecimenAssembly({
@@ -54,22 +61,20 @@ export function SpecimenAssembly({
     meshes = useRef<(Mesh | null)[]>([]);
   const batching = quality === "overview" && physics !== "detailed";
   const batches = useMemo(
-    () => (batching ? surfaceBatchGroups(model) : []),
+    () => (batching ? surfaceBatchGroups(model, true) : []),
     [model, batching],
   );
   const overviewDraws = useRef<(OverviewDraw | null)[]>([]);
+  const overviewPoses = useMemo(
+    () => (batching ? createSurfaceBatchPoses(model.clusters) : null),
+    [model, batching],
+  );
+  useEffect(() => () => overviewPoses?.texture.dispose(), [overviewPoses]);
   const resources = useMemo(() => {
     if (physics !== "detailed") return null;
     const { indices, patches } = specimenCages(model, constrained);
     const sim = new PetalDynamics(patches, constrained);
-    patches.forEach((p, i) => {
-      if (!model.surfaces[indices[i]].pinMidrib) return;
-      const stride = p.columns + 1;
-      for (let row = 0; row <= p.rows; row++)
-        sim.inverseMass[
-          sim.offsets[i] + row * stride + Math.floor(stride / 2)
-        ] = 0;
-    });
+    applySpecimenPins(sim, model, indices);
     const deformation = new CageDeformation(sim),
       shadows = deformation.shadows();
     return {
@@ -124,10 +129,7 @@ export function SpecimenAssembly({
     };
   }, [canvas, resources]);
   useActiveFrame(() => {
-    const touch = interaction?.current,
-      press = reducedMotion
-        ? 0
-        : (touch?.proximity ?? 0) * 0.24 + (pulse?.current ?? 0) * 0.35;
+    const touch = interaction?.current;
     const articulationDt = articulationClock.current.delta(
       time.current,
       reducedMotion,
@@ -135,19 +137,6 @@ export function SpecimenAssembly({
     model.clusters.forEach((c, i) => {
       const group = groups.current[i];
       if (!group) return;
-      const point = touch?.point,
-        near = point
-          ? Math.max(
-              0,
-              1 -
-                Math.hypot(
-                  point[0] - c.position[0],
-                  point[1] - c.position[1],
-                  point[2] - c.position[2],
-                ) /
-                  1.2,
-            )
-          : 1;
       const spring = articulation.current[i];
       if (reducedMotion) {
         spring.value = 0;
@@ -155,7 +144,13 @@ export function SpecimenAssembly({
       } else
         stepSpring(
           spring,
-          Math.max(-0.25, Math.min(0.35, press * near)),
+          specimenPressTarget(
+            c.position,
+            touch?.point,
+            touch?.proximity ?? 0,
+            pulse?.current ?? 0,
+            reducedMotion,
+          ),
           articulationDt,
           65,
         );
@@ -172,6 +167,12 @@ export function SpecimenAssembly({
             (motion?.current.contact ?? 0) * c.nod);
       group.updateMatrix();
     });
+    if (overviewPoses)
+      updateSurfaceBatchPoses(
+        overviewPoses,
+        groups.current,
+        articulation.current,
+      );
     model.surfaces.forEach((s, i) => {
       const mesh = meshes.current[i];
       if (!mesh) return;
@@ -188,12 +189,8 @@ export function SpecimenAssembly({
     });
     for (const draw of overviewDraws.current) {
       if (!draw) continue;
-      const pressure = articulation.current[draw.group.cluster].value;
       draw.uniforms.uBatchBloom.value = bloom.current;
-      draw.uniforms.uBatchPressure.value = Math.max(0, pressure) / 0.35;
-      draw.mesh.rotation.x =
-        draw.group.role === "wing" || draw.group.role === "keel" ? pressure : 0;
-      draw.mesh.updateMatrix();
+      refreshSurfaceBatchBounds(draw.mesh, draw.uniforms);
     }
     if (!resources) return;
     const { sim, deformation, indices, matrices, inverses, clock } = resources;
@@ -258,6 +255,21 @@ export function SpecimenAssembly({
   });
   return (
     <group>
+      {batching &&
+        overviewPoses &&
+        batches.map((batch, i) => (
+          <OverviewSurfaces
+            key={i}
+            group={batch}
+            type={type}
+            color={color}
+            clusters={model.clusters}
+            poses={overviewPoses}
+            assign={(draw) => {
+              overviewDraws.current[i] = draw;
+            }}
+          />
+        ))}
       {model.clusters.map((c, k) => (
         <group
           key={k}
@@ -268,36 +280,23 @@ export function SpecimenAssembly({
           rotation={c.rotation}
           scale={c.scale}
         >
-          {batching
-            ? batches.map((batch, i) =>
-                batch.cluster === k ? (
-                  <OverviewSurfaces
-                    key={i}
-                    group={batch}
-                    type={type}
-                    color={color}
-                    assign={(draw) => {
-                      overviewDraws.current[i] = draw;
-                    }}
-                  />
-                ) : null,
-              )
-            : model.surfaces.map((s, i) =>
-                s.cluster === k ? (
-                  <Surface
-                    key={i}
-                    surface={s}
-                    index={i}
-                    assign={(m) => {
-                      meshes.current[i] = m;
-                    }}
-                    quality={quality}
-                    type={type}
-                    color={color}
-                    resources={resources}
-                  />
-                ) : null,
-              )}
+          {!batching &&
+            model.surfaces.map((s, i) =>
+              s.cluster === k ? (
+                <Surface
+                  key={i}
+                  surface={s}
+                  index={i}
+                  assign={(m) => {
+                    meshes.current[i] = m;
+                  }}
+                  quality={quality}
+                  type={type}
+                  color={color}
+                  resources={resources}
+                />
+              ) : null,
+            )}
           <Organs model={model} cluster={k} quality={quality} bloom={bloom} />
           {model.instances
             ?.filter((g) => g.cluster === k)
@@ -394,22 +393,9 @@ function Organs({
   included?: boolean;
 }) {
   const g = useMemo(() => {
-    const parts = model.organs
-      .filter(
-        (o, i) =>
-          o.cluster === cluster &&
-          /stamen|anther|style|pistil|hair/.test(o.name) === included &&
-          (!o.fine || quality === "high" || quality === "ultra" || i % 3 === 0),
-      )
-      .map((o) => specimenOrganGeometry(o, quality));
-    if (parts.some((part) => part.morphAttributes.position?.length))
-      for (const part of parts)
-        if (!part.morphAttributes.position?.length) {
-          part.morphAttributes.position = [
-            part.getAttribute("position").clone(),
-          ];
-          part.morphAttributes.normal = [part.getAttribute("normal").clone()];
-        }
+    const parts = specimenOrganParts(model, cluster, quality, included).map(
+      (part) => part.geometry,
+    );
     return parts.length ? joinOrgans(parts) : null;
   }, [model, cluster, quality, included]);
   const mesh = useRef<Mesh>(null);

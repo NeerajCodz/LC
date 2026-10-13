@@ -56,7 +56,27 @@ import { Magnolia } from "./magnolia/Magnolia";
 import { Gardenia } from "./gardenia/Gardenia";
 import { Nasturtium } from "./nasturtium/Nasturtium";
 import { Cosmos } from "./cosmos/Cosmos";
+import { Pansy } from "./pansy/Pansy";
+import { AfricanViolet } from "./african-violet/AfricanViolet";
+import { Bluebell } from "./bluebell/Bluebell";
+import { Wisteria } from "./wisteria/Wisteria";
+import { Bottlebrush } from "./bottlebrush/Bottlebrush";
+import { Scabiosa } from "./scabiosa/Scabiosa";
+import { Hyacinth } from "./hyacinth/Hyacinth";
+import { Amaryllis } from "./amaryllis/Amaryllis";
+import { Canna } from "./canna/Canna";
+import { Agapanthus } from "./agapanthus/Agapanthus";
 const SPECIES = {
+  agapanthus: Agapanthus,
+  canna: Canna,
+  amaryllis: Amaryllis,
+  hyacinth: Hyacinth,
+  scabiosa: Scabiosa,
+  bottlebrush: Bottlebrush,
+  wisteria: Wisteria,
+  bluebell: Bluebell,
+  "african-violet": AfricanViolet,
+  pansy: Pansy,
   cosmos: Cosmos,
   nasturtium: Nasturtium,
   gardenia: Gardenia,

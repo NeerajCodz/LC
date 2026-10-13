@@ -1,8 +1,14 @@
 import type { Quality, Vec3 } from "../flowers/types";
 import { createParametricShell } from "./parametricShell";
 import { createOrganicTube } from "./organicTube";
-import { Float32BufferAttribute, Euler, Matrix4, Vector3 } from "three";
-import { createCagePatch } from "./petalDynamics";
+import {
+  Float32BufferAttribute,
+  Euler,
+  Matrix4,
+  Vector3,
+  type BufferGeometry,
+} from "three";
+import { createCagePatch, type PetalDynamics } from "./petalDynamics";
 export type SpecimenTissue = "inner" | "guide" | "disc" | "leaf";
 export interface SpecimenSurface {
   tissue?: SpecimenTissue;
@@ -19,6 +25,8 @@ export interface SpecimenSurface {
   compliance?: number;
   shapeCompliance?: number;
   pinMidrib?: boolean;
+  /** Axial landmarks that must survive the distant overview grid. */
+  overviewRows?: number;
   cage?: [number, number];
   mobileCage?: [number, number];
 }
@@ -94,18 +102,23 @@ export interface SpecimenInstanceGroup {
 }
 export function specimenGeometry(surface: SpecimenSurface, quality: Quality) {
   const resolution = {
-    overview: [6, 8],
+    overview: [6, 6],
     low: [12, 16],
     medium: [20, 24],
     high: [32, 32],
     ultra: [48, 44],
   }[quality];
-  // Small fused corollas still need enough angular samples to preserve their lobes.
+  // Distant shells use fewer axial strips; the focused tiers retain their curves.
+  // Fused corollas keep their angular samples so five/six lobes remain distinct.
   const columns =
     surface.periodic && quality === "overview" ? 24 : resolution[0];
+  const rows =
+    quality === "overview"
+      ? (surface.overviewRows ?? resolution[1])
+      : resolution[1];
   const g = createParametricShell({
     columns,
-    rows: resolution[1],
+    rows,
     ...surface,
   });
   const side = new Float32Array(g.getAttribute("position").count);
@@ -114,7 +127,7 @@ export function specimenGeometry(surface: SpecimenSurface, quality: Quality) {
   if (surface.pressureSample) {
     const pressed = createParametricShell({
       columns,
-      rows: resolution[1],
+      rows,
       ...surface,
       sample: surface.pressureSample,
     });
@@ -140,6 +153,23 @@ export function specimenCages(model: SpecimenModel, constrained: boolean) {
     });
   });
   return { indices, patches };
+}
+
+/** Additional botanical midribs use the same authored cage indices everywhere. */
+export function applySpecimenPins(
+  simulation: Pick<PetalDynamics, "patches" | "offsets" | "inverseMass">,
+  model: Pick<SpecimenModel, "surfaces">,
+  indices: readonly number[],
+) {
+  for (let i = 0; i < indices.length; i++) {
+    if (!model.surfaces[indices[i]].pinMidrib) continue;
+    const patch = simulation.patches[i],
+      stride = patch.periodic ? patch.columns : patch.columns + 1;
+    for (let row = 0; row <= patch.rows; row++)
+      simulation.inverseMass[
+        simulation.offsets[i] + row * stride + Math.floor(stride / 2)
+      ] = 0;
+  }
 }
 export function specimenOrganGeometry(organ: SpecimenOrgan, quality: Quality) {
   const options = {
@@ -168,6 +198,38 @@ export function specimenOrganGeometry(organ: SpecimenOrgan, quality: Quality) {
     folded.dispose();
   }
   return geometry;
+}
+
+/** Reproductive tissue follows its flower's bloom; axes and attachments remain fixed. */
+export function specimenOrganFollowsBloom(organ: Pick<SpecimenOrgan, "name">) {
+  return /stamen|anther|style|pistil|stigma|hair/.test(organ.name);
+}
+
+/** The renderer's real partition and matched morph attributes, prepared once per quality. */
+export function specimenOrganParts(
+  model: SpecimenModel,
+  cluster: number,
+  quality: Quality,
+  included: boolean,
+): { organ: SpecimenOrgan; geometry: BufferGeometry }[] {
+  const parts = model.organs.flatMap((organ, i) =>
+    organ.cluster === cluster &&
+    specimenOrganFollowsBloom(organ) === included &&
+    (!organ.fine || quality === "high" || quality === "ultra" || i % 3 === 0)
+      ? [{ organ, geometry: specimenOrganGeometry(organ, quality) }]
+      : [],
+  );
+  if (parts.some(({ geometry }) => geometry.morphAttributes.position?.length))
+    for (const { geometry } of parts)
+      if (!geometry.morphAttributes.position?.length) {
+        geometry.morphAttributes.position = [
+          geometry.getAttribute("position").clone(),
+        ];
+        geometry.morphAttributes.normal = [
+          geometry.getAttribute("normal").clone(),
+        ];
+      }
+  return parts;
 }
 
 /** Included tissue follows its enclosing corolla/keel, not an earlier calyx. */

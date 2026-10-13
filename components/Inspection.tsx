@@ -1,9 +1,110 @@
 "use client";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState, type RefObject } from "react";
+import { useFrame, useThree } from "@react-three/fiber";
+import { Box3, Group, PerspectiveCamera as ThreeCamera } from "three";
 import { botanicalEvents } from "@/lib/three/events";
 import { PerspectiveCamera, View } from "@react-three/drei";
 import { FLOWERS } from "@/lib/flowers/catalog";
-import type { FlowerType } from "@/lib/flowers/types";
+import type { FlowerType, Vec3 } from "@/lib/flowers/types";
+import { fitInspectionBounds } from "@/lib/three/inspectionFraming";
+
+function InspectionCameraFit({
+  camera,
+  plant,
+  macroTarget,
+}: {
+  camera: RefObject<ThreeCamera | null>;
+  plant: RefObject<Group | null>;
+  macroTarget?: Vec3;
+}) {
+  const frames = useRef(0),
+    fitted = useRef(false),
+    box = useRef(new Box3());
+  const width = useThree((state) => state.size.width),
+    height = useThree((state) => state.size.height);
+  useEffect(() => {
+    frames.current = 0;
+    fitted.current = false;
+  }, [width, height]);
+  useFrame(() => {
+    if (
+      fitted.current ||
+      !camera.current ||
+      !plant.current ||
+      ++frames.current < 2
+    )
+      return;
+    // View establishes its camera aspect and instanced poses on the first drawn frame.
+    const scope = macroTarget
+      ? (plant.current.getObjectByName("flower-head") ?? plant.current)
+      : plant.current;
+    scope.updateWorldMatrix(true, true);
+    scope.traverse((object) => {
+      if (
+        "computeBoundingBox" in object &&
+        typeof object.computeBoundingBox === "function"
+      )
+        object.computeBoundingBox();
+    });
+    box.current.setFromObject(scope);
+    if (box.current.isEmpty()) return;
+    const pose = fitInspectionBounds(
+      box.current,
+      camera.current.aspect,
+      camera.current.fov,
+      macroTarget,
+    );
+    camera.current.position.set(...pose.position);
+    camera.current.lookAt(...pose.target);
+    camera.current.updateProjectionMatrix();
+    fitted.current = true;
+  });
+  return null;
+}
+
+function InspectionSpecimen({
+  type,
+  overview,
+  wind,
+  view,
+  target,
+}: {
+  type: FlowerType;
+  overview: boolean;
+  wind: boolean;
+  view: (typeof VIEWS)[number];
+  target: Vec3;
+}) {
+  const camera = useRef<ThreeCamera>(null),
+    plant = useRef<Group>(null);
+  return (
+    <>
+      <PerspectiveCamera
+        ref={camera}
+        makeDefault
+        position={[0, 0.6, 5.5]}
+        fov={36}
+      />
+      <Lighting shadows={false} followCursor={false} />
+      <group ref={plant} rotation={[0, view.angle, 0]}>
+        <Flower
+          type={type}
+          bloom={view.bloom}
+          position={[0, 0.25, 0]}
+          quality={overview ? "overview" : view.macro ? "ultra" : "high"}
+          windStrength={wind ? 2 : 0}
+          animateEntrance={false}
+          reducedMotion={!wind}
+        />
+      </group>
+      <InspectionCameraFit
+        camera={camera}
+        plant={plant}
+        macroTarget={view.macro ? target : undefined}
+      />
+    </>
+  );
+}
 import { Flower } from "./flowers/Flower";
 import { Lighting } from "./scene/Lighting";
 import { SafeCanvas } from "./scene/SafeCanvas";
@@ -27,11 +128,10 @@ export default function Inspection() {
   const [overview, setOverview] = useState(false);
   const structure = FLOWER_STRUCTURES[type];
   const target = flowerHeadTarget(structure, [
-      0,
-      0.25 - structure.stemLength,
-      0,
-    ]),
-    targetY = target[1];
+    0,
+    0.25 - structure.stemLength,
+    0,
+  ]);
   return (
     <div ref={container} style={{ padding: 20 }}>
       <div
@@ -88,35 +188,14 @@ export default function Inspection() {
           >
             <p style={{ fontSize: 13, margin: 12 }}>{v.name}</p>
             <View style={{ height: 365 }} index={i + 1}>
-              <PerspectiveCamera
-                makeDefault
-                position={[
-                  v.macro ? target[0] : 0,
-                  v.macro ? targetY + 0.8 : 0.6,
-                  (v.macro ? 3 : 5.5) * (structure.previewScale ?? 1),
-                ]}
-                fov={36}
-                onUpdate={(c) =>
-                  c.lookAt(
-                    v.macro ? target[0] : 0,
-                    v.macro ? targetY : -0.45,
-                    v.macro ? target[2] : 0,
-                  )
-                }
+              <InspectionSpecimen
+                key={`${type}:${overview}`}
+                type={type}
+                overview={overview}
+                wind={wind}
+                view={v}
+                target={target}
               />
-              <Lighting shadows={false} followCursor={false} />
-              <group rotation={[0, v.angle, 0]}>
-                <Flower
-                  key={`${type}:${overview}`}
-                  type={type}
-                  bloom={v.bloom}
-                  position={[0, 0.25, 0]}
-                  quality={overview ? "overview" : v.macro ? "ultra" : "high"}
-                  windStrength={wind ? 2 : 0}
-                  animateEntrance={false}
-                  reducedMotion={!wind}
-                />
-              </group>
             </View>
           </div>
         ))}

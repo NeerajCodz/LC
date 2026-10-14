@@ -3,11 +3,22 @@
 `cymes-and-spikes.spec.ts` covers the Lupine, Hollyhock, Crown Imperial, Tuberose,
 Ixora, Pentas, Torenia, Lobelia, Hoya and Impatiens routes, controls, retained
 rendering, search and garden selection. `cymes-and-spikes-inspection.spec.ts`
-captures seven caption-free anatomical views of each plus Rose, including the
+captures seven caption-free anatomical views of each plus Rose and Fuchsia, including the
 actual low/medium geometry tier on mobile WebKit. The contact sheet uses a
 1600-by-1100 inspection viewport; public route tests retain the configured phone
-viewport and renderer budget. The fixture's explicit device-tier selector keeps
+viewport. Inspection also uses the actual device's capped renderer clock, GPU
+pacing and pixel budget, independently of its geometry-tier selector. An explicit
+one-times DPR ceiling preserves the contact sheet's original resolution on desktop.
+The fixture's explicit device-tier selector keeps
 high/ultra as its standard default and leaves overview geometry at overview.
+
+Fritillaria's optional **Bell interior study** and Hoya's **Single-floret study**
+switch the seven standard tiles to two targeted views and back. They frame real
+single-flower surface and organ bounds while rendering the complete plant. They
+do not hide surrounding anatomy or change geometry, materials or bloom semantics.
+`inspection-studies.test.ts` checks transformed camera axes and bounds at every
+tier; separate browser cases inspect axial/oblique bell interiors and a full/bud
+Hoya floret with the same caption-free pixel and renderer-error checks.
 
 `cymes-and-spikes-dynamics.test.ts` exercises actual transformed contact cages at
 both node budgets. `cymes-and-spikes-attachments.test.ts` checks positive axes

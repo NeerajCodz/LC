@@ -13,6 +13,17 @@ export interface FlowerInfo {
 
 export const FLOWERS: FlowerInfo[] = [
   {
+    type: "pentas",
+    name: "Pentas",
+    latin: "Pentas lanceolata",
+    family: "Rubiaceae",
+    color: "#d95791",
+    description:
+      "Rose stars in a soft cluster.\nFine white hairs at every throat.",
+    detail:
+      "Five pointed fused lobes spread from a swollen hairy throat around included anthers and a long bifid style. Unequal hairy calyx lobes, petiolate opposite leaves and wiry stipules distinguish this cultivated long-styled study.",
+  },
+  {
     type: "ixora",
     name: "Ixora",
     latin: "Ixora coccinea",

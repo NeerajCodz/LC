@@ -30,6 +30,15 @@ const palette = (
 });
 
 export const PETAL_PALETTES: Record<FlowerType, PetalPalette> = {
+  pentas: {
+    root: "#f1d3dd",
+    body: "#d95791",
+    tip: "#e77da9",
+    vein: "#b94376",
+    rootFalloff: 0.23,
+    tipStart: 0.8,
+    veinStrength: 0.035,
+  },
   ixora: {
     root: "#bd3627",
     body: "#eb4b31",

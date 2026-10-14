@@ -34,7 +34,10 @@ import { TUBEROSE_MODEL } from "../components/flowers/tuberose/tuberoseGeometry"
 
 import { IXORA_MODEL } from "../components/flowers/ixora/ixoraGeometry";
 
+import { PENTAS_MODEL } from "../components/flowers/pentas/pentasGeometry";
+
 const models: Record<string, SpecimenModel> = {
+  pentas: PENTAS_MODEL,
   ixora: IXORA_MODEL,
   tuberose: TUBEROSE_MODEL,
   fritillaria: FRITILLARIA_MODEL,

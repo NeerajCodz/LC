@@ -73,7 +73,9 @@ import { Hollyhock } from "./hollyhock/Hollyhock";
 import { Fritillaria } from "./fritillaria/Fritillaria";
 import { Tuberose } from "./tuberose/Tuberose";
 import { Ixora } from "./ixora/Ixora";
+import { Pentas } from "./pentas/Pentas";
 const SPECIES = {
+  pentas: Pentas,
   ixora: Ixora,
   tuberose: Tuberose,
   fritillaria: Fritillaria,

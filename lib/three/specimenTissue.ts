@@ -5,6 +5,7 @@ export const TISSUE_RESPONSE: Record<
   string,
   { roughness: number; sheen: number; coat: number; scatter: number }
 > = {
+  pentas: { roughness: 0.7, sheen: 0.2, coat: 0.005, scatter: 0.06 },
   ixora: { roughness: 0.56, sheen: 0.16, coat: 0.035, scatter: 0.045 },
   tuberose: { roughness: 0.43, sheen: 0.2, coat: 0.065, scatter: 0.049 },
   fritillaria: { roughness: 0.48, sheen: 0.17, coat: 0.055, scatter: 0.051 },
@@ -80,6 +81,8 @@ export function specimenTissueColor(type: string, tissue?: SpecimenTissue) {
 export function specimenTissueShader(type: string, tissue?: SpecimenTissue) {
   if (tissue === "leaf") return "";
   switch (type) {
+    case "pentas":
+      return `float penThroat=1.-smoothstep(.62,.83,vPetalUv.y); float penVein=pow(.5+.5*cos(vPetalUv.x*31.415927),21.)*smoothstep(.71,.9,vPetalUv.y); diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.94,.82,.88),penThroat*.24); diffuseColor.rgb*=1.-penVein*.044;`;
     case "ixora":
       return `float ixoVein=pow(.5+.5*cos(vPetalUv.x*25.13274),23.)*smoothstep(.65,.85,vPetalUv.y); diffuseColor.rgb*=1.-ixoVein*.045;`;
     case "tuberose":

@@ -72,6 +72,7 @@ export const FLOWER_TYPES = [
   "fritillaria",
   "tuberose",
   "ixora",
+  "pentas",
 ] as const;
 
 export type FlowerType = (typeof FLOWER_TYPES)[number];

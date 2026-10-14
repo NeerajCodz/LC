@@ -28,11 +28,12 @@ and reports a pollen reward without nectar. This is review-level behavioral
 evidence, not a measured spring law. Do not add a nectar gland, explosive hatch,
 or pollination-driven color transition on that basis.
 
-Planned authored composition: twenty-four complete flowers in four loosely
+Authored composition: twenty-one complete flowers in three loosely
 whorled levels and three younger terminal buds. Every flower retains one banner,
 two wings, two enclosing keel halves, a two-lipped calyx, ten joined stamens and
-one curved style. Share sealed flower prototypes through real geometry
-instancing; retain the internal column rather than replacing it with a bead.
+one curved style. Seal each small flower surface and retain the internal column
+rather than replacing it with a bead. Overview uses four transverse and two
+axial strips per small petal while focused tiers retain denser geometry.
 Five leaf groups may use eleven separately sealed leaflets around each shared
 petiole junction, with shorter petioles above. Raceme count, whorl spacing,
 leaf sampling, pigment, thickness, growth stages and elastic response are

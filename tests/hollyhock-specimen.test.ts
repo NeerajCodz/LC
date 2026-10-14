@@ -1,5 +1,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { closestSegments } from "../lib/three/petalContacts";
+import { PetalDynamics } from "../lib/three/petalDynamics";
+import { specimenCages, applySpecimenPins } from "../lib/three/specimenModel";
 import { Euler, Matrix4, Vector3 } from "three";
 import {
   HOLLYHOCK_MODEL,
@@ -165,4 +168,64 @@ test("hollyhock is complete throughout the typed botanical catalog", async () =>
   assert.equal(FLOWER_STRUCTURES[type].simulatedSurfaces, true);
   assert.equal(FLOWER_STRUCTURES[type].airbornePollen, false);
   assert.ok(WIND_PROFILES[type].compliance > 0);
+});
+
+test("hollyhock: finite petal claws keep nonadjacent warp edges beyond tissue thickness and recover after contact", () => {
+  const { indices, patches } = specimenCages(HOLLYHOCK_MODEL, false),
+    index = indices.findIndex((i) => HOLLYHOCK_MODEL.surfaces[i].flexible),
+    patch = patches[index],
+    simulation = new PetalDynamics([patch], false),
+    matrix = new Matrix4().makeScale(0.61 * 0.88, 0.61 * 0.88, 0.61 * 0.88),
+    separation = new Float64Array(9);
+  applySpecimenPins(simulation, HOLLYHOCK_MODEL, [indices[index]]);
+  simulation.setRest(0, 1, matrix.elements);
+  simulation.reset();
+  for (const edges of [
+    [0, 5, 2, 7],
+    [2, 7, 4, 9],
+  ] as const) {
+    closestSegments(
+      simulation.rest,
+      edges[0],
+      edges[1],
+      edges[2],
+      edges[3],
+      separation,
+    );
+    assert.ok(
+      separation[5] > patch.thickness,
+      "distinct pinned claw roots need positive tissue clearance",
+    );
+  }
+  const error = () => {
+    let squared = 0,
+      count = 0;
+    for (let n = 0; n < simulation.inverseMass.length; n++) {
+      if (!simulation.inverseMass[n]) continue;
+      count++;
+      for (let axis = 0; axis < 3; axis++)
+        squared +=
+          (simulation.positions[n * 3 + axis] -
+            simulation.rest[n * 3 + axis]) **
+          2;
+    }
+    return Math.sqrt(squared / count);
+  };
+  for (let frame = 0; frame < 20; frame++)
+    simulation.step(1 / 60, {
+      wind: 2.4,
+      pulse: 1,
+      time: frame / 60,
+      x: 0,
+      y: 0,
+      z: 0,
+      proximity: 0,
+    });
+  const driven = error();
+  assert.ok(driven > 1e-6);
+  for (let frame = 0; frame < 80; frame++) simulation.step(1 / 60);
+  assert.ok(
+    error() < driven * 0.3,
+    "release recovers within the unchanged 30% bound",
+  );
 });

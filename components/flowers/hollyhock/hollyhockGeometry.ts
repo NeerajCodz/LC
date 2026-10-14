@@ -20,7 +20,7 @@ export function hollyhockPetal(index: number, young = false) {
       notch = 0.055 * Math.exp(-w * w * 24) * v ** 10,
       width =
         w *
-        (0.004 + 0.31 * Math.sin(Math.PI * v * 0.98) ** 0.7) *
+        (0.032 + 0.282 * Math.sin(Math.PI * v * 0.98) ** 0.7) *
         (0.3 + 0.7 * open),
       r =
         (0.009 + 0.059 * (1 - v) + 0.049 * Math.sin(Math.PI * v)) * (1 - open) +

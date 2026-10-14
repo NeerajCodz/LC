@@ -37,3 +37,5 @@ hair sampling, forces, stiffness and damping are authored. These references
 do not supply a time-resolved anthesis trajectory or measured loading law;
 the reversible bloom control is an inspection convention. No pollinator,
 reproduction or nectar transport is simulated.
+
+The authored petal claw has a 0.032-unit half-width, tapering into the same 0.314-unit maximum blade width. This finite insertion keeps nonadjacent cage warp roots beyond the 0.013-unit contact thickness at the tested floral scale; a string-thin insertion trapped the free blade in residual self-contact after a pulse. These dimensions are modeling choices, not measured botanical proportions.

@@ -19,7 +19,7 @@ confirms five petals and five sepals, alternate leaves that become smaller
 upward, wrinkled venation, a hairy lower surface, and a mostly unbranched
 flowering stem. Neither account establishes one invariant anther count.
 
-Planned authored composition: five complete rose-pink flowers and two
+Authored composition: five complete rose-pink flowers and two
 younger upper buds on one leafy shoot. Each open flower has five substantial,
 overlapping, cupped, notched petals, a separate seven-lobed epicalyx and
 five-lobed calyx. Use a continuous central staminal column with thirty-two

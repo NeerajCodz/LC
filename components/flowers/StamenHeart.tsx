@@ -15,7 +15,7 @@ export function createStamenHeart(type: StamenSpecies, quality: Quality) {
     pistils: BufferGeometry[] = [],
     stigmas: BufferGeometry[] = [];
   const random = seededRandom(624),
-    detail = quality === "overview" ? 10 : quality === "ultra" ? 40 : 26;
+    detail = quality === "overview" ? 6 : quality === "ultra" ? 40 : 26;
   const tube = (
     points: Vec3[],
     radius: number,
@@ -29,7 +29,7 @@ export function createStamenHeart(type: StamenSpecies, quality: Quality) {
       color,
       tipColor,
       segments: detail,
-      sides: 14,
+      sides: quality === "overview" ? 6 : 14,
     });
   if (type === "hibiscus") {
     pistils.push(
@@ -78,8 +78,8 @@ export function createStamenHeart(type: StamenSpecies, quality: Quality) {
           color: "#e0aa24",
           tipColor: "#f6cd51",
           grain: 0.13,
-          segments: 16,
-          sides: 12,
+          segments: quality === "overview" ? 6 : 16,
+          sides: quality === "overview" ? 6 : 12,
         }),
       );
     }
@@ -111,8 +111,8 @@ export function createStamenHeart(type: StamenSpecies, quality: Quality) {
           color: "#b3264b",
           tipColor: "#d94a67",
           grain: 0.07,
-          segments: 16,
-          sides: 16,
+          segments: quality === "overview" ? 6 : 16,
+          sides: quality === "overview" ? 8 : 16,
         }),
       );
     }
@@ -155,7 +155,7 @@ export function createStamenHeart(type: StamenSpecies, quality: Quality) {
           grain: 0.12,
           flatten: 0.75,
           segments: detail,
-          sides: 16,
+          sides: quality === "overview" ? 8 : 16,
         });
         anther.rotateY(a);
         anthers.push(anther);
@@ -189,8 +189,8 @@ export function createStamenHeart(type: StamenSpecies, quality: Quality) {
           endRadius: lily ? 0.028 : 0.022,
           color: "#9bab6c",
           tipColor: "#c5cf92",
-          segments: 16,
-          sides: 16,
+          segments: quality === "overview" ? 6 : 16,
+          sides: quality === "overview" ? 8 : 16,
         }),
       );
     }

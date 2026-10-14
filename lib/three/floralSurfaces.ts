@@ -67,14 +67,23 @@ export function createFloralSurface(
   quality: Quality,
 ): BufferGeometry {
   const columns =
-    quality === "overview" || quality === "low"
-      ? 22
-      : quality === "medium"
-        ? 34
-        : quality === "high"
-          ? 50
-          : 70;
-  const rows = Math.round(columns * 1.2),
+    quality === "overview"
+      ? kind === "corona"
+        ? 22
+        : 12
+      : quality === "low"
+        ? 22
+        : quality === "medium"
+          ? 34
+          : quality === "high"
+            ? 50
+            : 70;
+  const rows =
+      quality === "overview"
+        ? kind === "corona"
+          ? 8
+          : 14
+        : Math.round(columns * 1.2),
     stride = columns + 1,
     count = stride * (rows + 1);
   const indices: number[] = [],

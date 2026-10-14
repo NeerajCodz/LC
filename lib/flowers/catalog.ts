@@ -13,6 +13,16 @@ export interface FlowerInfo {
 
 export const FLOWERS: FlowerInfo[] = [
   {
+    type: "ixora",
+    name: "Ixora",
+    latin: "Ixora coccinea",
+    family: "Rubiaceae",
+    color: "#eb4b31",
+    description: "Scarlet stars.\nLong tubes gather above glossy leaves.",
+    detail:
+      "A branched terminal cyme carries slender four-lobed fused corollas, short throat anthers and bifid styles. Contorted young buds sit above leathery opposite leaves and pointed stipules.",
+  },
+  {
     type: "tuberose",
     name: "Tuberose",
     latin: "Agave amica",

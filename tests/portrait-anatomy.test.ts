@@ -32,7 +32,10 @@ import { FRITILLARIA_MODEL } from "../components/flowers/fritillaria/fritillaria
 
 import { TUBEROSE_MODEL } from "../components/flowers/tuberose/tuberoseGeometry";
 
+import { IXORA_MODEL } from "../components/flowers/ixora/ixoraGeometry";
+
 const models: Record<string, SpecimenModel> = {
+  ixora: IXORA_MODEL,
   tuberose: TUBEROSE_MODEL,
   fritillaria: FRITILLARIA_MODEL,
   hollyhock: HOLLYHOCK_MODEL,

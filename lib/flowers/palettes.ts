@@ -30,6 +30,15 @@ const palette = (
 });
 
 export const PETAL_PALETTES: Record<FlowerType, PetalPalette> = {
+  ixora: {
+    root: "#bd3627",
+    body: "#eb4b31",
+    tip: "#f26443",
+    vein: "#c1372b",
+    rootFalloff: 0.25,
+    tipStart: 0.84,
+    veinStrength: 0.03,
+  },
   tuberose: {
     root: "#d1cfad",
     body: "#eee7d7",

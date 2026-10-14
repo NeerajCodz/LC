@@ -10,6 +10,7 @@ export interface WindProfile {
 // Art-directed response classes informed by habit, stem construction and head load.
 // These are not measured species-specific elastic constants. See wind-and-contact.md.
 export const WIND_PROFILES: Record<FlowerType, WindProfile> = {
+  ixora: { compliance: 0.07, stiffness: 62, damping: 0.91, flutter: 0.27 },
   tuberose: { compliance: 0.075, stiffness: 59, damping: 0.91, flutter: 0.2 },
   fritillaria: {
     compliance: 0.053,

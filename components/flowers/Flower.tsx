@@ -72,7 +72,9 @@ import { Lupine } from "./lupine/Lupine";
 import { Hollyhock } from "./hollyhock/Hollyhock";
 import { Fritillaria } from "./fritillaria/Fritillaria";
 import { Tuberose } from "./tuberose/Tuberose";
+import { Ixora } from "./ixora/Ixora";
 const SPECIES = {
+  ixora: Ixora,
   tuberose: Tuberose,
   fritillaria: Fritillaria,
   hollyhock: Hollyhock,

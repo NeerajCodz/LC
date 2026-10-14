@@ -21,6 +21,14 @@ export interface FoliageProfile {
 
 /** Cultivar-independent leaf traits; lotus has its own peltate blade generator. */
 export const FOLIAGE: Record<FlowerType, FoliageProfile> = {
+  ixora: {
+    length: 0.96,
+    width: 0.31,
+    color: "#3f6e4c",
+    thickness: 0.016,
+    roughness: 0.46,
+    opposite: true,
+  },
   tuberose: {
     length: 1.52,
     width: 0.038,

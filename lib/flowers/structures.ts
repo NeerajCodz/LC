@@ -87,7 +87,9 @@ import { lupineStructure } from "../../components/flowers/lupine/Lupine";
 import { hollyhockStructure } from "../../components/flowers/hollyhock/Hollyhock";
 import { fritillariaStructure } from "../../components/flowers/fritillaria/Fritillaria";
 import { tuberoseStructure } from "../../components/flowers/tuberose/Tuberose";
+import { ixoraStructure } from "../../components/flowers/ixora/Ixora";
 export const FLOWER_STRUCTURES: Record<FlowerType, FlowerStructure> = {
+  ixora: ixoraStructure,
   tuberose: tuberoseStructure,
   fritillaria: fritillariaStructure,
   hollyhock: hollyhockStructure,

@@ -5,6 +5,7 @@ export const TISSUE_RESPONSE: Record<
   string,
   { roughness: number; sheen: number; coat: number; scatter: number }
 > = {
+  ixora: { roughness: 0.56, sheen: 0.16, coat: 0.035, scatter: 0.045 },
   tuberose: { roughness: 0.43, sheen: 0.2, coat: 0.065, scatter: 0.049 },
   fritillaria: { roughness: 0.48, sheen: 0.17, coat: 0.055, scatter: 0.051 },
   hollyhock: { roughness: 0.63, sheen: 0.23, coat: 0.012, scatter: 0.068 },
@@ -79,6 +80,8 @@ export function specimenTissueColor(type: string, tissue?: SpecimenTissue) {
 export function specimenTissueShader(type: string, tissue?: SpecimenTissue) {
   if (tissue === "leaf") return "";
   switch (type) {
+    case "ixora":
+      return `float ixoVein=pow(.5+.5*cos(vPetalUv.x*25.13274),23.)*smoothstep(.65,.85,vPetalUv.y); diffuseColor.rgb*=1.-ixoVein*.045;`;
     case "tuberose":
       return `float tubRib=pow(.5+.5*cos(vPetalUv.x*37.699),27.); float tubWax=pow(max(0.,sin(vPetalUv.x*141.)*sin(vPetalUv.y*127.)),8.); diffuseColor.rgb*=1.-tubRib*.023-tubWax*.014;`;
     case "fritillaria":

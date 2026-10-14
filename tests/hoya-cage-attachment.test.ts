@@ -19,61 +19,87 @@ import {
 } from "../lib/three/petalDeformation";
 import { petalOpenness } from "../lib/three/easing";
 
-test("hoya: real terminal roots stay inside or intersect the displaced corolla under bounded contact", () => {
+test("hoya: valvate roots stay in their cup and closed tips cover the apex under bounded contact", () => {
   const material = new MeshBasicMaterial({ side: DoubleSide }),
     triangle = new Triangle(),
     point = new Vector3(),
     back = new Vector3(),
     closest = new Vector3(),
-    restPoint = new Vector3(),
+    rest = new Vector3(),
     restBack = new Vector3(),
-    direction = new Vector3(0.341, 0.729, 0.594).normalize();
+    direction = new Vector3(0.341, 0.729, 0.594).normalize(),
+    parent = new Object3D(),
+    pose = new Object3D();
+  parent.position.set(0.7, -0.4, 0.2);
+  parent.rotation.set(0.37, -0.51, 0.23);
+  parent.scale.setScalar(1.15);
+  parent.updateMatrix();
+  const matrices = HOYA_MODEL.clusters.map((cluster) => {
+    pose.position.set(...cluster.position);
+    pose.rotation.set(...cluster.rotation);
+    pose.scale.setScalar(cluster.scale);
+    pose.updateMatrix();
+    return parent.matrix.clone().multiply(pose.matrix);
+  });
   try {
     for (const constrained of [false, true]) {
       const { indices, patches } = specimenCages(HOYA_MODEL, constrained),
         sim = new PetalDynamics(patches, constrained),
-        pose = new Object3D(),
-        matrices = HOYA_MODEL.clusters.map((cluster) => {
-          pose.position.set(...cluster.position);
-          pose.rotation.set(...cluster.rotation);
-          pose.scale.setScalar(cluster.scale);
-          pose.updateMatrix();
-          return pose.matrix.clone();
-        }),
         inverses = indices.map((index) =>
           matrices[HOYA_MODEL.surfaces[index].cluster].clone().invert(),
         ),
         deformation = new CageDeformation(sim),
-        quality = constrained ? "low" : "high",
-        carrier = new Mesh(
-          specimenGeometry(HOYA_MODEL.surfaces[0], quality),
-          material,
-        ),
         cleanup: (() => void)[] = [];
       assert.equal(sim.inverseMass.length, constrained ? 440 : 1100);
-      bindCageGeometry(carrier.geometry, patches[0], sim.offsets[0]);
-      cleanup.push(bindCageRaycast(carrier, deformation));
-      const sectors = HOYA_MODEL.surfaces.flatMap((surface, index) => {
-        if (
-          surface.cluster !== 0 ||
-          surface.name !== "contorted hoya terminal lobe tissue"
-        )
-          return [];
-        const mesh = new Mesh(specimenGeometry(surface, quality), material);
-        assert.equal(surface.cageAttachment?.surface, HOYA_MODEL.surfaces[0]);
-        bindCageGeometry(mesh.geometry, patches[0], sim.offsets[0], {
-          mapUv: surface.cageAttachment!.uv,
-          thickness: surface.thickness,
-        });
-        assert.ok(
-          Math.abs(
-            mesh.geometry.getAttribute("cageSide").getX(0) -
-              surface.thickness / 2,
-          ) < 1e-9,
-        );
-        cleanup.push(bindCageRaycast(mesh, deformation));
-        return [{ surface, index, mesh }];
-      });
+      const studies = (["high", "low", "overview"] as const).flatMap(
+        (quality) =>
+          [0, 19].map((cluster) => {
+            const cupSurface = HOYA_MODEL.surfaces.find(
+              (surface) =>
+                surface.cluster === cluster &&
+                surface.name === "papillose five-lobed corolla",
+            )!;
+            assert.equal(cupSurface.flexible, undefined);
+            const cup = new Mesh(
+              specimenGeometry(cupSurface, quality),
+              material,
+            );
+            cup.matrix.copy(matrices[cluster]);
+            cup.matrixAutoUpdate = false;
+            cup.updateMatrixWorld(true);
+            const lobes = HOYA_MODEL.surfaces.flatMap((surface, index) => {
+              if (
+                surface.cluster !== cluster ||
+                surface.name !== "valvate corolla lobe"
+              )
+                return [];
+              const patch = indices.indexOf(index),
+                mesh = new Mesh(specimenGeometry(surface, quality), material);
+              assert.ok(patch >= 0, "every real lobe owns its production cage");
+              bindCageGeometry(
+                mesh.geometry,
+                patches[patch],
+                sim.offsets[patch],
+              );
+              // The ambient overview renderer does not run the tissue cage solver.
+              if (quality !== "overview")
+                cleanup.push(bindCageRaycast(mesh, deformation));
+              mesh.matrix.copy(matrices[cluster]);
+              mesh.matrixAutoUpdate = false;
+              mesh.updateMatrixWorld(true);
+              return [{ surface, index, mesh }];
+            });
+            assert.equal(lobes.length, 5);
+            const cupVertices = Array.from(
+              { length: cup.geometry.getAttribute("position").count },
+              (_, i) =>
+                cup
+                  .getVertexPosition(i, new Vector3())
+                  .applyMatrix4(cup.matrixWorld),
+            );
+            return { quality, cluster, cup, cupVertices, lobes };
+          }),
+      );
       deformation.setEnabled(true);
       try {
         for (const bloom of [1, 0.5, 0]) {
@@ -86,12 +112,10 @@ test("hoya: real terminal roots stay inside or intersect the displaced corolla u
             );
           });
           sim.reset();
-          carrier.morphTargetInfluences![0] =
-            1 - petalOpenness(bloom, HOYA_MODEL.surfaces[0].delay ?? 0, 0);
-          sectors.forEach(({ surface, index, mesh }) => {
-            mesh.morphTargetInfluences![0] =
-              1 - petalOpenness(bloom, surface.delay ?? 0, index * 0.31);
-          });
+          for (const { lobes } of studies)
+            for (const { surface, index, mesh } of lobes)
+              mesh.morphTargetInfluences![0] =
+                1 - petalOpenness(bloom, surface.delay ?? 0, index * 0.31);
           const firstFree = sim.inverseMass.findIndex((mass) => mass > 0),
             force = {
               wind: 2.4,
@@ -114,62 +138,119 @@ test("hoya: real terminal roots stay inside or intersect the displaced corolla u
                 deformation.data.some((value) => Math.abs(value) > 1e-5),
                 "use actual nonzero displacement",
               );
-            const positions = Array.from(
-                { length: carrier.geometry.getAttribute("position").count },
-                (_, i) => carrier.getVertexPosition(i, new Vector3()),
-              ),
-              index = carrier.geometry.index!;
-            let movedRoot = 0;
-            for (const { mesh } of sectors) {
-              const uv = mesh.geometry.getAttribute("uv"),
-                half = uv.count / 2;
-              for (let i = 0; i < half && uv.getY(i) === 0; i++) {
-                mesh.getVertexPosition(i, point);
-                mesh.getVertexPosition(i + half, back);
-                point.add(back).multiplyScalar(0.5);
-                Mesh.prototype.getVertexPosition.call(mesh, i, restPoint);
-                Mesh.prototype.getVertexPosition.call(mesh, i + half, restBack);
-                restPoint.add(restBack).multiplyScalar(0.5);
-                movedRoot = Math.max(movedRoot, point.distanceTo(restPoint));
-                let distance = Infinity;
-                for (let j = 0; j < index.count; j += 3) {
-                  triangle.set(
-                    positions[index.getX(j)],
-                    positions[index.getX(j + 1)],
-                    positions[index.getX(j + 2)],
+            for (const {
+              quality,
+              cluster,
+              cup,
+              cupVertices,
+              lobes,
+            } of studies) {
+              const context = `${constrained ? "mobile" : "desktop"} ${quality} cluster ${cluster} bloom ${bloom} frame ${frame}`,
+                cupIndex = cup.geometry.index!,
+                worldScale = 1.15 * HOYA_MODEL.clusters[cluster].scale;
+              let movedFree = 0;
+              for (const { mesh } of lobes) {
+                const uv = mesh.geometry.getAttribute("uv"),
+                  half = uv.count / 2;
+                for (let i = 0; i < half; i++) {
+                  mesh.getVertexPosition(i, point);
+                  Mesh.prototype.getVertexPosition.call(mesh, i, rest);
+                  if (uv.getY(i) !== 0) {
+                    movedFree = Math.max(movedFree, point.distanceTo(rest));
+                    continue;
+                  }
+                  mesh.getVertexPosition(i + half, back);
+                  Mesh.prototype.getVertexPosition.call(
+                    mesh,
+                    i + half,
+                    restBack,
                   );
-                  triangle.closestPointToPoint(point, closest);
-                  distance = Math.min(distance, closest.distanceTo(point));
+                  point.add(back).multiplyScalar(0.5);
+                  rest.add(restBack).multiplyScalar(0.5);
+                  assert.ok(
+                    point.distanceTo(rest) < 1e-7,
+                    `${context}: basal lobe root midpoint must remain pinned`,
+                  );
+                  point.applyMatrix4(mesh.matrixWorld);
+                  const hits = new Raycaster(
+                      point,
+                      direction,
+                      1e-8,
+                      10,
+                    ).intersectObject(cup),
+                    unique = hits.filter(
+                      (hit, j) =>
+                        !j ||
+                        Math.abs(hit.distance - hits[j - 1].distance) > 1e-6,
+                    );
+                  if (unique.length % 2 === 1) continue;
+                  let distance = Infinity;
+                  for (let j = 0; j < cupIndex.count; j += 3) {
+                    triangle.set(
+                      cupVertices[cupIndex.getX(j)],
+                      cupVertices[cupIndex.getX(j + 1)],
+                      cupVertices[cupIndex.getX(j + 2)],
+                    );
+                    triangle.closestPointToPoint(point, closest);
+                    distance = Math.min(distance, point.distanceTo(closest));
+                  }
+                  assert.ok(
+                    distance <= (0.007 + 1e-7) * worldScale,
+                    `${context}: root is outside the actual cup by ${distance / worldScale}`,
+                  );
                 }
-                const hits = new Raycaster(
-                    point,
-                    direction,
-                    1e-8,
-                    10,
-                  ).intersectObject(carrier),
-                  unique = hits.filter(
-                    (hit, j) =>
-                      !j ||
-                      Math.abs(hit.distance - hits[j - 1].distance) > 1e-6,
-                  ),
-                  inside = unique.length % 2 === 1;
+              }
+              if (frame && quality !== "overview")
                 assert.ok(
-                  inside || distance <= 0.007 + 1e-7,
-                  `${quality} bloom ${bloom} frame ${frame}: root is outside the displaced corolla by ${distance}, beyond its .007 half-thickness`,
+                  movedFree > 1e-5,
+                  `${context}: free tissue must move; measured ${movedFree}`,
                 );
+              if (bloom === 0 || cluster >= 19) {
+                // Follow the real displaced apex; lateral bud bending is not an aperture.
+                const apex = new Vector3();
+                let tipCount = 0;
+                for (const { mesh } of lobes) {
+                  const uv = mesh.geometry.getAttribute("uv"),
+                    half = uv.count / 2;
+                  for (let i = 0; i < half; i++) {
+                    if (uv.getY(i) !== 1) continue;
+                    mesh.getVertexPosition(i, point);
+                    mesh.getVertexPosition(i + half, back);
+                    apex.add(point.add(back).multiplyScalar(0.5));
+                    tipCount++;
+                  }
+                }
+                apex.divideScalar(tipCount);
+                for (const radius of [0, 0.012, 0.025, 0.04])
+                  for (let azimuth = 0; azimuth < 20; azimuth++) {
+                    const angle = (azimuth * Math.PI * 2) / 20,
+                      origin = new Vector3(
+                        radius * Math.cos(angle),
+                        0.07,
+                        radius * Math.sin(angle),
+                      )
+                        .add(apex)
+                        .applyMatrix4(matrices[cluster]),
+                      down = new Vector3(0, -1, 0).transformDirection(
+                        matrices[cluster],
+                      ),
+                      ray = new Raycaster(origin, down, 0, 0.11 * worldScale);
+                    assert.ok(
+                      ray.intersectObjects(lobes.map(({ mesh }) => mesh))
+                        .length > 0,
+                      `${context}: open displaced apex at radius ${radius}, azimuth ${azimuth}`,
+                    );
+                  }
               }
             }
-            if (frame)
-              assert.ok(
-                movedRoot > 1e-5,
-                "terminal roots actually inherit nonzero cage displacement",
-              );
           }
         }
       } finally {
         cleanup.forEach((unbind) => unbind());
-        carrier.geometry.dispose();
-        sectors.forEach(({ mesh }) => mesh.geometry.dispose());
+        for (const { cup, lobes } of studies) {
+          cup.geometry.dispose();
+          lobes.forEach(({ mesh }) => mesh.geometry.dispose());
+        }
         deformation.dispose();
       }
     }

@@ -1,25 +1,48 @@
 import type { Vec3 } from "@/lib/flowers/types";
 import type { SpecimenModel, SpecimenOrgan } from "@/lib/three/specimenModel";
 
-/** Authored continuous shallow star, with papillose inner corolla tissue. */
-export function hoyaCorolla(
+/** The short fused corolla cup remains joined to all five valvate limbs. */
+function hoyaCorollaCup(u: number, v: number): Vec3 {
+  const angle = u * Math.PI * 2,
+    radius = 0.035 + 0.022 * v;
+  return [
+    Math.cos(angle) * radius,
+    -0.015 + 0.04 * v,
+    Math.sin(angle) * radius,
+  ];
+}
+
+/** A complete corolla limb, with meeting bud margins and no superimposed cap. */
+function hoyaCorollaLobe(
   u: number,
   v: number,
   stage: number,
+  lobe: number,
   young = false,
 ): Vec3 {
-  const open = stage * (young ? 0.06 : 1),
-    a = u * Math.PI * 2,
-    lobe = (0.5 + 0.5 * Math.cos(a * 5)) ** 1.35,
-    limb = Math.max(0, (v - 0.22) / 0.78),
-    mature = 0.042 + 0.13 * v + 0.18 * lobe * limb ** 1.3,
-    closed = 0.04 + 0.082 * Math.sin(Math.PI * v) + 0.007 * v,
-    r = mature * open + closed * (1 - open),
-    twist = (1 - open) * v * 0.24;
+  const open = young ? 0 : stage,
+    direction = (lobe * Math.PI * 2) / 5,
+    w = 2 * u - 1,
+    angle = (w * Math.PI) / 5,
+    closedRadius = 0.057 * (1 - v) + 0.105 * Math.sin(Math.PI * v),
+    closedX = closedRadius * Math.cos(angle),
+    closedZ = closedRadius * Math.sin(angle) + 0.007 * w * v ** 8,
+    fullX = 0.057 + 0.285 * v + 0.057 * (Math.cos(angle) - 1) * (1 - v) ** 2,
+    fullZ =
+      0.057 * Math.sin(angle) * (1 - v) +
+      w * (0.007 * v + 0.085 * Math.sin(Math.PI * v)),
+    x = closedX * (1 - open) + fullX * open,
+    z = closedZ * (1 - open) + fullZ * open,
+    closedY = 0.025 + 0.305 * v + 0.013 * Math.sin(Math.PI * v),
+    fullY =
+      0.025 +
+      0.035 * Math.sin(Math.PI * v) +
+      0.018 * w * w * Math.sin(Math.PI * v) ** 2 -
+      0.015 * v;
   return [
-    Math.cos(a + twist) * r,
-    0.09 * v - 0.08 * limb ** 2 * lobe * open + 0.24 * v * (1 - open),
-    Math.sin(a + twist) * r,
+    Math.cos(direction) * x - Math.sin(direction) * z,
+    closedY * (1 - open) + fullY * open,
+    Math.sin(direction) * x + Math.cos(direction) * z,
   ];
 }
 
@@ -79,18 +102,14 @@ for (let cluster = 0; cluster < 22; cluster++) {
     role: "tube",
     periodic: true,
     overviewColumns: 20,
-    overviewRows: 3,
+    overviewRows: 1,
     thickness: 0.017,
-    flexible: true,
-    cage: [10, 4],
-    mobileCage: [10, 1],
     delay: (cluster % 5) * 0.025,
-    compliance: 0.000022,
-    shapeCompliance: 0.00018,
-    sample: (u, v, open) => hoyaCorolla(u, v, open, young),
+    sample: hoyaCorollaCup,
   });
   for (let lobe = 0; lobe < 5; lobe++) {
-    const a = (lobe * Math.PI * 2) / 5;
+    // The inner waxy star alternates with the five outer corolla limbs.
+    const a = ((lobe + 0.5) * Math.PI * 2) / 5;
     HOYA_MODEL.surfaces.push(
       {
         name: "ridged waxy corona limb",
@@ -98,13 +117,17 @@ for (let cluster = 0; cluster < 22; cluster++) {
         role: "petal",
         tissue: "inner",
         thickness: 0.024,
-        overviewRows: 2,
+        overviewRows: 4,
         sample: (u, v, stage) => {
           const w = 2 * u - 1,
             open = stage * (young ? 0.08 : 1),
-            r = 0.029 + 0.112 * v * (0.38 + 0.62 * open),
-            width = w * (0.004 + 0.048 * Math.sin(Math.PI * v) ** 0.85),
-            ridge = 0.055 + 0.044 * (1 - w * w) * Math.sin(Math.PI * v),
+            r = 0.025 + 0.132 * v * (0.38 + 0.62 * open),
+            taper = Math.sin(Math.PI * v) ** 1.5,
+            width = w * (0.001 + 0.046 * taper),
+            ridge =
+              0.053 +
+              0.012 * Math.sin(Math.PI * v) +
+              0.034 * (1 - w * w) * taper * taper,
             y = ridge + 0.19 * v * (1 - open);
           return [
             Math.cos(a) * r - Math.sin(a) * width,
@@ -194,59 +217,34 @@ for (let cluster = 0; cluster < 22; cluster++) {
   });
 }
 
-// Append the terminal tissue so existing corolla/corona phase indices stay intact.
-// Each sector starts inside the corolla wall at v=.5 and unfurls onto its star limb.
+// Append the real distal lobes so existing reproductive-carrier phases stay intact.
+// Five independent root-pinned patches replace the old periodic carrier's budget.
 for (let cluster = 0; cluster < HOYA_MODEL.clusters.length; cluster++) {
   const young = cluster >= 19,
     carrierIndex = HOYA_MODEL.surfaces.findIndex(
-      (surface) => surface.cluster === cluster && surface.flexible,
+      (surface) =>
+        surface.cluster === cluster &&
+        surface.name === "papillose five-lobed corolla",
     ),
     carrier = HOYA_MODEL.surfaces[carrierIndex];
   for (let lobe = 0; lobe < 5; lobe++) {
-    const direction = (lobe * Math.PI * 2) / 5,
-      index = HOYA_MODEL.surfaces.length;
+    const index = HOYA_MODEL.surfaces.length;
     HOYA_MODEL.surfaces.push({
-      name: "contorted hoya terminal lobe tissue",
+      name: "valvate corolla lobe",
       cluster,
       role: "tube",
-      thickness: 0.014,
-      overviewColumns: 2,
-      overviewRows: 2,
-      cageAttachment: {
-        surface: carrier,
-        uv: (u, v) => [
-          (direction + (u * 2 - 1) * 0.7) / (Math.PI * 2),
-          0.5 + 0.5 * v,
-        ],
-      },
+      thickness: 0.017,
+      overviewColumns: 4,
+      overviewRows: 4,
+      flexible: true,
+      cage: [1, 4],
+      mobileCage: [1, 1],
+      closedCohesion: { group: cluster, release: 0.25, persistent: young },
+      compliance: 0.00004,
+      shapeCompliance: 0.00018,
       // The shared renderer adds index*.31*.004 to delay for every shell.
       delay: (carrier.delay ?? 0) + (carrierIndex - index) * 0.31 * 0.004,
-      sample: (u, v, stage) => {
-        const open = stage * (young ? 0.06 : 1),
-          w = u * 2 - 1,
-          angle = direction + w * 0.7,
-          root = hoyaCorolla(angle / (Math.PI * 2), 0.5, 0),
-          turn = direction + 0.3 + 0.22 * v,
-          width = w * (0.012 + 0.018 * Math.sin(Math.PI * v)),
-          tipX = -0.03 * Math.cos(turn) - width * Math.sin(turn),
-          tipZ = -0.03 * Math.sin(turn) + width * Math.cos(turn),
-          full = hoyaCorolla(angle / (Math.PI * 2), 0.5 + 0.5 * v, 1);
-        const closed: Vec3 = [
-          root[0] * (1 - v) + tipX * v,
-          root[1] * (1 - v) +
-            (0.358 + lobe * 0.0015) * v +
-            0.05 * Math.sin(Math.PI * v),
-          root[2] * (1 - v) + tipZ * v,
-        ];
-        return [
-          closed[0] * (1 - open) +
-            (full[0] + Math.cos(angle) * 0.012 * v) * open,
-          closed[1] * (1 - open) +
-            (full[1] + 0.007 * Math.sin(Math.PI * v)) * open,
-          closed[2] * (1 - open) +
-            (full[2] + Math.sin(angle) * 0.012 * v) * open,
-        ];
-      },
+      sample: (u, v, stage) => hoyaCorollaLobe(u, v, stage, lobe, young),
     });
   }
 }

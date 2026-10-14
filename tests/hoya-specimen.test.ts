@@ -3,7 +3,6 @@ import assert from "node:assert/strict";
 import {
   HOYA_MODEL,
   HOYA_STALKS,
-  hoyaCorolla,
 } from "../components/flowers/hoya/hoyaGeometry";
 import { verifySpecimen } from "./specimen-checks";
 import { HOYA_LEAF } from "../components/flowers/hoya/hoyaLeaf";
@@ -89,7 +88,7 @@ test("hoya: actual folded corolla tissue closes the apex instead of leaving a ci
   }
 });
 
-test("hoya: terminal lobe roots remain in the actual corolla wall through bloom and quality changes", () => {
+test("hoya: valvate lobe roots remain in the actual basal cup through bloom and quality changes", () => {
   const material = new MeshBasicMaterial({ side: DoubleSide }),
     triangle = new Triangle(),
     point = new Vector3(),
@@ -112,7 +111,7 @@ test("hoya: terminal lobe roots remain in the actual corolla wall through bloom 
           assert.equal(
             meshes.length,
             6,
-            "one fused corolla and its five attached terminal sectors",
+            "one short fused cup and its five complete valvate lobes",
           );
           const corolla = meshes[0],
             indices = corolla.geometry.index!;
@@ -151,7 +150,7 @@ test("hoya: terminal lobe roots remain in the actual corolla wall through bloom 
                   inside = unique.length % 2 === 1;
                 assert.ok(
                   inside || distance <= 0.007 + 1e-7,
-                  `${quality} cluster ${cluster} bloom ${bloom}: detached terminal root ${distance}`,
+                  `${quality} cluster ${cluster} bloom ${bloom}: detached valvate lobe root ${distance}`,
                 );
               }
               const index = mesh.geometry.index!;
@@ -161,7 +160,7 @@ test("hoya: terminal lobe roots remain in the actual corolla wall through bloom 
                 mesh.getVertexPosition(index.getX(j + 2), triangle.c);
                 assert.ok(
                   triangle.getArea() > 5e-13,
-                  `${quality} bloom ${bloom}: degenerate terminal triangle`,
+                  `${quality} bloom ${bloom}: degenerate corolla lobe triangle`,
                 );
               }
               for (const normal of [
@@ -276,6 +275,10 @@ test("hoya: complete five-part corollas and coronas surround enclosed gynostegia
       1,
     );
     assert.equal(
+      surfaces.filter((s) => s.name === "valvate corolla lobe").length,
+      5,
+    );
+    assert.equal(
       surfaces.filter((s) => s.name === "ridged waxy corona limb").length,
       5,
     );
@@ -289,6 +292,10 @@ test("hoya: complete five-part corollas and coronas surround enclosed gynostegia
       10,
     );
     assert.equal(organs.filter((o) => o.name === "gynostegium").length, 1);
+    assert.equal(
+      organs.filter((o) => o.name === "appressed anther membrane").length,
+      5,
+    );
     for (const o of organs)
       for (const p of o.points) assert.ok(Math.hypot(p[0], p[2]) < 0.16);
   }
@@ -296,11 +303,14 @@ test("hoya: complete five-part corollas and coronas surround enclosed gynostegia
 
 test("hoya: five genuine limb peaks persist and all pedicels converge at one umbel", () => {
   for (let i = 0; i < 5; i++) {
-    const peak = hoyaCorolla(i / 5, 1, 1);
-    const notch = hoyaCorolla((i + 0.5) / 5, 1, 1);
-    assert.ok(
-      Math.hypot(peak[0], peak[2]) > Math.hypot(notch[0], notch[2]) * 1.5,
-    );
+    const lobe = HOYA_MODEL.surfaces.filter(
+        (s) => s.cluster === 0 && s.name === "valvate corolla lobe",
+      )[i],
+      peak = lobe.sample(0.5, 1, 1),
+      root = lobe.sample(0.5, 0, 1),
+      expectedAngle = (i * Math.PI * 2) / 5;
+    assert.ok(Math.hypot(peak[0], peak[2]) > Math.hypot(root[0], root[2]) * 5);
+    assert.ok(Math.cos(Math.atan2(peak[2], peak[0]) - expectedAngle) > 0.999);
   }
   const stalks = HOYA_STALKS.filter((s) => s.name === "umbel pedicel");
   assert.equal(stalks.length, 22);

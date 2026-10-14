@@ -8,7 +8,8 @@ taxonomic inventory mapping and visual resemblance do not establish validation.
 [Flora of Taiwan, second edition](https://tai2.ntu.edu.tw/species/515%20010%2001%200)
 describes a climber with opposite fleshy elliptic leaves and many-flowered umbels.
 Each flower has a five-lobed calyx, five ovate-triangular corolla lobes with
-papillate inner surfaces, and five ridged waxy corona lobes spreading as a star.
+papillate inner surfaces, and five ridged waxy corona lobes with acute apices
+spreading as a star.
 Pollinia are oblong; the stigma head is flat. Its flower stalks converge into a
 peduncle rather than attaching to a solid spherical receptacle.
 
@@ -17,6 +18,12 @@ supports the fleshy corolla, five-part corona surrounding the gynostegium, short
 connate stamens and paired pollinia. This reproductive description is explicitly
 genus-level evidence. Keep the small anther membranes appressed around the stigma
 head; do not substitute long free stamens or an exposed pollen bouquet.
+
+[PlantNET, Flora of New South Wales, Hoya genus treatment](https://plantnet.rbgsyd.nsw.gov.au/cgi-bin/NSWfl.pl?lvl=gn&name=Hoya&page=nswfl)
+describes valvate corolla lobes in bud and five fleshy, jug-shaped corona segments
+alternating with the corolla lobes. Valvation and alternating orientation are
+used here as genus-level evidence, distinct from the Taiwan species account's
+acute, ridged corona description.
 
 [Royal Botanic Gardens Victoria HortFlora](https://hortflora.rbg.vic.gov.au/taxon/ad9dbbfe-5340-11e7-b82b-005056b0018f)
 records a wiry twiner, convex tight umbels, silvery-white papillose corollas and
@@ -28,7 +35,7 @@ primary structural identity rather than assigning a named cultivar.
 
 Select an unnamed pale pink-white, red-centered study. Use nineteen complete
 flowers in a convex umbel with three smaller adjacent younger buds. Every flower
-has a continuous shallow five-lobed corolla, five separately sealed fleshy ridged
+has a short continuous corolla cup joined to five complete valvate limbs, five separately sealed fleshy ridged
 corona limbs, a small gynostegium, paired pollinia and five small calyx lobes.
 Pedicels converge at one insertion; the umbel follows the supported shoot.
 Opposite thick leaves have entire margins and subtle pinnate veins; their current
@@ -42,29 +49,46 @@ Bud sectors close with finite thickness rather than collapsed triangles. Tissue
 and shadow deformation share the same contact transfer. Full garden and retained
 previews remain ambient; focused/selected cages respect 2,048/512 node ceilings.
 
-The folded corolla's finite circular rim is covered by five overlapping terminal
-lobe sectors, continuous in placement with the real corolla wall. Their roots
-start halfway along that wall and their finite-width tips pass beyond the axis
-at slightly staggered heights; each unfolds over its corresponding star limb.
-This contorted closure is an authored inspection construction, not a measured
-bud-development sequence. Terminal shells share the parent corolla's effective
-bloom timing. Their roots follow the actual quality-specific corolla triangles,
-and attached sectors inherit the existing corolla cage displacement and normal
-transfer with their own finite thickness. Color and both shadow passes use the
-same mapping without adding simulation nodes: the complete head retains its
-unchanged 1,100 desktop / 440 constrained cage nodes. Corona limbs and all ten pollinia
-per flower are retained. The extra tissue adds 10,560 overview indexed inputs
-across the complete 22-flower/bud head, with no extra overview material batches.
+The earlier overlapping terminal sectors visibly produced raised pinwheel lips
+in buds and doubled white-lobe rims at full bloom. They have been replaced by
+the actual five corolla limbs: each starts in the basal cup, closes along its
+neighbors in bud, and becomes the complete exposed limb at full bloom. There is
+no extra distal shell over the open corolla. Finite rounded terminal edges and
+taper-dependent curvature retain positive tissue volume and avoid pinched inner
+skins during the linear inspection morph. The three smaller persistent buds
+remain closed throughout the UI bloom control; their opening is not simulated.
 
-An actual-mesh axial ray regression first exposed the open folded apex. It now
-checks a disk of rays across mature closed and persistent young buds at overview,
-low and high detail. Companion checks measure terminal-root distance to the
-generated corolla triangles and reject degenerate terminal triangles or invalid
-normal targets through closed, half and full bloom. A nonzero wind, pulse and
-contact regression measures the actual displaced meshes under both cage budgets;
-each root must remain inside the corolla solid or within its own 0.007
-half-thickness of that solid. Visual acceptance of the revised tissue remains
-pending.
+The five corona limbs have narrow finite inner and outer tips, a raised median
+ridge and an acute outline. They alternate with the outer corolla. The appressed
+anther membranes and paired pollinia follow the same angular staggering; all
+five corona limbs, five anther membranes and ten pollinia per flower remain.
+The dimensions, slight finite tip rounding and opening trajectory are authored,
+not measurements from the floras.
+
+Five root-pinned flexible patches per flower use 1 by 4 desktop and 1 by 1
+constrained grids, retaining exactly 1,100 / 440 simulation nodes for the whole
+head. The fixed cup and lobe roots share their actual sampled insertion ring.
+Explicit same-flower cohorts share row displacement while their lobes are closed,
+preserving the meeting valvate seams and pinned insertion. The three persistent
+young buds retain this coupling at every UI setting. Mature coupling fades with
+a smooth cubic curve over actual lobe openness from zero to 0.25; independent
+seam-contact correction rises by the complementary amount. External contacts stay
+active throughout: the contacted node receives the full correction, while shared
+row propagation fades continuously. At full release, ordinary independent tissue
+motion and contact are unchanged. Cohorts, release interval, stiffness and the
+shared-row mechanical approximation are authored choices, not measured Hoya
+biomechanics or claims that natural buds reopen.
+
+Actual-mesh tests cover the mature closed and persistent young apex, cup/root
+intersection, one front/back shell per open limb, smooth closed-apex height
+around azimuths, acute alternating corona buffers, positive volume and opposite
+inner/outer triangle orientation at seven morph fractions in all five tiers.
+The original three visible defects were reproduced as failing mesh regressions
+against the previous geometry. Static and whole-model bounded-motion checks pass.
+Actual displaced high/low tissue retains the strict cup intersection and closed
+apex ray coverage under bounded wind, pulse and contact for mature and persistent
+young flowers, with both simulation budgets. Fresh targeted images remain pending;
+CPU mesh checks alone do not establish the final visible macro finish.
 
 ## Behavior and evidence gaps
 

@@ -25,7 +25,7 @@ succulent, entire strap leaves in a basal rosette.
 confirms elongated flowering spikes above grasslike basal foliage and a long
 cultivation history; its account treats the plant as a cultigen.
 
-Planned authored composition: six flower pairs and one younger terminal pair
+Authored composition: six flower pairs and one younger terminal pair
 on one scape. Each flower has a continuous sealed hollow tube bent near its
 base, six integrated fleshy flaring lobes, six included filament/anther units,
 and a style with three stigma divisions. Keep the inferior ovary below the

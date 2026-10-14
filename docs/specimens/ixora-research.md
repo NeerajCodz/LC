@@ -61,5 +61,12 @@ information must not be labeled species-specific evidence.
 Verify four lobes and four stamens, continuous tube walls, closed contorted buds,
 folded normal quality, bifid style, sessile flower insertions and opposite foliage.
 Front, side, 45-degree, macro, bud, half-bloom and full-bloom inspection remains
-required before reporting the specimen finished. No implementation tests or
-visual checks are claimed by this research dossier.
+required before reporting the specimen finished.
+
+The authored model retains 19 flowers and three persistent buds, four throat
+stamens and paired anther chambers per flower, complete bifid pistils with real
+inferior ovaries, and every cyme branch. Species and foliage CPU tests verify
+sealed tissue, positive thickness, folded normals, reproductive containment in
+young buds and exact branch endpoints. The corolla cages use 880 desktop and
+352 constrained nodes. Eight decussate leaves and cuspidate stipules are
+prepared through BotanicalStem; registration and all visual checks remain pending.

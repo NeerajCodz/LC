@@ -7,6 +7,35 @@ import {
 } from "../components/flowers/lobelia/lobeliaGeometry";
 import { verifySpecimen } from "./specimen-checks";
 import { specimenOrganParts } from "../lib/three/specimenModel";
+test("lobelia: three lower limb contours form broad downward fans", () => {
+  // Measure the actual frontal rim, rather than checking authored Gaussian widths.
+  // Broad obovate lower limbs are described by Flora of New Zealand; this
+  // silhouette threshold is an authored proportion, not a measured specimen.
+  const gap = 0.5;
+  for (const [start, end] of [
+    [Math.PI, (Math.PI * 4) / 3],
+    [(Math.PI * 4) / 3, (Math.PI * 5) / 3],
+    [(Math.PI * 5) / 3, Math.PI * 2],
+  ]) {
+    const rim = Array.from({ length: 301 }, (_, i) => {
+      const angle = start + ((end - start) * i) / 300;
+      const p = lobeliaCorolla(
+        (angle - Math.PI / 2 - gap / 2) / (Math.PI * 2 - gap),
+        1,
+        1,
+      );
+      return { angle, p, radius: Math.hypot(p[0], p[1]) };
+    });
+    const tip = rim.reduce((a, b) => (a.radius > b.radius ? a : b));
+    assert.ok(-tip.p[1] / tip.radius > 0.6, "lower lobes must slope down");
+    const base = 0.091;
+    const halfHeight = base + (tip.radius - base) * 0.5;
+    const blade = rim.filter((p) => p.radius >= halfHeight);
+    const first = blade[0].p, last = blade.at(-1)!.p;
+    const width = Math.hypot(last[0] - first[0], last[1] - first[1]);
+    assert.ok(width / (tip.radius - base) >= 0.65, "lower limb is too narrow");
+  }
+});
 test("lobelia: dorsal cleft stays open above the basal bridge with two upper and three lower lobes", () => {
   assert.equal(LOBELIA_MODEL.clusters.length, 9);
   const tubes = LOBELIA_MODEL.surfaces.filter(

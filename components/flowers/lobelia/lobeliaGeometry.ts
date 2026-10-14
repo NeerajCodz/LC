@@ -16,9 +16,9 @@ export function lobeliaCorolla(
   for (const [center, size, width] of [
     [1.94, 0.045, 0.11],
     [1.2 + Math.PI * 2, 0.045, 0.11],
-    [3.6, 0.19, 0.28],
-    [Math.PI * 1.5, 0.24, 0.3],
-    [5.82, 0.19, 0.28],
+    [Math.PI * 1.25, 0.19, 0.44],
+    [Math.PI * 1.5, 0.22, 0.44],
+    [Math.PI * 1.75, 0.19, 0.44],
   ]) {
     const d = Math.atan2(Math.sin(a - center), Math.cos(a - center));
     lobe += size * Math.exp(-((d / width) ** 2));
@@ -111,9 +111,9 @@ for (let c = 0; c < 9; c++) {
   for (const [direction, index] of [
     [1.99, 0],
     [7.43, 1],
-    [3.6, 2],
+    [Math.PI * 1.25, 2],
     [Math.PI * 1.5, 3],
-    [5.82, 4],
+    [Math.PI * 1.75, 4],
   ])
     LOBELIA_MODEL.surfaces.push({
       name: "folded lobelia terminal lobe tissue",

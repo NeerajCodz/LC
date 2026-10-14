@@ -52,6 +52,14 @@ hair density, stage offsets and all mechanical coefficients are authored.
 Preserve the existing focused contact budgets, atlas reuse, reduced motion and
 sharp macro rendering.
 
+The three lower limbs use broad rounded contours directed below the throat.
+Their authored frontal half-height width is at least 65% of their projecting
+length; this prevents the earlier narrow, sideways propeller silhouette. A
+sampled-rim regression checks the rendered surface function's contour and
+downward direction. This ratio is a visual construction choice, not a measured
+flora dimension. Terminal folded tissue follows the same revised lobe axes;
+the dorsal cleft, two narrow upper lobes and cage counts remain unchanged.
+
 ## Evidence gaps and verification
 
 No measured elastic constants, spectral pigments, scan, species-specific opening

@@ -36,6 +36,23 @@ v = 1/32, is authored. Generated root-cap/tepal-wall distance checks at low and
 high quality cover closed, half and full bloom; they verify geometric
 attachment without claiming measured tissue insertion dimensions.
 
+Each pale nectary remains a sealed pad on the inner basal tepal face, rather
+than an external oval. The authored pad centerline uses the u = 0.5, v = 0.1
+tepal landmark in both bloom poses, with a 0.009 model-unit inward radial
+setback. Its broad cross-section follows the circumferential tepal tangent;
+the thin axis faces the wall. This corrects the previous global ellipse
+orientation, which exposed two pads through the outer tepal. The setback,
+flattening and section roll are construction choices, not measured nectary
+microgeometry or a nectar-flow model.
+
+Actual generated-buffer checks cover all six pads in all five bells, every
+geometry tier, and closed/half/full bloom. Exterior center and upper/lower
+silhouette rays must encounter tepal tissue first; interior rays must reach
+the nectary before the wall. Pad exits overlap the inner wall, actual root-cap
+centers stay inside the tepal solid, and both open/folded normals stay finite
+and unit length. Counts, body cages, indexed inputs and draw partitions remain
+unchanged. Updated interior and seven-view rendered acceptance is pending.
+
 Flower pedicels retain their nodding rest orientation during authored bud
 expansion and may yield locally while the shoot follows its anchored bend.
 The leafy crown must remain attached above their insertion points. Never

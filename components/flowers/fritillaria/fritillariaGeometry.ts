@@ -123,9 +123,9 @@ for (let i = 0; i < 5; i++) {
       bud = fritillariaTepal(j)(0.5, 0.1, 0),
       points = (p: Vec3): Vec3[] =>
         [-0.022, 0, 0.022].map((d) => [
-          p[0] - Math.sin(a) * 0.01,
+          p[0] - Math.sin(a) * 0.009,
           p[1] + d,
-          p[2] - Math.cos(a) * 0.01,
+          p[2] - Math.cos(a) * 0.009,
         ]);
     FRITILLARIA_MODEL.organs.push({
       name: "pale basal nectary",
@@ -137,6 +137,9 @@ for (let i = 0; i < 5; i++) {
       foldedRadius: 0.02,
       endRadius: 0.018,
       flatten: 0.32,
+      // A +Y tube starts with its broad axis along -Z. Roll that axis into
+      // the tepal's circumferential tangent; the thin section faces the wall.
+      sectionRoll: a - Math.PI / 2,
       color: "#ede3cf",
     });
   }

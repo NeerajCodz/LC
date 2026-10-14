@@ -1,6 +1,15 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { Euler, Matrix4, Triangle, Vector3 } from "three";
+import {
+  DoubleSide,
+  Euler,
+  Matrix4,
+  Mesh,
+  MeshBasicMaterial,
+  Raycaster,
+  Triangle,
+  Vector3,
+} from "three";
 import {
   FRITILLARIA_MODEL,
   FRITILLARIA_STALKS,
@@ -15,8 +24,216 @@ import {
   specimenOrganParts,
   specimenGeometry,
   specimenOrganGeometry,
+  specimenOrganCarrier,
 } from "../lib/three/specimenModel";
 import { verifySpecimen } from "./specimen-checks";
+import { petalOpenness } from "../lib/three/easing";
+
+for (const quality of ["overview", "low", "medium", "high", "ultra"] as const)
+  test(`fritillaria: ${quality} nectaries face inward and attach beneath all six real tepal walls through bloom`, () => {
+    const material = new MeshBasicMaterial({ side: DoubleSide }),
+      ray = new Raycaster(),
+      point = new Vector3(),
+      folded = new Vector3();
+    try {
+      for (let cluster = 1; cluster <= 5; cluster++) {
+        const tepals = FRITILLARIA_MODEL.surfaces.flatMap((surface, index) =>
+            surface.cluster === cluster &&
+            surface.name === "separate bell tepal"
+              ? [{ surface, index }]
+              : [],
+          ),
+          nectaries = FRITILLARIA_MODEL.organs.filter(
+            (organ) =>
+              organ.cluster === cluster && organ.name === "pale basal nectary",
+          ),
+          shells = tepals.map(
+            ({ surface }) =>
+              new Mesh(specimenGeometry(surface, quality), material),
+          ),
+          pads = nectaries.map(
+            (organ) =>
+              new Mesh(specimenOrganGeometry(organ, quality), material),
+          ),
+          meshes = [...shells, ...pads],
+          carrier = specimenOrganCarrier(FRITILLARIA_MODEL, cluster);
+        assert.equal(shells.length, 6);
+        assert.equal(pads.length, 6);
+        meshes.forEach((mesh) => {
+          mesh.updateMorphTargets();
+          mesh.updateMatrixWorld(true);
+        });
+        for (const pad of pads)
+          for (const normal of [
+            pad.geometry.getAttribute("normal"),
+            pad.geometry.morphAttributes.normal![0],
+          ])
+            for (let vertex = 0; vertex < normal.count; vertex++)
+              assert.ok(
+                Math.abs(
+                  Math.hypot(
+                    normal.getX(vertex),
+                    normal.getY(vertex),
+                    normal.getZ(vertex),
+                  ) - 1,
+                ) < 0.002,
+                "rolled open/folded nectary normals remain finite unit vectors",
+              );
+        try {
+          for (const bloom of [1, 0.5, 0]) {
+            shells.forEach((mesh, j) => {
+              const { surface, index } = tepals[j];
+              mesh.morphTargetInfluences![0] =
+                1 - petalOpenness(bloom, surface.delay ?? 0, index * 0.31);
+            });
+            const organOpen = petalOpenness(
+              bloom,
+              carrier.delay,
+              carrier.phase,
+            );
+            pads.forEach((mesh) => {
+              mesh.morphTargetInfluences![0] = 1 - organOpen;
+            });
+            for (let j = 0; j < 6; j++) {
+              const a = (j * Math.PI) / 3,
+                outward = new Vector3(Math.sin(a), 0, Math.cos(a)),
+                tangent = new Vector3(Math.cos(a), 0, -Math.sin(a)),
+                tepal = tepals[j].surface,
+                open = 1 - shells[j].morphTargetInfluences![0];
+              point
+                .set(...tepal.sample(0.5, 0.1, 1))
+                .lerp(folded.set(...tepal.sample(0.5, 0.1, 0)), 1 - open);
+              ray.set(
+                new Vector3(outward.x, point.y, outward.z),
+                outward.clone().negate(),
+              );
+              ray.near = 0;
+              ray.far = 2;
+              const outside = ray.intersectObjects(meshes, false);
+              assert.ok(outside.length > 0);
+              assert.ok(
+                shells.some((shell) => shell === outside[0].object),
+                `cluster ${cluster}, pad ${j}, bloom ${bloom}: exterior first hit must be tepal, not nectary`,
+              );
+
+              ray.set(new Vector3(0, point.y, 0), outward);
+              const inside = ray.intersectObjects(meshes, false);
+              assert.equal(
+                inside[0]?.object,
+                pads[j],
+                `cluster ${cluster}, pad ${j}, bloom ${bloom}: nectary must remain visible from inside`,
+              );
+              const padHits = inside.filter((hit) => hit.object === pads[j]),
+                wallHits = inside.filter((hit) => hit.object === shells[j]);
+              assert.ok(padHits.length >= 2 && wallHits.length >= 2);
+              assert.ok(
+                padHits.at(-1)!.distance >= wallHits[0].distance,
+                `cluster ${cluster}, pad ${j}, bloom ${bloom}: pad must overlap the inner tepal wall`,
+              );
+
+              pads[j].getVertexPosition(
+                pads[j].geometry.getAttribute("position").count - 2,
+                point,
+              );
+              ray.set(point, new Vector3(0.341, 0.729, 0.594).normalize());
+              ray.near = 1e-8;
+              const rootHits = ray.intersectObject(shells[j], false),
+                unique = rootHits.filter(
+                  (hit, k) =>
+                    !k ||
+                    Math.abs(hit.distance - rootHits[k - 1].distance) > 1e-6,
+                );
+              assert.equal(
+                unique.length % 2,
+                1,
+                `cluster ${cluster}, pad ${j}, bloom ${bloom}: actual root cap center must remain inside its tepal solid`,
+              );
+
+              const geometry = pads[j].geometry,
+                position = geometry.getAttribute("position"),
+                sides = quality === "overview" ? 4 : quality === "low" ? 7 : 12,
+                segments =
+                  quality === "overview" ? 4 : quality === "low" ? 10 : 24,
+                ring = Math.floor(segments / 2),
+                center = new Vector3()
+                  .fromArray(nectaries[j].points[1])
+                  .lerp(
+                    new Vector3().fromArray(nectaries[j].foldedPoints![1]),
+                    1 - organOpen,
+                  );
+              let tangentWidth = 0,
+                radialThickness = 0;
+              for (let side = 0; side < sides; side++) {
+                pads[j].getVertexPosition(ring * sides + side, point);
+                point.sub(center);
+                tangentWidth = Math.max(
+                  tangentWidth,
+                  Math.abs(point.dot(tangent)),
+                );
+                radialThickness = Math.max(
+                  radialThickness,
+                  Math.abs(point.dot(outward)),
+                );
+              }
+              assert.ok(
+                tangentWidth > radialThickness * 2,
+                `cluster ${cluster}, pad ${j}, bloom ${bloom}: broad ellipse must be tangential`,
+              );
+              assert.equal(
+                position.count,
+                geometry.morphAttributes.normal![0].count,
+              );
+              // Actual upper/lower and silhouette sections must also stay behind
+              // the curved wall; a center-only ray could miss an exposed edge.
+              for (const station of new Set([
+                1,
+                Math.floor(segments / 4),
+                ring,
+                Math.floor((segments * 3) / 4),
+                segments - 1,
+              ])) {
+                const sectionCenter = new Vector3();
+                for (let side = 0; side < sides; side++)
+                  sectionCenter.add(
+                    pads[j].getVertexPosition(station * sides + side, point),
+                  );
+                sectionCenter.divideScalar(sides);
+                let sectionWidth = 0;
+                for (let side = 0; side < sides; side++) {
+                  pads[j].getVertexPosition(station * sides + side, point);
+                  sectionWidth = Math.max(
+                    sectionWidth,
+                    Math.abs(point.sub(sectionCenter).dot(tangent)),
+                  );
+                }
+                for (const silhouette of [-0.8, 0, 0.8]) {
+                  ray.set(
+                    outward
+                      .clone()
+                      .addScaledVector(tangent, sectionWidth * silhouette)
+                      .setY(sectionCenter.y),
+                    outward.clone().negate(),
+                  );
+                  ray.near = 0;
+                  ray.far = 2;
+                  const hits = ray.intersectObjects(meshes, false);
+                  assert.ok(
+                    hits.length > 0 &&
+                      shells.some((shell) => shell === hits[0].object),
+                    `cluster ${cluster}, pad ${j}, bloom ${bloom}, section ${station}, edge ${silhouette}: exterior first hit must remain tepal`,
+                  );
+                }
+              }
+            }
+          }
+        } finally {
+          meshes.forEach((mesh) => mesh.geometry.dispose());
+        }
+      }
+    } finally {
+      material.dispose();
+    }
+  });
 test("fritillaria: generated epitepalous stamen roots intersect their sealed tepal walls through closed/half/full bloom", () => {
   for (const quality of ["low", "high"] as const)
     for (let cluster = 1; cluster < 6; cluster++) {

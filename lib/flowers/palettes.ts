@@ -30,6 +30,15 @@ const palette = (
 });
 
 export const PETAL_PALETTES: Record<FlowerType, PetalPalette> = {
+  impatiens: {
+    root: "#f6d9cf",
+    body: "#e86f79",
+    tip: "#f19394",
+    vein: "#be4c63",
+    rootFalloff: 0.29,
+    tipStart: 0.81,
+    veinStrength: 0.044,
+  },
   hoya: {
     root: "#d1aab2",
     body: "#eee1de",

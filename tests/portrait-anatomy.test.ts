@@ -22,7 +22,10 @@ import { BOTTLEBRUSH_MODEL } from "../components/flowers/bottlebrush/bottlebrush
 import { SCABIOSA_MODEL } from "../components/flowers/scabiosa/scabiosaGeometry";
 import { HOYA_MODEL } from "../components/flowers/hoya/hoyaGeometry";
 
+import { IMPATIENS_MODEL } from "../components/flowers/impatiens/impatiensGeometry";
+
 const models: Record<string, SpecimenModel> = {
+  impatiens: IMPATIENS_MODEL,
   hoya: HOYA_MODEL,
   pansy: PANSY_MODEL,
   "african-violet": AFRICAN_VIOLET_MODEL,

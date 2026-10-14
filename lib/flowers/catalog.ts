@@ -13,6 +13,16 @@ export interface FlowerInfo {
 
 export const FLOWERS: FlowerInfo[] = [
   {
+    type: "impatiens",
+    name: "Impatiens",
+    latin: "Impatiens walleriana",
+    family: "Balsaminaceae",
+    color: "#e86f79",
+    description: "Coral petals, softly paired.\nA slender spur behind.",
+    detail:
+      "One dorsal petal and two joined lateral pairs frame a small reproductive cap. A boat-shaped lower sepal continues into a long curved hollow spur above a succulent leafy shoot.",
+  },
+  {
     type: "hoya",
     name: "Hoya",
     latin: "Hoya carnosa",

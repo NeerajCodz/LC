@@ -21,6 +21,15 @@ export interface FoliageProfile {
 
 /** Cultivar-independent leaf traits; lotus has its own peltate blade generator. */
 export const FOLIAGE: Record<FlowerType, FoliageProfile> = {
+  impatiens: {
+    length: 0.74,
+    width: 0.225,
+    color: "#4c7652",
+    thickness: 0.014,
+    teeth: 8,
+    depth: 0.14,
+    roughness: 0.61,
+  },
   hoya: {
     length: 0.88,
     width: 0.245,

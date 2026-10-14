@@ -5,6 +5,7 @@ export const TISSUE_RESPONSE: Record<
   string,
   { roughness: number; sheen: number; coat: number; scatter: number }
 > = {
+  impatiens: { roughness: 0.6, sheen: 0.19, coat: 0.017, scatter: 0.062 },
   hoya: { roughness: 0.48, sheen: 0.17, coat: 0.065, scatter: 0.037 },
   agapanthus: { roughness: 0.59, sheen: 0.13, coat: 0.025, scatter: 0.044 },
   canna: { roughness: 0.56, sheen: 0.15, coat: 0.035, scatter: 0.047 },
@@ -43,6 +44,7 @@ export const TISSUE_RESPONSE: Record<
   zinnia: { roughness: 0.78, sheen: 0.16, coat: 0, scatter: 0.055 },
 };
 export function specimenTissueColor(type: string, tissue?: SpecimenTissue) {
+  if (type === "impatiens" && tissue === "inner") return "#d7c5b5";
   if (type === "hoya" && tissue === "inner") return "#e8d4d3";
   if (type === "agapanthus" && tissue === "disc") return "#b9bd98";
   if (type === "canna" && tissue === "guide") return "#d94a23";
@@ -70,6 +72,10 @@ export function specimenTissueColor(type: string, tissue?: SpecimenTissue) {
 export function specimenTissueShader(type: string, tissue?: SpecimenTissue) {
   if (tissue === "leaf") return "";
   switch (type) {
+    case "impatiens":
+      if (tissue === "inner")
+        return `float impSepFiber=pow(.5+.5*cos(vPetalUv.x*31.416+vPetalUv.y*2.),23.); diffuseColor.rgb*=1.-impSepFiber*.038;`;
+      return `float impVein=pow(.5+.5*cos((vPetalUv.y-abs(vPetalUv.x-.5)*.48)*61.),22.); float impEye=1.-smoothstep(.04,.26,vPetalUv.y); diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.96,.85,.79),impEye*.46); diffuseColor.rgb*=1.-impVein*.048;`;
     case "hoya":
       if (tissue === "inner")
         return `float hoyRidge=pow(.5+.5*cos(vPetalUv.x*6.283185),12.); diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.61,.17,.28),smoothstep(.12,.48,vPetalUv.y)*.38); diffuseColor.rgb*=1.-hoyRidge*.025;`;

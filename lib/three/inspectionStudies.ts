@@ -35,7 +35,14 @@ const HOYA: Omit<InspectionStudy, "name" | "bloom" | "target"> = {
 };
 const STUDIES: Partial<Record<FlowerType, readonly InspectionStudy[]>> = {
   fritillaria: [
-    { ...BELL, name: "Bell interior · axial", back: [0, 1, 0] },
+    {
+      ...BELL,
+      name: "Bell interior · axial",
+      // Keep the view parallel to the bell axis, offset enough for the inner
+      // pads to clear the foreground paired anthers without moving any tissue.
+      target: [0, 0.38, 0.03],
+      back: [0, 1, 0],
+    },
     { ...BELL, name: "Bell interior · oblique", back: [0.1, 1, -0.08] },
   ],
   hoya: [

@@ -11,6 +11,7 @@ import {
   type BufferGeometry,
 } from "three";
 import { fitInspectionBounds } from "../lib/three/inspectionFraming";
+import { createOrganicTube } from "../lib/three/organicTube";
 import { FRITILLARIA_MODEL } from "../components/flowers/fritillaria/fritillariaGeometry";
 import {
   createFritillariaLeaf,
@@ -29,7 +30,13 @@ import {
 test("underside cameras expose all six nectaries and paired anthers through the real surrounding anatomy", () => {
   const material = new MeshBasicMaterial({ side: DoubleSide });
   try {
-    for (const quality of ["overview", "medium", "ultra"] as const) {
+    for (const quality of [
+      "overview",
+      "low",
+      "medium",
+      "high",
+      "ultra",
+    ] as const) {
       const meshes: Mesh[] = [],
         targets: Mesh[] = [];
       const add = (geometry: BufferGeometry, cluster: number, name: string) => {
@@ -52,6 +59,25 @@ test("underside cameras expose all six nectaries and paired anthers through the 
           );
         for (const organ of FRITILLARIA_MODEL.organs)
           add(specimenOrganGeometry(organ, quality), organ.cluster, organ.name);
+        // BotanicalStem's settled negative-Y axis is separate from the model's
+        // head-carried positive-Y stalks and remains a potential occluder too.
+        add(
+          createOrganicTube({
+            points: [
+              [0, -2.2, 0],
+              [0.025, -2.2 * 0.55, 0],
+              [0, 0, 0],
+            ],
+            radius: 0.042 * 1.2,
+            endRadius: 0.042,
+            color: "#73904f",
+            segments: quality === "overview" || quality === "low" ? 40 : 80,
+            sides: quality === "overview" || quality === "low" ? 10 : 18,
+            grain: 0.05,
+          }),
+          0,
+          "main stem",
+        );
         // Include actual foliage with BotanicalStem's settled attachment transform.
         for (const node of FRITILLARIA_FOLIAGE_NODES) {
           const mesh = new Mesh(createFritillariaLeaf(quality), material);
@@ -67,44 +93,46 @@ test("underside cameras expose all six nectaries and paired anthers through the 
         }
         assert.equal(targets.length, 6 + 6 * 2);
         for (const study of inspectionStudies("fritillaria")) {
-          const frame = inspectionStudyFrame(study, quality, new Matrix4()),
-            pose = fitInspectionBounds(
-              frame.box,
-              1.24,
-              36,
-              frame.target,
-              frame,
-            ),
-            origin = new Vector3(...pose.position),
-            ray = new Raycaster(),
-            point = new Vector3(),
-            scratch = new Vector3();
-          for (const mesh of targets) {
-            const position = mesh.geometry.getAttribute("position"),
-              index = mesh.geometry.index!;
-            let visible = false;
-            for (
-              let i = 0;
-              i < index.count;
-              i += Math.max(3, Math.floor(index.count / 60 / 3) * 3)
-            ) {
-              point.set(0, 0, 0);
-              for (let j = 0; j < 3; j++)
-                point.add(
-                  scratch.fromBufferAttribute(position, index.getX(i + j)),
-                );
-              point.multiplyScalar(1 / 3).applyMatrix4(mesh.matrixWorld);
-              ray.set(origin, scratch.copy(point).sub(origin).normalize());
-              ray.far = origin.distanceTo(point) + 0.0001;
-              if (ray.intersectObjects(meshes, false)[0]?.object === mesh) {
-                visible = true;
-                break;
+          const frame = inspectionStudyFrame(study, quality, new Matrix4());
+          for (const aspect of [1.04, 1.24, 1.5]) {
+            const pose = fitInspectionBounds(
+                frame.box,
+                aspect,
+                36,
+                frame.target,
+                frame,
+              ),
+              origin = new Vector3(...pose.position),
+              ray = new Raycaster(),
+              point = new Vector3(),
+              scratch = new Vector3();
+            for (const mesh of targets) {
+              const position = mesh.geometry.getAttribute("position"),
+                index = mesh.geometry.index!;
+              let visible = false;
+              for (
+                let i = 0;
+                i < index.count;
+                i += Math.max(3, Math.floor(index.count / 60 / 3) * 3)
+              ) {
+                point.set(0, 0, 0);
+                for (let j = 0; j < 3; j++)
+                  point.add(
+                    scratch.fromBufferAttribute(position, index.getX(i + j)),
+                  );
+                point.multiplyScalar(1 / 3).applyMatrix4(mesh.matrixWorld);
+                ray.set(origin, scratch.copy(point).sub(origin).normalize());
+                ray.far = origin.distanceTo(point) + 0.0001;
+                if (ray.intersectObjects(meshes, false)[0]?.object === mesh) {
+                  visible = true;
+                  break;
+                }
               }
+              assert.ok(
+                visible,
+                `${quality} ${study.name} aspect ${aspect}: organ ${targets.indexOf(mesh)} is fully occluded`,
+              );
             }
-            assert.ok(
-              visible,
-              `${quality} ${study.name}: organ ${targets.indexOf(mesh)} is fully occluded`,
-            );
           }
         }
       } finally {

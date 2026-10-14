@@ -116,18 +116,23 @@ for (let cluster = 0; cluster < 22; cluster++) {
         cluster,
         role: "petal",
         tissue: "inner",
-        thickness: 0.024,
+        thickness: 0.008,
         overviewRows: 4,
         sample: (u, v, stage) => {
           const w = 2 * u - 1,
             open = stage * (young ? 0.08 : 1),
-            r = 0.025 + 0.132 * v * (0.38 + 0.62 * open),
-            taper = Math.sin(Math.PI * v) ** 1.5,
-            width = w * (0.001 + 0.046 * taper),
+            // The thin root cap enters the actual anther/gynostegium tissue;
+            // the basal inset vanishes at the distal acute tip.
+            r = 0.025 + 0.132 * v * (0.38 + 0.62 * open) - 0.002 * (1 - v) ** 2,
+            taper = Math.sin(Math.PI * v) ** 1.25,
+            width = w * (0.001 + 0.026 * taper),
+            // A rounded tent keeps a median ridge without inflating the two
+            // shoulders into cushions after the actual normal-offset thickness.
+            ridgeSection =
+              (Math.sqrt(1.16) - Math.sqrt(w * w + 0.16)) /
+              (Math.sqrt(1.16) - 0.4),
             ridge =
-              0.053 +
-              0.012 * Math.sin(Math.PI * v) +
-              0.034 * (1 - w * w) * taper * taper,
+              0.053 + 0.004 * taper + 0.028 * ridgeSection * taper * taper,
             y = ridge + 0.19 * v * (1 - open);
           return [
             Math.cos(a) * r - Math.sin(a) * width,

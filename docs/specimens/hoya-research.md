@@ -65,6 +65,27 @@ five corona limbs, five anther membranes and ten pollinia per flower remain.
 The dimensions, slight finite tip rounding and opening trajectory are authored,
 not measurements from the floras.
 
+The first valvate revision's generated corona skins still appeared as rounded
+cushions in the targeted desktop and constrained captures. Averaging paired
+skin vertices had hidden the normal-extrusion contribution: the complete shell
+was approximately 0.81 as wide as it was long, with near-tip projected angles
+above 90 degrees. The corona now uses a narrower body, 0.008 finite shell
+thickness and a restrained rounded-tent median ridge. Tests measure the entire
+projected skin/cap envelope, require acute inner/outer taper and an authored
+width-to-length ceiling of 0.6, and preserve positive volume and opposing skin
+orientation through adult and young morphs. These proportions are an authored
+interpretation of the source's acute, ridged waxy segments; fresh images remain
+necessary to accept the visible result.
+
+Reducing corona thickness also exposed a closed-stage insertion gap that the
+unchanged root midpoint did not detect. A 0.002 basal radial inset, fading to zero
+at the distal end, places the actual root cap into the retained anther or
+gynostegium tissue. Real cap-edge intersections or enclosed vertices are checked
+against those morphed organ meshes in all five tiers, mature and young flowers,
+and bud/half/full settings. This replaces midpoint coincidence as attachment
+evidence; distal tips, organ counts and the corolla's closed-stage mechanics are
+unchanged.
+
 Five root-pinned flexible patches per flower use 1 by 4 desktop and 1 by 1
 constrained grids, retaining exactly 1,100 / 440 simulation nodes for the whole
 head. The fixed cup and lobe roots share their actual sampled insertion ring.

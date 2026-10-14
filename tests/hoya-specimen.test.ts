@@ -324,3 +324,301 @@ test("hoya: five genuine limb peaks persist and all pedicels converge at one umb
   assert.ok(Math.max(...radii) - Math.min(...radii) > 0.4);
   assert.ok(HOYA_MODEL.clusters.some((c) => c.position[1] > 0.1));
 });
+
+type OutlinePoint = [number, number];
+function coronaOutline(points: OutlinePoint[]) {
+  const cross = (a: OutlinePoint, b: OutlinePoint, c: OutlinePoint) =>
+    (b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0]);
+  points.sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+  const lower: OutlinePoint[] = [],
+    upper: OutlinePoint[] = [];
+  for (const point of points) {
+    while (lower.length > 1 && cross(lower.at(-2)!, lower.at(-1)!, point) <= 0)
+      lower.pop();
+    lower.push(point);
+  }
+  for (let i = points.length - 1; i >= 0; i--) {
+    const point = points[i];
+    while (upper.length > 1 && cross(upper.at(-2)!, upper.at(-1)!, point) <= 0)
+      upper.pop();
+    upper.push(point);
+  }
+  lower.pop();
+  upper.pop();
+  return lower.concat(upper);
+}
+
+test("hoya: complete sealed corona outlines retain acute tips instead of inflated cushions", () => {
+  for (const quality of ["overview", "low", "medium", "high", "ultra"] as const)
+    for (const surface of HOYA_MODEL.surfaces.filter(
+      (s) => s.cluster === 0 && s.name === "ridged waxy corona limb",
+    )) {
+      const geometry = specimenGeometry(surface, quality);
+      try {
+        const positions = geometry.getAttribute("position"),
+          tip = surface.sample(0.5, 1, 1),
+          angle = Math.atan2(tip[2], tip[0]),
+          points: OutlinePoint[] = Array.from(
+            { length: positions.count },
+            (_, i) => [
+              positions.getX(i) * Math.cos(angle) +
+                positions.getZ(i) * Math.sin(angle),
+              -positions.getX(i) * Math.sin(angle) +
+                positions.getZ(i) * Math.cos(angle),
+            ],
+          ),
+          outline = coronaOutline(points),
+          min = Math.min(...points.map((point) => point[0])),
+          max = Math.max(...points.map((point) => point[0])),
+          length = max - min,
+          width =
+            Math.max(...points.map((point) => point[1])) -
+            Math.min(...points.map((point) => point[1]));
+        // These proportional bounds are authored interpretation of acute waxy
+        // segments, tested against every real skin/cap vertex, not the midsurface.
+        for (const fraction of [0.1, 0.125, 0.875, 0.9]) {
+          const radial = min + length * fraction,
+            intersections: number[] = [];
+          for (let i = 0; i < outline.length; i++) {
+            const a = outline[i],
+              b = outline[(i + 1) % outline.length];
+            if (
+              a[0] !== b[0] &&
+              radial >= Math.min(a[0], b[0]) &&
+              radial <= Math.max(a[0], b[0])
+            )
+              intersections.push(
+                a[1] + ((b[1] - a[1]) * (radial - a[0])) / (b[0] - a[0]),
+              );
+          }
+          assert.ok(intersections.length >= 2);
+          const span = Math.max(...intersections) - Math.min(...intersections),
+            tipDistance = length * Math.min(fraction, 1 - fraction),
+            includedAngle = 2 * Math.atan(span / (2 * tipDistance));
+          assert.ok(
+            includedAngle < Math.PI / 2,
+            `${quality}: actual shell tip angle ${(includedAngle * 180) / Math.PI} at ${fraction} must be acute`,
+          );
+        }
+        assert.ok(
+          width / length < 0.6,
+          `${quality}: complete corona width/length ${width / length} is too inflated`,
+        );
+        const uv = geometry.getAttribute("uv"),
+          normals = geometry.getAttribute("normal"),
+          half = positions.count / 2;
+        const shoulder = (left: boolean) => {
+          let nearest = 0,
+            error = Infinity;
+          for (let i = 0; i < half; i++) {
+            const candidate =
+              Math.abs(uv.getX(i) - (left ? 0.25 : 0.75)) +
+              Math.abs(uv.getY(i) - 0.5);
+            if (candidate < error) {
+              nearest = i;
+              error = candidate;
+            }
+          }
+          return (
+            -normals.getX(nearest) * Math.sin(angle) +
+            normals.getZ(nearest) * Math.cos(angle)
+          );
+        };
+        assert.ok(
+          shoulder(true) < -0.35 && shoulder(false) > 0.35,
+          `${quality}: actual ridge shoulders must face opposite sides of the median crest`,
+        );
+      } finally {
+        geometry.dispose();
+      }
+    }
+});
+
+test("hoya: restrained corona tissue stays thick and oriented through adult and young morphs", () => {
+  const triangle = new Triangle(),
+    back = new Triangle(),
+    normal = new Vector3(),
+    backNormal = new Vector3(),
+    frontPoint = new Vector3(),
+    backPoint = new Vector3();
+  for (const quality of ["overview", "low", "medium", "high", "ultra"] as const)
+    for (const cluster of [0, 19]) {
+      const surface = HOYA_MODEL.surfaces.find(
+          (s) => s.cluster === cluster && s.name === "ridged waxy corona limb",
+        )!,
+        geometry = specimenGeometry(surface, quality),
+        position = geometry.getAttribute("position"),
+        folded = geometry.morphAttributes.position![0],
+        uv = geometry.getAttribute("uv"),
+        index = geometry.index!,
+        half = position.count / 2,
+        stride = Array.from({ length: half }, (_, i) => i).find(
+          (i) => uv.getY(i) > 0,
+        )!,
+        sideIndices = (stride - 1) * (half / stride - 1) * 6;
+      try {
+        for (const attribute of [
+          geometry.getAttribute("normal"),
+          geometry.morphAttributes.normal![0],
+        ])
+          for (let i = 0; i < attribute.count; i++)
+            assert.ok(
+              Math.abs(
+                Math.hypot(
+                  attribute.getX(i),
+                  attribute.getY(i),
+                  attribute.getZ(i),
+                ) - 1,
+              ) < 1e-5,
+            );
+        for (const bloom of [0, 0.1, 0.25, 0.5, 0.75, 0.9, 1]) {
+          const vertex = (n: number, target: Vector3) =>
+            target.set(
+              position.getX(n) * bloom + folded.getX(n) * (1 - bloom),
+              position.getY(n) * bloom + folded.getY(n) * (1 - bloom),
+              position.getZ(n) * bloom + folded.getZ(n) * (1 - bloom),
+            );
+          for (let i = 0; i < half; i++) {
+            vertex(i, frontPoint);
+            vertex(i + half, backPoint);
+            assert.ok(
+              frontPoint.distanceTo(backPoint) > 0.004,
+              "actual skins retain finite fleshy thickness",
+            );
+          }
+          let volume = 0;
+          for (let i = 0; i < index.count; i += 3) {
+            vertex(index.getX(i), triangle.a);
+            vertex(index.getX(i + 1), triangle.b);
+            vertex(index.getX(i + 2), triangle.c);
+            assert.ok(
+              triangle.getArea() > 5e-13,
+              `${quality}/${cluster}/${bloom}: nondegenerate corona`,
+            );
+            volume +=
+              triangle.a.dot(normal.crossVectors(triangle.b, triangle.c)) / 6;
+            if (i < sideIndices) {
+              vertex(index.getX(i + sideIndices), back.a);
+              vertex(index.getX(i + sideIndices + 1), back.b);
+              vertex(index.getX(i + sideIndices + 2), back.c);
+              assert.ok(
+                triangle.getNormal(normal).dot(back.getNormal(backNormal)) < 0,
+                `${quality}/${cluster}/${bloom}: skins cannot fold through one another`,
+              );
+            }
+          }
+          assert.ok(
+            volume > 1e-6,
+            `${quality}/${cluster}/${bloom}: positive corona volume`,
+          );
+        }
+      } finally {
+        geometry.dispose();
+      }
+    }
+});
+
+test("hoya: actual corona root caps intersect their reproductive insertion at every tier and bloom", () => {
+  const material = new MeshBasicMaterial({ side: DoubleSide }),
+    ray = new Raycaster(),
+    direction = new Vector3(0.341, 0.729, 0.594).normalize(),
+    start = new Vector3(),
+    end = new Vector3(),
+    delta = new Vector3();
+  try {
+    for (const quality of [
+      "overview",
+      "low",
+      "medium",
+      "high",
+      "ultra",
+    ] as const)
+      for (const cluster of [0, 19]) {
+        const parts = specimenOrganParts(HOYA_MODEL, cluster, quality, true),
+          insertion = parts
+            .filter(({ organ }) =>
+              /gynostegium|anther membrane/.test(organ.name),
+            )
+            .map(({ geometry }) => new Mesh(geometry, material)),
+          carrier = specimenOrganCarrier(HOYA_MODEL, cluster),
+          surfaces = HOYA_MODEL.surfaces.filter(
+            (surface) =>
+              surface.cluster === cluster &&
+              surface.name === "ridged waxy corona limb",
+          ),
+          coronal = surfaces.map(
+            (surface) => new Mesh(specimenGeometry(surface, quality), material),
+          );
+        try {
+          assert.equal(insertion.length, 6);
+          for (const bloom of [0, 0.5, 1]) {
+            insertion.forEach((mesh) => {
+              mesh.morphTargetInfluences![0] =
+                1 - petalOpenness(bloom, carrier.delay, carrier.phase);
+            });
+            for (let lobe = 0; lobe < surfaces.length; lobe++) {
+              const surface = surfaces[lobe],
+                mesh = coronal[lobe],
+                index = mesh.geometry.index!,
+                uv = mesh.geometry.getAttribute("uv");
+              mesh.morphTargetInfluences![0] =
+                1 -
+                petalOpenness(
+                  bloom,
+                  surface.delay ?? 0,
+                  HOYA_MODEL.surfaces.indexOf(surface) * 0.31,
+                );
+              let intersects = false;
+              for (
+                let triangle = 0;
+                triangle < index.count && !intersects;
+                triangle += 3
+              ) {
+                const a = index.getX(triangle),
+                  b = index.getX(triangle + 1),
+                  c = index.getX(triangle + 2);
+                if (uv.getY(a) !== 0 || uv.getY(b) !== 0 || uv.getY(c) !== 0)
+                  continue;
+                for (let corner = 0; corner < 3 && !intersects; corner++) {
+                  mesh.getVertexPosition(
+                    corner === 0 ? a : corner === 1 ? b : c,
+                    start,
+                  );
+                  mesh.getVertexPosition(
+                    corner === 0 ? b : corner === 1 ? c : a,
+                    end,
+                  );
+                  delta.copy(end).sub(start);
+                  ray.set(start, delta.clone().normalize());
+                  ray.near = 1e-9;
+                  ray.far = delta.length();
+                  intersects = ray.intersectObjects(insertion).length > 0;
+                  for (const target of insertion) {
+                    ray.set(start, direction);
+                    ray.near = 1e-8;
+                    ray.far = 2;
+                    const hits = ray.intersectObject(target),
+                      unique = hits.filter(
+                        (hit, i) =>
+                          !i ||
+                          Math.abs(hit.distance - hits[i - 1].distance) > 1e-7,
+                      );
+                    if (unique.length % 2) intersects = true;
+                  }
+                }
+              }
+              assert.ok(
+                intersects,
+                `${quality}/cluster${cluster}/bloom${bloom}/lobe${lobe}: real root cap must overlap anther or gynostegium tissue`,
+              );
+            }
+          }
+        } finally {
+          parts.forEach(({ geometry }) => geometry.dispose());
+          coronal.forEach((mesh) => mesh.geometry.dispose());
+        }
+      }
+  } finally {
+    material.dispose();
+  }
+});

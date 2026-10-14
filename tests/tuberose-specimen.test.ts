@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { Euler, Matrix4, Vector3 } from "three";
+import { Euler, Matrix4, Ray, Triangle, Vector3 } from "three";
 import {
   TUBEROSE_MODEL,
   TUBEROSE_STALKS,
@@ -17,8 +17,174 @@ import {
   specimenGeometry,
   specimenOrganGeometry,
   specimenClusterPoint,
+  specimenCages,
 } from "../lib/three/specimenModel";
 import { verifySpecimen } from "./specimen-checks";
+
+const tipSurfaces = [1, 13].map((cluster) =>
+  TUBEROSE_MODEL.surfaces.find((surface) => surface.cluster === cluster)!,
+);
+function foldedTipCases() {
+  const cases = [];
+  for (const surface of tipSurfaces)
+    for (const quality of [
+      "overview",
+      "low",
+      "medium",
+      "high",
+      "ultra",
+    ] as const) {
+      const geometry = specimenGeometry(surface, quality),
+        p = geometry.getAttribute("position"),
+        f = geometry.morphAttributes.position![0],
+        uv = geometry.getAttribute("uv"),
+        index = geometry.index!,
+        half = p.count / 2,
+        columns = Array.from({ length: half }, (_, i) => i).find(
+          (i) => uv.getY(i) > 0,
+        )!,
+        rows = half / columns - 1,
+        sideIndices = columns * rows * 6,
+        ray = new Ray(),
+        hit = new Vector3(),
+        delta = new Vector3(),
+        normal = new Vector3(),
+        opposite = new Vector3();
+      try {
+        for (const attribute of [
+          geometry.getAttribute("normal"),
+          geometry.morphAttributes.normal![0],
+        ])
+          for (let i = 0; i < attribute.count; i++)
+            assert.ok(
+              Math.abs(
+                Math.hypot(
+                  attribute.getX(i),
+                  attribute.getY(i),
+                  attribute.getZ(i),
+                ) - 1,
+              ) < 0.002,
+            );
+        for (const fraction of [0, 0.1, 0.25, 0.5, 0.75, 0.9, 1]) {
+          const vertex = (i: number) =>
+              new Vector3(
+                p.getX(i) * fraction + f.getX(i) * (1 - fraction),
+                p.getY(i) * fraction + f.getY(i) * (1 - fraction),
+                p.getZ(i) * fraction + f.getZ(i) * (1 - fraction),
+              ),
+            center = new Vector3(...tuberoseCenter(1, 0)).lerp(
+              new Vector3(
+                ...tuberoseCenter(1, surface.cluster >= 13 ? 0.055 : 1),
+              ),
+              fraction,
+            ),
+            triangles: { ids: number[]; triangle: Triangle }[] = [];
+          let minInnerRadius = Infinity,
+            maxPairedNormal = -Infinity;
+          for (let i = rows * columns; i < half; i++) {
+            const point = vertex(i),
+              angle = uv.getX(i) * Math.PI * 2;
+            minInnerRadius = Math.min(
+              minInnerRadius,
+              point.x * Math.cos(angle) +
+                (point.z - center.z) * Math.sin(angle),
+            );
+            assert.ok(
+              point.distanceTo(vertex(i + half)) > surface.thickness * 0.45,
+            );
+          }
+          for (let i = (rows - 1) * columns * 6; i < sideIndices; i += 3) {
+            const ids = [index.getX(i), index.getX(i + 1), index.getX(i + 2)],
+              triangle = new Triangle(
+                vertex(ids[0]),
+                vertex(ids[1]),
+                vertex(ids[2]),
+              ),
+              back = new Triangle(
+                vertex(index.getX(i + sideIndices)),
+                vertex(index.getX(i + sideIndices + 1)),
+                vertex(index.getX(i + sideIndices + 2)),
+              );
+            assert.ok(triangle.getArea() > 5e-13 && back.getArea() > 5e-13);
+            maxPairedNormal = Math.max(
+              maxPairedNormal,
+              triangle.getNormal(normal).dot(back.getNormal(opposite)),
+            );
+            triangles.push({ ids, triangle });
+          }
+          let intersects = false;
+          outer: for (let a = 0; a < triangles.length; a++)
+            for (let b = a + 1; b < triangles.length; b++) {
+              const first = triangles[a],
+                second = triangles[b];
+              if (first.ids.some((i) => second.ids.includes(i))) continue;
+              for (const [from, to] of [
+                [first.triangle, second.triangle],
+                [second.triangle, first.triangle],
+              ])
+                for (const [start, end] of [
+                  [from.a, from.b],
+                  [from.b, from.c],
+                  [from.c, from.a],
+                ]) {
+                  delta.copy(end).sub(start);
+                  const length = delta.length();
+                  ray.set(start, delta.normalize());
+                  if (ray.intersectTriangle(to.a, to.b, to.c, false, hit)) {
+                    const along = hit.distanceTo(start);
+                    if (along > 1e-8 && along < length - 1e-8) {
+                      intersects = true;
+                      break outer;
+                    }
+                  }
+                }
+            }
+          cases.push({
+            label: `${quality}/cluster${surface.cluster}/fraction${fraction}`,
+            minInnerRadius,
+            maxPairedNormal,
+            intersects,
+          });
+        }
+      } finally {
+        geometry.dispose();
+      }
+    }
+  return cases;
+}
+let rimCases: ReturnType<typeof foldedTipCases> | undefined;
+const rims = () => (rimCases ??= foldedTipCases());
+test("tuberose: the actual inner terminal ring stays on its own side of the axis through seven folds", () => {
+  for (const row of rims())
+    assert.ok(
+      row.minInnerRadius > 0,
+      `${row.label}: inner signed radius ${row.minInnerRadius}`,
+    );
+});
+test("tuberose: actual terminal inner and outer skins remain oppositely oriented", () => {
+  for (const row of rims())
+    assert.ok(
+      row.maxPairedNormal < 0,
+      `${row.label}: paired terminal normal dot ${row.maxPairedNormal}`,
+    );
+});
+test("tuberose: nonadjacent actual inner terminal triangles never intersect", () => {
+  for (const row of rims())
+    assert.equal(
+      row.intersects,
+      false,
+      `${row.label}: nonadjacent terminal inner faces intersect`,
+    );
+});
+test("tuberose: complete flower cages retain their exact desktop and constrained node counts", () => {
+  for (const constrained of [false, true]) {
+    const { patches } = specimenCages(TUBEROSE_MODEL, constrained);
+    assert.equal(
+      patches.reduce((sum, patch) => sum + patch.open.length / 3, 0),
+      constrained ? 336 : 840,
+    );
+  }
+});
 test("tuberose: the cheap head-carried axis uses an identity carrier and preserves every positive insertion under the head pose", () => {
   const model = TUBEROSE_MODEL,
     stalks = TUBEROSE_STALKS,

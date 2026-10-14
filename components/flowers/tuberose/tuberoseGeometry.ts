@@ -35,16 +35,26 @@ export function tuberosePerianth(
     a = u * Math.PI * 2,
     lobe = (0.5 + 0.5 * Math.cos(a * 6)) ** 1.25,
     limb = Math.max(0, (v - 0.68) / 0.32),
+    // Small buds retain a smooth wall until the six fleshy lobes can spread.
+    lobeOpen = open ** 3,
     full =
       0.04 +
       0.017 * Math.sin(Math.PI * v) +
       (0.026 + 0.187 * lobe) * limb ** 1.4,
-    closed = 0.006 + 0.049 * Math.sin(Math.PI * v) + 0.028 * (1 - v),
-    r = closed * (1 - open) + full * open,
+    // The distal inner skin must remain outside the axis at full wall thickness.
+    closed =
+      0.006 +
+      0.049 * Math.sin(Math.PI * v) +
+      0.028 * (1 - v) +
+      0.002 * limb ** 2,
+    r =
+      closed * (1 - open) +
+      full * open -
+      0.187 * lobe * limb ** 1.4 * (open - lobeOpen),
     center = tuberoseCenter(v, open);
   return [
     Math.cos(a) * r,
-    center[1] - 0.098 * lobe * limb ** 2 * open,
+    center[1] - 0.098 * lobe * limb ** 2 * lobeOpen,
     center[2] + Math.sin(a) * r,
   ];
 }

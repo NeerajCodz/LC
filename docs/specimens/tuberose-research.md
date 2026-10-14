@@ -42,3 +42,16 @@ petals or mix twelve-segment double-flower anatomy into this single form.
 Reversal is an inspection convention, not biological reopening. Scent
 emission, pollination, ovary development and calibrated optical or mechanical
 measurements are outside this study.
+
+The closed distal wall keeps a small positive inner radius at its full authored
+thickness. Its former narrow tip made the inner skin cross the axis and turn
+over; tiny six-fold corrugations also intersected in persistent young buds.
+A smooth distal-only radius margin and slower lobe emergence preserve a
+continuous wall while leaving the fully open adult form and basal tube intact.
+The margin and cubic lobe-emergence curve are authored mechanical/shape choices,
+not measured bud anatomy. Actual generated inner-ring radius, opposing terminal
+skin orientation and nonadjacent triangle intersections are checked for adult
+and persistent-young tissue in all five qualities and seven morph fractions.
+The model retains fourteen flowers, full reproductive organs and 840/336 cage
+nodes. Updated seven-view specimen and overview images remain necessary for
+visible acceptance of this local folded-wall correction.

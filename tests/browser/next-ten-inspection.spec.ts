@@ -1,6 +1,7 @@
 import { test, expect } from "@playwright/test";
 
 import { expectRenderedFlower } from "./pixel-content";
+test.use({ deviceScaleFactor: 1 });
 const species = [
   "rose",
   "ranunculus",

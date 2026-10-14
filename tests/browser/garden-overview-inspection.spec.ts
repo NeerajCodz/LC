@@ -2,6 +2,7 @@ import { test, expect } from "@playwright/test";
 import { FLOWER_TYPES } from "../../lib/flowers/types";
 import { FLOWER_STRUCTURES } from "../../lib/flowers/structures";
 import { expectRenderedFlower } from "./pixel-content";
+test.use({ deviceScaleFactor: 1 });
 
 test.skip(
   process.env.DEV_INSPECTION !== "1",

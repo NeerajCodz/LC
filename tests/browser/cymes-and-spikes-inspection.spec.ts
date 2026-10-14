@@ -1,12 +1,17 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, devices } from "@playwright/test";
 import { CYMES_AND_SPIKES, observeRendering } from "./cymes-and-spikes-cases";
 import { expectRenderedFlower, expectScreenshotFlower } from "./pixel-content";
+import { boundedDpr } from "../../lib/performance";
+
+// Wide inspection sheets keep compositor captures at CSS resolution.
+test.use({ deviceScaleFactor: 1 });
 
 // The isolated runner lists with DEV_INSPECTION=1 and separates inspection files.
 // Production discovery creates no development cases and therefore no skipped cases.
 if (process.env.DEV_INSPECTION === "1") {
   test("inspection starts at the device tier before manual overrides", async ({
     page,
+    browserName,
   }, info) => {
     test.setTimeout(180000);
     await page.setViewportSize({ width: 1600, height: 1100 });
@@ -85,6 +90,101 @@ if (process.env.DEV_INSPECTION === "1") {
     await expect(tier).toHaveValue(constrained ? "constrained" : "standard");
     await expect.poll(qualities).toEqual(constrained ? low : high);
     await expectRenderedFlower(page.locator("canvas"), 0.004);
+    const native = await page.locator("canvas").evaluate((node) => {
+      const canvas = node as HTMLCanvasElement,
+        rect = canvas.getBoundingClientRect(),
+        context = canvas.getContext("webgl2");
+      return {
+        deviceScaleFactor: devicePixelRatio,
+        cssWidth: rect.width,
+        cssHeight: rect.height,
+        width: canvas.width,
+        height: canvas.height,
+        drawingBufferWidth: context?.drawingBufferWidth,
+        drawingBufferHeight: context?.drawingBufferHeight,
+        budget: canvas.dataset.renderBudget,
+        contextLost: context?.isContextLost(),
+        userAgent: navigator.userAgent,
+        touch: "ontouchstart" in window,
+        maxTouchPoints: navigator.maxTouchPoints,
+        coarsePointer: matchMedia("(pointer: coarse)").matches,
+      };
+    });
+    const dpr = boundedDpr(
+        1600,
+        1100,
+        1,
+        constrained,
+        constrained ? 4096 : 8192,
+      ),
+      expectedWidth = Math.floor(1600 * dpr),
+      expectedHeight = Math.floor(1100 * dpr);
+    expect(native.deviceScaleFactor).toBe(1);
+    expect(native.cssWidth).toBe(1600);
+    expect(native.cssHeight).toBe(1100);
+    expect(native.width).toBe(expectedWidth);
+    expect(native.height).toBe(expectedHeight);
+    expect(native.drawingBufferWidth).toBe(expectedWidth);
+    expect(native.drawingBufferHeight).toBe(expectedHeight);
+    expect(native.budget).toBe(constrained ? "mobile" : "desktop");
+    expect(native.contextLost).toBe(false);
+    let trustedTouch: { isTrusted: boolean; touchesLength: number } | null =
+      null;
+    if (constrained) {
+      expect(browserName).toBe("webkit");
+      expect(native.userAgent).toBe(devices["iPhone 13"].userAgent);
+      expect(native.touch).toBe(true);
+      expect(native.coarsePointer).toBe(true);
+      const heading = page.getByRole("heading", {
+        name: "Geometry inspection",
+        exact: true,
+      });
+      await heading.evaluate((node) => {
+        const observed = window as typeof window & {
+          __inspectionTrustedTouch: {
+            isTrusted: boolean;
+            touchesLength: number;
+          } | null;
+        };
+        observed.__inspectionTrustedTouch = null;
+        node.addEventListener(
+          "touchstart",
+          (event) => {
+            const touch = event as TouchEvent;
+            observed.__inspectionTrustedTouch = {
+              isTrusted: touch.isTrusted,
+              touchesLength: touch.touches.length,
+            };
+          },
+          { once: true },
+        );
+      });
+      const bounds = await heading.boundingBox();
+      if (!bounds) throw new Error("Inspection heading has no touch bounds");
+      await page.touchscreen.tap(
+        bounds.x + bounds.width / 2,
+        bounds.y + bounds.height / 2,
+      );
+      trustedTouch = await page.evaluate(
+        () =>
+          (
+            window as typeof window & {
+              __inspectionTrustedTouch: {
+                isTrusted: boolean;
+                touchesLength: number;
+              } | null;
+            }
+          ).__inspectionTrustedTouch,
+      );
+    }
+    await info.attach("inspection-native-profile", {
+      body: Buffer.from(
+        JSON.stringify({ ...native, browserName, trustedTouch }),
+      ),
+      contentType: "application/json",
+    });
+    if (constrained)
+      expect(trustedTouch).toEqual({ isTrusted: true, touchesLength: 1 });
     await page.evaluate(() => {
       (
         window as typeof window & { __inspectionManualChoice: boolean }

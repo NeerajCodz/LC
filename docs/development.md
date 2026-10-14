@@ -5,8 +5,10 @@ Ixora, Pentas, Torenia, Lobelia, Hoya and Impatiens routes, controls, retained
 rendering, search and garden selection. `cymes-and-spikes-inspection.spec.ts`
 captures seven caption-free anatomical views of each plus Rose and Fuchsia, including the
 actual low/medium geometry tier on mobile WebKit. The contact sheet uses a
-1600-by-1100 inspection viewport; public route tests retain the configured phone
-viewport. Inspection also uses the actual device's capped renderer clock, GPU
+1600-by-1100 inspection viewport at device scale 1. This keeps the wide contact
+sheet and normal trace captures at CSS resolution rather than enlarging an
+already capped WebGL image. Public route tests retain the configured phone
+viewport and device scale. Inspection also uses the actual device's capped renderer clock, GPU
 pacing and pixel budget, independently of its geometry-tier selector. An explicit
 one-times DPR ceiling preserves the contact sheet's original resolution on desktop.
 The fixture initially follows the detected device: low/medium on constrained
@@ -14,6 +16,9 @@ devices and high/ultra on standard devices. Its selector permits an explicit
 override in either direction; overview geometry stays at overview. The startup
 browser regression checks the first seven tile qualities before manual input,
 both overrides, rendered pixels and renderer errors.
+It also checks the native drawing buffer, capture density and unchanged mobile
+WebKit user agent, touch and coarse-pointer signals. The pixel/error/context-loss
+criteria and flower geometry tiers are unchanged.
 
 Fritillaria's optional **Bell interior study** and Hoya's **Single-floret study**
 switch the seven standard tiles to two targeted views and back. They frame real

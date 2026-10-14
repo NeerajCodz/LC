@@ -1,6 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { expectRenderedFlower } from "./pixel-content";
 import { resolve } from "node:path";
+test.use({ deviceScaleFactor: 1 });
 const species = [
   "rose",
   "cyclamen",

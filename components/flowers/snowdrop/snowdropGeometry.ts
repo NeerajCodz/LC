@@ -61,6 +61,7 @@ export const SNOWDROP_STALKS: SpecimenOrgan[] = SNOWDROP_MODEL.clusters.flatMap(
     return [
       {
         name: "solitary curved scape",
+        overviewSides: 3,
         cluster: 0,
         points: [
           [c.position[0] * 0.25, -1.65, c.position[2] * 0.25],
@@ -121,6 +122,7 @@ for (let c = 0; c < 3; c++) {
   }
   SNOWDROP_MODEL.surfaces.push({
     name: "inferior ovary",
+    overviewColumns: 12,
     cluster: c,
     role: "calyx",
     sample: (u, v) => {
@@ -140,6 +142,7 @@ for (let c = 0; c < 3; c++) {
       z = Math.cos(a) * 0.037;
     SNOWDROP_MODEL.organs.push({
       name: "included stamen filament",
+      overviewSides: 3,
       cluster: c,
       points: [
         [x * 0.5, 0.025, z * 0.5],
@@ -157,6 +160,7 @@ for (let c = 0; c < 3; c++) {
     });
     SNOWDROP_MODEL.organs.push({
       name: "included anther",
+      overviewSides: 3,
       cluster: c,
       points: [
         [x, 0.19, z],
@@ -176,6 +180,7 @@ for (let c = 0; c < 3; c++) {
   }
   SNOWDROP_MODEL.organs.push({
     name: "pistil style",
+    overviewSides: 3,
     cluster: c,
     points: [
       [0, 0.015, 0],

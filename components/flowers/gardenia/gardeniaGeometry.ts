@@ -43,6 +43,7 @@ for (let c = 0; c < 3; c++) {
   const age = c === 0 ? 1 : 0.1;
   GARDENIA_MODEL.surfaces.push({
     name: "inferior ovary",
+    overviewColumns: 12,
     cluster: c,
     role: "calyx",
     periodic: true,
@@ -123,6 +124,7 @@ for (let c = 0; c < 3; c++) {
   GARDENIA_MODEL.organs.push(
     ...floralStamens({
       count: 6,
+      overviewSides: 3,
       cluster: c,
       radius: 0.058,
       height: 0.4,
@@ -136,6 +138,7 @@ for (let c = 0; c < 3; c++) {
   );
   GARDENIA_MODEL.organs.push({
     name: "central style",
+    overviewSides: 3,
     cluster: c,
     points: [
       [0, -0.04, 0],

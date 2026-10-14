@@ -81,6 +81,7 @@ function includedStamens(cluster: number): SpecimenOrgan[] {
       x = Math.sin(angle) * 0.026;
     return {
       name: i === 9 ? "free tenth stamen" : "united stamen",
+      overviewSides: 3,
       cluster,
       points: [
         [x, -0.074, 0.035],
@@ -215,6 +216,7 @@ export const WISTERIA_MODEL: SpecimenModel = {
       ...includedStamens(cluster),
       {
         name: "included curved style",
+        overviewSides: 3,
         cluster,
         points: [
           [0, -0.115, 0.035],

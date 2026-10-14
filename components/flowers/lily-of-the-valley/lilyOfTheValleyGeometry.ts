@@ -78,6 +78,7 @@ for (let c = 0; c < 11; c++) {
   });
   LILY_OF_THE_VALLEY_MODEL.surfaces.push({
     name: "superior ovary",
+    overviewColumns: 12,
     cluster: c,
     role: "calyx",
     periodic: true,
@@ -97,6 +98,7 @@ for (let c = 0; c < 11; c++) {
       z = Math.cos(a) * 0.042;
     LILY_OF_THE_VALLEY_MODEL.organs.push({
       name: "included stamen filament",
+      overviewSides: 3,
       cluster: c,
       points: [
         [x * 0.5, 0.075, z * 0.5],
@@ -114,6 +116,7 @@ for (let c = 0; c < 11; c++) {
     });
     LILY_OF_THE_VALLEY_MODEL.organs.push({
       name: "included anther",
+      overviewSides: 3,
       cluster: c,
       points: [
         [x, 0.23, z],
@@ -133,6 +136,7 @@ for (let c = 0; c < 11; c++) {
   }
   LILY_OF_THE_VALLEY_MODEL.organs.push({
     name: "pistil style",
+    overviewSides: 3,
     cluster: c,
     points: [
       [0, 0.09, 0],
@@ -152,6 +156,7 @@ for (let c = 0; c < 11; c++) {
     const a = (i * Math.PI * 2) / 3;
     LILY_OF_THE_VALLEY_MODEL.organs.push({
       name: "pistil stigma arm",
+      overviewSides: 3,
       cluster: c,
       points: [
         [0, 0.33, 0],

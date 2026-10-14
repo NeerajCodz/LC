@@ -141,6 +141,7 @@ for (let c = 0; c < 5; c++) {
       z = Math.cos(a) * 0.024;
     PETUNIA_MODEL.organs.push({
       name: "included stamen filament",
+      overviewSides: 3,
       cluster: c,
       points: [
         [x, 0.09, z],
@@ -158,6 +159,7 @@ for (let c = 0; c < 5; c++) {
     });
     PETUNIA_MODEL.organs.push({
       name: "included anther",
+      overviewSides: 3,
       cluster: c,
       points: [
         [x, h, z],
@@ -177,6 +179,7 @@ for (let c = 0; c < 5; c++) {
   }
   PETUNIA_MODEL.organs.push({
     name: "pistil style",
+    overviewSides: 3,
     cluster: c,
     points: [
       [0, 0.09, 0],
@@ -195,6 +198,7 @@ for (let c = 0; c < 5; c++) {
   for (const side of [-1, 1])
     PETUNIA_MODEL.organs.push({
       name: "pistil stigma lobe",
+      overviewSides: 3,
       cluster: c,
       points: [
         [0, 0.83, 0],

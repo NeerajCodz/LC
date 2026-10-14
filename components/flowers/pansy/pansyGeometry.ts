@@ -158,6 +158,7 @@ for (let c = 0; c < PANSY_MODEL.clusters.length; c++) {
   PANSY_MODEL.organs.push(
     ...floralStamens({
       count: 5,
+      overviewSides: 3,
       cluster: c,
       radius: 0.028,
       height: 0.09,

@@ -317,6 +317,7 @@ for (let c = 0; c < CANNA_MODEL.clusters.length; c++) {
     },
     {
       name: "marginal stigma ridge",
+      overviewSides: 3,
       cluster: c,
       points: [
         cannaStyle(0.12, 0.94, 1, young),
@@ -340,6 +341,7 @@ for (let c = 0; c < CANNA_MODEL.clusters.length; c++) {
     organs: [
       {
         name: "sealed ovary papilla",
+        overviewSides: 3,
         cluster: 0,
         points: [
           [0, 0, 0],

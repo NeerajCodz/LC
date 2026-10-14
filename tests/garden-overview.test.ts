@@ -8,6 +8,7 @@ import { FLOWER_STRUCTURES } from "../lib/flowers/structures";
 import { createPetalGeometry } from "../lib/three/geometry";
 import { createCoreGrainGeometry } from "../lib/three/coreGeometry";
 import { specimenInstanceGeometry } from "../lib/three/floretInstances";
+import { specimenInstanceBatches } from "../lib/three/floretBatches";
 import { HYDRANGEA_MODEL } from "../components/flowers/hydrangea/hydrangeaGeometry";
 import { PROTEA_MODEL } from "../components/flowers/king-protea/proteaGeometry";
 import { GERBERA_MODEL } from "../components/flowers/gerbera/gerberaGeometry";
@@ -116,9 +117,10 @@ test("compatible overview tissues batch across independently posed flowers withi
           parts.forEach(({ geometry }) => geometry.dispose());
         }
       for (const group of model.instances ?? []) {
-        const parts = specimenInstanceGeometry(group, "overview");
+        const parts = specimenInstanceBatches(group, "overview");
         draws += parts.surfaces.length + parts.organs.length;
-        [...parts.surfaces, ...parts.organs].forEach((g) => g.dispose());
+        parts.surfaces.forEach((batch) => batch.geometry.dispose());
+        parts.organs.forEach((g) => g.dispose());
       }
     }
   }

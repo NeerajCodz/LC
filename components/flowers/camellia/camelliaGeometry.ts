@@ -131,6 +131,7 @@ for (let c = 0; c < 2; c++) {
   });
   CAMELLIA_MODEL.surfaces.push({
     name: "superior ovary",
+    overviewColumns: 12,
     cluster: c,
     role: "calyx",
     periodic: true,
@@ -140,6 +141,7 @@ for (let c = 0; c < 2; c++) {
   CAMELLIA_MODEL.organs.push(
     ...floralStamens({
       count: 64,
+      overviewSides: 3,
       cluster: c,
       radius: 0.19,
       height: 0.35,
@@ -154,6 +156,7 @@ for (let c = 0; c < 2; c++) {
   );
   CAMELLIA_MODEL.organs.push({
     name: "central style",
+    overviewSides: 3,
     cluster: c,
     points: [
       [0, 0.08, 0],
@@ -173,6 +176,7 @@ for (let c = 0; c < 2; c++) {
     const a = (i * Math.PI * 2) / 3;
     CAMELLIA_MODEL.organs.push({
       name: "style lobe",
+      overviewSides: 3,
       cluster: c,
       points: [
         [0, 0.395, 0],

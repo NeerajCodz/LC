@@ -70,6 +70,8 @@ export function specimenClusterPoint(
 }
 export interface SpecimenOrgan {
   fine?: boolean;
+  /** Explicit distant cross-section detail; the carrier's axial samples remain. */
+  overviewSides?: number;
   /** Explicit carrier membership for reproductive organs with nonlegacy names. */
   bloomMorph?: boolean;
   cluster: number;
@@ -186,7 +188,12 @@ export function specimenOrganGeometry(organ: SpecimenOrgan, quality: Quality) {
         : quality === "low"
           ? 10
           : 24,
-    sides: quality === "overview" ? 4 : quality === "low" ? 7 : 12,
+    sides:
+      quality === "overview"
+        ? (organ.overviewSides ?? 4)
+        : quality === "low"
+          ? 7
+          : 12,
     grain: 0.025,
   };
   const geometry = createOrganicTube(options);

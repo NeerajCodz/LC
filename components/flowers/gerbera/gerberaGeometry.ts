@@ -37,6 +37,7 @@ function smallBilateralCorolla(): SpecimenSurface[] {
   return [
     {
       name: "bilateral corolla tube",
+      overviewColumns: 12,
       cluster: 0,
       role: "tube",
       tissue: "disc",
@@ -66,6 +67,7 @@ function smallBilateralCorolla(): SpecimenSurface[] {
     },
     ...Array.from({ length: 2 }, (_, i) => ({
       name: "paired inner limb",
+      overviewColumns: 4,
       cluster: 0,
       role: "petal" as const,
       tissue: "disc" as const,
@@ -86,6 +88,7 @@ function smallStyles(): SpecimenOrgan[] {
   return [
     {
       name: "pistil style",
+      overviewSides: 3,
       cluster: 0,
       points: [
         [0, 0.015, 0],
@@ -103,6 +106,7 @@ function smallStyles(): SpecimenOrgan[] {
     },
     ...[-1, 1].map((side) => ({
       name: "pistil style arm",
+      overviewSides: 3,
       cluster: 0,
       points: [
         [0, 0.145, 0],
@@ -137,6 +141,7 @@ const disk: SpecimenInstanceGroup = {
         z = Math.cos(a) * 0.009;
       return {
         name: "stamen anther",
+        overviewSides: 3,
         cluster: 0,
         points: [
           [x, 0.077, z],
@@ -211,6 +216,7 @@ for (let i = 0; i < 32; i++) {
   });
   GERBERA_MODEL.surfaces.push({
     name: "outer ray tube",
+    overviewColumns: 12,
     cluster: 0,
     role: "petal",
     periodic: true,
@@ -242,6 +248,7 @@ for (let i = 0; i < 32; i++) {
     });
   GERBERA_MODEL.organs.push({
     name: "female ray pistil style",
+    overviewSides: 3,
     cluster: 0,
     points: [
       [Math.sin(a) * 0.285, 0.02, Math.cos(a) * 0.285],
@@ -260,6 +267,7 @@ for (let i = 0; i < 32; i++) {
   for (const side of [-1, 1])
     GERBERA_MODEL.organs.push({
       name: "female ray pistil style arm",
+      overviewSides: 3,
       cluster: 0,
       points: [
         [Math.sin(a) * 0.285, 0.14, Math.cos(a) * 0.285],
@@ -294,6 +302,7 @@ for (let i = 0; i < 32; i++) {
 }
 GERBERA_MODEL.surfaces.push({
   name: "involucral receptacle wall",
+  overviewColumns: 12,
   cluster: 0,
   role: "calyx",
   periodic: true,

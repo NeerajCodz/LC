@@ -145,6 +145,7 @@ function marginPoint(index: number, [x, y, z]: Vec3, open: number): Vec3 {
 
 const fineOrgans = floralStamens({
   count: 4,
+  overviewSides: 3,
   cluster: 0,
   radius: 0.073,
   height: 0.35,
@@ -170,6 +171,7 @@ fineOrgans.push(
   },
   {
     name: "single protruding style",
+    overviewSides: 3,
     cluster: 0,
     points: [
       [0, 0.022, 0],
@@ -187,6 +189,7 @@ fineOrgans.push(
   },
   ...[-1, 1].map((side) => ({
     name: "lobed style tip",
+    overviewSides: 3,
     cluster: 0,
     points: [
       [0.012, 0.372, 0],
@@ -206,6 +209,7 @@ fineOrgans.push(
     const angle = (i * Math.PI * 2) / 5;
     return {
       name: "calyx bristle",
+      overviewSides: 3,
       cluster: 0,
       points: [
         [Math.sin(angle) * 0.02, -0.022, Math.cos(angle) * 0.02],
@@ -274,6 +278,7 @@ export const SCABIOSA_MODEL: SpecimenModel = {
     }),
     {
       name: "domed head receptacle",
+      overviewColumns: 12,
       cluster: 0,
       role: "calyx",
       periodic: true,

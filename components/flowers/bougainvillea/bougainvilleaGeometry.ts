@@ -104,6 +104,7 @@ export const BOUGAINVILLEA_MODEL: SpecimenModel = {
           const b = (k * Math.PI * 2) / 7;
           return {
             name: "included floral stamen",
+            overviewSides: 3,
             cluster: i + 1,
             points: [
               [
@@ -134,6 +135,7 @@ export const BOUGAINVILLEA_MODEL: SpecimenModel = {
         const a = (j * Math.PI * 2) / 3;
         return {
           name: "included floral style",
+          overviewSides: 3,
           cluster: i + 1,
           points: [
             [Math.sin(a) * 0.08, 0.18, Math.cos(a) * 0.08],

@@ -99,6 +99,7 @@ for (let c = 0; c < 4; c++) {
   CROCUS_MODEL.organs.push(
     ...floralStamens({
       count: 3,
+      overviewSides: 3,
       cluster: c,
       radius: 0.061,
       height: 0.62,
@@ -112,6 +113,7 @@ for (let c = 0; c < 4; c++) {
   );
   CROCUS_MODEL.organs.push({
     name: "central style",
+    overviewSides: 3,
     cluster: c,
     points: [
       [0, 0.38, 0],
@@ -131,6 +133,7 @@ for (let c = 0; c < 4; c++) {
     const a = (i * Math.PI * 2) / 3;
     CROCUS_MODEL.organs.push({
       name: "stigma branch",
+      overviewSides: 3,
       cluster: c,
       points: [
         [0, 0.67, 0],

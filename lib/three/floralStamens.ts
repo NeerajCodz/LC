@@ -15,6 +15,7 @@ export function floralStamens({
   antherLength = 0.04,
   spiral = false,
   foldedHeight = height * 0.65,
+  overviewSides,
 }: {
   count: number;
   cluster: number;
@@ -27,6 +28,7 @@ export function floralStamens({
   antherLength?: number;
   spiral?: boolean;
   foldedHeight?: number;
+  overviewSides?: number;
 }): SpecimenOrgan[] {
   const random = seededRandom(415),
     organs: SpecimenOrgan[] = [];
@@ -51,6 +53,7 @@ export function floralStamens({
     ];
     organs.push({
       name: "stamen filament",
+      overviewSides,
       cluster,
       points: full,
       foldedPoints: folded,
@@ -74,6 +77,7 @@ export function floralStamens({
       ];
       organs.push({
         name: "stamen anther chamber",
+        overviewSides,
         cluster,
         points: chamber(full[2], antherLength),
         foldedPoints: chamber(folded[2], antherLength * 0.7),

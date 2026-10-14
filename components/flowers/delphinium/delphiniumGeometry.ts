@@ -183,6 +183,7 @@ for (let c = 0; c < 12; c++) {
       z = Math.cos(a) * r;
     DELPHINIUM_MODEL.organs.push({
       name: "stamen filament",
+      overviewSides: 3,
       cluster: c,
       points: [
         [x * 0.45, 0.065, z * 0.45],
@@ -200,6 +201,7 @@ for (let c = 0; c < 12; c++) {
     });
     DELPHINIUM_MODEL.organs.push({
       name: "stamen anther",
+      overviewSides: 3,
       cluster: c,
       points: [
         [x, h, z],
@@ -221,6 +223,7 @@ for (let c = 0; c < 12; c++) {
     const a = (i * Math.PI * 2) / 3;
     DELPHINIUM_MODEL.organs.push({
       name: "carpel style",
+      overviewSides: 3,
       cluster: c,
       points: [
         [Math.sin(a) * 0.016, 0.06, Math.cos(a) * 0.016],
@@ -244,6 +247,7 @@ for (let c = 0; c < 12; c++) {
         b = sample(0.24 + (k % 5) * 0.13, 0.38 + Math.floor(k / 5) * 0.11, 0);
       DELPHINIUM_MODEL.organs.push({
         name: "lower petal beard hair",
+        overviewSides: 3,
         cluster: c,
         fine: true,
         points: [

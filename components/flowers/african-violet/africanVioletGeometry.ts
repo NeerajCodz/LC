@@ -76,6 +76,7 @@ for (let c = 0; c < 6; c++) {
       const a = (i * Math.PI * 2) / 5;
       tips.push({
         name: "imbricated corolla apex tissue",
+        overviewColumns: 4,
         cluster: c,
         role: "petal",
         thickness: 0.011,
@@ -136,6 +137,7 @@ for (let c = 0; c < 6; c++) {
   for (const sign of [-1, 1]) {
     AFRICAN_VIOLET_MODEL.organs.push({
       name: "connivent stamen filament",
+      overviewSides: 3,
       cluster: c,
       points: [
         [sign * 0.037, 0.035, 0.018],
@@ -163,6 +165,7 @@ for (let c = 0; c < 6; c++) {
     }
     AFRICAN_VIOLET_MODEL.organs.push({
       name: "staminodial peg",
+      overviewSides: 3,
       cluster: c,
       points: [
         [sign * 0.03, 0.036, -0.025],
@@ -175,6 +178,7 @@ for (let c = 0; c < 6; c++) {
   }
   AFRICAN_VIOLET_MODEL.organs.push({
     name: "laterally exserted style",
+    overviewSides: 3,
     cluster: c,
     points: [
       [0, 0.025, -0.01],

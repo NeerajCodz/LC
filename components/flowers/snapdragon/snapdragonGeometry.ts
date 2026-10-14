@@ -51,7 +51,8 @@ export const SNAPDRAGON_MODEL: SpecimenModel = {
       thickness: 0.014,
       flexible: true,
       sample: snapdragonCorolla,
-      pressureSample: (u: number, v: number, open: number) => snapdragonCorolla(u, v, open, 1),
+      pressureSample: (u: number, v: number, open: number) =>
+        snapdragonCorolla(u, v, open, 1),
       delay: i * 0.04,
       cage: [12, 7] as [number, number],
       mobileCage: [6, 4] as [number, number],
@@ -129,6 +130,7 @@ export const SNAPDRAGON_MODEL: SpecimenModel = {
           ];
         return {
           name: "included didynamous stamen",
+          overviewSides: 3,
           cluster: i + 1,
           points,
           foldedPoints: folded(points),
@@ -140,6 +142,7 @@ export const SNAPDRAGON_MODEL: SpecimenModel = {
       }),
       {
         name: "included style",
+        overviewSides: 3,
         cluster: i + 1,
         points: [
           [0, 0, 0.04],

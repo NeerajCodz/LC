@@ -47,6 +47,7 @@ for (let i = 0; i < 8; i++) {
   });
   COSMOS_MODEL.surfaces.push({
     name: "neuter ray corolla tube",
+    overviewColumns: 12,
     cluster: 0,
     role: "tube",
     periodic: true,
@@ -91,6 +92,7 @@ for (let rank = 0; rank < 2; rank++)
   }
 COSMOS_MODEL.surfaces.push({
   name: "head receptacle",
+  overviewColumns: 12,
   cluster: 0,
   role: "calyx",
   periodic: true,
@@ -107,6 +109,7 @@ COSMOS_MODEL.surfaces.push({
 const diskSurfaces: SpecimenSurface[] = [
   {
     name: "disk corolla tube",
+    overviewColumns: 10,
     cluster: 0,
     role: "tube",
     tissue: "disc",
@@ -119,6 +122,7 @@ for (let i = 0; i < 5; i++) {
   const a = (i * Math.PI * 2) / 5;
   diskSurfaces.push({
     name: "disk corolla lobe",
+    overviewColumns: 4,
     cluster: 0,
     role: "petal",
     tissue: "disc",
@@ -136,6 +140,7 @@ for (let i = 0; i < 5; i++) {
 }
 const diskOrgans = floralStamens({
   count: 5,
+  overviewSides: 3,
   cluster: 0,
   radius: 0.009,
   height: 0.063,
@@ -149,6 +154,7 @@ const diskOrgans = floralStamens({
 for (const side of [-1, 1])
   diskOrgans.push({
     name: "disk style arm",
+    overviewSides: 3,
     cluster: 0,
     points: [
       [0, 0.06, 0],

@@ -122,6 +122,7 @@ export const FOXGLOVE_MODEL: SpecimenModel = {
         ];
         return {
           name: "included didynamous stamen",
+          overviewSides: 3,
           cluster: i + 1,
           points,
           foldedPoints: foldedOrganPoints(points),
@@ -134,6 +135,7 @@ export const FOXGLOVE_MODEL: SpecimenModel = {
     ),
     ...FOXGLOVE_POSITIONS.map((_, i) => ({
       name: "included style",
+      overviewSides: 3,
       cluster: i + 1,
       points: [
         [0, 0, 0.07],
@@ -165,6 +167,7 @@ export const FOXGLOVE_MODEL: SpecimenModel = {
         };
         return {
           name: "interior corolla hair",
+          overviewSides: 3,
           cluster: cluster + 1,
           fine: true,
           points: points(1),

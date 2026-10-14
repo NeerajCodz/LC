@@ -135,6 +135,7 @@ export const SWEET_PEA_MODEL: SpecimenModel = {
         const a = (j * Math.PI * 2) / 10;
         return {
           name: j === 9 ? "free tenth stamen" : "united stamen",
+          overviewSides: 3,
           cluster: i + 1,
           points: [
             [Math.sin(a) * 0.03, -0.065, 0],
@@ -149,6 +150,7 @@ export const SWEET_PEA_MODEL: SpecimenModel = {
     ),
     ...SWEET_PEA_POSITIONS.map((_, i) => ({
       name: "curved pollen-presenting style",
+      overviewSides: 3,
       cluster: i + 1,
       points: [
         [0, -0.13, 0.03],

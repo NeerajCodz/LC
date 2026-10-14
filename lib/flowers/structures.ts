@@ -81,7 +81,9 @@ import { hyacinthStructure } from "../../components/flowers/hyacinth/Hyacinth";
 import { amaryllisStructure } from "../../components/flowers/amaryllis/Amaryllis";
 import { cannaStructure } from "../../components/flowers/canna/Canna";
 import { agapanthusStructure } from "../../components/flowers/agapanthus/Agapanthus";
+import { hoyaStructure } from "../../components/flowers/hoya/Hoya";
 export const FLOWER_STRUCTURES: Record<FlowerType, FlowerStructure> = {
+  hoya: hoyaStructure,
   agapanthus: agapanthusStructure,
   canna: cannaStructure,
   amaryllis: amaryllisStructure,

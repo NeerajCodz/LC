@@ -20,8 +20,10 @@ import { AGAPANTHUS_MODEL } from "../components/flowers/agapanthus/agapanthusGeo
 import { WISTERIA_MODEL } from "../components/flowers/wisteria/wisteriaGeometry";
 import { BOTTLEBRUSH_MODEL } from "../components/flowers/bottlebrush/bottlebrushGeometry";
 import { SCABIOSA_MODEL } from "../components/flowers/scabiosa/scabiosaGeometry";
+import { HOYA_MODEL } from "../components/flowers/hoya/hoyaGeometry";
 
 const models: Record<string, SpecimenModel> = {
+  hoya: HOYA_MODEL,
   pansy: PANSY_MODEL,
   "african-violet": AFRICAN_VIOLET_MODEL,
   bluebell: BLUEBELL_MODEL,

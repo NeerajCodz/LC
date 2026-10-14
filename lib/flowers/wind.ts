@@ -10,6 +10,7 @@ export interface WindProfile {
 // Art-directed response classes informed by habit, stem construction and head load.
 // These are not measured species-specific elastic constants. See wind-and-contact.md.
 export const WIND_PROFILES: Record<FlowerType, WindProfile> = {
+  hoya: { compliance: 0.078, stiffness: 54, damping: 0.9, flutter: 0.25 },
   agapanthus: { compliance: 0.11, stiffness: 51, damping: 0.87, flutter: 0.39 },
   canna: { compliance: 0.085, stiffness: 58, damping: 0.88, flutter: 0.43 },
   amaryllis: { compliance: 0.085, stiffness: 54, damping: 0.89, flutter: 0.27 },

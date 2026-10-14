@@ -13,6 +13,16 @@ export interface FlowerInfo {
 
 export const FLOWERS: FlowerInfo[] = [
   {
+    type: "hoya",
+    name: "Hoya",
+    latin: "Hoya carnosa",
+    family: "Apocynaceae",
+    color: "#eee1de",
+    description: "Porcelain stars.\nA quiet constellation on a vine.",
+    detail:
+      "A convex umbel carries papillose five-lobed corollas and thick ridged coronas around enclosed reproductive organs. Fleshy opposite leaves follow a supported twining shoot.",
+  },
+  {
     type: "agapanthus",
     name: "Agapanthus",
     latin: "Agapanthus praecox",

@@ -66,7 +66,9 @@ import { Hyacinth } from "./hyacinth/Hyacinth";
 import { Amaryllis } from "./amaryllis/Amaryllis";
 import { Canna } from "./canna/Canna";
 import { Agapanthus } from "./agapanthus/Agapanthus";
+import { Hoya } from "./hoya/Hoya";
 const SPECIES = {
+  hoya: Hoya,
   agapanthus: Agapanthus,
   canna: Canna,
   amaryllis: Amaryllis,

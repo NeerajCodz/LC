@@ -30,6 +30,15 @@ const palette = (
 });
 
 export const PETAL_PALETTES: Record<FlowerType, PetalPalette> = {
+  hoya: {
+    root: "#d1aab2",
+    body: "#eee1de",
+    tip: "#f4eae4",
+    vein: "#c69fac",
+    rootFalloff: 0.29,
+    tipStart: 0.8,
+    veinStrength: 0.025,
+  },
   agapanthus: {
     root: "#4f529a",
     body: "#828cdb",

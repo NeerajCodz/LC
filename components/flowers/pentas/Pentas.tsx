@@ -15,6 +15,7 @@ import {
 } from "@/components/flowers/pentas/pentasGeometry";
 import { PENTAS_LEAF_TILT } from "@/components/flowers/pentas/pentasLeaf";
 import { PentasLeaf, PentasNode } from "./PentasFoliage";
+import { pentasYoungStemHairs } from "./pentasPubescence";
 export const pentasStructure: FlowerStructure = {
   ...BASE_STRUCTURE,
   layers: [],
@@ -43,10 +44,21 @@ const anatomy: StemAnatomy = {
   ),
 };
 function PentasStem(props: StemProps) {
+  const hairyAnatomy = useMemo(
+    () => ({
+      ...anatomy,
+      extras: pentasYoungStemHairs(
+        props.quality,
+        props.structure.stemLength,
+        props.structure.stemRadius,
+      ),
+    }),
+    [props.quality, props.structure.stemLength, props.structure.stemRadius],
+  );
   return (
     <BotanicalStem
       {...props}
-      anatomy={anatomy}
+      anatomy={hairyAnatomy}
       LeafComponent={PentasLeaf}
       NodeDecorationComponent={PentasNode}
     />
@@ -66,3 +78,4 @@ export function Pentas(props: Omit<FlowerProps, "type">) {
     />
   );
 }
+import { useMemo } from "react";

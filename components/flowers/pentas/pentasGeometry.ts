@@ -1,5 +1,6 @@
 import type { Vec3 } from "@/lib/flowers/types";
 import type { SpecimenModel, SpecimenOrgan } from "@/lib/three/specimenModel";
+import { pentasCalyxHairs } from "./pentasPubescence";
 
 /** A hairy swollen throat leads into five pointed, connected star lobes. */
 export function pentasCorolla(
@@ -261,3 +262,7 @@ for (let cluster = 0; cluster < 22; cluster++)
 for (const organ of PENTAS_MODEL.organs)
   if (organ.cluster >= 19 && organ.foldedPoints)
     organ.points = organ.foldedPoints.map((p) => [...p] as Vec3);
+for (const calyx of PENTAS_MODEL.surfaces.filter(
+  (surface) => surface.role === "calyx",
+))
+  PENTAS_MODEL.organs.push(...pentasCalyxHairs(calyx.cluster, calyx.sample));

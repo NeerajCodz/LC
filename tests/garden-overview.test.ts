@@ -20,10 +20,10 @@ import {
 } from "../components/flowers/torenia/toreniaStigmaGeometry";
 import {
   specimenGeometry,
-  specimenOrganParts,
   type SpecimenSurface,
   type SpecimenModel,
 } from "../lib/three/specimenModel";
+import { createOrganBatch, organBatchGroups } from "../lib/three/organBatch";
 import { createParametricShell } from "../lib/three/parametricShell";
 import {
   createSurfaceBatch,
@@ -74,17 +74,11 @@ test("all catalog dedicated heads leave room for stems and foliage within the na
         submitted += geometry.index!.count;
         geometry.dispose();
       }
-      for (let cluster = 0; cluster < model.clusters.length; cluster++)
-        for (const included of [false, true])
-          for (const { geometry } of specimenOrganParts(
-            model,
-            cluster,
-            "overview",
-            included,
-          )) {
-            submitted += geometry.index!.count;
-            geometry.dispose();
-          }
+      for (const group of organBatchGroups(renderModel)) {
+        const geometry = createOrganBatch(renderModel, group);
+        submitted += geometry.index!.count;
+        geometry.dispose();
+      }
       for (const group of model.instances ?? []) {
         const parts = specimenInstanceGeometry(group, "overview");
         assert.equal(parts.surfaces.length, group.surfaces.length);
@@ -133,17 +127,7 @@ test("compatible overview tissues batch across independently posed flowers withi
         draws += TORENIA_MODEL.surfaces.filter(
           (s) => s.name === "bilamellate torenia stigma",
         ).length;
-      for (let cluster = 0; cluster < model.clusters.length; cluster++)
-        for (const included of [false, true]) {
-          const parts = specimenOrganParts(
-            model,
-            cluster,
-            "overview",
-            included,
-          );
-          if (parts.length) draws++;
-          parts.forEach(({ geometry }) => geometry.dispose());
-        }
+      draws += organBatchGroups(renderModel).length;
       for (const group of model.instances ?? []) {
         const parts = specimenInstanceBatches(group, "overview");
         draws += parts.surfaces.length + parts.organs.length;
@@ -152,8 +136,8 @@ test("compatible overview tissues batch across independently posed flowers withi
       }
     }
   }
-  // The old dedicated-head path submits1,137 of2,102 measured native draws.
-  // Leave the other965 root, foliage, radial-head and environment draws intact.
+  // Count the current connected dedicated-head path. Native browser coverage
+  // additionally measures roots, foliage, radial heads and environment draws.
   assert.ok(draws < 800, `${draws} dedicated overview head draws`);
   t.diagnostic(`${draws} actual dedicated overview head draws`);
 });

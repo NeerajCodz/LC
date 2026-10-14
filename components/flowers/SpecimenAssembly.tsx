@@ -27,6 +27,8 @@ import { useThree } from "@react-three/fiber";
 import { FloretInstances } from "./FloretInstances";
 import { OverviewSurfaces, type OverviewDraw } from "./OverviewSurfaces";
 import { surfaceBatchGroups } from "@/lib/three/surfaceBatch";
+import { organBatchGroups } from "@/lib/three/organBatch";
+import { OverviewOrgans, type OverviewOrganDraw } from "./OverviewOrgans";
 import {
   createSurfaceBatchPoses,
   updateSurfaceBatchPoses,
@@ -71,6 +73,11 @@ export function SpecimenAssembly({
     [model, batching],
   );
   const overviewDraws = useRef<(OverviewDraw | null)[]>([]);
+  const organBatches = useMemo(
+    () => (batching ? organBatchGroups(model) : []),
+    [model, batching],
+  );
+  const overviewOrganDraws = useRef<(OverviewOrganDraw | null)[]>([]);
   const overviewPoses = useMemo(
     () => (batching ? createSurfaceBatchPoses(model.clusters) : null),
     [model, batching],
@@ -198,6 +205,11 @@ export function SpecimenAssembly({
       draw.uniforms.uBatchBloom.value = bloom.current;
       refreshSurfaceBatchBounds(draw.mesh, draw.uniforms);
     }
+    for (const draw of overviewOrganDraws.current) {
+      if (!draw) continue;
+      draw.uniforms.uBatchBloom.value = bloom.current;
+      refreshSurfaceBatchBounds(draw.mesh, draw.uniforms);
+    }
     if (!resources) return;
     const { sim, deformation, indices, matrices, inverses, clock } = resources;
     for (let p = 0; p < indices.length; p++) {
@@ -276,6 +288,19 @@ export function SpecimenAssembly({
             }}
           />
         ))}
+      {batching &&
+        overviewPoses &&
+        organBatches.map((group, i) => (
+          <OverviewOrgans
+            key={group.included ? "included" : "fixed"}
+            model={model}
+            group={group}
+            poses={overviewPoses}
+            assign={(draw) => {
+              overviewOrganDraws.current[i] = draw;
+            }}
+          />
+        ))}
       {model.clusters.map((c, k) => (
         <group
           key={k}
@@ -308,7 +333,9 @@ export function SpecimenAssembly({
                 />
               ) : null,
             )}
-          <Organs model={model} cluster={k} quality={quality} bloom={bloom} />
+          {!batching && (
+            <Organs model={model} cluster={k} quality={quality} bloom={bloom} />
+          )}
           {model.instances
             ?.filter((g) => g.cluster === k)
             .map((g) => (
@@ -324,13 +351,15 @@ export function SpecimenAssembly({
                 reducedMotion={reducedMotion}
               />
             ))}
-          <Organs
-            model={model}
-            cluster={k}
-            quality={quality}
-            bloom={bloom}
-            included
-          />
+          {!batching && (
+            <Organs
+              model={model}
+              cluster={k}
+              quality={quality}
+              bloom={bloom}
+              included
+            />
+          )}
         </group>
       ))}
     </group>

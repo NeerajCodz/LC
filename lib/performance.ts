@@ -10,6 +10,15 @@ export function isConstrainedDevice(): boolean {
   );
 }
 
+/** Public detail defaults, with an optional lower cap for multi-view inspection. */
+export function renderDprRequest(
+  constrained: boolean,
+  macro: boolean,
+  maxDpr = Infinity,
+) {
+  return Math.min(constrained ? 1 : macro ? 2.5 : 2, maxDpr);
+}
+
 /** Bound total render-buffer area as well as the GPU's maximum dimension. */
 export function boundedDpr(
   width: number,

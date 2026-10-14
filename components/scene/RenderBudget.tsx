@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useLayoutEffect, useRef } from "react";
 import { useStore, useThree } from "@react-three/fiber";
-import { boundedDpr } from "@/lib/performance";
+import { boundedDpr, renderDprRequest } from "@/lib/performance";
 import { bindRendererDocumentExit } from "@/lib/three/documentRenderer";
 import { GpuFrameGate } from "@/lib/three/gpuFrameGate";
 import { SceneProgramPreparation } from "@/lib/three/sceneProgramPreparation";
@@ -15,6 +15,7 @@ export function RenderBudget({
   gpuPacing = false,
   shaderScope,
   shaderRevision,
+  maxDpr,
 }: {
   active?: boolean;
   constrained: boolean;
@@ -22,6 +23,7 @@ export function RenderBudget({
   gpuPacing?: boolean;
   shaderScope?: string;
   shaderRevision?: string;
+  maxDpr?: number;
 }) {
   const get = useThree((state) => state.get);
   const { subscribe } = useStore();
@@ -43,7 +45,7 @@ export function RenderBudget({
     // Keep mobile at CSS-pixel resolution in both modes. Fractional upscaling
     // produced blank composited WebKit macro views despite valid draw calls.
     // Macro still upgrades the geometry; MSAA and the pixel budget stay enabled.
-    const requested = constrained ? 1 : macro ? 2.5 : 2;
+    const requested = renderDprRequest(constrained, macro, maxDpr);
     const context = state.gl.getContext();
     const limit = Math.min(
       state.gl.capabilities.maxTextureSize,
@@ -68,7 +70,7 @@ export function RenderBudget({
       ? "mobile"
       : "desktop";
     return subscribe(applyBudget);
-  }, [get, subscribe, constrained, macro]);
+  }, [get, subscribe, constrained, macro, maxDpr]);
   useEffect(() => {
     const state = get();
     const canvas = state.gl.domElement;

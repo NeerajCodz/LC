@@ -1,7 +1,29 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { boundedDpr } from "../lib/performance";
+import { boundedDpr, renderDprRequest } from "../lib/performance";
 import { queueBake } from "../lib/gpu/bake-queue";
+
+test("an inspection DPR cap preserves public defaults and the actual mobile pixel ceiling", () => {
+  assert.equal(
+    typeof renderDprRequest,
+    "function",
+    "renderer DPR request must support an explicit fixture cap",
+  );
+  assert.equal(renderDprRequest(false, false), 2);
+  assert.equal(renderDprRequest(false, true), 2.5);
+  assert.equal(renderDprRequest(true, true), 1);
+  for (const constrained of [false, true])
+    for (const macro of [false, true]) {
+      const requested = renderDprRequest(constrained, macro, 1);
+      assert.equal(requested, 1);
+      const dpr = boundedDpr(1600, 1100, requested, constrained);
+      assert.ok(dpr <= 1);
+      assert.ok(
+        1600 * 1100 * dpr * dpr <= (constrained ? 1_500_000 : 6_000_000) + 1,
+      );
+      if (constrained) assert.ok(dpr < 1);
+    }
+});
 
 test("portrait galleries and large displays stay within pixel and dimension budgets", () => {
   for (const [width, height] of [

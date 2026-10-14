@@ -70,6 +70,8 @@ export function specimenClusterPoint(
 }
 export interface SpecimenOrgan {
   fine?: boolean;
+  /** Explicit carrier membership for reproductive organs with nonlegacy names. */
+  bloomMorph?: boolean;
   cluster: number;
   name: string;
   points: Vec3[];
@@ -205,8 +207,13 @@ export function specimenOrganGeometry(organ: SpecimenOrgan, quality: Quality) {
 }
 
 /** Reproductive tissue follows its flower's bloom; axes and attachments remain fixed. */
-export function specimenOrganFollowsBloom(organ: Pick<SpecimenOrgan, "name">) {
-  return /stamen|anther|style|pistil|stigma|hair/.test(organ.name);
+export function specimenOrganFollowsBloom(
+  organ: Pick<SpecimenOrgan, "name" | "bloomMorph">,
+) {
+  return (
+    organ.bloomMorph ??
+    /stamen|anther|style|pistil|stigma|hair/.test(organ.name)
+  );
 }
 
 /** The renderer's real partition and matched morph attributes, prepared once per quality. */

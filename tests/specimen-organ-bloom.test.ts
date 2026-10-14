@@ -16,6 +16,15 @@ import { AMARYLLIS_MODEL } from "../components/flowers/amaryllis/amaryllisGeomet
 import { AGAPANTHUS_MODEL } from "../components/flowers/agapanthus/agapanthusGeometry";
 import { CANNA_MODEL } from "../components/flowers/canna/cannaGeometry";
 
+test("explicit bloom partition overrides names while unmarked organs keep legacy classification", () => {
+  const optedIn = { name: "receptive complex", bloomMorph: true },
+    optedOut = { name: "decorative stigma", bloomMorph: false };
+  assert.equal(specimenOrganFollowsBloom(optedIn), true);
+  assert.equal(specimenOrganFollowsBloom(optedOut), false);
+  assert.equal(specimenOrganFollowsBloom({ name: "stamen filament" }), true);
+  assert.equal(specimenOrganFollowsBloom({ name: "flower pedicel" }), false);
+});
+
 test("reproductive organs include stigmas in the renderer bloom partition while shoot attachments stay fixed", () => {
   for (const name of [
     "stamen filament",

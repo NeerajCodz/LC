@@ -62,4 +62,14 @@ has been adopted. Seasonal growth, reproductive success and pollinator motion
 are outside this study. Check five lobes and stamens, valvate closed tissue,
 included anthers, exserted stigma branches, unequal calyx lobes, throat hairs and
 opposite petiolate foliage at front, side, 45 degrees, macro, bud, half bloom and
-full bloom. This dossier does not claim implementation tests or visual checks.
+full bloom.
+
+The authored model retains 19 flowers and three persistent buds, five stamens
+with paired anther chambers, complete bifid pistils and inferior ovaries,
+quality-scaled throat hairs, unequal calyx tissue and every cyme branch.
+Species CPU tests include a real radial ray through the closed generated bud
+at overview, low and high quality. Two axial overview cap strips preserve its
+width bulge; tiny filament cross sections use three sides only at overview.
+Corolla cages use 1,100 desktop and 440 constrained nodes. Eight opposite
+petiolate leaves with geometric underside hairs and stipular bristles are
+prepared. Registration and visual inspection remain pending.

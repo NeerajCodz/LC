@@ -20,7 +20,7 @@ confirms drooping bells, the leaflike bract crown, and glossy lanceolate leaves
 with wavy margins around the lower part of the stem. Its discussion of
 checkerboard markings refers to _F. meleagris_, not this study's pigment.
 
-Planned authored composition: five hanging bells beneath twelve narrow crown
+Authored composition: five hanging bells beneath twelve narrow crown
 bracts and three lower foliage whorls, each with six leaves. Preserve the
 vertical sequence of leafy lower shoot, exposed peduncle, hanging flower ring
 and upward crown. Each bell uses six separately sealed, overlapping curved
@@ -29,6 +29,12 @@ divisions, and one pale basal nectary on each tepal. The bell is an arrangement
 of distinct tepals, not a fused tubular corolla. Crown bracts are narrower than
 lower foliage. Scene counts, palette, tepal thickness and proportions are
 authored choices, including the reference-range choices for bells and leaves.
+
+The six epitepalous filament bases use matching samples of their actual sealed
+tepals in both open and folded poses. The selected midrib landmark, u = 0.5 and
+v = 1/32, is authored. Generated root-cap/tepal-wall distance checks at low and
+high quality cover closed, half and full bloom; they verify geometric
+attachment without claiming measured tissue insertion dimensions.
 
 Flower pedicels retain their nodding rest orientation during authored bud
 expansion and may yield locally while the shoot follows its anchored bend.

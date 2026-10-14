@@ -13,6 +13,11 @@ import { HYDRANGEA_MODEL } from "../components/flowers/hydrangea/hydrangeaGeomet
 import { PROTEA_MODEL } from "../components/flowers/king-protea/proteaGeometry";
 import { GERBERA_MODEL } from "../components/flowers/gerbera/gerberaGeometry";
 import { ZINNIA_MODEL } from "../components/flowers/zinnia/zinniaGeometry";
+import { TORENIA_MODEL } from "../components/flowers/torenia/toreniaGeometry";
+import {
+  TORENIA_RENDER_MODEL,
+  createToreniaStigmaGeometry,
+} from "../components/flowers/torenia/toreniaStigmaGeometry";
 import {
   specimenGeometry,
   specimenOrganParts,
@@ -25,7 +30,7 @@ import {
   surfaceBatchGroups,
 } from "../lib/three/surfaceBatch";
 
-test("all catalog dedicated heads leave room for stems and foliage within the native overview draw budget", async () => {
+test("all catalog dedicated heads leave room for stems and foliage within the native overview draw budget", async (t) => {
   const directory = fileURLToPath(
     new URL("../components/flowers/", import.meta.url),
   );
@@ -37,18 +42,35 @@ test("all catalog dedicated heads leave room for stems and foliage within the na
     if (!FLOWER_TYPES.includes(type as (typeof FLOWER_TYPES)[number])) continue;
     const exports = await import(pathToFileURL(resolve(directory, file)).href);
     for (const [name, value] of Object.entries(exports)) {
-      if (!name.endsWith("_MODEL")) continue;
+      if (!name.endsWith("_MODEL") || name.endsWith("_RENDER_MODEL")) continue;
       const model = value as SpecimenModel;
       assert.ok(!covered.has(type), `${type} is counted once`);
       covered.add(type);
-      const batches = surfaceBatchGroups(model);
+      const renderModel = type === "torenia" ? TORENIA_RENDER_MODEL : model,
+        sensitive =
+          type === "torenia"
+            ? TORENIA_MODEL.surfaces.filter(
+                (s) => s.name === "bilamellate torenia stigma",
+              )
+            : [],
+        batches = surfaceBatchGroups(renderModel);
       assert.equal(
-        batches.reduce((n, group) => n + group.entries.length, 0),
+        batches.reduce((n, group) => n + group.entries.length, 0) +
+          sensitive.length,
         model.surfaces.length,
         `${type} retains every authored surface`,
       );
       for (const batch of batches) {
         const geometry = createSurfaceBatch(batch.entries);
+        submitted += geometry.index!.count;
+        geometry.dispose();
+      }
+      for (let index = 0; index < sensitive.length; index++) {
+        const geometry = createToreniaStigmaGeometry(
+          sensitive[index].cluster,
+          (index % 2) as 0 | 1,
+          "overview",
+        );
         submitted += geometry.index!.count;
         geometry.dispose();
       }
@@ -89,9 +111,10 @@ test("all catalog dedicated heads leave room for stems and foliage within the na
     submitted < 4300000,
     `${submitted} indexed inputs in dedicated overview heads`,
   );
+  t.diagnostic(`${submitted} actual dedicated overview head indexed inputs`);
 });
 
-test("compatible overview tissues batch across independently posed flowers within the native draw-call budget", async () => {
+test("compatible overview tissues batch across independently posed flowers within the native draw-call budget", async (t) => {
   const directory = fileURLToPath(
     new URL("../components/flowers/", import.meta.url),
   );
@@ -102,9 +125,14 @@ test("compatible overview tissues batch across independently posed flowers withi
     if (!FLOWER_TYPES.includes(type as (typeof FLOWER_TYPES)[number])) continue;
     const exports = await import(pathToFileURL(resolve(directory, file)).href);
     for (const [name, value] of Object.entries(exports)) {
-      if (!name.endsWith("_MODEL")) continue;
+      if (!name.endsWith("_MODEL") || name.endsWith("_RENDER_MODEL")) continue;
       const model = value as SpecimenModel;
-      draws += surfaceBatchGroups(model, true).length;
+      const renderModel = type === "torenia" ? TORENIA_RENDER_MODEL : model;
+      draws += surfaceBatchGroups(renderModel, true).length;
+      if (type === "torenia")
+        draws += TORENIA_MODEL.surfaces.filter(
+          (s) => s.name === "bilamellate torenia stigma",
+        ).length;
       for (let cluster = 0; cluster < model.clusters.length; cluster++)
         for (const included of [false, true]) {
           const parts = specimenOrganParts(
@@ -127,6 +155,7 @@ test("compatible overview tissues batch across independently posed flowers withi
   // The old dedicated-head path submits1,137 of2,102 measured native draws.
   // Leave the other965 root, foliage, radial-head and environment draws intact.
   assert.ok(draws < 800, `${draws} dedicated overview head draws`);
+  t.diagnostic(`${draws} actual dedicated overview head draws`);
 });
 
 test("distant fused limbs retain five and six lobes, sealed thickness and folded normals while focused buffers stay unchanged", () => {

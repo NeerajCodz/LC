@@ -102,6 +102,10 @@ Additional slugs are `pansy`, `african-violet`, `bluebell`, `hyacinth`, `amaryll
 
 Their [validation record](docs/specimens/floral-forms-validation.md) distinguishes botanical evidence, authored parameters, real mesh attachment checks, browser review and measured costs.
 
+The collection also includes `lupine`, `hollyhock`, `fritillaria`, `tuberose`, `ixora`, `pentas`, `torenia`, `lobelia`, `hoya` and `impatiens`. Dedicated structures preserve papilionoid whorls, an epicalyx and staminal column, hanging six-tepal bells, paired tubular flowers, four- and five-lobed cymes, bilateral lips, a natural dorsal cleft, waxy coronas and continuous hollow sepal spurs. Each has its own foliage, pigments, tissue response, bloom stages and anchored motion. The [research dossiers](docs/botanical-references.md) distinguish botanical evidence from authored counts, dimensions and mechanics. Tuberose follows the pinned WFO concept `Agave amica`; its dossier records the different current POWO treatment.
+
+Torenia's detailed interactive view responds only to a visible inner stigma face. The touched lobe closes independently and stays closed. The optional `pulseSerial` prop is an explicit authored reset counter; increment it separately from the general `pulse` animation counter. The accessible Pulse control advances both, while ordinary flower clicks retain closure. This reset does not represent measured natural reopening. Leaf blades follow rooted stem motion; they do not each have a separate contact cage.
+
 ## Architecture
 
 The tissue atlas receives a cached CPU-generated field at the device budget before the first tissue material compiles. Its deterministic samples match the optional GPU bake; devices without WebGPU sample the same shared texture rather than evaluating the full noise field for every fragment. A successful GPU bake upgrades that texture in place. The procedural shader remains a preparation-failure safety net.

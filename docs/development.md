@@ -1,5 +1,21 @@
 # Development and verification
 
+`cymes-and-spikes.spec.ts` covers the Lupine, Hollyhock, Crown Imperial, Tuberose,
+Ixora, Pentas, Torenia, Lobelia, Hoya and Impatiens routes, controls, retained
+rendering, search and garden selection. `cymes-and-spikes-inspection.spec.ts`
+captures seven caption-free anatomical views of each plus Rose, including the
+actual low/medium geometry tier on mobile WebKit. The contact sheet uses a
+1600-by-1100 inspection viewport; public route tests retain the configured phone
+viewport and renderer budget. The fixture's explicit device-tier selector keeps
+high/ultra as its standard default and leaves overview geometry at overview.
+
+`cymes-and-spikes-dynamics.test.ts` exercises actual transformed contact cages at
+both node budgets. `cymes-and-spikes-attachments.test.ts` checks positive axes
+carried once by identity clusters as well as lower insertions bridged through
+the stem attachment path. Torenia's dedicated hit/probe/state tests use generated
+inner-face topology, actual mouth occluders and independent stigma state. Its
+explicit reset counter is separate from ordinary click pulses.
+
 `floral-forms-inspection.spec.ts` adds Rose and the Pansy, African Violet,
 Bluebell, Hyacinth, Amaryllis, Canna, Agapanthus, Wisteria, Bottlebrush and
 Scabiosa seven-view boards. `floral-forms.spec.ts` checks their public routes,

@@ -8,7 +8,11 @@ import {
   Vector3,
   type BufferGeometry,
 } from "three";
-import { createCagePatch, type PetalDynamics } from "./petalDynamics";
+import {
+  createCagePatch,
+  type ClosedCohesion,
+  type PetalDynamics,
+} from "./petalDynamics";
 export type SpecimenTissue = "inner" | "guide" | "disc" | "leaf";
 export interface SpecimenSurface {
   tissue?: SpecimenTissue;
@@ -31,6 +35,8 @@ export interface SpecimenSurface {
   overviewRows?: number;
   cage?: [number, number];
   mobileCage?: [number, number];
+  /** Same-cluster valvate tissue shares row motion only while closed. */
+  closedCohesion?: ClosedCohesion;
   /** Attached tissue shares this same-cluster carrier's cage; its v=0 root follows the real sampled wall. */
   cageAttachment?: {
     surface: SpecimenSurface;
@@ -209,7 +215,22 @@ export function specimenGeometry(surface: SpecimenSurface, quality: Quality) {
   return g;
 }
 export function specimenCages(model: SpecimenModel, constrained: boolean) {
+  const closedClusters = new Map<number, number>();
   for (const surface of model.surfaces) {
+    if (surface.closedCohesion) {
+      const group = surface.closedCohesion.group,
+        cluster = closedClusters.get(group);
+      if (
+        !surface.flexible ||
+        surface.cageAttachment ||
+        surface.pinMidrib ||
+        (cluster !== undefined && cluster !== surface.cluster)
+      )
+        throw new Error(
+          "Closed cohesion requires flexible tissue in the same cluster without independent pins or attachments",
+        );
+      closedClusters.set(group, surface.cluster);
+    }
     const carrier = surface.cageAttachment?.surface;
     if (
       carrier &&

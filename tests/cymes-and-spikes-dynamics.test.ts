@@ -209,12 +209,28 @@ for (const { slug, model } of CYMES_MODELS) {
         (index) => model.surfaces[index].flexible,
       );
       assert.ok(flexible >= 0);
-      const isolated = new PetalDynamics([patches[flexible]], constrained),
-        unforced = new PetalDynamics([patches[flexible]], constrained),
-        surface = model.surfaces[indices[flexible]];
+      // A closed-bud cohort is one physical unit; isolating only one member
+      // would remove its authored seam mechanics from the recovery comparison.
+      const group = patches[flexible].closedCohesion?.group,
+        recoveryPatchIndices = patches.flatMap((patch, index) =>
+          group === undefined
+            ? index === flexible
+              ? [index]
+              : []
+            : patch.closedCohesion?.group === group
+              ? [index]
+              : [],
+        ),
+        recoveryPatches = recoveryPatchIndices.map((index) => patches[index]),
+        recoveryIndices = recoveryPatchIndices.map((index) => indices[index]),
+        isolated = new PetalDynamics(recoveryPatches, constrained),
+        unforced = new PetalDynamics(recoveryPatches, constrained);
       for (const tissue of [isolated, unforced]) {
-        applySpecimenPins(tissue, model, [indices[flexible]]);
-        tissue.setRest(0, 1, clusters[surface.cluster].elements);
+        applySpecimenPins(tissue, model, recoveryIndices);
+        recoveryIndices.forEach((index, patch) => {
+          const surface = model.surfaces[index];
+          tissue.setRest(patch, 1, clusters[surface.cluster].elements);
+        });
         tissue.reset();
       }
       force.wind = 2.4;
@@ -238,7 +254,7 @@ for (const { slug, model } of CYMES_MODELS) {
       assertAttached(isolated, `${slug}/released organ`);
       assertAttached(unforced, `${slug}/unforced recovery baseline`);
       t.diagnostic(
-        `${constrained ? "constrained" : "desktop"}: ${sim.inverseMass.length} nodes, ${frames} frames, ${contacts} resolved contacts`,
+        `${constrained ? "constrained" : "desktop"}: ${sim.inverseMass.length} nodes, ${frames} frames, ${contacts} resolved contacts; recovery ${recovered} / driven ${driven} = ${recovered / driven}`,
       );
     }
   });

@@ -134,6 +134,8 @@ export default function FlowerGarden({
                     reducedMotion={reducedMotion}
                     paused={paused}
                     pulse={pulse}
+                    // Garden pulse is advanced only by the explicit breeze button.
+                    pulseSerial={pulse}
                     onClick={() => onSelect(plant.type)}
                   />
                 </RenderActivity>

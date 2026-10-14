@@ -1,6 +1,7 @@
-import type { ReactNode } from "react";
+import type { ReactNode, RefObject } from "react";
 import type { ThreeEvent } from "@react-three/fiber";
 import type { Vec3 } from "@/lib/flowers/types";
+import type { FlowerOrganRayProbe } from "./FloralParts";
 
 /** Phones hit a small invisible envelope, not every triangle of every petal. */
 export function FlowerInteraction({
@@ -10,6 +11,7 @@ export function FlowerInteraction({
   proxyCenter,
   onHover,
   onClick,
+  rayProbe,
 }: {
   children: ReactNode;
   enabled: boolean;
@@ -17,10 +19,12 @@ export function FlowerInteraction({
   proxyCenter?: Vec3;
   onHover?: (hovered: boolean) => void;
   onClick?: () => void;
+  rayProbe?: RefObject<FlowerOrganRayProbe | null>;
 }) {
   const handlers = enabled
     ? {
         onPointerDown: (event: ThreeEvent<PointerEvent>) => {
+          rayProbe?.current?.(event.ray);
           event.stopPropagation();
           (event.target as Element | null)?.setPointerCapture(event.pointerId);
         },
@@ -30,8 +34,12 @@ export function FlowerInteraction({
           );
         },
         onPointerOver: (event: ThreeEvent<PointerEvent>) => {
+          rayProbe?.current?.(event.ray);
           event.stopPropagation();
           onHover?.(true);
+        },
+        onPointerMove: (event: ThreeEvent<PointerEvent>) => {
+          rayProbe?.current?.(event.ray);
         },
         onPointerOut: () => onHover?.(false),
         onClick: (event: ThreeEvent<MouseEvent>) => {

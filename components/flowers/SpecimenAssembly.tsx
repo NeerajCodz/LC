@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef } from "react";
 import { Group, Matrix4, Mesh } from "three";
 import { useActiveFrame } from "@/hooks/useActiveFrame";
 import { useExperienceSettings } from "@/hooks/useExperienceSettings";
@@ -6,6 +6,7 @@ import { PetalDynamics, type SurfaceForces } from "@/lib/three/petalDynamics";
 import {
   CageDeformation,
   bindCageGeometry,
+  bindCageRaycast,
 } from "@/lib/three/petalDeformation";
 import { SurfaceClock } from "@/lib/three/surfaceClock";
 import {
@@ -47,7 +48,12 @@ export function SpecimenAssembly({
   motion,
   physics = "ambient",
   reducedMotion = false,
-}: FlowerOrgansProps & { model: SpecimenModel; type: FlowerType }) {
+  raycastCages = false,
+}: FlowerOrgansProps & {
+  model: SpecimenModel;
+  type: FlowerType;
+  raycastCages?: boolean;
+}) {
   const { constrained } = useExperienceSettings();
   const canvas = useThree((state) => state.gl.domElement);
   const cost = useRef({
@@ -294,6 +300,7 @@ export function SpecimenAssembly({
                   type={type}
                   color={color}
                   resources={resources}
+                  raycastCages={raycastCages}
                 />
               ) : null,
             )}
@@ -339,6 +346,7 @@ function Surface({
   type,
   color,
   resources,
+  raycastCages,
 }: {
   surface: SpecimenSurface;
   index: number;
@@ -347,7 +355,9 @@ function Surface({
   type: FlowerType;
   color?: string;
   resources: Resources;
+  raycastCages: boolean;
 }) {
+  const mesh = useRef<Mesh>(null);
   const geometry = useMemo(() => {
     const g = specimenGeometry(surface, quality),
       p = resources?.indices.indexOf(index) ?? -1;
@@ -362,9 +372,16 @@ function Surface({
   }, [type, surface, color, resources]);
   useEffect(() => () => geometry.dispose(), [geometry]);
   useEffect(() => () => material.dispose(), [material]);
+  useLayoutEffect(() => {
+    if (mesh.current && resources && raycastCages && surface.flexible)
+      return bindCageRaycast(mesh.current, resources.deformation);
+  }, [geometry, resources, raycastCages, surface.flexible]);
   return (
     <mesh
-      ref={assign}
+      ref={(value) => {
+        mesh.current = value;
+        assign(value);
+      }}
       geometry={geometry}
       material={material}
       onUpdate={(m) => m.updateMorphTargets()}

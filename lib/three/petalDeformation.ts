@@ -10,10 +10,74 @@ import {
   MeshDistanceMaterial,
   RGBADepthPacking,
   DoubleSide,
+  Box3,
+  Sphere,
+  Vector3,
+  type Mesh,
   type Material,
   type Matrix4,
 } from "three";
 import type { CagePatch, PetalDynamics } from "./petalDynamics";
+
+/** Opt-in rare CPU queries use the exact visible cage texture position field. */
+export function bindCageRaycast(mesh: Mesh, deformation: CageDeformation) {
+  const geometry = mesh.geometry,
+    indices = geometry.getAttribute("cageIndices"),
+    weights = geometry.getAttribute("cageWeights"),
+    sides = geometry.getAttribute("cageSide"),
+    previousVertex = mesh.getVertexPosition,
+    previousRaycast = mesh.raycast,
+    box = new Box3(),
+    sphere = new Sphere(),
+    point = new Vector3();
+  if (!indices || !weights || !sides)
+    throw new Error("Cage raycasts require bound cage geometry");
+  const vertex: Mesh["getVertexPosition"] = (index, target) => {
+    previousVertex.call(mesh, index, target);
+    if (mesh.geometry !== geometry || !deformation.enabled.value) return target;
+    const data = deformation.data,
+      row = deformation.simulation.inverseMass.length * 4,
+      side = sides.getX(index),
+      enabled = deformation.enabled.value;
+    let x = 0,
+      y = 0,
+      z = 0;
+    for (let corner = 0; corner < 4; corner++) {
+      const offset = indices.getComponent(index, corner) * 4,
+        weight = weights.getComponent(index, corner) * enabled;
+      x += (data[offset] + data[row + offset] * side) * weight;
+      y += (data[offset + 1] + data[row + offset + 1] * side) * weight;
+      z += (data[offset + 2] + data[row + offset + 2] * side) * weight;
+    }
+    return target.set(target.x + x, target.y + y, target.z + z);
+  };
+  const raycast: Mesh["raycast"] = (raycaster, intersections) => {
+    if (mesh.geometry !== geometry)
+      return previousRaycast.call(mesh, raycaster, intersections);
+    // Exact current bounds are prepared only for the rare anatomical query.
+    const originalBox = geometry.boundingBox,
+      originalSphere = geometry.boundingSphere;
+    box.makeEmpty();
+    for (let i = 0; i < geometry.getAttribute("position").count; i++)
+      box.expandByPoint(vertex(i, point));
+    box.getBoundingSphere(sphere);
+    geometry.boundingBox = box;
+    geometry.boundingSphere = sphere;
+    try {
+      previousRaycast.call(mesh, raycaster, intersections);
+    } finally {
+      geometry.boundingBox = originalBox;
+      geometry.boundingSphere = originalSphere;
+    }
+  };
+  mesh.getVertexPosition = vertex;
+  mesh.raycast = raycast;
+  return () => {
+    if (mesh.getVertexPosition === vertex)
+      mesh.getVertexPosition = previousVertex;
+    if (mesh.raycast === raycast) mesh.raycast = previousRaycast;
+  };
+}
 
 /** Four bilinear cage samples per vertex, shared by both sealed shell sides. */
 export function bindCageGeometry(

@@ -21,6 +21,7 @@ export const ixoraStructure: FlowerStructure = {
   headRadius: 1.18,
   headCenter: IXORA_HEAD_CENTER,
   headTilt: 0,
+  cameraElevation: Math.PI / 4,
   stemLength: 1.94,
   stemRadius: 0.038,
   leafCount: 8,

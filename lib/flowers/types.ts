@@ -155,6 +155,8 @@ export interface FlowerStructure {
   portraitBounds?: { min: Vec3; max: Vec3 };
   /** Extra camera distance for tall or forward-projecting preview silhouettes. */
   previewScale?: number;
+  /** Preferred camera elevation in radians for face-reading presets; side diagnostics stay low. */
+  cameraElevation?: number;
   /** Included pollen stays on organs rather than releasing decorative bursts. */
   airbornePollen?: boolean;
   /** GPU-displaced shells use a persistent picking envelope. */

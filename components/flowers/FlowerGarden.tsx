@@ -160,6 +160,7 @@ export default function FlowerGarden({
         gardenDistance={gardenDistance(constrained)}
         focus={focus}
         focusScale={chosen?.scale}
+        specimenStructure={chosen ? FLOWER_STRUCTURES[chosen.type] : undefined}
         reset={reset}
         reducedMotion={reducedMotion}
         paused={paused}

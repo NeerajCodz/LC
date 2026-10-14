@@ -22,6 +22,7 @@ export const pentasStructure: FlowerStructure = {
   headRadius: 1.2,
   headCenter: PENTAS_HEAD_CENTER,
   headTilt: 0,
+  cameraElevation: (50 * Math.PI) / 180,
   stemLength: 1.98,
   stemRadius: 0.029,
   leafCount: 8,

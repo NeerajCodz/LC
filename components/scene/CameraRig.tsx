@@ -6,6 +6,8 @@ import type { FlowerStructure, Vec3 } from "@/lib/flowers/types";
 import {
   flowerPortraitPose,
   flowerPortraitVisibility,
+  flowerCameraElevation,
+  flowerCameraPose,
 } from "@/lib/flowers/framing";
 export type ViewAngle = "portrait" | "front" | "side" | "three-quarter";
 export function CameraRig({
@@ -102,6 +104,21 @@ export function CameraRig({
       y ?? (garden ? -0.9 : macro ? 0.55 : -0.14),
       z ?? 0,
     );
+    if (
+      specimenStructure &&
+      flowerCameraElevation(specimenStructure, azimuth) !== undefined &&
+      (focus || macro)
+    ) {
+      const pose = flowerCameraPose(
+        specimenStructure,
+        lookAt.current.toArray() as Vec3,
+        distance,
+        azimuth,
+      );
+      destination.current.set(...pose.position);
+      transitioning.current = true;
+      return;
+    }
     destination.current.set(
       (x ?? 0) + Math.sin(azimuth) * distance,
       y !== undefined

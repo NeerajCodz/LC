@@ -63,5 +63,15 @@ flora observations.
 Verify five unequal corolla lobes, the uninterrupted dorsal cleft, sealed cut
 walls, included/protruding organ placement, the fused anther tube, bearded lower
 tips, narrow calyx lobes, long attached pedicels and alternate foliage in front,
-side, 45-degree, macro, bud, half-bloom and full-bloom views. This dossier claims
-no implementation tests or visual checks.
+side, 45-degree, macro, bud, half-bloom and full-bloom views.
+
+The authored model retains seven flowers and two buds, five filaments, a fused
+anther tube, lower-anther beard hairs, complete pistils with subinferior ovaries,
+pale mouth bumps and every slender pedicel. The nonperiodic corolla has sealed
+cut walls while preserving the natural dorsal opening. Species CPU tests
+check tissue topology, thickness, folded normals, organ retention and young-bud
+containment. Corolla cages use 702 desktop and 315 constrained nodes.
+Prepared foliage has three broader toothed lower leaves and nine narrow upper
+leaves. Every upper blade is placed at its rendered pedicel root using the same
+below-head bridge; CPU tests verify those exact roots through growth and head
+contact. Registration and visual inspection remain pending.

@@ -38,4 +38,11 @@ do not supply a time-resolved anthesis trajectory or measured loading law;
 the reversible bloom control is an inspection convention. No pollinator,
 reproduction or nectar transport is simulated.
 
+The current geometric stellate hairs are attached to leaf undersides. Petal
+claws and the sixteen sampled style branches remain smooth; the source-listed
+claw and style pubescence is not separately modeled. These are fine floral
+surface-detail limitations, not changes to the five-petal form, distinct
+epicalyx/calyx or staminal-column arrangement. Manual botanical acceptance
+remains pending.
+
 The authored petal claw has a 0.032-unit half-width, tapering into the same 0.314-unit maximum blade width. This finite insertion keeps nonadjacent cage warp roots beyond the 0.013-unit contact thickness at the tested floral scale; a string-thin insertion trapped the free blade in residual self-contact after a pulse. These dimensions are modeling choices, not measured botanical proportions.

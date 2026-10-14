@@ -2,8 +2,8 @@
 
 Modeled taxon: _Torenia fournieri_ Linden ex E.Fourn. Research reviewed
 October 13, 2026. The exact species is `wfo-0000458503` in the pinned inventory.
-This is a proposed unnamed single-flowered study, without cultivar or hybrid
-identification. Implementation and visual verification remain pending.
+This is an implemented unnamed single-flowered study, without cultivar or hybrid
+identification. Registration is complete; visual and botanical acceptance remain pending.
 
 ## Source-backed traits
 
@@ -74,12 +74,12 @@ upper-lip notch, inner versus outer stigma triangles, independent lobe state
 and rejection of an actual opaque occluder. Corolla cages use 640 desktop and
 240 constrained nodes.
 
-The prepared ToreniaStigmas renderer removes lamellae from SpecimenAssembly
+The implemented ToreniaStigmas renderer removes lamellae from SpecimenAssembly
 and draws them once with the same corolla bloom carrier. Detailed interactive
 views register an optional ray probe through the existing picking envelope;
 an actual inner-face hit is followed by a rare occlusion query. Paused,
 offscreen, reduced-motion and young-bud views cannot trigger it. Only the
 external UI pulse serial resets closure; elapsed time never resets its target.
 The damping constant and maturity threshold remain authored. Six opposite
-toothed leaves are prepared. Registration, browser event verification and
+toothed leaves are rendered. Browser event acceptance and manual assessment of
 all visual postures remain pending.

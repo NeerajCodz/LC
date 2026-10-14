@@ -29,8 +29,10 @@ Three complete flowers and two younger buds on a fleshy branching shoot. Preserv
 one dorsal petal and two continuous deeply two-lobed lateral blades, a hollow
 lower sepal joined continuously to its long curved spur, two small lateral
 sepals, a five-part anther cap and superior ovary. No detached five-petal radial
-whorl is substituted for the joined lateral pairs. Small petiole glands and
-alternate toothed leaves remain attached to the moving shoot.
+whorl is substituted for the joined lateral pairs. Alternate toothed leaf blades
+and three authored gland samples follow the moving shoot. Current gland placement
+uses stem-node samples; distinct petioles and gland insertions sampled from
+petiole tissue remain a foliage-anatomy limitation.
 
 Select a coral pink study with a pale center; counts, spacing, model-unit
 dimensions, pigment values, translucency, vein detail and mechanical constants

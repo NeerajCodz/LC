@@ -31,12 +31,13 @@ flowers in a convex umbel with three smaller adjacent younger buds. Every flower
 has a continuous shallow five-lobed corolla, five separately sealed fleshy ridged
 corona limbs, a small gynostegium, paired pollinia and five small calyx lobes.
 Pedicels converge at one insertion; the umbel follows the supported shoot.
-Opposite thick leaves have entire margins, subtle pinnate veins and restrained
-silver flecking. A fixed support and free upper shoot use the existing anchored
-bend hierarchy; neither the support nor planting point moves.
+Opposite thick leaves have entire margins and subtle pinnate veins; their current
+material has no distinct silver-fleck field. A fixed support and free upper shoot
+use the existing anchored bend hierarchy; neither the support nor planting point moves.
 
-Counts, spacing, model dimensions, color values, corona proportions, sampled
-papillae and all roughness/scatter/mechanics coefficients are authored choices.
+Counts, spacing, model dimensions, color values, corona proportions, the
+papillae approximation and all roughness/scatter/mechanics coefficients are
+authored choices.
 Bud sectors close with finite thickness rather than collapsed triangles. Tissue
 and shadow deformation share the same contact transfer. Full garden and retained
 previews remain ambient; focused/selected cages respect 2,048/512 node ceilings.
@@ -75,5 +76,10 @@ are inferred from these accounts. Floral-carrier motion is separate from a fixed
 vine support. No tissue scans, measured spectra or species-calibrated force laws
 are available. Inspect every standard angle and bud/half/full stage against the
 sources, especially corona separation, genuine cavity detail and stalk junctions.
+
+Inner-corolla papillae are approximated through the material's fine pigment and
+shared tissue-detail fields, rather than individual geometric protuberances.
+This is a surface microdetail limitation; the five-lobed corolla, ridged corona,
+gynostegium and paired pollinia are real retained geometry.
 
 Pinned WFO June 2026 exact-name candidate: wfo-0000725176.

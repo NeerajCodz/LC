@@ -1,9 +1,9 @@
 # Lobelia — Lobelia erinus
 
 Modeled taxon: _Lobelia erinus_ L. Research reviewed October 13, 2026.
-The exact species is `wfo-0000815543` in the pinned inventory. Plan an unnamed
-blue-flowered study with a loose raceme; do not identify a horticultural cultivar.
-Implementation and visual verification remain pending.
+The exact species is `wfo-0000815543` in the pinned inventory. This is an unnamed
+blue-flowered study with a loose raceme; no horticultural cultivar is identified.
+Implementation and registration are complete; visual and botanical acceptance remain pending.
 
 ## Source-backed traits
 
@@ -71,7 +71,12 @@ pale mouth bumps and every slender pedicel. The nonperiodic corolla has sealed
 cut walls while preserving the natural dorsal opening. Species CPU tests
 check tissue topology, thickness, folded normals, organ retention and young-bud
 containment. Corolla cages use 702 desktop and 315 constrained nodes.
-Prepared foliage has three broader toothed lower leaves and nine narrow upper
+Implemented foliage has three broader toothed lower leaves and nine narrow upper
 leaves. Every upper blade is placed at its rendered pedicel root using the same
 below-head bridge; CPU tests verify those exact roots through growth and head
-contact. Registration and visual inspection remain pending.
+contact. Manual visual and botanical acceptance remain pending.
+
+The two lower-anther beards are sampled with real hairs. Distinct thin,
+translucent appendage membranes described by the reproduced African flora
+treatments are not modeled. They remain a reproductive microanatomy limitation,
+separate from the implemented fused anther tube and its two bearded tips.

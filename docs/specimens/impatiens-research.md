@@ -17,6 +17,13 @@ deeply divided pairs. The spur is sepal tissue, not an extra corolla petal.
 independently supports smooth succulent stems, toothed ovate leaves, two or three
 flowers together, the long spurred lowermost sepal and fused lateral petal bases.
 
+The same Kew-hosted Flora of Tropical East Africa account describes the two
+members of each united lateral pair as nearly equal, obovate or
+obovate-spathulate, with entire or slightly notched ends. Its Flora Zambesiaca
+treatment explicitly describes the deeply divided limbs as having rounded or
+sub-truncate apices. Broad rounded lateral ends are therefore source-backed
+species traits, not an optional authored replacement for acute triangular fins.
+
 [Kew's Balsaminaceae flora treatment](https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:77126612-1/general-information)
 supplies genus/family-level reproductive detail: five short stamens unite into a
 cap over the superior ovary and stigma, later falling away as one piece. Mature
@@ -49,6 +56,41 @@ at all five qualities, the actual overview batch vertex path, bloom timing and a
 transformed parent to check this dorsal/ventral relationship at half and full
 bloom. The correction retains the 690 desktop / 350 constrained contact nodes.
 Updated visual acceptance remains pending the corresponding seven-view captures.
+
+The final desktop seven-view review exposed a separate lateral-outline defect:
+the previous linearly widening paired sheets had straight outer edges and four
+sharp terminal corners, including at ultra quality. The paired sheets now use
+two broad rounded distal contours around their retained deep central cleft.
+They remain two continuous sealed blades, not four detached petals or extra
+overlays. Actual front/back skins and cap endpoints are projected separately
+for each lobe in tests; a hull of both lobes together cannot conceal the cleft.
+The greater-than-100-degree distal-shoulder criterion and relative width bounds
+are authored geometric acceptance bounds for the source-backed rounded shape,
+not measured botanical angles or dimensions.
+
+The first corrected overview still reduced each lobe to three boundary segments:
+the six-column grid missed both rounded apex landmarks and joined the shoulders
+with a straight cut. Only these paired sheets use twelve overview columns,
+retaining six axial rows. This adds 840 vertices and 5,040 indexed inputs across
+the ten sheets without extra draws or cage nodes. A separate actual batched-
+vertex boundary test requires distal curvature; a broad rectangular end cannot
+pass merely by having a large shoulder angle. Its proportional curvature bound
+is authored geometric acceptance, not a measured species trait.
+
+The narrow insertion's former tight transverse U-curve also inverted some
+closed inner-skin triangles. The paired blade now folds coherently in an
+inclined plane and opens into a shallow curved lamina. The sampled root center
+and the dorsal/sepal/spur/reproductive anatomy stay in place. A small additional
+basal breadth tapers to zero toward the rounded ends so the young blades' actual
+root caps intersect retained reproductive tissue at every tested quality and
+bloom fraction; the centerline alone is insufficient evidence of attachment.
+Both adult and
+younger flower shells retain opposing skin orientations, finite normals,
+positive thickness, sealed edges and positive signed volume across seven
+interpolated morph fractions in all five qualities. The opening path, curvature,
+fold angle and proportions are authored; reversed UI bloom is not natural
+reopening. Fresh desktop and constrained seven-view images remain necessary to
+accept the visible correction.
 
 ## Behavior and evidence gaps
 

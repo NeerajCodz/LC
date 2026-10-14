@@ -117,6 +117,8 @@ for (let cluster = 0; cluster < 5; cluster++) {
         cluster,
         role: "petal",
         thickness: 0.011,
+        // Keep each rounded apex: six columns skip u=.25/.75 entirely.
+        overviewColumns: 12,
         flexible: true,
         cage: [6, 6],
         mobileCage: [4, 4],
@@ -124,17 +126,29 @@ for (let cluster = 0; cluster < 5; cluster++) {
         sample: (u, v, stage) => {
           const w = 2 * u - 1,
             open = maturity(stage),
-            notch = 1 - 0.46 * Math.exp(-w * w * 38) * v ** 4,
-            r = (0.028 + 0.59 * v) * notch,
-            x = side * r * (0.17 + 0.83 * open),
-            z = 0.02 + w * (0.018 + 0.45 * v) * (0.17 + 0.83 * open);
+            // Each continuous half broadens into a rounded, obovate limb.
+            // The small finite radius retains the cleft and a sealed basal rim.
+            angle = w * 1.35,
+            shoulder =
+              ((Math.sin(Math.PI * w) ** 2 + 0.025) ** 0.3 - 0.025 ** 0.3) /
+              (1.025 ** 0.3 - 0.025 ** 0.3),
+            radius = 0.13 + 0.5 * shoulder,
+            length = radius * Math.cos(angle),
+            radial = length * v * (0.7 + 0.3 * open),
+            z =
+              (0.018 + 0.004 * (1 - v) ** 2) * w * (0.17 + 0.83 * open) +
+              radius * Math.sin(angle) * v * (0.28 + 0.72 * open),
+            foldAngle = Math.atan2(0.41, 0.065) * (1 - open),
+            arch = 0.1 * (radial * radial + z * z) * open;
           return [
-            x,
-            0.145 +
-              0.41 * v * (1 - open) +
-              0.065 * w * w +
-              0.033 * Math.sin(Math.PI * v),
-            z,
+            side *
+              (0.028 * (0.17 + 0.83 * open) +
+                radial * Math.cos(foldAngle) -
+                arch * Math.sin(foldAngle)),
+            // The closed paired blade lies in a gently inclined plane; a tight
+            // transverse U-fold at this narrow root would invert its inner skin.
+            0.145 + radial * Math.sin(foldAngle) + arch * Math.cos(foldAngle),
+            0.02 + z,
           ];
         },
       },

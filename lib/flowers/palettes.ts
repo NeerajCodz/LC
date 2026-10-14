@@ -30,6 +30,15 @@ const palette = (
 });
 
 export const PETAL_PALETTES: Record<FlowerType, PetalPalette> = {
+  lupine: {
+    root: "#b2a6d2",
+    body: "#6663ac",
+    tip: "#9290c4",
+    vein: "#4f4b88",
+    rootFalloff: 0.22,
+    tipStart: 0.77,
+    veinStrength: 0.035,
+  },
   impatiens: {
     root: "#f6d9cf",
     body: "#e86f79",

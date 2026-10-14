@@ -13,6 +13,16 @@ export interface FlowerInfo {
 
 export const FLOWERS: FlowerInfo[] = [
   {
+    type: "lupine",
+    name: "Lupine",
+    latin: "Lupinus polyphyllus",
+    family: "Fabaceae",
+    color: "#6663ac",
+    description: "Violet banners in quiet tiers.\nA fan of green below.",
+    detail:
+      "An upright raceme carries bilateral banner, wing and enclosing keel petals around ten joined stamens and a brushy style. Eleven leaflets radiate from each shared petiole junction.",
+  },
+  {
     type: "impatiens",
     name: "Impatiens",
     latin: "Impatiens walleriana",

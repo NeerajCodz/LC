@@ -24,7 +24,10 @@ import { HOYA_MODEL } from "../components/flowers/hoya/hoyaGeometry";
 
 import { IMPATIENS_MODEL } from "../components/flowers/impatiens/impatiensGeometry";
 
+import { LUPINE_MODEL } from "../components/flowers/lupine/lupineGeometry";
+
 const models: Record<string, SpecimenModel> = {
+  lupine: LUPINE_MODEL,
   impatiens: IMPATIENS_MODEL,
   hoya: HOYA_MODEL,
   pansy: PANSY_MODEL,

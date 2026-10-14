@@ -68,7 +68,9 @@ import { Canna } from "./canna/Canna";
 import { Agapanthus } from "./agapanthus/Agapanthus";
 import { Hoya } from "./hoya/Hoya";
 import { Impatiens } from "./impatiens/Impatiens";
+import { Lupine } from "./lupine/Lupine";
 const SPECIES = {
+  lupine: Lupine,
   impatiens: Impatiens,
   hoya: Hoya,
   agapanthus: Agapanthus,

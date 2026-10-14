@@ -41,6 +41,30 @@ Bud sectors close with finite thickness rather than collapsed triangles. Tissue
 and shadow deformation share the same contact transfer. Full garden and retained
 previews remain ambient; focused/selected cages respect 2,048/512 node ceilings.
 
+The folded corolla's finite circular rim is covered by five overlapping terminal
+lobe sectors, continuous in placement with the real corolla wall. Their roots
+start halfway along that wall and their finite-width tips pass beyond the axis
+at slightly staggered heights; each unfolds over its corresponding star limb.
+This contorted closure is an authored inspection construction, not a measured
+bud-development sequence. Terminal shells share the parent corolla's effective
+bloom timing. Their roots follow the actual quality-specific corolla triangles,
+and attached sectors inherit the existing corolla cage displacement and normal
+transfer with their own finite thickness. Color and both shadow passes use the
+same mapping without adding simulation nodes: the complete head retains its
+unchanged 1,100 desktop / 440 constrained cage nodes. Corona limbs and all ten pollinia
+per flower are retained. The extra tissue adds 10,560 overview indexed inputs
+across the complete 22-flower/bud head, with no extra overview material batches.
+
+An actual-mesh axial ray regression first exposed the open folded apex. It now
+checks a disk of rays across mature closed and persistent young buds at overview,
+low and high detail. Companion checks measure terminal-root distance to the
+generated corolla triangles and reject degenerate terminal triangles or invalid
+normal targets through closed, half and full bloom. A nonzero wind, pulse and
+contact regression measures the actual displaced meshes under both cage budgets;
+each root must remain inside the corolla solid or within its own 0.007
+half-thickness of that solid. Visual acceptance of the revised tissue remains
+pending.
+
 ## Behavior and evidence gaps
 
 Local pedicel nodding, slow lobe expansion and fleshy corona resistance are

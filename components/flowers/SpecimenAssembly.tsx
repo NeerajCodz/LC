@@ -292,7 +292,11 @@ export function SpecimenAssembly({
                 <Surface
                   key={i}
                   surface={s}
-                  index={i}
+                  cageIndex={
+                    s.cageAttachment
+                      ? model.surfaces.indexOf(s.cageAttachment.surface)
+                      : i
+                  }
                   assign={(m) => {
                     meshes.current[i] = m;
                   }}
@@ -340,7 +344,7 @@ type Resources = {
 } | null;
 function Surface({
   surface,
-  index,
+  cageIndex,
   assign,
   quality,
   type,
@@ -349,7 +353,7 @@ function Surface({
   raycastCages,
 }: {
   surface: SpecimenSurface;
-  index: number;
+  cageIndex: number;
   assign: (m: Mesh | null) => void;
   quality: FlowerOrgansProps["quality"];
   type: FlowerType;
@@ -358,24 +362,32 @@ function Surface({
   raycastCages: boolean;
 }) {
   const mesh = useRef<Mesh>(null);
+  const deformed = surface.flexible || !!surface.cageAttachment;
   const geometry = useMemo(() => {
     const g = specimenGeometry(surface, quality),
-      p = resources?.indices.indexOf(index) ?? -1;
+      p = resources?.indices.indexOf(cageIndex) ?? -1;
     if (resources && p >= 0)
-      bindCageGeometry(g, resources.sim.patches[p], resources.sim.offsets[p]);
+      bindCageGeometry(
+        g,
+        resources.sim.patches[p],
+        resources.sim.offsets[p],
+        surface.cageAttachment
+          ? { mapUv: surface.cageAttachment.uv, thickness: surface.thickness }
+          : undefined,
+      );
     return g;
-  }, [surface, quality, resources, index]);
+  }, [surface, quality, resources, cageIndex]);
   const material = useMemo(() => {
     const m = createSpecimenMaterial(type, surface.role, color, surface.tissue);
-    if (resources && surface.flexible) resources.deformation.attach(m);
+    if (resources && deformed) resources.deformation.attach(m);
     return m;
-  }, [type, surface, color, resources]);
+  }, [type, surface, color, resources, deformed]);
   useEffect(() => () => geometry.dispose(), [geometry]);
   useEffect(() => () => material.dispose(), [material]);
   useLayoutEffect(() => {
-    if (mesh.current && resources && raycastCages && surface.flexible)
+    if (mesh.current && resources && raycastCages && deformed)
       return bindCageRaycast(mesh.current, resources.deformation);
-  }, [geometry, resources, raycastCages, surface.flexible]);
+  }, [geometry, resources, raycastCages, deformed]);
   return (
     <mesh
       ref={(value) => {
@@ -385,11 +397,9 @@ function Surface({
       geometry={geometry}
       material={material}
       onUpdate={(m) => m.updateMorphTargets()}
-      customDepthMaterial={
-        surface.flexible ? resources?.shadows.depth : undefined
-      }
+      customDepthMaterial={deformed ? resources?.shadows.depth : undefined}
       customDistanceMaterial={
-        surface.flexible ? resources?.shadows.distance : undefined
+        deformed ? resources?.shadows.distance : undefined
       }
       castShadow
       receiveShadow

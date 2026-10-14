@@ -84,6 +84,10 @@ export function bindCageGeometry(
   geometry: BufferGeometry,
   patch: CagePatch,
   offset: number,
+  mapping?: {
+    mapUv: (u: number, v: number) => [number, number];
+    thickness: number;
+  },
 ) {
   const uv = geometry.getAttribute("uv"),
     count = uv.count;
@@ -92,8 +96,15 @@ export function bindCageGeometry(
     sides = new Float32Array(count);
   const stride = patch.periodic ? patch.columns : patch.columns + 1;
   for (let i = 0; i < count; i++) {
-    const u = Math.max(0, Math.min(1, uv.getX(i))) * patch.columns;
-    const v = Math.max(0, Math.min(1, uv.getY(i))) * patch.rows;
+    const mapped = mapping?.mapUv(uv.getX(i), uv.getY(i)),
+      rawU = mapped?.[0] ?? uv.getX(i),
+      rawV = mapped?.[1] ?? uv.getY(i),
+      unitU =
+        mapping && patch.periodic
+          ? ((rawU % 1) + 1) % 1
+          : Math.max(0, Math.min(1, rawU)),
+      u = unitU * patch.columns,
+      v = Math.max(0, Math.min(1, rawV)) * patch.rows;
     const col = Math.min(patch.columns - 1, Math.floor(u)),
       row = Math.min(patch.rows - 1, Math.floor(v));
     const right = patch.periodic ? (col + 1) % stride : col + 1;
@@ -109,7 +120,10 @@ export function bindCageGeometry(
     weights[k + 2] = (1 - x) * y;
     weights[k + 3] = x * y;
     sides[i] =
-      (i < count / 2 ? 1 : -1) * patch.thickness * 0.5 * (1 - 0.2 * uv.getY(i));
+      (i < count / 2 ? 1 : -1) *
+      (mapping?.thickness ?? patch.thickness) *
+      0.5 *
+      (1 - 0.2 * uv.getY(i));
   }
   geometry.setAttribute("cageIndices", new Float32BufferAttribute(ids, 4));
   geometry.setAttribute("cageWeights", new Float32BufferAttribute(weights, 4));

@@ -23,11 +23,171 @@ test("hoya is complete throughout the typed botanical catalog", async () => {
   assert.ok(WIND_PROFILES[type].compliance > 0);
 });
 import {
+  specimenGeometry,
   specimenOrganParts,
   specimenOrganCarrier,
 } from "../lib/three/specimenModel";
 import { petalOpenness } from "../lib/three/easing";
-import { Vector3 } from "three";
+import {
+  DoubleSide,
+  Mesh,
+  MeshBasicMaterial,
+  Raycaster,
+  Triangle,
+  Vector3,
+} from "three";
+
+test("hoya: actual folded corolla tissue closes the apex instead of leaving a circular mouth", () => {
+  const material = new MeshBasicMaterial({ side: DoubleSide });
+  try {
+    for (const quality of ["overview", "low", "high"] as const)
+      for (const cluster of [0, 19]) {
+        const entries = HOYA_MODEL.surfaces.flatMap((surface, index) =>
+          surface.cluster === cluster && surface.role === "tube"
+            ? [{ surface, index }]
+            : [],
+        );
+        const meshes = entries.map(({ surface }) => {
+          const mesh = new Mesh(specimenGeometry(surface, quality), material);
+          mesh.updateMorphTargets();
+          mesh.updateMatrixWorld(true);
+          return mesh;
+        });
+        try {
+          // Persistent young buds must stay enclosed even at the full UI setting.
+          for (const bloom of cluster >= 19 ? [0, 0.5, 1] : [0]) {
+            meshes.forEach((mesh, i) => {
+              const { surface, index } = entries[i];
+              mesh.morphTargetInfluences![0] =
+                1 - petalOpenness(bloom, surface.delay ?? 0, index * 0.31);
+            });
+            for (const radius of [0, 0.012, 0.025, 0.04])
+              for (let azimuth = 0; azimuth < 20; azimuth++) {
+                const angle = (azimuth * Math.PI * 2) / 20,
+                  ray = new Raycaster(
+                    new Vector3(
+                      radius * Math.cos(angle),
+                      0.4,
+                      radius * Math.sin(angle),
+                    ),
+                    new Vector3(0, -1, 0),
+                    0,
+                    0.11,
+                  );
+                assert.ok(
+                  ray.intersectObjects(meshes).length > 0,
+                  `${quality} cluster ${cluster}, bloom ${bloom}: open apex at radius ${radius}, azimuth ${azimuth}`,
+                );
+              }
+          }
+        } finally {
+          meshes.forEach((mesh) => mesh.geometry.dispose());
+        }
+      }
+  } finally {
+    material.dispose();
+  }
+});
+
+test("hoya: terminal lobe roots remain in the actual corolla wall through bloom and quality changes", () => {
+  const material = new MeshBasicMaterial({ side: DoubleSide }),
+    triangle = new Triangle(),
+    point = new Vector3(),
+    back = new Vector3(),
+    closest = new Vector3(),
+    direction = new Vector3(0.341, 0.729, 0.594).normalize();
+  try {
+    for (const quality of ["overview", "low", "high"] as const)
+      for (const cluster of [0, 19]) {
+        const entries = HOYA_MODEL.surfaces.flatMap((surface, index) =>
+          surface.cluster === cluster && surface.role === "tube"
+            ? [{ surface, index }]
+            : [],
+        );
+        const meshes = entries.map(
+          ({ surface }) =>
+            new Mesh(specimenGeometry(surface, quality), material),
+        );
+        try {
+          assert.equal(
+            meshes.length,
+            6,
+            "one fused corolla and its five attached terminal sectors",
+          );
+          const corolla = meshes[0],
+            indices = corolla.geometry.index!;
+          for (const bloom of [0, 0.5, 1]) {
+            meshes.forEach((mesh, i) => {
+              const { surface, index } = entries[i];
+              mesh.morphTargetInfluences![0] =
+                1 - petalOpenness(bloom, surface.delay ?? 0, index * 0.31);
+            });
+            for (const mesh of meshes.slice(1)) {
+              const uv = mesh.geometry.getAttribute("uv"),
+                half = uv.count / 2;
+              for (let i = 0; i < half && uv.getY(i) === 0; i++) {
+                mesh.getVertexPosition(i, point);
+                mesh.getVertexPosition(i + half, back);
+                point.add(back).multiplyScalar(0.5);
+                let distance = Infinity;
+                for (let j = 0; j < indices.count; j += 3) {
+                  corolla.getVertexPosition(indices.getX(j), triangle.a);
+                  corolla.getVertexPosition(indices.getX(j + 1), triangle.b);
+                  corolla.getVertexPosition(indices.getX(j + 2), triangle.c);
+                  triangle.closestPointToPoint(point, closest);
+                  distance = Math.min(distance, closest.distanceTo(point));
+                }
+                const hits = new Raycaster(
+                    point,
+                    direction,
+                    1e-8,
+                    10,
+                  ).intersectObject(corolla),
+                  unique = hits.filter(
+                    (hit, j) =>
+                      !j ||
+                      Math.abs(hit.distance - hits[j - 1].distance) > 1e-6,
+                  ),
+                  inside = unique.length % 2 === 1;
+                assert.ok(
+                  inside || distance <= 0.007 + 1e-7,
+                  `${quality} cluster ${cluster} bloom ${bloom}: detached terminal root ${distance}`,
+                );
+              }
+              const index = mesh.geometry.index!;
+              for (let j = 0; j < index.count; j += 3) {
+                mesh.getVertexPosition(index.getX(j), triangle.a);
+                mesh.getVertexPosition(index.getX(j + 1), triangle.b);
+                mesh.getVertexPosition(index.getX(j + 2), triangle.c);
+                assert.ok(
+                  triangle.getArea() > 5e-13,
+                  `${quality} bloom ${bloom}: degenerate terminal triangle`,
+                );
+              }
+              for (const normal of [
+                mesh.geometry.getAttribute("normal"),
+                mesh.geometry.morphAttributes.normal![0],
+              ])
+                for (let i = 0; i < normal.count; i++)
+                  assert.ok(
+                    Math.abs(
+                      Math.hypot(
+                        normal.getX(i),
+                        normal.getY(i),
+                        normal.getZ(i),
+                      ) - 1,
+                    ) < 0.002,
+                  );
+            }
+          }
+        } finally {
+          meshes.forEach((mesh) => mesh.geometry.dispose());
+        }
+      }
+  } finally {
+    material.dispose();
+  }
+});
 
 test("hoya: all ten anatomical pollinia survive the actual renderer partition at overview and low quality", () => {
   for (const quality of ["overview", "low"] as const)

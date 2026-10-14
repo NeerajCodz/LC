@@ -31,6 +31,11 @@ export interface SpecimenSurface {
   overviewRows?: number;
   cage?: [number, number];
   mobileCage?: [number, number];
+  /** Attached tissue shares this same-cluster carrier's cage; its v=0 root follows the real sampled wall. */
+  cageAttachment?: {
+    surface: SpecimenSurface;
+    uv: (u: number, v: number) => [number, number];
+  };
 }
 export interface SpecimenCluster {
   position: Vec3;
@@ -106,7 +111,7 @@ export interface SpecimenInstanceGroup {
   organs: SpecimenOrgan[];
   poses: SpecimenInstancePose[];
 }
-export function specimenGeometry(surface: SpecimenSurface, quality: Quality) {
+function specimenGrid(surface: SpecimenSurface, quality: Quality) {
   const resolution = {
     overview: [6, 6],
     low: [12, 16],
@@ -124,10 +129,66 @@ export function specimenGeometry(surface: SpecimenSurface, quality: Quality) {
     quality === "overview"
       ? (surface.overviewRows ?? resolution[1])
       : resolution[1];
+  return { columns, rows };
+}
+
+/** Interpolate the same two triangles used by the carrier's real shell grid. */
+function specimenGridPoint(
+  surface: SpecimenSurface,
+  quality: Quality,
+  u: number,
+  v: number,
+  open: number,
+): Vec3 {
+  const { columns, rows } = specimenGrid(surface, quality),
+    su =
+      (surface.periodic ? ((u % 1) + 1) % 1 : Math.max(0, Math.min(1, u))) *
+      columns,
+    sv = Math.max(0, Math.min(1, v)) * rows,
+    column = Math.min(columns - 1, Math.floor(su)),
+    row = Math.min(rows - 1, Math.floor(sv)),
+    x = su - column,
+    y = sv - row,
+    right = surface.periodic ? (column + 1) % columns : column + 1,
+    a = surface.sample(column / columns, row / rows, open),
+    d = surface.sample(right / columns, (row + 1) / rows, open),
+    middle =
+      y <= x
+        ? surface.sample(right / columns, row / rows, open)
+        : surface.sample(column / columns, (row + 1) / rows, open),
+    wa = 1 - Math.max(x, y),
+    wd = Math.min(x, y),
+    wm = Math.abs(x - y);
+  return [
+    a[0] * wa + d[0] * wd + middle[0] * wm,
+    a[1] * wa + d[1] * wd + middle[1] * wm,
+    a[2] * wa + d[2] * wd + middle[2] * wm,
+  ];
+}
+
+export function specimenGeometry(surface: SpecimenSurface, quality: Quality) {
+  const { columns, rows } = specimenGrid(surface, quality),
+    attachment = surface.cageAttachment;
+  const sample = attachment
+    ? (u: number, v: number, open: number): Vec3 => {
+        const point = surface.sample(u, v, open),
+          blend = Math.max(0, 1 - v * 4) ** 2;
+        if (!blend) return point;
+        const [cu, cv] = attachment.uv(u, 0),
+          root = specimenGridPoint(attachment.surface, quality, cu, cv, open),
+          authored = surface.sample(u, 0, open);
+        return [
+          point[0] + (root[0] - authored[0]) * blend,
+          point[1] + (root[1] - authored[1]) * blend,
+          point[2] + (root[2] - authored[2]) * blend,
+        ];
+      }
+    : surface.sample;
   const g = createParametricShell({
     columns,
     rows,
     ...surface,
+    sample,
   });
   const side = new Float32Array(g.getAttribute("position").count);
   for (let i = 0; i < side.length; i++) side[i] = i < side.length / 2 ? 1 : -1;
@@ -146,6 +207,23 @@ export function specimenGeometry(surface: SpecimenSurface, quality: Quality) {
   return g;
 }
 export function specimenCages(model: SpecimenModel, constrained: boolean) {
+  for (const surface of model.surfaces) {
+    const carrier = surface.cageAttachment?.surface;
+    if (
+      carrier &&
+      (!model.surfaces.includes(carrier) ||
+        !carrier.flexible ||
+        carrier.cageAttachment ||
+        carrier.pressureSample ||
+        carrier.cluster !== surface.cluster ||
+        surface.flexible ||
+        surface.contactObstacle ||
+        surface.pressureSample)
+    )
+      throw new Error(
+        "Attached cage tissue requires one flexible carrier in the same cluster without an independent pressure morph",
+      );
+  }
   const indices = model.surfaces.flatMap((s, i) =>
     s.flexible || s.contactObstacle ? [i] : [],
   );

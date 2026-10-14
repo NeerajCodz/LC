@@ -193,3 +193,60 @@ for (let cluster = 0; cluster < 22; cluster++) {
     color: "#b9445d",
   });
 }
+
+// Append the terminal tissue so existing corolla/corona phase indices stay intact.
+// Each sector starts inside the corolla wall at v=.5 and unfurls onto its star limb.
+for (let cluster = 0; cluster < HOYA_MODEL.clusters.length; cluster++) {
+  const young = cluster >= 19,
+    carrierIndex = HOYA_MODEL.surfaces.findIndex(
+      (surface) => surface.cluster === cluster && surface.flexible,
+    ),
+    carrier = HOYA_MODEL.surfaces[carrierIndex];
+  for (let lobe = 0; lobe < 5; lobe++) {
+    const direction = (lobe * Math.PI * 2) / 5,
+      index = HOYA_MODEL.surfaces.length;
+    HOYA_MODEL.surfaces.push({
+      name: "contorted hoya terminal lobe tissue",
+      cluster,
+      role: "tube",
+      thickness: 0.014,
+      overviewColumns: 2,
+      overviewRows: 2,
+      cageAttachment: {
+        surface: carrier,
+        uv: (u, v) => [
+          (direction + (u * 2 - 1) * 0.7) / (Math.PI * 2),
+          0.5 + 0.5 * v,
+        ],
+      },
+      // The shared renderer adds index*.31*.004 to delay for every shell.
+      delay: (carrier.delay ?? 0) + (carrierIndex - index) * 0.31 * 0.004,
+      sample: (u, v, stage) => {
+        const open = stage * (young ? 0.06 : 1),
+          w = u * 2 - 1,
+          angle = direction + w * 0.7,
+          root = hoyaCorolla(angle / (Math.PI * 2), 0.5, 0),
+          turn = direction + 0.3 + 0.22 * v,
+          width = w * (0.012 + 0.018 * Math.sin(Math.PI * v)),
+          tipX = -0.03 * Math.cos(turn) - width * Math.sin(turn),
+          tipZ = -0.03 * Math.sin(turn) + width * Math.cos(turn),
+          full = hoyaCorolla(angle / (Math.PI * 2), 0.5 + 0.5 * v, 1);
+        const closed: Vec3 = [
+          root[0] * (1 - v) + tipX * v,
+          root[1] * (1 - v) +
+            (0.358 + lobe * 0.0015) * v +
+            0.05 * Math.sin(Math.PI * v),
+          root[2] * (1 - v) + tipZ * v,
+        ];
+        return [
+          closed[0] * (1 - open) +
+            (full[0] + Math.cos(angle) * 0.012 * v) * open,
+          closed[1] * (1 - open) +
+            (full[1] + 0.007 * Math.sin(Math.PI * v)) * open,
+          closed[2] * (1 - open) +
+            (full[2] + Math.sin(angle) * 0.012 * v) * open,
+        ];
+      },
+    });
+  }
+}

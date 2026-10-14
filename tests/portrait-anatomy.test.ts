@@ -26,7 +26,10 @@ import { IMPATIENS_MODEL } from "../components/flowers/impatiens/impatiensGeomet
 
 import { LUPINE_MODEL } from "../components/flowers/lupine/lupineGeometry";
 
+import { HOLLYHOCK_MODEL } from "../components/flowers/hollyhock/hollyhockGeometry";
+
 const models: Record<string, SpecimenModel> = {
+  hollyhock: HOLLYHOCK_MODEL,
   lupine: LUPINE_MODEL,
   impatiens: IMPATIENS_MODEL,
   hoya: HOYA_MODEL,

@@ -21,6 +21,17 @@ export interface FoliageProfile {
 
 /** Cultivar-independent leaf traits; lotus has its own peltate blade generator. */
 export const FOLIAGE: Record<FlowerType, FoliageProfile> = {
+  hollyhock: {
+    length: 1.05,
+    width: 0.55,
+    color: "#648154",
+    thickness: 0.011,
+    lobes: 7,
+    teeth: 24,
+    depth: 0.06,
+    roughness: 0.77,
+    pubescence: 0.28,
+  },
   lupine: {
     length: 0.64,
     width: 0.081,

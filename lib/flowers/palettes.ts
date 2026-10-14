@@ -30,6 +30,15 @@ const palette = (
 });
 
 export const PETAL_PALETTES: Record<FlowerType, PetalPalette> = {
+  hollyhock: {
+    root: "#9e496c",
+    body: "#cb839d",
+    tip: "#e6b3c0",
+    vein: "#a75879",
+    rootFalloff: 0.32,
+    tipStart: 0.82,
+    veinStrength: 0.056,
+  },
   lupine: {
     root: "#b2a6d2",
     body: "#6663ac",

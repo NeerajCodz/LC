@@ -13,6 +13,16 @@ export interface FlowerInfo {
 
 export const FLOWERS: FlowerInfo[] = [
   {
+    type: "hollyhock",
+    name: "Hollyhock",
+    latin: "Alcea rosea",
+    family: "Malvaceae",
+    color: "#cb839d",
+    description: "Five softly notched petals.\nA rose-pink column of bloom.",
+    detail:
+      "Single cup-shaped flowers rise along a leafy shoot. A seven-lobed epicalyx surrounds the separate calyx, while numerous upper-column anthers and fine style branches remain visible inside each flower.",
+  },
+  {
     type: "lupine",
     name: "Lupine",
     latin: "Lupinus polyphyllus",

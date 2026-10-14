@@ -5,6 +5,7 @@ export const TISSUE_RESPONSE: Record<
   string,
   { roughness: number; sheen: number; coat: number; scatter: number }
 > = {
+  hollyhock: { roughness: 0.63, sheen: 0.23, coat: 0.012, scatter: 0.068 },
   lupine: { roughness: 0.54, sheen: 0.22, coat: 0.02, scatter: 0.047 },
   impatiens: { roughness: 0.6, sheen: 0.19, coat: 0.017, scatter: 0.062 },
   hoya: { roughness: 0.48, sheen: 0.17, coat: 0.065, scatter: 0.037 },
@@ -74,6 +75,8 @@ export function specimenTissueColor(type: string, tissue?: SpecimenTissue) {
 export function specimenTissueShader(type: string, tissue?: SpecimenTissue) {
   if (tissue === "leaf") return "";
   switch (type) {
+    case "hollyhock":
+      return `float holVein=pow(.5+.5*cos((vPetalUv.y-abs(vPetalUv.x-.5)*.47)*55.),22.); float holPap=pow(max(0.,sin(vPetalUv.x*167.)*sin(vPetalUv.y*153.)),8.); diffuseColor.rgb*=1.-holVein*.043-holPap*.02;`;
     case "lupine":
       if (tissue === "guide")
         return `float lupPatch=exp(-pow((vPetalUv.x-.5)*5.4,2.)-pow((vPetalUv.y-.28)*8.3,2.)); diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.94,.91,.72),lupPatch*.88); float lupGuideVein=pow(.5+.5*cos((vPetalUv.y-abs(vPetalUv.x-.5)*.62)*56.),24.); diffuseColor.rgb*=1.-lupGuideVein*.022;`;

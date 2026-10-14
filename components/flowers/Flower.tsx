@@ -69,7 +69,9 @@ import { Agapanthus } from "./agapanthus/Agapanthus";
 import { Hoya } from "./hoya/Hoya";
 import { Impatiens } from "./impatiens/Impatiens";
 import { Lupine } from "./lupine/Lupine";
+import { Hollyhock } from "./hollyhock/Hollyhock";
 const SPECIES = {
+  hollyhock: Hollyhock,
   lupine: Lupine,
   impatiens: Impatiens,
   hoya: Hoya,

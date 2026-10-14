@@ -68,6 +68,7 @@ export const FLOWER_TYPES = [
   "hoya",
   "impatiens",
   "lupine",
+  "hollyhock",
 ] as const;
 
 export type FlowerType = (typeof FLOWER_TYPES)[number];
@@ -99,6 +100,8 @@ export interface FlowerProps {
   reducedMotion?: boolean;
   paused?: boolean;
   pulse?: number;
+  /** Explicit accessible pulse/reset action, independent of ordinary specimen clicks. */
+  pulseSerial?: number;
   onHover?: (hovered: boolean) => void;
   onClick?: () => void;
 }

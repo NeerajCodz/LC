@@ -38,7 +38,10 @@ import { PENTAS_MODEL } from "../components/flowers/pentas/pentasGeometry";
 
 import { LOBELIA_MODEL } from "../components/flowers/lobelia/lobeliaGeometry";
 
+import { TORENIA_MODEL } from "../components/flowers/torenia/toreniaGeometry";
+
 const models: Record<string, SpecimenModel> = {
+  torenia: TORENIA_MODEL,
   lobelia: LOBELIA_MODEL,
   pentas: PENTAS_MODEL,
   ixora: IXORA_MODEL,

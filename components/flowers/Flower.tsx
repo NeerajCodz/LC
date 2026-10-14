@@ -75,7 +75,9 @@ import { Tuberose } from "./tuberose/Tuberose";
 import { Ixora } from "./ixora/Ixora";
 import { Pentas } from "./pentas/Pentas";
 import { Lobelia } from "./lobelia/Lobelia";
+import { Torenia } from "./torenia/Torenia";
 const SPECIES = {
+  torenia: Torenia,
   lobelia: Lobelia,
   pentas: Pentas,
   ixora: Ixora,

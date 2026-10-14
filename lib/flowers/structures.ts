@@ -90,7 +90,9 @@ import { tuberoseStructure } from "../../components/flowers/tuberose/Tuberose";
 import { ixoraStructure } from "../../components/flowers/ixora/Ixora";
 import { pentasStructure } from "../../components/flowers/pentas/Pentas";
 import { lobeliaStructure } from "../../components/flowers/lobelia/Lobelia";
+import { toreniaStructure } from "../../components/flowers/torenia/Torenia";
 export const FLOWER_STRUCTURES: Record<FlowerType, FlowerStructure> = {
+  torenia: toreniaStructure,
   lobelia: lobeliaStructure,
   pentas: pentasStructure,
   ixora: ixoraStructure,

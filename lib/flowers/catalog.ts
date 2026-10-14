@@ -13,6 +13,17 @@ export interface FlowerInfo {
 
 export const FLOWERS: FlowerInfo[] = [
   {
+    type: "torenia",
+    name: "Wishbone Flower",
+    latin: "Torenia fournieri",
+    family: "Linderniaceae",
+    color: "#7770bb",
+    description:
+      "Violet lips and a yellow tongue.\nA quiet wishbone beneath the roof.",
+    detail:
+      "A hollow bilateral trumpet joins a broad upper lip to three rounded lower lobes above a five-winged calyx. Four paired unequal stamens and two stigma lamellae occupy its throat, above opposite toothed leaves.",
+  },
+  {
     type: "lobelia",
     name: "Lobelia",
     latin: "Lobelia erinus",

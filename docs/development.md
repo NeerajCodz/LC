@@ -9,8 +9,11 @@ actual low/medium geometry tier on mobile WebKit. The contact sheet uses a
 viewport. Inspection also uses the actual device's capped renderer clock, GPU
 pacing and pixel budget, independently of its geometry-tier selector. An explicit
 one-times DPR ceiling preserves the contact sheet's original resolution on desktop.
-The fixture's explicit device-tier selector keeps
-high/ultra as its standard default and leaves overview geometry at overview.
+The fixture initially follows the detected device: low/medium on constrained
+devices and high/ultra on standard devices. Its selector permits an explicit
+override in either direction; overview geometry stays at overview. The startup
+browser regression checks the first seven tile qualities before manual input,
+both overrides, rendered pixels and renderer errors.
 
 Fritillaria's optional **Bell interior study** and Hoya's **Single-floret study**
 switch the seven standard tiles to two targeted views and back. They frame real

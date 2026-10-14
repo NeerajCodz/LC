@@ -5,6 +5,105 @@ import { expectRenderedFlower, expectScreenshotFlower } from "./pixel-content";
 // The isolated runner lists with DEV_INSPECTION=1 and separates inspection files.
 // Production discovery creates no development cases and therefore no skipped cases.
 if (process.env.DEV_INSPECTION === "1") {
+  test("inspection starts at the device tier before manual overrides", async ({
+    page,
+  }, info) => {
+    test.setTimeout(180000);
+    await page.setViewportSize({ width: 1600, height: 1100 });
+    const healthy = await observeRendering(page),
+      constrained = info.project.name === "mobile",
+      low = ["low", "low", "low", "medium", "low", "low", "low"],
+      high = ["high", "high", "high", "ultra", "high", "high", "high"];
+    await page.addInitScript(() => {
+      const observed = window as typeof window & {
+        __inspectionFirstQualities: string[] | null;
+        __inspectionDesktopBeforeChoice: boolean;
+        __inspectionManualChoice: boolean;
+      };
+      observed.__inspectionFirstQualities = null;
+      observed.__inspectionDesktopBeforeChoice = false;
+      observed.__inspectionManualChoice = false;
+      const record = () => {
+        if (observed.__inspectionManualChoice) {
+          observer.disconnect();
+          return;
+        }
+        const views = document.querySelectorAll("[data-inspection-view]");
+        if (views.length !== 7) return;
+        const qualities = Array.from(views, (view) =>
+          view.getAttribute("data-inspection-quality"),
+        );
+        if (qualities.some((quality) => quality === null)) return;
+        observed.__inspectionFirstQualities ??= qualities as string[];
+        observed.__inspectionDesktopBeforeChoice ||= qualities.some(
+          (quality) => quality === "high" || quality === "ultra",
+        );
+      };
+      const observer = new MutationObserver(record);
+      observer.observe(document, {
+        childList: true,
+        subtree: true,
+        attributes: true,
+        attributeFilter: ["data-inspection-quality"],
+      });
+      record();
+    });
+    await page.goto("/dev/inspection/");
+    const tier = page.getByRole("combobox", {
+        name: "Inspection device tier",
+        exact: true,
+      }),
+      qualities = () =>
+        page
+          .locator("[data-inspection-view]")
+          .evaluateAll((views) =>
+            views.map((view) => view.getAttribute("data-inspection-quality")),
+          );
+    await expect(page.locator("[data-inspection-view]")).toHaveCount(7);
+    if (constrained) {
+      expect(
+        await page.evaluate(
+          () =>
+            (
+              window as typeof window & {
+                __inspectionFirstQualities: string[] | null;
+              }
+            ).__inspectionFirstQualities,
+        ),
+      ).toEqual(low);
+      expect(
+        await page.evaluate(
+          () =>
+            (
+              window as typeof window & {
+                __inspectionDesktopBeforeChoice: boolean;
+              }
+            ).__inspectionDesktopBeforeChoice,
+        ),
+      ).toBe(false);
+    }
+    await expect(tier).toHaveValue(constrained ? "constrained" : "standard");
+    await expect.poll(qualities).toEqual(constrained ? low : high);
+    await expectRenderedFlower(page.locator("canvas"), 0.004);
+    await page.evaluate(() => {
+      (
+        window as typeof window & { __inspectionManualChoice: boolean }
+      ).__inspectionManualChoice = true;
+    });
+    // Both choices are explicit: an unconstrained desktop can request low,
+    // and a constrained device can deliberately request standard geometry.
+    await tier.selectOption("standard");
+    await expect(tier).toHaveValue("standard");
+    await expect.poll(qualities).toEqual(high);
+    await tier.selectOption("constrained");
+    await expect(tier).toHaveValue("constrained");
+    await expect.poll(qualities).toEqual(low);
+    await tier.selectOption(constrained ? "constrained" : "standard");
+    await expect.poll(qualities).toEqual(constrained ? low : high);
+    await expectRenderedFlower(page.locator("canvas"), 0.004);
+    await healthy();
+  });
+
   // Fuchsia covers the legacy overview tessellation changed for garden headroom.
   for (const slug of ["rose", "fuchsia", ...CYMES_AND_SPIKES])
     for (const detail of ["specimen", "overview"] as const)
@@ -21,7 +120,7 @@ if (process.env.DEV_INSPECTION === "1") {
             name: "Inspection device tier",
             exact: true,
           }),
-        ).toHaveValue("standard");
+        ).toHaveValue(constrained ? "constrained" : "standard");
         await page
           .getByRole("combobox", {
             name: "Inspection device tier",
@@ -66,12 +165,10 @@ if (process.env.DEV_INSPECTION === "1") {
           "data-render-budget",
           constrained ? "mobile" : "desktop",
         );
-        const buffer = await page
-          .locator("canvas")
-          .evaluate((canvas) => ({
-            width: (canvas as HTMLCanvasElement).width,
-            height: (canvas as HTMLCanvasElement).height,
-          }));
+        const buffer = await page.locator("canvas").evaluate((canvas) => ({
+          width: (canvas as HTMLCanvasElement).width,
+          height: (canvas as HTMLCanvasElement).height,
+        }));
         expect(buffer.width * buffer.height).toBeLessThanOrEqual(
           constrained ? 1_500_000 : 6_000_000,
         );
@@ -119,7 +216,7 @@ if (process.env.DEV_INSPECTION === "1") {
             name: "Inspection device tier",
             exact: true,
           }),
-        ).toHaveValue("standard");
+        ).toHaveValue(constrained ? "constrained" : "standard");
         const canvas = page.locator("canvas");
         await expect(canvas).toHaveAttribute(
           "data-render-budget",

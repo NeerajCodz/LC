@@ -157,9 +157,12 @@ export default function Inspection() {
   const [type, setType] = useState<FlowerType>("rose");
   const [wind, setWind] = useState(false);
   const [overview, setOverview] = useState(false);
-  const [tier, setTier] = useState<"standard" | "constrained">("standard");
+  const [tierOverride, setTierOverride] = useState<
+    "standard" | "constrained" | null
+  >(null);
   const [studyType, setStudyType] = useState<FlowerType | null>(null);
   const { constrained } = useExperienceSettings();
+  const tier = tierOverride ?? (constrained ? "constrained" : "standard");
   const studies = inspectionStudies(type),
     studying = studyType === type && studies.length > 0,
     views: readonly InspectionView[] = studying
@@ -223,7 +226,7 @@ export default function Inspection() {
             aria-label="Inspection device tier"
             value={tier}
             onChange={(event) =>
-              setTier(event.target.value as "standard" | "constrained")
+              setTierOverride(event.target.value as "standard" | "constrained")
             }
           >
             <option value="standard">Standard detail</option>

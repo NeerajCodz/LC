@@ -71,7 +71,9 @@ import { Impatiens } from "./impatiens/Impatiens";
 import { Lupine } from "./lupine/Lupine";
 import { Hollyhock } from "./hollyhock/Hollyhock";
 import { Fritillaria } from "./fritillaria/Fritillaria";
+import { Tuberose } from "./tuberose/Tuberose";
 const SPECIES = {
+  tuberose: Tuberose,
   fritillaria: Fritillaria,
   hollyhock: Hollyhock,
   lupine: Lupine,

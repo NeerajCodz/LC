@@ -13,6 +13,16 @@ export interface FlowerInfo {
 
 export const FLOWERS: FlowerInfo[] = [
   {
+    type: "tuberose",
+    name: "Tuberose",
+    latin: "Agave amica",
+    family: "Asparagaceae",
+    color: "#eee7d7",
+    description: "Ivory tubes, gently flaring.\nPaired along a slender scape.",
+    detail:
+      "Paired waxy flowers open upward along a scape above smooth basal strap leaves. Each bent continuous perianth has six flared lobes, six included stamens, three stigma divisions and an inferior ovary. This cultivated tuberose is also known as Polianthes tuberosa.",
+  },
+  {
     type: "fritillaria",
     name: "Crown Imperial",
     latin: "Fritillaria imperialis",

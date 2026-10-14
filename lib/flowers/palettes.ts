@@ -30,6 +30,15 @@ const palette = (
 });
 
 export const PETAL_PALETTES: Record<FlowerType, PetalPalette> = {
+  tuberose: {
+    root: "#d1cfad",
+    body: "#eee7d7",
+    tip: "#faf3e8",
+    vein: "#c1bca6",
+    rootFalloff: 0.2,
+    tipStart: 0.8,
+    veinStrength: 0.023,
+  },
   fritillaria: {
     root: "#a84528",
     body: "#d87435",

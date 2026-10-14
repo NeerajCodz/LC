@@ -30,7 +30,10 @@ import { HOLLYHOCK_MODEL } from "../components/flowers/hollyhock/hollyhockGeomet
 
 import { FRITILLARIA_MODEL } from "../components/flowers/fritillaria/fritillariaGeometry";
 
+import { TUBEROSE_MODEL } from "../components/flowers/tuberose/tuberoseGeometry";
+
 const models: Record<string, SpecimenModel> = {
+  tuberose: TUBEROSE_MODEL,
   fritillaria: FRITILLARIA_MODEL,
   hollyhock: HOLLYHOCK_MODEL,
   lupine: LUPINE_MODEL,

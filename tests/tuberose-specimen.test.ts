@@ -162,3 +162,17 @@ test("tuberose: complete overview head remains below the indexed-input target", 
   }
   assert.ok(inputs < 100000, String(inputs));
 });
+
+test("tuberose is complete throughout the typed botanical catalog", async () => {
+  const { FLOWER_TYPES } = await import("../lib/flowers/types"),
+    { getFlower } = await import("../lib/flowers/catalog"),
+    { FLOWER_STRUCTURES } = await import("../lib/flowers/structures"),
+    { WIND_PROFILES } = await import("../lib/flowers/wind");
+  const type = FLOWER_TYPES.find((t) => String(t) === "tuberose");
+  assert.ok(type, "tuberose catalog integration is missing");
+  assert.equal(getFlower(type).latin, "Agave amica");
+  assert.equal(FLOWER_STRUCTURES[type].layers.length, 0);
+  assert.equal(FLOWER_STRUCTURES[type].simulatedSurfaces, true);
+  assert.equal(FLOWER_STRUCTURES[type].airbornePollen, false);
+  assert.ok(WIND_PROFILES[type].compliance > 0);
+});

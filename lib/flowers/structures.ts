@@ -86,7 +86,9 @@ import { impatiensStructure } from "../../components/flowers/impatiens/Impatiens
 import { lupineStructure } from "../../components/flowers/lupine/Lupine";
 import { hollyhockStructure } from "../../components/flowers/hollyhock/Hollyhock";
 import { fritillariaStructure } from "../../components/flowers/fritillaria/Fritillaria";
+import { tuberoseStructure } from "../../components/flowers/tuberose/Tuberose";
 export const FLOWER_STRUCTURES: Record<FlowerType, FlowerStructure> = {
+  tuberose: tuberoseStructure,
   fritillaria: fritillariaStructure,
   hollyhock: hollyhockStructure,
   lupine: lupineStructure,

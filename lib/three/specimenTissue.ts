@@ -5,6 +5,7 @@ export const TISSUE_RESPONSE: Record<
   string,
   { roughness: number; sheen: number; coat: number; scatter: number }
 > = {
+  tuberose: { roughness: 0.43, sheen: 0.2, coat: 0.065, scatter: 0.049 },
   fritillaria: { roughness: 0.48, sheen: 0.17, coat: 0.055, scatter: 0.051 },
   hollyhock: { roughness: 0.63, sheen: 0.23, coat: 0.012, scatter: 0.068 },
   lupine: { roughness: 0.54, sheen: 0.22, coat: 0.02, scatter: 0.047 },
@@ -47,6 +48,7 @@ export const TISSUE_RESPONSE: Record<
   zinnia: { roughness: 0.78, sheen: 0.16, coat: 0, scatter: 0.055 },
 };
 export function specimenTissueColor(type: string, tissue?: SpecimenTissue) {
+  if (type === "tuberose" && tissue === "leaf") return "#65835b";
   if (type === "fritillaria" && tissue === "leaf") return "#577948";
   if (type === "lupine" && tissue === "guide") return "#6663ac";
   if (type === "impatiens" && tissue === "inner") return "#d7c5b5";
@@ -77,6 +79,8 @@ export function specimenTissueColor(type: string, tissue?: SpecimenTissue) {
 export function specimenTissueShader(type: string, tissue?: SpecimenTissue) {
   if (tissue === "leaf") return "";
   switch (type) {
+    case "tuberose":
+      return `float tubRib=pow(.5+.5*cos(vPetalUv.x*37.699),27.); float tubWax=pow(max(0.,sin(vPetalUv.x*141.)*sin(vPetalUv.y*127.)),8.); diffuseColor.rgb*=1.-tubRib*.023-tubWax*.014;`;
     case "fritillaria":
       return `float fritRib=pow(.5+.5*cos(vPetalUv.x*31.416+vPetalUv.y*2.),25.); diffuseColor.rgb*=1.-fritRib*.039;`;
     case "hollyhock":

@@ -88,6 +88,8 @@ export interface SpecimenOrgan {
   endRadius?: number;
   color: string;
   flatten?: number;
+  /** Rotate flattened tissue about its carrier tangent, in radians. */
+  sectionRoll?: number;
 }
 export interface SpecimenModel {
   clusters: SpecimenCluster[];

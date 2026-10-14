@@ -17,6 +17,7 @@ export function createOrganicTube({
   color = "#e8bd41",
   tipColor = color,
   flatten = 1,
+  sectionRoll = 0,
   grain = 0,
 }: {
   points: Vec3[];
@@ -27,10 +28,17 @@ export function createOrganicTube({
   color?: string;
   tipColor?: string;
   flatten?: number;
+  /** Radians around the transported tangent; zero retains the original section. */
+  sectionRoll?: number;
   grain?: number;
 }) {
   const curve = new CatmullRomCurve3(points.map((p) => new Vector3(...p)));
   const frames = curve.computeFrenetFrames(segments, false);
+  if (sectionRoll !== 0)
+    for (let j = 0; j <= segments; j++) {
+      frames.normals[j].applyAxisAngle(frames.tangents[j], sectionRoll);
+      frames.binormals[j].applyAxisAngle(frames.tangents[j], sectionRoll);
+    }
   const positions: number[] = [],
     colors: number[] = [],
     indices: number[] = [];

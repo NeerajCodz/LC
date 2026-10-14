@@ -28,7 +28,10 @@ import { LUPINE_MODEL } from "../components/flowers/lupine/lupineGeometry";
 
 import { HOLLYHOCK_MODEL } from "../components/flowers/hollyhock/hollyhockGeometry";
 
+import { FRITILLARIA_MODEL } from "../components/flowers/fritillaria/fritillariaGeometry";
+
 const models: Record<string, SpecimenModel> = {
+  fritillaria: FRITILLARIA_MODEL,
   hollyhock: HOLLYHOCK_MODEL,
   lupine: LUPINE_MODEL,
   impatiens: IMPATIENS_MODEL,

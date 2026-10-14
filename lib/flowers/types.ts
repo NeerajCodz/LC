@@ -69,6 +69,7 @@ export const FLOWER_TYPES = [
   "impatiens",
   "lupine",
   "hollyhock",
+  "fritillaria",
 ] as const;
 
 export type FlowerType = (typeof FLOWER_TYPES)[number];

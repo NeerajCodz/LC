@@ -21,6 +21,14 @@ export interface FoliageProfile {
 
 /** Cultivar-independent leaf traits; lotus has its own peltate blade generator. */
 export const FOLIAGE: Record<FlowerType, FoliageProfile> = {
+  fritillaria: {
+    length: 0.78,
+    width: 0.12,
+    color: "#577948",
+    thickness: 0.013,
+    parallel: true,
+    roughness: 0.5,
+  },
   hollyhock: {
     length: 1.05,
     width: 0.55,

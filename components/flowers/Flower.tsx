@@ -70,7 +70,9 @@ import { Hoya } from "./hoya/Hoya";
 import { Impatiens } from "./impatiens/Impatiens";
 import { Lupine } from "./lupine/Lupine";
 import { Hollyhock } from "./hollyhock/Hollyhock";
+import { Fritillaria } from "./fritillaria/Fritillaria";
 const SPECIES = {
+  fritillaria: Fritillaria,
   hollyhock: Hollyhock,
   lupine: Lupine,
   impatiens: Impatiens,

@@ -30,6 +30,15 @@ const palette = (
 });
 
 export const PETAL_PALETTES: Record<FlowerType, PetalPalette> = {
+  fritillaria: {
+    root: "#a84528",
+    body: "#d87435",
+    tip: "#e9a754",
+    vein: "#ad572e",
+    rootFalloff: 0.27,
+    tipStart: 0.82,
+    veinStrength: 0.035,
+  },
   hollyhock: {
     root: "#9e496c",
     body: "#cb839d",

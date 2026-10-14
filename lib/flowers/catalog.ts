@@ -13,6 +13,17 @@ export interface FlowerInfo {
 
 export const FLOWERS: FlowerInfo[] = [
   {
+    type: "fritillaria",
+    name: "Crown Imperial",
+    latin: "Fritillaria imperialis",
+    family: "Liliaceae",
+    color: "#d87435",
+    description:
+      "Ember bells beneath a green crown.\nA poised circle, hanging low.",
+    detail:
+      "Five hanging bells retain six separate thick tepals, pale basal nectaries and long reproductive organs. Narrow leaflike crown bracts rise above the flowers; broader wavy leaves form whorls below the bare peduncle.",
+  },
+  {
     type: "hollyhock",
     name: "Hollyhock",
     latin: "Alcea rosea",

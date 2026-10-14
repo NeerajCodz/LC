@@ -15,7 +15,10 @@ async function holdPrograms(page: Page) {
     const prototype = WebGL2RenderingContext.prototype,
       extension = prototype.getExtension,
       query = prototype.getProgramParameter;
-    prototype.getExtension = function (this: WebGL2RenderingContext, name: string) {
+    prototype.getExtension = function (
+      this: WebGL2RenderingContext,
+      name: string,
+    ) {
       const value = Reflect.apply(extension, this, [name]);
       if (name === "KHR_parallel_shader_compile" && value)
         completion.set(
@@ -90,6 +93,87 @@ test("early garden selection preserves its loader until real shaders and flower 
   await page.getByRole("button", { name: "Return to garden" }).click();
   await expectRenderedFlower(canvas, 0.007);
   expect(errors).toEqual([]);
+});
+
+test("returning to the retained garden polls recreated programs without restarting its canvas or loader", async ({
+  page,
+}) => {
+  test.setTimeout(180000);
+  const errors: string[] = [];
+  page.on("pageerror", (error) => errors.push(error.message));
+  await holdPrograms(page);
+  await page.goto("/garden/");
+  const canvas = page.locator(".garden-scene canvas"),
+    programs = () =>
+      canvas.evaluate((node) =>
+        (
+          node as HTMLCanvasElement & { nativeProgramCount: () => number }
+        ).nativeProgramCount(),
+      );
+  await expect(canvas).toHaveAttribute("data-shader-preparation", "pending", {
+    timeout: 60000,
+  });
+  await expect.poll(programs, { timeout: 60000 }).toBeGreaterThan(10);
+  await releasePrograms(page);
+  await expect(canvas).toHaveAttribute("data-shader-preparation", "ready", {
+    timeout: 60000,
+  });
+  await expectRenderedFlower(canvas, 0.007);
+  await expect(canvas).toHaveAttribute("data-render-frames", /\d+/, {
+    timeout: 60000,
+  });
+  const fullPrograms = await programs(),
+    retainedCanvas = await canvas.elementHandle();
+  if (!retainedCanvas) throw new Error("Missing retained garden canvas");
+  await page
+    .getByRole("combobox", { name: "Explore a garden flower" })
+    .selectOption("rose");
+  await expectRenderedFlower(canvas, 0.007);
+  await expect.poll(programs).toBeLessThan(fullPrograms * 0.5);
+  const selectedPrograms = await programs(),
+    priorFrames = Number(await canvas.getAttribute("data-render-frames"));
+  expect(priorFrames).toBeGreaterThan(0);
+  await expect(page.locator(".bloom-loader--overlay")).toHaveCount(0);
+  await page.evaluate(() =>
+    Object.assign(window, { lcHoldGardenPrograms: true }),
+  );
+  await page.getByRole("button", { name: "Return to garden" }).click();
+  await expect(canvas).toHaveAttribute("data-shader-preparation", "pending");
+  await expect.poll(programs).toBeGreaterThan(selectedPrograms);
+  // Completion is withheld for newly linked programs. The page must continue
+  // receiving RAF callbacks while the guarded renderer waits instead of drawing.
+  expect(
+    await page.evaluate(
+      () =>
+        new Promise<number>((resolve) => {
+          let frames = 0;
+          const next = () => {
+            if (++frames === 8) resolve(frames);
+            else requestAnimationFrame(next);
+          };
+          requestAnimationFrame(next);
+        }),
+    ),
+  ).toBe(8);
+  await expect(canvas).toHaveAttribute("data-shader-preparation", "pending");
+  await expect(page.locator(".bloom-loader--overlay")).toHaveCount(0);
+  expect(
+    Number(await canvas.getAttribute("data-render-frames")),
+  ).toBeGreaterThanOrEqual(priorFrames);
+  await releasePrograms(page);
+  await expect(canvas).toHaveAttribute("data-shader-preparation", "ready", {
+    timeout: 60000,
+  });
+  await expectRenderedFlower(canvas, 0.007);
+  expect(
+    await canvas.evaluate(
+      (current, original) => current === original,
+      retainedCanvas,
+    ),
+  ).toBe(true);
+  await expect(page.locator(".bloom-loader--overlay")).toHaveCount(0);
+  expect(errors).toEqual([]);
+  await retainedCanvas.dispose();
 });
 
 test("context loss during shader preparation cancels polling and explicit retry draws the garden", async ({

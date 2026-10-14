@@ -90,6 +90,89 @@ test("disposing hidden materials during preparation cancels only unreferenced pr
   assert.deepEqual(f.counts(), { compiled: 1, polls: 1 });
 });
 
+test("visible revisions rearm a completed preparation for evicted program replacements without restarting unchanged scopes", async () => {
+  const f = await fixture();
+  f.preparation.setRevision("overview");
+  f.preparation.begin(f.scene, f.camera);
+  f.finish();
+  assert.equal(f.preparation.ready(), true);
+  let replacementReady = false,
+    replacementPolls = 0;
+  const replacement = {
+    isReady: () => {
+      replacementPolls++;
+      return replacementReady;
+    },
+  };
+  // Residency eviction removes the original native program, while CPU materials survive.
+  f.properties.delete(f.a);
+  f.properties.delete(f.b);
+  f.properties.set(f.a, { currentProgram: replacement });
+  f.properties.set(f.b, { currentProgram: replacement });
+  f.preparation.setRevision("rose");
+  assert.equal(
+    f.preparation.ready(),
+    false,
+    "newly visible programs must not inherit completed readiness",
+  );
+  assert.equal(f.preparation.started, false);
+  f.preparation.begin(f.scene, f.camera);
+  assert.equal(f.preparation.ready(), false);
+  assert.equal(replacementPolls, 1, "shared replacement is polled once");
+  assert.equal(f.counts().compiled, 2);
+  assert.equal(f.preparation.setRevision("rose"), false);
+  f.preparation.begin(f.scene, f.camera);
+  assert.equal(
+    f.counts().compiled,
+    2,
+    "an unchanged selection does not compile again",
+  );
+  replacementReady = true;
+  assert.equal(f.preparation.ready(), true);
+  f.preparation.setRevision("overview");
+  assert.equal(
+    f.preparation.ready(),
+    false,
+    "returning to a previous scope is also a new visible generation",
+  );
+  f.preparation.begin(f.scene, f.camera);
+  assert.equal(f.preparation.ready(), true);
+  assert.equal(f.counts().compiled, 3);
+});
+
+test("a visibility revision cancels pending stale programs before polling new membership", async () => {
+  const f = await fixture();
+  f.preparation.setRevision("overview");
+  f.preparation.begin(f.scene, f.camera);
+  f.properties.clear();
+  f.preparation.setRevision("rose");
+  assert.equal(f.preparation.started, false);
+  assert.equal(f.preparation.ready(), false);
+  assert.deepEqual(f.counts(), { compiled: 1, polls: 0 });
+  let polls = 0;
+  const replacement = {
+    isReady: () => {
+      polls++;
+      return false;
+    },
+  };
+  f.properties.set(f.c, { currentProgram: replacement });
+  f.preparation.begin(f.scene, f.camera);
+  assert.equal(f.preparation.ready(), false);
+  assert.equal(polls, 1);
+  f.properties.delete(f.c);
+  assert.equal(
+    f.preparation.ready(),
+    true,
+    "deleted replacement is cancelled without another native query",
+  );
+  assert.equal(polls, 1);
+  f.preparation.reset();
+  assert.equal(f.preparation.started, false);
+  assert.equal(f.preparation.ready(), false);
+  assert.equal(polls, 1);
+});
+
 test("preparation resets without polling a lost or unmounted renderer and can prepare again", async () => {
   const f = await fixture();
   f.preparation.begin(f.scene, f.camera);

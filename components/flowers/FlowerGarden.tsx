@@ -70,6 +70,7 @@ export default function FlowerGarden({
       <RenderBudget
         gpuPacing={constrained}
         shaderScope={constrained ? "garden-specimens" : undefined}
+        shaderRevision={constrained ? (selected ?? "overview") : undefined}
         constrained={constrained || degraded}
         macro={!!selected}
       />

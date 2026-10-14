@@ -17,10 +17,19 @@ interface PreparationRenderer {
  */
 export class SceneProgramPreparation {
   private pending: Map<ReadyProgram, Material[]> | null = null;
+  private revision: string | undefined;
   constructor(private readonly renderer: PreparationRenderer) {}
 
   get started() {
     return this.pending !== null;
+  }
+
+  /** Visible retained materials may have evicted programs or new mesh variants. */
+  setRevision(revision: string | undefined) {
+    if (revision === this.revision) return false;
+    this.revision = revision;
+    this.reset();
+    return true;
   }
 
   begin(scene: Scene, camera: Camera) {

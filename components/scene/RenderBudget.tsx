@@ -14,12 +14,14 @@ export function RenderBudget({
   macro = false,
   gpuPacing = false,
   shaderScope,
+  shaderRevision,
 }: {
   active?: boolean;
   constrained: boolean;
   macro?: boolean;
   gpuPacing?: boolean;
   shaderScope?: string;
+  shaderRevision?: string;
 }) {
   const get = useThree((state) => state.get);
   const { subscribe } = useStore();
@@ -27,6 +29,15 @@ export function RenderBudget({
   const startupFrames = useRef(0);
   // Activity changes restart the RAF clock, not this Canvas's draw history.
   const rendered = useRef(0);
+  const preparationRef = useRef<SceneProgramPreparation | null>(null),
+    preparationRevision = useRef(shaderRevision);
+  useLayoutEffect(() => {
+    preparationRevision.current = shaderRevision;
+    // Rearm only preparation before the next draw. Keep the pending GPU fence,
+    // RAF clock, Canvas draw history and already-released loader intact.
+    if (preparationRef.current?.setRevision(shaderRevision))
+      get().gl.domElement.dataset.shaderPreparation = "pending";
+  }, [get, shaderRevision]);
   useLayoutEffect(() => {
     const state = get();
     // Keep mobile at CSS-pixel resolution in both modes. Fractional upscaling
@@ -67,6 +78,8 @@ export function RenderBudget({
     const preparation = shaderScope
       ? new SceneProgramPreparation(state.gl)
       : null;
+    preparation?.setRevision(preparationRevision.current);
+    preparationRef.current = preparation;
     const before = state.scene.onBeforeRender,
       after = state.scene.onAfterRender;
     let hidden = false,
@@ -182,6 +195,7 @@ export function RenderBudget({
       cancelAnimationFrame(frame);
       gate?.dispose();
       preparation?.reset();
+      if (preparationRef.current === preparation) preparationRef.current = null;
       restoreVisibility();
       if (preparation) {
         state.scene.onBeforeRender = before;

@@ -104,7 +104,9 @@ for (let cluster = 0; cluster < 5; cluster++) {
           0.39 * v * (1 - open) +
           0.085 * w * w +
           0.022 * Math.sin(v * Math.PI),
-        0.035 + 0.67 * v * notch * (0.13 + 0.87 * open),
+        // The carrier faces +Z: local -Z places the dorsal blade above its throat.
+        // Keep the same v=0 insertion instead of turning the sepal and spur over.
+        0.035 - 0.67 * v * notch * (0.13 + 0.87 * open),
       ];
     },
   });

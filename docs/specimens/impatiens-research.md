@@ -41,6 +41,15 @@ petal response; the sepal spur stays attached at every bloom/contact stage.
 Bud folds retain sealed thickness and nondegenerate normals. Focused/selected
 contact uses the existing 2,048/512 node caps; previews and full garden are ambient.
 
+The dorsal blade extends toward local negative Z so the authored forward-facing
+cluster rotations place it above the lower sepal in the assembled flower. Its
+insertion stays fixed; the lower sepal/spur, joined lateral pairs, reproductive
+organs and cluster poses are unchanged. A regression uses the generated shells
+at all five qualities, the actual overview batch vertex path, bloom timing and a
+transformed parent to check this dorsal/ventral relationship at half and full
+bloom. The correction retains the 690 desktop / 350 constrained contact nodes.
+Updated visual acceptance remains pending the corresponding seven-view captures.
+
 ## Behavior and evidence gaps
 
 Opening trajectories, bloom offsets, elastic recovery and response to pointer

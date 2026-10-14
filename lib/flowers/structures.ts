@@ -89,7 +89,9 @@ import { fritillariaStructure } from "../../components/flowers/fritillaria/Friti
 import { tuberoseStructure } from "../../components/flowers/tuberose/Tuberose";
 import { ixoraStructure } from "../../components/flowers/ixora/Ixora";
 import { pentasStructure } from "../../components/flowers/pentas/Pentas";
+import { lobeliaStructure } from "../../components/flowers/lobelia/Lobelia";
 export const FLOWER_STRUCTURES: Record<FlowerType, FlowerStructure> = {
+  lobelia: lobeliaStructure,
   pentas: pentasStructure,
   ixora: ixoraStructure,
   tuberose: tuberoseStructure,

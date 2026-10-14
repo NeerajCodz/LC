@@ -74,7 +74,9 @@ import { Fritillaria } from "./fritillaria/Fritillaria";
 import { Tuberose } from "./tuberose/Tuberose";
 import { Ixora } from "./ixora/Ixora";
 import { Pentas } from "./pentas/Pentas";
+import { Lobelia } from "./lobelia/Lobelia";
 const SPECIES = {
+  lobelia: Lobelia,
   pentas: Pentas,
   ixora: Ixora,
   tuberose: Tuberose,

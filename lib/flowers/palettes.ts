@@ -30,6 +30,15 @@ const palette = (
 });
 
 export const PETAL_PALETTES: Record<FlowerType, PetalPalette> = {
+  lobelia: {
+    root: "#bfc8e9",
+    body: "#4867bd",
+    tip: "#587cd5",
+    vein: "#344f9f",
+    rootFalloff: 0.27,
+    tipStart: 0.84,
+    veinStrength: 0.036,
+  },
   pentas: {
     root: "#f1d3dd",
     body: "#d95791",

@@ -36,7 +36,10 @@ import { IXORA_MODEL } from "../components/flowers/ixora/ixoraGeometry";
 
 import { PENTAS_MODEL } from "../components/flowers/pentas/pentasGeometry";
 
+import { LOBELIA_MODEL } from "../components/flowers/lobelia/lobeliaGeometry";
+
 const models: Record<string, SpecimenModel> = {
+  lobelia: LOBELIA_MODEL,
   pentas: PENTAS_MODEL,
   ixora: IXORA_MODEL,
   tuberose: TUBEROSE_MODEL,

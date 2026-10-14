@@ -5,6 +5,7 @@ export const TISSUE_RESPONSE: Record<
   string,
   { roughness: number; sheen: number; coat: number; scatter: number }
 > = {
+  lobelia: { roughness: 0.72, sheen: 0.18, coat: 0.003, scatter: 0.063 },
   pentas: { roughness: 0.7, sheen: 0.2, coat: 0.005, scatter: 0.06 },
   ixora: { roughness: 0.56, sheen: 0.16, coat: 0.035, scatter: 0.045 },
   tuberose: { roughness: 0.43, sheen: 0.2, coat: 0.065, scatter: 0.049 },
@@ -50,6 +51,8 @@ export const TISSUE_RESPONSE: Record<
   zinnia: { roughness: 0.78, sheen: 0.16, coat: 0, scatter: 0.055 },
 };
 export function specimenTissueColor(type: string, tissue?: SpecimenTissue) {
+  if (type === "lobelia" && tissue === "guide") return "#ece6cb";
+  if (type === "lobelia" && tissue === "inner") return "#9584ae";
   if (type === "tuberose" && tissue === "leaf") return "#65835b";
   if (type === "fritillaria" && tissue === "leaf") return "#577948";
   if (type === "lupine" && tissue === "guide") return "#6663ac";
@@ -81,6 +84,8 @@ export function specimenTissueColor(type: string, tissue?: SpecimenTissue) {
 export function specimenTissueShader(type: string, tissue?: SpecimenTissue) {
   if (tissue === "leaf") return "";
   switch (type) {
+    case "lobelia":
+      return `float lobThroat=exp(-pow((vPetalUv.x-.5)*7.,2.))*(1.-smoothstep(.5,.8,vPetalUv.y)); float lobVein=pow(.5+.5*cos(vPetalUv.x*31.416),21.)*smoothstep(.66,.91,vPetalUv.y); diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.84,.88,.96),lobThroat*.33); diffuseColor.rgb*=1.-lobVein*.052;`;
     case "pentas":
       return `float penThroat=1.-smoothstep(.62,.83,vPetalUv.y); float penVein=pow(.5+.5*cos(vPetalUv.x*31.415927),21.)*smoothstep(.71,.9,vPetalUv.y); diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.94,.82,.88),penThroat*.24); diffuseColor.rgb*=1.-penVein*.044;`;
     case "ixora":

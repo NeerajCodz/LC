@@ -13,6 +13,17 @@ export interface FlowerInfo {
 
 export const FLOWERS: FlowerInfo[] = [
   {
+    type: "lobelia",
+    name: "Lobelia",
+    latin: "Lobelia erinus",
+    family: "Campanulaceae",
+    color: "#4867bd",
+    description:
+      "A blue fan on slender stalks.\nTwo small lobes above, three below.",
+    detail:
+      "Dorsally split fused corollas retain sealed cut walls and a broad three-lobed lower lip. A fused anther tube, two bearded tips and pale mouth bumps remain distinct above alternate broad lower and narrow upper leaves.",
+  },
+  {
     type: "pentas",
     name: "Pentas",
     latin: "Pentas lanceolata",

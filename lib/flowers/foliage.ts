@@ -21,6 +21,15 @@ export interface FoliageProfile {
 
 /** Cultivar-independent leaf traits; lotus has its own peltate blade generator. */
 export const FOLIAGE: Record<FlowerType, FoliageProfile> = {
+  lobelia: {
+    length: 0.48,
+    width: 0.19,
+    color: "#547b54",
+    thickness: 0.008,
+    teeth: 7,
+    depth: 0.08,
+    roughness: 0.67,
+  },
   pentas: {
     length: 0.91,
     width: 0.28,

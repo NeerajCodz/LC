@@ -53,5 +53,7 @@ not measured bud anatomy. Actual generated inner-ring radius, opposing terminal
 skin orientation and nonadjacent triangle intersections are checked for adult
 and persistent-young tissue in all five qualities and seven morph fractions.
 The model retains fourteen flowers, full reproductive organs and 840/336 cage
-nodes. Updated seven-view specimen and overview images remain necessary for
-visible acceptance of this local folded-wall correction.
+nodes. Updated seven-view specimen and overview captures have completed a
+bounded desktop and constrained visual assessment of this local folded-wall
+correction. The [validation record](cymes-and-spikes-validation.md) records that
+evidence and its remaining visibility, botanical and device limits.

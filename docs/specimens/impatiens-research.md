@@ -55,7 +55,10 @@ organs and cluster poses are unchanged. A regression uses the generated shells
 at all five qualities, the actual overview batch vertex path, bloom timing and a
 transformed parent to check this dorsal/ventral relationship at half and full
 bloom. The correction retains the 690 desktop / 350 constrained contact nodes.
-Updated visual acceptance remains pending the corresponding seven-view captures.
+The corresponding desktop and constrained seven-view captures have completed a
+bounded visual assessment, recorded in the
+[validation record](cymes-and-spikes-validation.md) with their visibility,
+botanical and device limits.
 
 The final desktop seven-view review exposed a separate lateral-outline defect:
 the previous linearly widening paired sheets had straight outer edges and four
@@ -89,8 +92,8 @@ younger flower shells retain opposing skin orientations, finite normals,
 positive thickness, sealed edges and positive signed volume across seven
 interpolated morph fractions in all five qualities. The opening path, curvature,
 fold angle and proportions are authored; reversed UI bloom is not natural
-reopening. Fresh desktop and constrained seven-view images remain necessary to
-accept the visible correction.
+reopening. Desktop and constrained seven-view captures have completed the
+bounded visual assessment of this correction documented in that validation record.
 
 ## Behavior and evidence gaps
 

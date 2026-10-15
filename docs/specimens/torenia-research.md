@@ -3,7 +3,9 @@
 Modeled taxon: _Torenia fournieri_ Linden ex E.Fourn. Research reviewed
 October 13, 2026. The exact species is `wfo-0000458503` in the pinned inventory.
 This is an implemented unnamed single-flowered study, without cultivar or hybrid
-identification. Registration is complete; visual and botanical acceptance remain pending.
+identification. Registration and bounded desktop and constrained visual
+assessment are complete; the [validation record](cymes-and-spikes-validation.md)
+records the captured-view evidence and its visibility, botanical and device limits.
 
 ## Source-backed traits
 
@@ -81,5 +83,7 @@ an actual inner-face hit is followed by a rare occlusion query. Paused,
 offscreen, reduced-motion and young-bud views cannot trigger it. Only the
 external UI pulse serial resets closure; elapsed time never resets its target.
 The damping constant and maturity threshold remain authored. Six opposite
-toothed leaves are rendered. Browser event acceptance and manual assessment of
-all visual postures remain pending.
+toothed leaves are rendered. CPU inner-face and occlusion checks do not by
+themselves establish actual browser-hit behavior. Final full browser acceptance
+remains pending in the [validation record](cymes-and-spikes-validation.md),
+separate from the completed bounded visual assessment.

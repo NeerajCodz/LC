@@ -3,7 +3,10 @@
 Modeled taxon: _Lobelia erinus_ L. Research reviewed October 13, 2026.
 The exact species is `wfo-0000815543` in the pinned inventory. This is an unnamed
 blue-flowered study with a loose raceme; no horticultural cultivar is identified.
-Implementation and registration are complete; visual and botanical acceptance remain pending.
+Implementation and registration are complete. The completed bounded desktop and
+constrained visual assessment is recorded in the
+[validation record](cymes-and-spikes-validation.md), with remaining visibility,
+botanical and device limits.
 
 ## Source-backed traits
 
@@ -82,7 +85,7 @@ containment. Corolla cages use 702 desktop and 315 constrained nodes.
 Implemented foliage has three broader toothed lower leaves and nine narrow upper
 leaves. Every upper blade is placed at its rendered pedicel root using the same
 below-head bridge; CPU tests verify those exact roots through growth and head
-contact. Manual visual and botanical acceptance remain pending.
+contact.
 
 The two lower-anther beards are sampled with real hairs. Distinct thin,
 translucent appendage membranes described by the reproduced African flora

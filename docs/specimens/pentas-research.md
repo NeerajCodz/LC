@@ -4,7 +4,9 @@ Modeled taxon: _Pentas lanceolata_ (Forssk.) Deflers. Research reviewed
 October 13, 2026. The exact species is `wfo-0000266958` in the pinned inventory.
 The study uses an unnamed cultivated long-styled form; no cultivar or
 subspecies is identified. Implementation and registration are complete;
-visual and botanical acceptance remain pending.
+the completed bounded desktop and constrained visual assessment is recorded in
+the [validation record](cymes-and-spikes-validation.md), with remaining visibility,
+botanical and device limits.
 
 ## Source-backed traits
 
@@ -73,7 +75,7 @@ at overview, low and high quality. Two axial overview cap strips preserve its
 width bulge; tiny filament cross sections use three sides only at overview.
 Corolla cages use 1,100 desktop and 440 constrained nodes. Eight opposite
 petiolate leaves with geometric underside hairs and stipular bristles are
-rendered. Manual visual and botanical acceptance remain pending.
+rendered.
 
 The referenced quadrangular young branches are simplified to a rounded stem
 cross-section. Young-shoot hairs, unequal calyx tissue and geometric calyx hairs

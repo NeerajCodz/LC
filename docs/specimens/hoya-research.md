@@ -74,8 +74,10 @@ thickness and a restrained rounded-tent median ridge. Tests measure the entire
 projected skin/cap envelope, require acute inner/outer taper and an authored
 width-to-length ceiling of 0.6, and preserve positive volume and opposing skin
 orientation through adult and young morphs. These proportions are an authored
-interpretation of the source's acute, ridged waxy segments; fresh images remain
-necessary to accept the visible result.
+interpretation of the source's acute, ridged waxy segments. The subsequent
+desktop and constrained closeups have completed a bounded visual assessment,
+recorded in the [validation record](cymes-and-spikes-validation.md) with their
+visibility, botanical and device limits.
 
 Reducing corona thickness also exposed a closed-stage insertion gap that the
 unchanged root midpoint did not detect. A 0.002 basal radial inset, fading to zero
@@ -108,8 +110,9 @@ The original three visible defects were reproduced as failing mesh regressions
 against the previous geometry. Static and whole-model bounded-motion checks pass.
 Actual displaced high/low tissue retains the strict cup intersection and closed
 apex ray coverage under bounded wind, pulse and contact for mature and persistent
-young flowers, with both simulation budgets. Fresh targeted images remain pending;
-CPU mesh checks alone do not establish the final visible macro finish.
+young flowers, with both simulation budgets. The targeted captures provide a
+separate, completed bounded visual assessment; CPU mesh checks alone do not
+establish the final visible macro finish.
 
 ## Behavior and evidence gaps
 

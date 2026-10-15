@@ -51,7 +51,10 @@ silhouette rays must encounter tepal tissue first; interior rays must reach
 the nectary before the wall. Pad exits overlap the inner wall, actual root-cap
 centers stay inside the tepal solid, and both open/folded normals stay finite
 and unit length. Counts, body cages, indexed inputs and draw partitions remain
-unchanged. Updated interior and seven-view rendered acceptance is pending.
+unchanged. The corrected interior and seven-view captures have completed a
+bounded desktop and constrained visual assessment, recorded in the
+[validation record](cymes-and-spikes-validation.md). Hidden nectary and organ
+surfaces retain the documented occlusion limits.
 
 Flower pedicels retain their nodding rest orientation during authored bud
 expansion and may yield locally while the shoot follows its anchored bend.

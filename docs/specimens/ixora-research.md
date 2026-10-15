@@ -3,7 +3,9 @@
 Modeled taxon: _Ixora coccinea_ L. Research reviewed October 13, 2026.
 The pinned inventory contains the exact species as `wfo-0000218311`.
 These are construction notes for an authored botanical study. Implementation and
-registration are complete; visual and botanical acceptance remain pending.
+registration are complete. The completed bounded desktop and constrained visual
+assessment is recorded in the [validation record](cymes-and-spikes-validation.md),
+with remaining visibility, botanical and device limits.
 No named cultivar or variety is identified.
 
 ## Source-backed traits
@@ -70,4 +72,4 @@ inferior ovaries, and every cyme branch. Species and foliage CPU tests verify
 sealed tissue, positive thickness, folded normals, reproductive containment in
 young buds and exact branch endpoints. The corolla cages use 880 desktop and
 352 constrained nodes. Eight decussate leaves and cuspidate stipules are
-rendered through BotanicalStem. Manual visual and botanical acceptance remain pending.
+rendered through BotanicalStem.

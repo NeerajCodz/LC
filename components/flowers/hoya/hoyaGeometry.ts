@@ -47,6 +47,7 @@ function hoyaCorollaLobe(
 }
 
 export const HOYA_MODEL: SpecimenModel = {
+  ambientSurfaceBatching: true,
   clusters: Array.from({ length: 22 }, (_, i) => {
     const young = i >= 19,
       a = i * 2.399963229728653,

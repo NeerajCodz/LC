@@ -98,10 +98,23 @@ export interface SpecimenOrgan {
   sectionRoll?: number;
 }
 export interface SpecimenModel {
+  /** Opt-in exact-quality surface batching for ambient views; contact cages stay individual. */
+  ambientSurfaceBatching?: boolean;
   clusters: SpecimenCluster[];
   surfaces: SpecimenSurface[];
   organs: SpecimenOrgan[];
   instances?: SpecimenInstanceGroup[];
+}
+
+export function specimenSurfaceBatching(
+  model: SpecimenModel,
+  quality: Quality,
+  physics: "ambient" | "detailed" = "ambient",
+) {
+  return (
+    physics !== "detailed" &&
+    (quality === "overview" || model.ambientSurfaceBatching === true)
+  );
 }
 export interface SpecimenInstancePose {
   position: Vec3;

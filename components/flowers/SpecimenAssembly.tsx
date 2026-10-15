@@ -17,6 +17,7 @@ import {
   type SpecimenSurface,
   specimenCages,
   applySpecimenPins,
+  specimenSurfaceBatching,
 } from "@/lib/three/specimenModel";
 import { petalOpenness, stepSpring } from "@/lib/three/easing";
 import type { FlowerOrgansProps } from "./FloralParts";
@@ -67,20 +68,21 @@ export function SpecimenAssembly({
   });
   const groups = useRef<(Group | null)[]>([]),
     meshes = useRef<(Mesh | null)[]>([]);
-  const batching = quality === "overview" && physics !== "detailed";
+  const surfaceBatching = specimenSurfaceBatching(model, quality, physics),
+    organBatching = quality === "overview" && physics !== "detailed";
   const batches = useMemo(
-    () => (batching ? surfaceBatchGroups(model, true) : []),
-    [model, batching],
+    () => (surfaceBatching ? surfaceBatchGroups(model, true) : []),
+    [model, surfaceBatching],
   );
   const overviewDraws = useRef<(OverviewDraw | null)[]>([]);
   const organBatches = useMemo(
-    () => (batching ? organBatchGroups(model) : []),
-    [model, batching],
+    () => (organBatching ? organBatchGroups(model) : []),
+    [model, organBatching],
   );
   const overviewOrganDraws = useRef<(OverviewOrganDraw | null)[]>([]);
   const overviewPoses = useMemo(
-    () => (batching ? createSurfaceBatchPoses(model.clusters) : null),
-    [model, batching],
+    () => (surfaceBatching ? createSurfaceBatchPoses(model.clusters) : null),
+    [model, surfaceBatching],
   );
   useEffect(() => () => overviewPoses?.texture.dispose(), [overviewPoses]);
   const resources = useMemo(() => {
@@ -273,7 +275,7 @@ export function SpecimenAssembly({
   });
   return (
     <group>
-      {batching &&
+      {surfaceBatching &&
         overviewPoses &&
         batches.map((batch, i) => (
           <OverviewSurfaces
@@ -283,12 +285,13 @@ export function SpecimenAssembly({
             color={color}
             clusters={model.clusters}
             poses={overviewPoses}
+            quality={quality}
             assign={(draw) => {
               overviewDraws.current[i] = draw;
             }}
           />
         ))}
-      {batching &&
+      {organBatching &&
         overviewPoses &&
         organBatches.map((group, i) => (
           <OverviewOrgans
@@ -311,7 +314,7 @@ export function SpecimenAssembly({
           rotation={c.rotation}
           scale={c.scale}
         >
-          {!batching &&
+          {!surfaceBatching &&
             model.surfaces.map((s, i) =>
               s.cluster === k ? (
                 <Surface
@@ -333,7 +336,7 @@ export function SpecimenAssembly({
                 />
               ) : null,
             )}
-          {!batching && (
+          {!organBatching && (
             <Organs model={model} cluster={k} quality={quality} bloom={bloom} />
           )}
           {model.instances
@@ -351,7 +354,7 @@ export function SpecimenAssembly({
                 reducedMotion={reducedMotion}
               />
             ))}
-          {!batching && (
+          {!organBatching && (
             <Organs
               model={model}
               cluster={k}

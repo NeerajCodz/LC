@@ -8,6 +8,7 @@ import {
   type Material,
 } from "three";
 import { mergeGeometries } from "three/addons/utils/BufferGeometryUtils.js";
+import type { Quality } from "../flowers/types";
 import {
   specimenGeometry,
   type SpecimenModel,
@@ -56,11 +57,12 @@ export function surfaceBatchGroups(
 export function createSurfaceBatch(
   entries: readonly SurfaceBatchEntry[],
   clusters?: readonly SpecimenCluster[],
+  quality: Quality = "overview",
 ) {
   if (!entries.length)
     throw new Error("An ambient surface batch needs anatomy");
   const parts = entries.map(({ surface }) =>
-    specimenGeometry(surface, "overview"),
+    specimenGeometry(surface, quality),
   );
   const geometry = mergeGeometries(parts);
   if (!geometry) {

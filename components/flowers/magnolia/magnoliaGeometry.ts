@@ -17,6 +17,7 @@ export const MAGNOLIA_MODEL: SpecimenModel = {
 };
 MAGNOLIA_MODEL.surfaces.push({
   name: "receptacular neck",
+  overviewColumns: 12,
   cluster: 0,
   role: "bract",
   tissue: "inner",
@@ -66,6 +67,7 @@ for (let i = 0; i < 9; i++) {
 }
 MAGNOLIA_MODEL.surfaces.push({
   name: "elongate floral receptacle",
+  overviewColumns: 12,
   cluster: 0,
   role: "bract",
   tissue: "disc",
@@ -109,6 +111,7 @@ MAGNOLIA_MODEL.instances = [
     surfaces: [],
     organs: floralStamens({
       count: 1,
+      overviewSides: 3,
       cluster: 0,
       radius: 0.07,
       height: 0.031,
@@ -159,6 +162,7 @@ MAGNOLIA_MODEL.instances = [
       },
       {
         name: "recurved carpel style",
+        overviewSides: 3,
         cluster: 0,
         points: [
           [0, 0.04, 0.012],

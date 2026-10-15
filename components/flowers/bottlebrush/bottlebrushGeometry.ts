@@ -57,6 +57,7 @@ const tinyPetals: SpecimenSurface[] = Array.from({ length: 5 }, (_, i) => {
   const angle = (i * Math.PI * 2) / 5;
   return {
     name: "tiny true-flower petal",
+    overviewColumns: 4,
     cluster: 0,
     role: "petal",
     tissue: "inner",
@@ -152,6 +153,7 @@ export const BOTTLEBRUSH_MODEL: SpecimenModel = {
       organs: [
         {
           name: "true flower style",
+          overviewSides: 3,
           cluster: 0,
           points: [
             [0, 0.04, 0],
@@ -177,6 +179,7 @@ export const BOTTLEBRUSH_MODEL: SpecimenModel = {
       organs: [
         {
           name: "red stamen filament",
+          overviewSides: 3,
           cluster: 0,
           points: [
             [0, 0, 0],
@@ -194,6 +197,7 @@ export const BOTTLEBRUSH_MODEL: SpecimenModel = {
         },
         ...[-1, 1].map((side) => ({
           name: "dark stamen anther chamber",
+          overviewSides: 3,
           cluster: 0,
           points: [
             [0.027 + side * 0.004, 0.614, 0.013],

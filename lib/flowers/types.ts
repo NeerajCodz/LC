@@ -65,6 +65,16 @@ export const FLOWER_TYPES = [
   "amaryllis",
   "canna",
   "agapanthus",
+  "hoya",
+  "impatiens",
+  "lupine",
+  "hollyhock",
+  "fritillaria",
+  "tuberose",
+  "ixora",
+  "pentas",
+  "lobelia",
+  "torenia",
 ] as const;
 
 export type FlowerType = (typeof FLOWER_TYPES)[number];
@@ -96,6 +106,8 @@ export interface FlowerProps {
   reducedMotion?: boolean;
   paused?: boolean;
   pulse?: number;
+  /** Explicit accessible pulse/reset action, independent of ordinary specimen clicks. */
+  pulseSerial?: number;
   onHover?: (hovered: boolean) => void;
   onClick?: () => void;
 }
@@ -143,6 +155,8 @@ export interface FlowerStructure {
   portraitBounds?: { min: Vec3; max: Vec3 };
   /** Extra camera distance for tall or forward-projecting preview silhouettes. */
   previewScale?: number;
+  /** Preferred camera elevation in radians for face-reading presets; side diagnostics stay low. */
+  cameraElevation?: number;
   /** Included pollen stays on organs rather than releasing decorative bursts. */
   airbornePollen?: boolean;
   /** GPU-displaced shells use a persistent picking envelope. */

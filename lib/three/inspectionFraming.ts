@@ -1,18 +1,30 @@
 import { Vector3, type Box3 } from "three";
 import type { Vec3 } from "../flowers/types";
 
+export interface InspectionCameraDirection {
+  back?: Vec3;
+  up?: Vec3;
+  elevation?: number;
+}
+
 /** One-time debug camera fit; all corners retain margin, including tall shoots. */
 export function fitInspectionBounds(
   box: Box3,
   aspect: number,
   fov: number,
   macroTarget?: Vec3,
+  direction: InspectionCameraDirection = {},
 ) {
   const target = macroTarget
     ? new Vector3(...macroTarget)
     : box.getCenter(new Vector3());
-  const back = new Vector3(0, 0.16, 1).normalize();
-  const right = new Vector3(1, 0, 0),
+  const elevation = direction.elevation ?? Math.atan(0.16),
+    back = direction.back
+      ? new Vector3(...direction.back).normalize()
+      : new Vector3(0, Math.sin(elevation), Math.cos(elevation)),
+    referenceUp = new Vector3(...(direction.up ?? [0, 1, 0]));
+  if (Math.abs(referenceUp.dot(back)) > 0.999) referenceUp.set(0, 0, 1);
+  const right = new Vector3().crossVectors(referenceUp, back).normalize(),
     up = new Vector3().crossVectors(back, right).normalize();
   const vertical = Math.tan((fov * Math.PI) / 360),
     horizontal = vertical * Math.max(0.1, aspect);
@@ -37,5 +49,6 @@ export function fitInspectionBounds(
   return {
     position: [position.x, position.y, position.z] as Vec3,
     target: [target.x, target.y, target.z] as Vec3,
+    up: [up.x, up.y, up.z] as Vec3,
   };
 }

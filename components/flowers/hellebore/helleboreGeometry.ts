@@ -70,6 +70,7 @@ for (let c = 0; c < 4; c++) {
     });
   HELLEBORE_MODEL.surfaces.push({
     name: "floral receptacle",
+    overviewColumns: 10,
     cluster: c,
     role: "calyx",
     sample: radialTube(0.12, 0.07, 5),
@@ -83,6 +84,7 @@ for (let c = 0; c < 4; c++) {
     const a = (i * Math.PI) / 5;
     HELLEBORE_MODEL.surfaces.push({
       name: "tubular nectary",
+      overviewColumns: 12,
       cluster: c,
       role: "calyx",
       thickness: 0.005,
@@ -119,6 +121,7 @@ for (let c = 0; c < 4; c++) {
     ];
     HELLEBORE_MODEL.organs.push({
       name: "stamen filament",
+      overviewSides: 3,
       cluster: c,
       points: full,
       foldedPoints: folded,
@@ -130,6 +133,7 @@ for (let c = 0; c < 4; c++) {
       bud = folded[2];
     HELLEBORE_MODEL.organs.push({
       name: "stamen anther",
+      overviewSides: 3,
       cluster: c,
       points: [
         tip,
@@ -153,6 +157,7 @@ for (let c = 0; c < 4; c++) {
       h = young ? 0.16 : 0.34;
     HELLEBORE_MODEL.organs.push({
       name: "carpel style",
+      overviewSides: 3,
       cluster: c,
       points: [
         [Math.sin(a) * r, 0.045, Math.cos(a) * r],

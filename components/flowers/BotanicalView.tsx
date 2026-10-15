@@ -8,6 +8,7 @@ import { SurfaceDetail } from "../scene/SurfaceDetail";
 import { useExperienceSettings } from "@/hooks/useExperienceSettings";
 import type { FlowerType } from "@/lib/flowers/types";
 import type { FlowerView } from "@/lib/flowers/views";
+import { flowerCameraElevation, flowerCameraPose } from "@/lib/flowers/framing";
 
 /** Shared camera, lighting, and flower composition for inline previews. */
 export function BotanicalView({
@@ -44,16 +45,31 @@ export function BotanicalView({
       : angle === "three-quarter"
         ? Math.PI / 4
         : 0;
+  const target = [macro ? cx : 0, macro ? cy : 0.05, macro ? cz : 0] as [
+    number,
+    number,
+    number,
+  ];
+  const cameraPosition =
+    flowerCameraElevation(structure, azimuth) === undefined
+      ? ([
+          Math.sin(azimuth) * distance + (macro ? cx : 0),
+          macro ? cy + 0.9 : 1.7,
+          Math.cos(azimuth) * distance + (macro ? cz : 0),
+        ] as [number, number, number])
+      : flowerCameraPose(
+          structure,
+          target,
+          distance,
+          azimuth,
+          (macro ? 0.9 : 1.65) / distance,
+        ).position;
   return (
     <Suspense fallback={null}>
       <SurfaceDetail />
       <PerspectiveCamera
         makeDefault
-        position={[
-          Math.sin(azimuth) * distance + (macro ? cx : 0),
-          macro ? cy + 0.9 : 1.7,
-          Math.cos(azimuth) * distance + (macro ? cz : 0),
-        ]}
+        position={cameraPosition}
         fov={36}
         onUpdate={(camera) =>
           camera.lookAt(macro ? cx : 0, macro ? cy : 0.05, macro ? cz : 0)

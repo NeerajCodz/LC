@@ -115,6 +115,7 @@ for (let c = 0; c < AGAPANTHUS_MODEL.clusters.length; c++) {
   });
   const apicalTip: SpecimenSurface = {
     name: "imbricated tepal apex tissue",
+    overviewColumns: 4,
     cluster: c,
     role: "petal",
     thickness: 0.012,
@@ -162,6 +163,7 @@ for (let c = 0; c < AGAPANTHUS_MODEL.clusters.length; c++) {
   });
   const stamens = floralStamens({
     count: 1,
+    overviewSides: 3,
     cluster: 0,
     radius: 0.18,
     height: 0.651,
@@ -239,6 +241,7 @@ for (let c = 0; c < AGAPANTHUS_MODEL.clusters.length; c++) {
     },
     {
       name: "central exserted style",
+      overviewSides: 3,
       cluster: c,
       points: style,
       foldedPoints: styleFolded,
@@ -248,6 +251,7 @@ for (let c = 0; c < AGAPANTHUS_MODEL.clusters.length; c++) {
     },
     {
       name: "small terminal stigma",
+      overviewSides: 3,
       cluster: c,
       points: [
         stigma,

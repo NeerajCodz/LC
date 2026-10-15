@@ -1,6 +1,11 @@
+import {
+  expectInspectionLoaded,
+  expectInspectionReady,
+} from "./inspection-ready";
 import { test, expect } from "@playwright/test";
 import { expectRenderedFlower } from "./pixel-content";
 import { resolve } from "node:path";
+test.use({ deviceScaleFactor: 1 });
 const species = [
   "rose",
   "cyclamen",
@@ -24,9 +29,11 @@ for (const slug of species)
         errors.push(m.text());
     });
     await page.goto("/dev/inspection/");
+    await expectInspectionLoaded(page);
     await page
       .getByRole("combobox", { name: "Inspection species" })
       .selectOption(slug);
+    await expectInspectionReady(page);
     await expectRenderedFlower(page.locator("canvas"), 0.004);
     const path = resolve(`dist/next-specimens/inspection-${slug}.png`);
     await page.screenshot({ path });

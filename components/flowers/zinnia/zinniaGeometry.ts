@@ -47,6 +47,7 @@ const disk: SpecimenInstanceGroup = {
   surfaces: [
     {
       name: "fused disk corolla tube",
+      overviewColumns: 12,
       cluster: 0,
       role: "tube",
       tissue: "disc",
@@ -60,6 +61,7 @@ const disk: SpecimenInstanceGroup = {
     },
     ...Array.from({ length: 5 }, (_, i) => ({
       name: "disk corolla lobe",
+      overviewColumns: 4,
       cluster: 0,
       role: "petal" as const,
       tissue: "disc" as const,
@@ -80,6 +82,7 @@ const disk: SpecimenInstanceGroup = {
   organs: [
     {
       name: "pistil style",
+      overviewSides: 3,
       cluster: 0,
       points: [
         [0, 0.012, 0],
@@ -97,6 +100,7 @@ const disk: SpecimenInstanceGroup = {
     },
     ...[-1, 1].map((side) => ({
       name: "pistil style arm",
+      overviewSides: 3,
       cluster: 0,
       points: [
         [0, 0.16, 0],
@@ -118,6 +122,7 @@ const disk: SpecimenInstanceGroup = {
         z = Math.cos(a) * 0.007;
       return {
         name: "stamen anther",
+        overviewSides: 3,
         cluster: 0,
         points: [
           [x, 0.072, z],
@@ -177,6 +182,7 @@ for (let i = 0; i < 28; i++) {
   });
   ZINNIA_MODEL.surfaces.push({
     name: "female ray tube",
+    overviewColumns: 12,
     cluster: 0,
     role: "petal",
     periodic: true,
@@ -192,6 +198,7 @@ for (let i = 0; i < 28; i++) {
   });
   ZINNIA_MODEL.organs.push({
     name: "female ray pistil style",
+    overviewSides: 3,
     cluster: 0,
     points: [
       [Math.sin(a) * root, y - 0.01, Math.cos(a) * root],
@@ -210,6 +217,7 @@ for (let i = 0; i < 28; i++) {
   for (const side of [-1, 1])
     ZINNIA_MODEL.organs.push({
       name: "female ray pistil style arm",
+      overviewSides: 3,
       cluster: 0,
       points: [
         [Math.sin(a) * root, y + 0.09, Math.cos(a) * root],
@@ -244,6 +252,7 @@ for (let i = 0; i < 28; i++) {
 }
 ZINNIA_MODEL.surfaces.push({
   name: "involucral receptacle wall",
+  overviewColumns: 12,
   cluster: 0,
   role: "calyx",
   periodic: true,

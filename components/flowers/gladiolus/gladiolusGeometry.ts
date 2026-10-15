@@ -136,6 +136,7 @@ for (let c = 0; c < 11; c++) {
       h = 0.49 + i * 0.012;
     GLADIOLUS_MODEL.organs.push({
       name: "unilateral stamen filament",
+      overviewSides: 3,
       cluster: c,
       points: [
         [x * 0.35, 0.07, 0.015],
@@ -153,6 +154,7 @@ for (let c = 0; c < 11; c++) {
     });
     GLADIOLUS_MODEL.organs.push({
       name: "unilateral anther",
+      overviewSides: 3,
       cluster: c,
       points: [
         [x, h, 0.072],
@@ -172,6 +174,7 @@ for (let c = 0; c < 11; c++) {
   }
   GLADIOLUS_MODEL.organs.push({
     name: "pistil style",
+    overviewSides: 3,
     cluster: c,
     points: [
       [0, 0.07, 0],
@@ -191,6 +194,7 @@ for (let c = 0; c < 11; c++) {
     const a = (i * Math.PI * 2) / 3;
     GLADIOLUS_MODEL.organs.push({
       name: "pistil style arm",
+      overviewSides: 3,
       cluster: c,
       points: [
         [0, 0.53, 0.036],

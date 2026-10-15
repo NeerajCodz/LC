@@ -1,0 +1,377 @@
+{
+  "schemaVersion": 1,
+  "description": "Two constrained garden native-call observations from the accepted production sweep, separate from forty focused native40 observations.",
+  "preparedAt": "2026-10-15T07:30:53.008Z",
+  "collectedRun": {
+    "path": "test-results/isolated-production-1792044195839",
+    "summary": {
+      "path": "test-results/isolated-production-1792044195839/summary.json",
+      "sha256": "6cf4cbc5e9a00e099fbb1f2ab18c6413037456c1a9656d2794309e687668ce23",
+      "byteLength": 72018
+    },
+    "acceptanceAudit": {
+      "path": "test-results/isolated-production-1792044195839/acceptance-audit.json",
+      "sha256": "e9fc692e9e46971a4f1b41f728215dbaf51ee4506317f55beb5000c631e01d90",
+      "byteLength": 43079,
+      "status": "passed",
+      "cases": 218,
+      "projects": {
+        "desktop": 109,
+        "mobile": 109
+      },
+      "unexpected": 0,
+      "skipped": 0,
+      "flaky": 0,
+      "errors": []
+    }
+  },
+  "sourceAndBuildProvenance": {
+    "builtProductReference": "754997b4dd44ae93631eec3859e2cc444dffa2ff",
+    "buildId": "agHhhdIFXShw1jFTbX8Ky",
+    "preparationHead": "1c65e42e380fd6a96fed13260ecdc821d19a89b0",
+    "sourceHashesCollectedAt": "2026-10-15T07:30:53.008Z",
+    "namedSourceFiles": [
+      {
+        "path": "tests/browser/shader-reuse.spec.ts",
+        "sha256": "bae8c44e3bae8ae61d089b525e7660001633baf04f599878c41ecc80edb3cf7b",
+        "byteLength": 13001,
+        "matchesBuiltCommitWithCRLFNormalization": true
+      },
+      {
+        "path": "tests/browser/pixel-content.ts",
+        "sha256": "e17440741b6c19980c2935cb1e842f942d2a2130621ca10032663adcdba57851",
+        "byteLength": 3116,
+        "matchesBuiltCommitWithCRLFNormalization": true
+      },
+      {
+        "path": "playwright.config.ts",
+        "sha256": "f0c7f143aa2597a38d4a5a8bdbd6cc86ed4b45dfccf8588a463e2bd2abb5393c",
+        "byteLength": 665,
+        "matchesBuiltCommitWithCRLFNormalization": true
+      },
+      {
+        "path": "scripts/test-browser-isolated.ts",
+        "sha256": "7eae50594cb1f5b9ed921d00bbf858256b2732992f19e9803fcc842ad7b1d0aa",
+        "byteLength": 4474,
+        "matchesBuiltCommitWithCRLFNormalization": true
+      },
+      {
+        "path": "components/flowers/FlowerGarden.tsx",
+        "sha256": "4096badb8a4a7cee6fe5a4e31afc8afb51ab4bc7a605659113615a1d2fd74f0e",
+        "byteLength": 5904,
+        "matchesBuiltCommitWithCRLFNormalization": true
+      },
+      {
+        "path": "components/scene/RenderBudget.tsx",
+        "sha256": "d14fe7e315a7a7ef1660ececbc7b09defccc535decf948f93434a99fb0af2222",
+        "byteLength": 7654,
+        "matchesBuiltCommitWithCRLFNormalization": true
+      },
+      {
+        "path": "lib/performance.ts",
+        "sha256": "ebe3f6b8556ebba5a71dbc95c134a25c57f4bfba4df1791972ab1d4101a3da6e",
+        "byteLength": 1177,
+        "matchesBuiltCommitWithCRLFNormalization": true
+      }
+    ],
+    "namedSourceScope": "Seven named files, not a complete transitive source closure; current bytes match the supplied built commit after CRLF normalization. Hashes collected offline after the accepted run.",
+    "installedDeviceDescriptorSource": {
+      "path": "node_modules/.pnpm/playwright-core@1.65.0-alpha-2026-10-08/node_modules/playwright-core/lib/coreBundle.js",
+      "sha256": "a43a072cece42021fa539c76b90c673fccf6a6929cbf00ae175bc9844cf5534b",
+      "byteLength": 3585028
+    },
+    "operatorLaunchAttestation": {
+      "session": "90981",
+      "processId": 29288,
+      "workingDirectory": "E:/codz/Projects/lc",
+      "basis": "Root operator launch record supplied for this accepted run; not observed through CIM by this preparation."
+    },
+    "servedPageEvidence": {
+      "path": "dist/cymes-and-spikes-work/754997b-production-server-provenance.json",
+      "sha256": "9db99d26c27701e2eee850e97c49333492f8c59e3dab75979fde32e598a181c5",
+      "byteLength": 3501,
+      "rawJson": "{\n  \"observedAt\": \"2026-10-15T07:27:16.644Z\",\n  \"origin\": \"http://localhost:1607\",\n  \"buildId\": \"agHhhdIFXShw1jFTbX8Ky\",\n  \"productReference\": \"754997b4dd44ae93631eec3859e2cc444dffa2ff\",\n  \"head\": \"1c65e42e380fd6a96fed13260ecdc821d19a89b0\",\n  \"productDiffEmpty\": true,\n  \"htmlSha256\": \"2f9f01ceb640e6111471fcd716a78ebf756361af12c495c510dceae0b017781d\",\n  \"htmlStatus\": 200,\n  \"assets\": [\n    {\n      \"url\": \"http://localhost:1607/_next/static/chunks/16_2m4g146quy.js\",\n      \"bytes\": 33470,\n      \"sha256\": \"6fc3ac3c5704dfacdd2942706a6c8df290071cf5c4a2c44e5a360031d87ba3a8\",\n      \"localMatches\": true\n    },\n    {\n      \"url\": \"http://localhost:1607/_next/static/chunks/3dlep5e5_f37i.js\",\n      \"bytes\": 229143,\n      \"sha256\": \"f32c1ade71826a73d7f878f8b7fb9fb141ccc4db550fccafad8899986c7c5b94\",\n      \"localMatches\": true\n    },\n    {\n      \"url\": \"http://localhost:1607/_next/static/chunks/0l7ao2jnn5lqc.js\",\n      \"bytes\": 161333,\n      \"sha256\": \"72498743fc91108917869c66099d904e598eba1717e938e6b645f0f623942ff0\",\n      \"localMatches\": true\n    },\n    {\n      \"url\": \"http://localhost:1607/_next/static/chunks/turbopack-1-za3_rz4nkwz.js\",\n      \"bytes\": 9721,\n      \"sha256\": \"89eb7199c752a45b6e115ca8e1bf11d4e7106d2f0d28234b379d995c5d34b52a\",\n      \"localMatches\": true\n    },\n    {\n      \"url\": \"http://localhost:1607/_next/static/chunks/2iujx6gmn74x9.js\",\n      \"bytes\": 14380,\n      \"sha256\": \"2edb49d20c0a9086632c31ccbb8f90337001f334977939ad56551eeba73bf49f\",\n      \"localMatches\": true\n    },\n    {\n      \"url\": \"http://localhost:1607/_next/static/chunks/0ml3bg8qhc69e.js\",\n      \"bytes\": 482,\n      \"sha256\": \"399cabfea72f3d071b06c7114f63c85b169f9b0c91e69307b5496159f73ea1d3\",\n      \"localMatches\": true\n    },\n    {\n      \"url\": \"http://localhost:1607/_next/static/chunks/23sclft736rbg.js\",\n      \"bytes\": 8870,\n      \"sha256\": \"b89f136c45cb6f87dcd9e11a070ab27635e6955e49cc2fd007cb78188dd415b3\",\n      \"localMatches\": true\n    },\n    {\n      \"url\": \"http://localhost:1607/_next/static/chunks/2biv5yk2nczgu.js\",\n      \"bytes\": 753,\n      \"sha256\": \"d9c1c2add70297df45fb53e53c4a278e0d12a37d07a1e403f5b67eb7050bd68d\",\n      \"localMatches\": true\n    },\n    {\n      \"url\": \"http://localhost:1607/_next/static/chunks/1261ebyp34qo_.js\",\n      \"bytes\": 42748,\n      \"sha256\": \"e6f279f27c625016ec753a569456dc7173e209dbb68705dace5cd42801606913\",\n      \"localMatches\": true\n    },\n    {\n      \"url\": \"http://localhost:1607/_next/static/chunks/0_3794jgu8udr.js\",\n      \"bytes\": 35838,\n      \"sha256\": \"774a15be0eadc32ad1a895a7df1691836554e98f50d2a4b569ea95d2df3ee067\",\n      \"localMatches\": true\n    },\n    {\n      \"url\": \"http://localhost:1607/_next/static/chunks/3mnxpgh6mqzt9.js\",\n      \"bytes\": 1356073,\n      \"sha256\": \"4f57b340744cab825c8517681a48f8983e79e16b30c982b751d1101a8c167235\",\n      \"localMatches\": true\n    },\n    {\n      \"url\": \"http://localhost:1607/_next/static/chunks/0cz1d0mv5g_q7.js\",\n      \"bytes\": 112594,\n      \"sha256\": \"0973c1d64c88adc8e3c950410cb58b288f72118d5965b78049438deb8f2f9683\",\n      \"localMatches\": true\n    },\n    {\n      \"url\": \"http://localhost:1607/_next/static/chunks/2vb4qir8dfge7.js\",\n      \"bytes\": 5364,\n      \"sha256\": \"6a1a6849651c15b53458c18f8037d68432653ddf2fbfe0dc826e980a0a581e4f\",\n      \"localMatches\": true\n    }\n  ],\n  \"allServedScriptBytesMatchLocalBuild\": true,\n  \"scope\": \"Operator-owned production process; served page script bytes match this unchanged local build. Not GPU execution attestation or complete transitive source provenance.\"\n}\n",
+      "scope": "Preserved operator observation reports thirteen fetched page-script assets matching the unchanged local build after the sweep. It does not identify every lazy asset or GPU execution and is not complete source attestation."
+    }
+  },
+  "configuredProfile": {
+    "basis": "Matching test/configuration sources and installed device-descriptor definitions; executable versions and actual buffer/tier/node measurements are not exported by these attachments.",
+    "initialCssViewport": {
+      "width": 390,
+      "height": 844
+    },
+    "postResizeCssViewport": {
+      "width": 400,
+      "height": 854
+    },
+    "deviceScaleFactor": 3,
+    "isMobile": true,
+    "hasTouch": true,
+    "reducedMotion": "reduce",
+    "webGPU": "disabled-by-test",
+    "layout": "constrained shadowless garden in both projects",
+    "configuredConstrainedDprRequest": 1,
+    "configuredDrawingBufferPixelCap": 1500000,
+    "actualDrawingBuffer": null,
+    "actualAppliedDpr": null,
+    "actualCageNodes": null,
+    "actualGeometryTier": null
+  },
+  "existingAssertions": {
+    "settledOverviewInputs": {
+      "exclusiveLowerBound": 1000000,
+      "exclusiveUpperBound": 8000000
+    },
+    "settledOverviewNativeDraws": {
+      "exclusiveUpperBound": 1800,
+      "exactNumericalAttachmentAvailable": false
+    },
+    "initial": {
+      "duplicateSources": 0,
+      "maximumProgramLinkCalls": 52,
+      "minimumTissueAtlasUniformAssignmentsExclusive": 0,
+      "losses": 0,
+      "maximumLiveFenceObjectsEquals": 1,
+      "minimumFencesCreated": 30
+    },
+    "postResize": {
+      "duplicateSources": 0,
+      "losses": 0,
+      "inputAndDrawCeilingsReasserted": false
+    },
+    "pixelThreshold": 0.007,
+    "basis": "Assertions in the exact passing testcase, not additional retrospective thresholds."
+  },
+  "observations": [
+    {
+      "project": "desktop",
+      "configuredEngine": "chromium",
+      "profileLabel": "Chromium, constrained",
+      "testTitle": "shadowless garden shader sources stay shared through canvas reconfiguration",
+      "testStatus": "passed",
+      "attempts": 1,
+      "retry": 0,
+      "startTime": "2026-10-15T07:08:51.845Z",
+      "testcaseDurationMs": 17722,
+      "reportDurationMs": 20379.077,
+      "caseReport": {
+        "path": "test-results/isolated-production-1792044195839/desktop-191.json",
+        "sha256": "13ae7721c6728281e11ec4e5ba987ccb1d3564385324bcbc363f251f4286f59e",
+        "byteLength": 8144
+      },
+      "screenshots": [
+        {
+          "name": "garden-after-resize",
+          "path": "test-results/isolated-production-1792044195839/desktop-191/shader-reuse-shadowless-ga-a2ec9-ough-canvas-reconfiguration-desktop/attachments/garden-after-resize-8ab3fccdadd7ee0f128bf78ce27cc3494f0e317e.png",
+          "sha256": "6b9cb1e56352fb9efaec0a6038dafb9a42054de6e17b975d6860fac803f6c17e",
+          "byteLength": 559872
+        },
+        {
+          "name": "rose-garden-close-up",
+          "path": "test-results/isolated-production-1792044195839/desktop-191/shader-reuse-shadowless-ga-a2ec9-ough-canvas-reconfiguration-desktop/attachments/rose-garden-close-up-659f137f6dd0e864b05bfde69a43918c22117f9f.png",
+          "sha256": "d72e7c7bbe83626227cb9aefdbf2575dfbc0bad46ea6283d32ac900d51cc83fd",
+          "byteLength": 249899
+        }
+      ],
+      "actualBrowserVersion": null,
+      "actualRuntimeVersion": null,
+      "rawAttachments": [
+        {
+          "name": "startup-native-stats",
+          "contentType": "application/json",
+          "storageKind": "file",
+          "originalReference": "test-results/isolated-production-1792044195839/desktop-191/shader-reuse-shadowless-ga-a2ec9-ough-canvas-reconfiguration-desktop/attachments/startup-native-stats-91f4ad27697a1f75fcda6392964ab525c0161d1a.json",
+          "sha256": "e20fd6c92e2f69b1fb1a4c719a7b7b948186d948e120e0b3789d3e395d85d3ce",
+          "byteLength": 938,
+          "rawJson": "[\n  {\n    \"connected\": false,\n    \"contextOptions\": {\n      \"failIfMajorPerformanceCaveat\": false,\n      \"powerPreference\": \"default\"\n    },\n    \"links\": 0,\n    \"duplicates\": [],\n    \"sampledAtlasUploads\": 0,\n    \"submittedVertices\": 0,\n    \"losses\": 1,\n    \"maximumVerticesPerFrame\": 0,\n    \"maximumDrawsPerFrame\": 0,\n    \"maximumPendingFrames\": 0,\n    \"fencesCreated\": 0\n  },\n  {\n    \"connected\": true,\n    \"contextOptions\": {\n      \"alpha\": true,\n      \"depth\": true,\n      \"stencil\": false,\n      \"antialias\": true,\n      \"premultipliedAlpha\": true,\n      \"preserveDrawingBuffer\": false,\n      \"powerPreference\": \"low-power\",\n      \"failIfMajorPerformanceCaveat\": false\n    },\n    \"links\": 50,\n    \"duplicates\": [],\n    \"sampledAtlasUploads\": 31,\n    \"submittedVertices\": 269324562,\n    \"losses\": 0,\n    \"maximumVerticesPerFrame\": 7694970,\n    \"maximumDrawsPerFrame\": 1511,\n    \"maximumPendingFrames\": 1,\n    \"fencesCreated\": 36\n  }\n]"
+        },
+        {
+          "name": "initial-shader-reuse",
+          "contentType": "application/json",
+          "storageKind": "inline-base64",
+          "originalReference": "test-results/isolated-production-1792044195839/desktop-191.json#attachment[1]:initial-shader-reuse",
+          "sha256": "35b6436bb3fc7fefacb272fab7e6fd90466d758052a1a9ed7db856a22b605fc6",
+          "byteLength": 418,
+          "rawJson": "{\"connected\":true,\"contextOptions\":{\"alpha\":true,\"depth\":true,\"stencil\":false,\"antialias\":true,\"premultipliedAlpha\":true,\"preserveDrawingBuffer\":false,\"powerPreference\":\"low-power\",\"failIfMajorPerformanceCaveat\":false},\"links\":50,\"duplicates\":[],\"sampledAtlasUploads\":31,\"submittedVertices\":315494382,\"losses\":0,\"maximumVerticesPerFrame\":7694970,\"maximumDrawsPerFrame\":1511,\"maximumPendingFrames\":1,\"fencesCreated\":42}"
+        },
+        {
+          "name": "overview-submitted-vertices-per-frame",
+          "contentType": "application/json",
+          "storageKind": "inline-base64",
+          "originalReference": "test-results/isolated-production-1792044195839/desktop-191.json#attachment[2]:overview-submitted-vertices-per-frame",
+          "sha256": "804f4a0e1418088cd6899f76b6f5ae9bf5d9df0a3748c2c6d36e2be5472e4c73",
+          "byteLength": 28,
+          "rawJson": "{\"verticesPerFrame\":7694970}"
+        },
+        {
+          "name": "resized-shader-reuse",
+          "contentType": "application/json",
+          "storageKind": "inline-base64",
+          "originalReference": "test-results/isolated-production-1792044195839/desktop-191.json#attachment[3]:resized-shader-reuse",
+          "sha256": "269a1a4f65855548c46fcb71e3bfceb4284c94986a0e6fd4dcccfc019cf48baa",
+          "byteLength": 418,
+          "rawJson": "{\"connected\":true,\"contextOptions\":{\"alpha\":true,\"depth\":true,\"stencil\":false,\"antialias\":true,\"premultipliedAlpha\":true,\"preserveDrawingBuffer\":false,\"powerPreference\":\"low-power\",\"failIfMajorPerformanceCaveat\":false},\"links\":50,\"duplicates\":[],\"sampledAtlasUploads\":31,\"submittedVertices\":530953542,\"losses\":0,\"maximumVerticesPerFrame\":7694970,\"maximumDrawsPerFrame\":1511,\"maximumPendingFrames\":1,\"fencesCreated\":70}"
+        }
+      ],
+      "stages": {
+        "startup": {
+          "contextCount": 2,
+          "scope": "All raw contexts retained, including detached probes."
+        },
+        "initial": {
+          "maximumSubmittedInputsPerRendererRender": 7694970,
+          "maximumNativeDrawCallsPerRendererRender": 1511,
+          "cumulativeSubmittedInputs": 315494382,
+          "programLinkCalls": 50,
+          "simultaneousDuplicateSourceSignatures": [],
+          "tissueAtlasUniformAssignments": 31,
+          "gardenCanvasLosses": 0,
+          "maximumLiveFenceObjects": 1,
+          "fencesCreated": 42
+        },
+        "settledInputOnly": {
+          "maximumSubmittedInputsPerRendererRender": 7694970,
+          "maximumNativeDrawCallsPerRendererRender": null,
+          "drawAssertion": {
+            "operator": "<",
+            "value": 1800,
+            "status": "passed-test-assertion",
+            "exactNumericalValueAttached": false
+          }
+        },
+        "postResize": {
+          "maximumSubmittedInputsPerRendererRender": 7694970,
+          "maximumNativeDrawCallsPerRendererRender": 1511,
+          "cumulativeSubmittedInputs": 530953542,
+          "programLinkCalls": 50,
+          "simultaneousDuplicateSourceSignatures": [],
+          "tissueAtlasUniformAssignments": 31,
+          "gardenCanvasLosses": 0,
+          "maximumLiveFenceObjects": 1,
+          "fencesCreated": 70
+        }
+      }
+    },
+    {
+      "project": "mobile",
+      "configuredEngine": "webkit",
+      "profileLabel": "WebKit, constrained",
+      "testTitle": "shadowless garden shader sources stay shared through canvas reconfiguration",
+      "testStatus": "passed",
+      "attempts": 1,
+      "retry": 0,
+      "startTime": "2026-10-15T07:09:13.345Z",
+      "testcaseDurationMs": 31839,
+      "reportDurationMs": 38554.782,
+      "caseReport": {
+        "path": "test-results/isolated-production-1792044195839/mobile-192.json",
+        "sha256": "68fac439804bc960381bcdf90b930798cec5d17453f747d2f50560f49f35f70f",
+        "byteLength": 8112
+      },
+      "screenshots": [
+        {
+          "name": "garden-after-resize",
+          "path": "test-results/isolated-production-1792044195839/mobile-192/shader-reuse-shadowless-ga-a2ec9-ough-canvas-reconfiguration-mobile/attachments/garden-after-resize-50814b3bf0edf72b66eb660cda753650b5e52aac.png",
+          "sha256": "e39634168ceab8fafe59f7f63bafe17ac61b7bc0279b8a1926ca4d82074e2ce3",
+          "byteLength": 629311
+        },
+        {
+          "name": "rose-garden-close-up",
+          "path": "test-results/isolated-production-1792044195839/mobile-192/shader-reuse-shadowless-ga-a2ec9-ough-canvas-reconfiguration-mobile/attachments/rose-garden-close-up-22f01c2fdb8e0f5a16ebcb5164e87fcfb9e4ae5a.png",
+          "sha256": "a885544bfa966fc92423af75203b72006fb5ebf8ae4facd930d31b4f76ad9932",
+          "byteLength": 276224
+        }
+      ],
+      "actualBrowserVersion": null,
+      "actualRuntimeVersion": null,
+      "rawAttachments": [
+        {
+          "name": "startup-native-stats",
+          "contentType": "application/json",
+          "storageKind": "file",
+          "originalReference": "test-results/isolated-production-1792044195839/mobile-192/shader-reuse-shadowless-ga-a2ec9-ough-canvas-reconfiguration-mobile/attachments/startup-native-stats-879c52837d671c3e83bfe451a7a889456e7820e1.json",
+          "sha256": "592826f03c155c24bd1353a881b2fd09a024d53fe15cafa9626140871a122bc0",
+          "byteLength": 938,
+          "rawJson": "[\n  {\n    \"connected\": false,\n    \"contextOptions\": {\n      \"failIfMajorPerformanceCaveat\": false,\n      \"powerPreference\": \"default\"\n    },\n    \"links\": 0,\n    \"duplicates\": [],\n    \"sampledAtlasUploads\": 0,\n    \"submittedVertices\": 0,\n    \"losses\": 1,\n    \"maximumVerticesPerFrame\": 0,\n    \"maximumDrawsPerFrame\": 0,\n    \"maximumPendingFrames\": 0,\n    \"fencesCreated\": 0\n  },\n  {\n    \"connected\": true,\n    \"contextOptions\": {\n      \"alpha\": true,\n      \"depth\": true,\n      \"stencil\": false,\n      \"antialias\": true,\n      \"premultipliedAlpha\": true,\n      \"preserveDrawingBuffer\": false,\n      \"powerPreference\": \"low-power\",\n      \"failIfMajorPerformanceCaveat\": false\n    },\n    \"links\": 50,\n    \"duplicates\": [],\n    \"sampledAtlasUploads\": 31,\n    \"submittedVertices\": 246239652,\n    \"losses\": 0,\n    \"maximumVerticesPerFrame\": 7694970,\n    \"maximumDrawsPerFrame\": 1511,\n    \"maximumPendingFrames\": 1,\n    \"fencesCreated\": 33\n  }\n]"
+        },
+        {
+          "name": "initial-shader-reuse",
+          "contentType": "application/json",
+          "storageKind": "inline-base64",
+          "originalReference": "test-results/isolated-production-1792044195839/mobile-192.json#attachment[1]:initial-shader-reuse",
+          "sha256": "f647a648dca5f5cad601c16d0aaa5a018a9b1094917c8c0a269eab5c28c776af",
+          "byteLength": 418,
+          "rawJson": "{\"connected\":true,\"contextOptions\":{\"alpha\":true,\"depth\":true,\"stencil\":false,\"antialias\":true,\"premultipliedAlpha\":true,\"preserveDrawingBuffer\":false,\"powerPreference\":\"low-power\",\"failIfMajorPerformanceCaveat\":false},\"links\":50,\"duplicates\":[],\"sampledAtlasUploads\":31,\"submittedVertices\":261629592,\"losses\":0,\"maximumVerticesPerFrame\":7694970,\"maximumDrawsPerFrame\":1511,\"maximumPendingFrames\":1,\"fencesCreated\":35}"
+        },
+        {
+          "name": "overview-submitted-vertices-per-frame",
+          "contentType": "application/json",
+          "storageKind": "inline-base64",
+          "originalReference": "test-results/isolated-production-1792044195839/mobile-192.json#attachment[2]:overview-submitted-vertices-per-frame",
+          "sha256": "804f4a0e1418088cd6899f76b6f5ae9bf5d9df0a3748c2c6d36e2be5472e4c73",
+          "byteLength": 28,
+          "rawJson": "{\"verticesPerFrame\":7694970}"
+        },
+        {
+          "name": "resized-shader-reuse",
+          "contentType": "application/json",
+          "storageKind": "inline-base64",
+          "originalReference": "test-results/isolated-production-1792044195839/mobile-192.json#attachment[3]:resized-shader-reuse",
+          "sha256": "e5015076878e2e0c9fac729b029832aafcad63575b6f38858be3ceaaf6e8023e",
+          "byteLength": 418,
+          "rawJson": "{\"connected\":true,\"contextOptions\":{\"alpha\":true,\"depth\":true,\"stencil\":false,\"antialias\":true,\"premultipliedAlpha\":true,\"preserveDrawingBuffer\":false,\"powerPreference\":\"low-power\",\"failIfMajorPerformanceCaveat\":false},\"links\":50,\"duplicates\":[],\"sampledAtlasUploads\":31,\"submittedVertices\":430918932,\"losses\":0,\"maximumVerticesPerFrame\":7694970,\"maximumDrawsPerFrame\":1511,\"maximumPendingFrames\":1,\"fencesCreated\":57}"
+        }
+      ],
+      "stages": {
+        "startup": {
+          "contextCount": 2,
+          "scope": "All raw contexts retained, including detached probes."
+        },
+        "initial": {
+          "maximumSubmittedInputsPerRendererRender": 7694970,
+          "maximumNativeDrawCallsPerRendererRender": 1511,
+          "cumulativeSubmittedInputs": 261629592,
+          "programLinkCalls": 50,
+          "simultaneousDuplicateSourceSignatures": [],
+          "tissueAtlasUniformAssignments": 31,
+          "gardenCanvasLosses": 0,
+          "maximumLiveFenceObjects": 1,
+          "fencesCreated": 35
+        },
+        "settledInputOnly": {
+          "maximumSubmittedInputsPerRendererRender": 7694970,
+          "maximumNativeDrawCallsPerRendererRender": null,
+          "drawAssertion": {
+            "operator": "<",
+            "value": 1800,
+            "status": "passed-test-assertion",
+            "exactNumericalValueAttached": false
+          }
+        },
+        "postResize": {
+          "maximumSubmittedInputsPerRendererRender": 7694970,
+          "maximumNativeDrawCallsPerRendererRender": 1511,
+          "cumulativeSubmittedInputs": 430918932,
+          "programLinkCalls": 50,
+          "simultaneousDuplicateSourceSignatures": [],
+          "tissueAtlasUniformAssignments": 31,
+          "gardenCanvasLosses": 0,
+          "maximumLiveFenceObjects": 1,
+          "fencesCreated": 57
+        }
+      }
+    }
+  ],
+  "limits": [
+    "Raw maximumVerticesPerFrame/maximumDrawsPerFrame are peaks of native-count deltas around one WebGLRenderer.render call, not whole R3F advances, compositor frames, FPS or GPU timestamps; the observer does not filter every render by scene identity.",
+    "Inputs count native draw count multiplied by instance count. Indexed inputs are index submissions, not unique vertices. Calls are counted before native invocation; no GPU completion time is measured.",
+    "The exact settled draw peak is not attached. Its strict <1800 assertion passed; initial and post-resize values remain separately staged. Post-resize cumulative peaks are observed, but the testcase does not repeat the input/draw ceiling assertions there.",
+    "Both configured projects use a constrained 390x844 CSS viewport resized to 400x854. The desktop project label does not establish a wide desktop overview budget. No physical-phone performance is established.",
+    "Device scale factor 3 is distinct from the configured constrained DPR request 1 and 1.5-million-pixel cap. Actual drawing-buffer size/DPR, geometry tier and node counts were not captured by these attachments.",
+    "sampledAtlasUploads counts uTissueAtlas uniform1i assignments, not texture upload bytes. links counts program-link calls, not currently live programs. maximumPendingFrames counts sync objects between creation and deletion, not unsignaled-work depth or latency.",
+    "Startup connected is captured at context creation. Detached capability-probe losses remain in raw data and are distinct from losses on the selected garden canvas.",
+    "The testcase catches page errors and selected shader/WebGLProgram console errors. Passing does not prove absence of all WebGL warnings or a terminal getError state; previously documented invalid-program warnings are not resolved by this evidence.",
+    "This is an offline aggregate. UTF-8 re-encoding of rawJson reproduces each original attachment byte-for-byte; the aggregate has a distinct SHA256. Original case reports and screenshots remain in the ignored run archive.",
+    "Browser/runtime executable versions are unavailable in these attachments and are not imported from another run. Background applications and power mode were not isolated. No timing or 60 FPS claim is made."
+  ]
+}

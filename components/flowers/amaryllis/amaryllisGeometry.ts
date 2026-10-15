@@ -155,6 +155,7 @@ for (let cluster = 0; cluster < 3; cluster++) {
   }
   AMARYLLIS_MODEL.surfaces.push({
     name: "inferior cylindrical ovary",
+    overviewColumns: 12,
     cluster,
     role: "calyx",
     periodic: true,
@@ -189,6 +190,7 @@ for (let cluster = 0; cluster < 3; cluster++) {
       ];
     AMARYLLIS_MODEL.organs.push({
       name: "arched stamen filament",
+      overviewSides: 3,
       cluster,
       points: young ? folded : full,
       foldedPoints: folded,
@@ -228,6 +230,7 @@ for (let cluster = 0; cluster < 3; cluster++) {
     ];
   AMARYLLIS_MODEL.organs.push({
     name: "declinate central style",
+    overviewSides: 3,
     cluster,
     points: young ? foldedStyle : style,
     foldedPoints: foldedStyle,
@@ -254,6 +257,7 @@ for (let cluster = 0; cluster < 3; cluster++) {
       ];
     AMARYLLIS_MODEL.organs.push({
       name: "three-branched stigma tip",
+      overviewSides: 3,
       cluster,
       points: branch(young ? foldedTip : tip, young ? 0.011 : 0.037),
       foldedPoints: branch(foldedTip, 0.011),

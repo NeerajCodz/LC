@@ -86,6 +86,7 @@ for (let i = 0; i < 5; i++) {
 }
 RANUNCULUS_MODEL.surfaces.push({
   name: "floral receptacle",
+  overviewColumns: 10,
   cluster: 0,
   role: "calyx",
   sample: radialTube(0.105, 0.045, 5),
@@ -97,6 +98,7 @@ for (let i = 0; i < 12; i++) {
     r = 0.023 + 0.02 * Math.sqrt(i / 12);
   RANUNCULUS_MODEL.organs.push({
     name: "enclosed carpel",
+    overviewSides: 3,
     cluster: 0,
     points: [
       [Math.sin(a) * r, 0.035, Math.cos(a) * r],

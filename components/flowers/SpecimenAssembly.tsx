@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef } from "react";
 import { Group, Matrix4, Mesh } from "three";
 import { useActiveFrame } from "@/hooks/useActiveFrame";
 import { useExperienceSettings } from "@/hooks/useExperienceSettings";
@@ -6,6 +6,7 @@ import { PetalDynamics, type SurfaceForces } from "@/lib/three/petalDynamics";
 import {
   CageDeformation,
   bindCageGeometry,
+  bindCageRaycast,
 } from "@/lib/three/petalDeformation";
 import { SurfaceClock } from "@/lib/three/surfaceClock";
 import {
@@ -16,6 +17,7 @@ import {
   type SpecimenSurface,
   specimenCages,
   applySpecimenPins,
+  specimenSurfaceBatching,
 } from "@/lib/three/specimenModel";
 import { petalOpenness, stepSpring } from "@/lib/three/easing";
 import type { FlowerOrgansProps } from "./FloralParts";
@@ -26,6 +28,8 @@ import { useThree } from "@react-three/fiber";
 import { FloretInstances } from "./FloretInstances";
 import { OverviewSurfaces, type OverviewDraw } from "./OverviewSurfaces";
 import { surfaceBatchGroups } from "@/lib/three/surfaceBatch";
+import { organBatchGroups } from "@/lib/three/organBatch";
+import { OverviewOrgans, type OverviewOrganDraw } from "./OverviewOrgans";
 import {
   createSurfaceBatchPoses,
   updateSurfaceBatchPoses,
@@ -47,7 +51,12 @@ export function SpecimenAssembly({
   motion,
   physics = "ambient",
   reducedMotion = false,
-}: FlowerOrgansProps & { model: SpecimenModel; type: FlowerType }) {
+  raycastCages = false,
+}: FlowerOrgansProps & {
+  model: SpecimenModel;
+  type: FlowerType;
+  raycastCages?: boolean;
+}) {
   const { constrained } = useExperienceSettings();
   const canvas = useThree((state) => state.gl.domElement);
   const cost = useRef({
@@ -59,15 +68,21 @@ export function SpecimenAssembly({
   });
   const groups = useRef<(Group | null)[]>([]),
     meshes = useRef<(Mesh | null)[]>([]);
-  const batching = quality === "overview" && physics !== "detailed";
+  const surfaceBatching = specimenSurfaceBatching(model, quality, physics),
+    organBatching = quality === "overview" && physics !== "detailed";
   const batches = useMemo(
-    () => (batching ? surfaceBatchGroups(model, true) : []),
-    [model, batching],
+    () => (surfaceBatching ? surfaceBatchGroups(model, true) : []),
+    [model, surfaceBatching],
   );
   const overviewDraws = useRef<(OverviewDraw | null)[]>([]);
+  const organBatches = useMemo(
+    () => (organBatching ? organBatchGroups(model) : []),
+    [model, organBatching],
+  );
+  const overviewOrganDraws = useRef<(OverviewOrganDraw | null)[]>([]);
   const overviewPoses = useMemo(
-    () => (batching ? createSurfaceBatchPoses(model.clusters) : null),
-    [model, batching],
+    () => (surfaceBatching ? createSurfaceBatchPoses(model.clusters) : null),
+    [model, surfaceBatching],
   );
   useEffect(() => () => overviewPoses?.texture.dispose(), [overviewPoses]);
   const resources = useMemo(() => {
@@ -192,6 +207,11 @@ export function SpecimenAssembly({
       draw.uniforms.uBatchBloom.value = bloom.current;
       refreshSurfaceBatchBounds(draw.mesh, draw.uniforms);
     }
+    for (const draw of overviewOrganDraws.current) {
+      if (!draw) continue;
+      draw.uniforms.uBatchBloom.value = bloom.current;
+      refreshSurfaceBatchBounds(draw.mesh, draw.uniforms);
+    }
     if (!resources) return;
     const { sim, deformation, indices, matrices, inverses, clock } = resources;
     for (let p = 0; p < indices.length; p++) {
@@ -255,7 +275,7 @@ export function SpecimenAssembly({
   });
   return (
     <group>
-      {batching &&
+      {surfaceBatching &&
         overviewPoses &&
         batches.map((batch, i) => (
           <OverviewSurfaces
@@ -265,8 +285,22 @@ export function SpecimenAssembly({
             color={color}
             clusters={model.clusters}
             poses={overviewPoses}
+            quality={quality}
             assign={(draw) => {
               overviewDraws.current[i] = draw;
+            }}
+          />
+        ))}
+      {organBatching &&
+        overviewPoses &&
+        organBatches.map((group, i) => (
+          <OverviewOrgans
+            key={group.included ? "included" : "fixed"}
+            model={model}
+            group={group}
+            poses={overviewPoses}
+            assign={(draw) => {
+              overviewOrganDraws.current[i] = draw;
             }}
           />
         ))}
@@ -280,13 +314,17 @@ export function SpecimenAssembly({
           rotation={c.rotation}
           scale={c.scale}
         >
-          {!batching &&
+          {!surfaceBatching &&
             model.surfaces.map((s, i) =>
               s.cluster === k ? (
                 <Surface
                   key={i}
                   surface={s}
-                  index={i}
+                  cageIndex={
+                    s.cageAttachment
+                      ? model.surfaces.indexOf(s.cageAttachment.surface)
+                      : i
+                  }
                   assign={(m) => {
                     meshes.current[i] = m;
                   }}
@@ -294,10 +332,13 @@ export function SpecimenAssembly({
                   type={type}
                   color={color}
                   resources={resources}
+                  raycastCages={raycastCages}
                 />
               ) : null,
             )}
-          <Organs model={model} cluster={k} quality={quality} bloom={bloom} />
+          {!organBatching && (
+            <Organs model={model} cluster={k} quality={quality} bloom={bloom} />
+          )}
           {model.instances
             ?.filter((g) => g.cluster === k)
             .map((g) => (
@@ -313,13 +354,15 @@ export function SpecimenAssembly({
                 reducedMotion={reducedMotion}
               />
             ))}
-          <Organs
-            model={model}
-            cluster={k}
-            quality={quality}
-            bloom={bloom}
-            included
-          />
+          {!organBatching && (
+            <Organs
+              model={model}
+              cluster={k}
+              quality={quality}
+              bloom={bloom}
+              included
+            />
+          )}
         </group>
       ))}
     </group>
@@ -333,46 +376,62 @@ type Resources = {
 } | null;
 function Surface({
   surface,
-  index,
+  cageIndex,
   assign,
   quality,
   type,
   color,
   resources,
+  raycastCages,
 }: {
   surface: SpecimenSurface;
-  index: number;
+  cageIndex: number;
   assign: (m: Mesh | null) => void;
   quality: FlowerOrgansProps["quality"];
   type: FlowerType;
   color?: string;
   resources: Resources;
+  raycastCages: boolean;
 }) {
+  const mesh = useRef<Mesh>(null);
+  const deformed = surface.flexible || !!surface.cageAttachment;
   const geometry = useMemo(() => {
     const g = specimenGeometry(surface, quality),
-      p = resources?.indices.indexOf(index) ?? -1;
+      p = resources?.indices.indexOf(cageIndex) ?? -1;
     if (resources && p >= 0)
-      bindCageGeometry(g, resources.sim.patches[p], resources.sim.offsets[p]);
+      bindCageGeometry(
+        g,
+        resources.sim.patches[p],
+        resources.sim.offsets[p],
+        surface.cageAttachment
+          ? { mapUv: surface.cageAttachment.uv, thickness: surface.thickness }
+          : undefined,
+      );
     return g;
-  }, [surface, quality, resources, index]);
+  }, [surface, quality, resources, cageIndex]);
   const material = useMemo(() => {
     const m = createSpecimenMaterial(type, surface.role, color, surface.tissue);
-    if (resources && surface.flexible) resources.deformation.attach(m);
+    if (resources && deformed) resources.deformation.attach(m);
     return m;
-  }, [type, surface, color, resources]);
+  }, [type, surface, color, resources, deformed]);
   useEffect(() => () => geometry.dispose(), [geometry]);
   useEffect(() => () => material.dispose(), [material]);
+  useLayoutEffect(() => {
+    if (mesh.current && resources && raycastCages && deformed)
+      return bindCageRaycast(mesh.current, resources.deformation);
+  }, [geometry, resources, raycastCages, deformed]);
   return (
     <mesh
-      ref={assign}
+      ref={(value) => {
+        mesh.current = value;
+        assign(value);
+      }}
       geometry={geometry}
       material={material}
       onUpdate={(m) => m.updateMorphTargets()}
-      customDepthMaterial={
-        surface.flexible ? resources?.shadows.depth : undefined
-      }
+      customDepthMaterial={deformed ? resources?.shadows.depth : undefined}
       customDistanceMaterial={
-        surface.flexible ? resources?.shadows.distance : undefined
+        deformed ? resources?.shadows.distance : undefined
       }
       castShadow
       receiveShadow

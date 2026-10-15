@@ -109,6 +109,7 @@ export const HYDRANGEA_MODEL: SpecimenModel = {
       surfaces: [
         ...Array.from({ length: 5 }, (_, i) => ({
           name: "fertile petal",
+          overviewColumns: 4,
           cluster: 0,
           role: "petal" as const,
           thickness: 0.003,
@@ -145,6 +146,7 @@ export const HYDRANGEA_MODEL: SpecimenModel = {
             ];
           return {
             name: "fertile stamen",
+            overviewSides: 3,
             cluster: 0,
             points,
             foldedPoints: points.map(
@@ -157,6 +159,7 @@ export const HYDRANGEA_MODEL: SpecimenModel = {
         }),
         ...[0, 1, 2].map((i) => ({
           name: "fertile style",
+          overviewSides: 3,
           cluster: 0,
           points: [
             [0, 0.018, 0],

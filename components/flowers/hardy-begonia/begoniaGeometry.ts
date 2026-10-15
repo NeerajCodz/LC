@@ -120,6 +120,7 @@ export const BEGONIA_MODEL: SpecimenModel = {
           ];
         return {
           name: "male stamen",
+          overviewSides: 3,
           cluster,
           points,
           foldedPoints: points.map(
@@ -138,6 +139,7 @@ export const BEGONIA_MODEL: SpecimenModel = {
             r = 0.025;
           return {
             name: "U-shaped stigma",
+            overviewSides: 3,
             cluster,
             points: [
               [0, 0, 0.01],

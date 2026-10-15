@@ -66,7 +66,27 @@ import { Hyacinth } from "./hyacinth/Hyacinth";
 import { Amaryllis } from "./amaryllis/Amaryllis";
 import { Canna } from "./canna/Canna";
 import { Agapanthus } from "./agapanthus/Agapanthus";
+import { Hoya } from "./hoya/Hoya";
+import { Impatiens } from "./impatiens/Impatiens";
+import { Lupine } from "./lupine/Lupine";
+import { Hollyhock } from "./hollyhock/Hollyhock";
+import { Fritillaria } from "./fritillaria/Fritillaria";
+import { Tuberose } from "./tuberose/Tuberose";
+import { Ixora } from "./ixora/Ixora";
+import { Pentas } from "./pentas/Pentas";
+import { Lobelia } from "./lobelia/Lobelia";
+import { Torenia } from "./torenia/Torenia";
 const SPECIES = {
+  torenia: Torenia,
+  lobelia: Lobelia,
+  pentas: Pentas,
+  ixora: Ixora,
+  tuberose: Tuberose,
+  fritillaria: Fritillaria,
+  hollyhock: Hollyhock,
+  lupine: Lupine,
+  impatiens: Impatiens,
+  hoya: Hoya,
   agapanthus: Agapanthus,
   canna: Canna,
   amaryllis: Amaryllis,

@@ -29,7 +29,7 @@ import { Stem, type StemProps } from "./Stem";
 import { FlowerCore } from "./FlowerCore";
 import { Branch } from "./Branch";
 import { Calyx } from "./Calyx";
-import type { FlowerOrgansProps } from "./FloralParts";
+import type { FlowerOrgansProps, FlowerOrganRayProbe } from "./FloralParts";
 import { FlowerInteraction } from "./FlowerInteraction";
 import { HeadAttachmentPose } from "./BotanicalStem";
 import {
@@ -62,6 +62,7 @@ export function FlowerPlant({
   reducedMotion = false,
   paused = false,
   pulse = 0,
+  pulseSerial = 0,
   onHover,
   onClick,
 }: FlowerProps & {
@@ -70,6 +71,7 @@ export function FlowerPlant({
   StemComponent?: ComponentType<StemProps>;
 }) {
   const plant = useRef<Group>(null);
+  const organRayProbe = useRef<FlowerOrganRayProbe | null>(null);
   const head = useRef<Group>(null);
   const attachmentHeadPose = useMemo(() => new Matrix4(), []);
   useLayoutEffect(() => {
@@ -281,6 +283,7 @@ export function FlowerPlant({
               proxyCenter={structure.headCenter}
               onHover={onHover}
               onClick={onClick}
+              rayProbe={organRayProbe}
             >
               {(
                 structure.blossoms ?? [
@@ -333,6 +336,8 @@ export function FlowerPlant({
                         quality={quality}
                         color={color}
                         pulse={pulseValue}
+                        pulseSerial={pulseSerial}
+                        rayProbe={organRayProbe}
                         interaction={interaction}
                       />
                     )}

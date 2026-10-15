@@ -86,6 +86,16 @@ Generated from `lib/flowers/catalog.ts`; genus or ornamental studies never mark 
 | [Amaryllis](http://localhost:1607/flower/amaryllis/) | Hippeastrum puniceum | Exact accepted-name match: `wfo-0000661183` |
 | [Canna](http://localhost:1607/flower/canna/) | Canna indica | Exact accepted-name match: `wfo-0000343805` |
 | [Agapanthus](http://localhost:1607/flower/agapanthus/) | Agapanthus praecox | Exact accepted-name match: `wfo-0000754090` |
+| [Hoya](http://localhost:1607/flower/hoya/) | Hoya carnosa | Exact accepted-name match: `wfo-0000725176` |
+| [Impatiens](http://localhost:1607/flower/impatiens/) | Impatiens walleriana | Exact accepted-name match: `wfo-0000731143` |
+| [Lupine](http://localhost:1607/flower/lupine/) | Lupinus polyphyllus | Exact accepted-name match: `wfo-0000213847` |
+| [Hollyhock](http://localhost:1607/flower/hollyhock/) | Alcea rosea | Exact accepted-name match: `wfo-0000525183` |
+| [Crown Imperial](http://localhost:1607/flower/fritillaria/) | Fritillaria imperialis | Exact accepted-name match: `wfo-0000767851` |
+| [Tuberose](http://localhost:1607/flower/tuberose/) | Agave amica | Exact accepted-name match: `wfo-0001425429` |
+| [Ixora](http://localhost:1607/flower/ixora/) | Ixora coccinea | Exact accepted-name match: `wfo-0000218311` |
+| [Pentas](http://localhost:1607/flower/pentas/) | Pentas lanceolata | Exact accepted-name match: `wfo-0000266958` |
+| [Lobelia](http://localhost:1607/flower/lobelia/) | Lobelia erinus | Exact accepted-name match: `wfo-0000815543` |
+| [Wishbone Flower](http://localhost:1607/flower/torenia/) | Torenia fournieri | Exact accepted-name match: `wfo-0000458503` |
 
 ## Reproduce and audit
 
@@ -24890,7 +24900,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Hoya carandangiana — `wfo-0001343154`
 - Hoya cardiophylla — `wfo-0000725175`
 - Hoya carmelae — `wfo-0000749569`
-- Hoya carnosa — `wfo-0000725176`
+- Hoya carnosa — `wfo-0000725176` · authored study: `hoya`
 - Hoya carrii — `wfo-1000087370`
 - Hoya caudata — `wfo-0000725177`
 - Hoya celsa — `wfo-0001337891`
@@ -40535,7 +40545,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Agave americana var. expansa — `wfo-0000754120` · variety
 - Agave americana var. franzosinii — `wfo-0001426214` · variety
 - Agave americana var. oaxacensis — `wfo-0001388220` · variety
-- Agave amica — `wfo-0001425429`
+- Agave amica — `wfo-0001425429` · authored study: `tuberose`
 - Agave andreae — `wfo-0001337028`
 - Agave angustiarum — `wfo-0000754133`
 - Agave angustifolia — `wfo-0000754134`
@@ -89579,7 +89589,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Impatiens volkensii subsp. volkensii — `wfo-1200069674` · subspecies
 - Impatiens waldheimiana — `wfo-0001274836`
 - Impatiens walkeri — `wfo-0000731142`
-- Impatiens walleriana — `wfo-0000731143`
+- Impatiens walleriana — `wfo-0000731143` · authored study: `impatiens`
 - Impatiens wallichii — `wfo-0000731144`
 - Impatiens walongensis — `wfo-1000057938`
 - Impatiens warburgiana — `wfo-0000731145`
@@ -113201,7 +113211,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Lobelia elongata — `wfo-0000815587`
 - Lobelia endlichii — `wfo-0000814413`
 - Lobelia erectiuscula — `wfo-0000815566`
-- Lobelia erinus — `wfo-0000815543`
+- Lobelia erinus — `wfo-0000815543` · authored study: `lobelia`
 - Lobelia erlangeriana — `wfo-0000815500`
 - Lobelia eryliae — `wfo-0000815499`
 - Lobelia eryliae subsp. eryliae — `wfo-0000923458` · subspecies
@@ -181291,7 +181301,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Lupinus platamodes — `wfo-0001052647`
 - Lupinus plattensis — `wfo-0000169181`
 - Lupinus platyptenus — `wfo-0001052648`
-- Lupinus polyphyllus — `wfo-0000213847`
+- Lupinus polyphyllus — `wfo-0000213847` · authored study: `lupine`
 - Lupinus polyphyllus subsp. bernardinus — `wfo-0000210156` · subspecies
 - Lupinus polyphyllus subsp. polyphyllus — `wfo-0000179718` · subspecies
 - Lupinus polyphyllus subsp. superbus — `wfo-0000179104` · subspecies
@@ -223556,7 +223566,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Fritillaria gussichiae — `wfo-0000767834`
 - Fritillaria hakkarensis — `wfo-0001424876`
 - Fritillaria hermonis — `wfo-0000767839`
-- Fritillaria imperialis — `wfo-0000767851`
+- Fritillaria imperialis — `wfo-0000767851` · authored study: `fritillaria`
 - Fritillaria imperialis var. imperialis — `wfo-0000773152` · variety
 - Fritillaria imperialis var. kashmirensis — `wfo-0001385403` · variety
 - Fritillaria involucrata — `wfo-0000767861`
@@ -224976,7 +224986,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Torenia dinklagei — `wfo-0001139237`
 - Torenia flava — `wfo-0001140253`
 - Torenia fordii — `wfo-0001140272`
-- Torenia fournieri — `wfo-0000458503`
+- Torenia fournieri — `wfo-0000458503` · authored study: `torenia`
 - Torenia godefroyi — `wfo-0000458507`
 - Torenia grandiflora — `wfo-0001425578`
 - Torenia hayatae — `wfo-0000458528`
@@ -230333,7 +230343,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Alcea rhyticarpa — `wfo-0000525181`
 - Alcea rhyticarpa var. rhyticarpa — `wfo-1200097973` · variety
 - Alcea rhyticarpa var. tiliacea — `wfo-0000506290` · variety
-- Alcea rosea — `wfo-0000525183`
+- Alcea rosea — `wfo-0000525183` · authored study: `hollyhock`
 - Alcea rosulata — `wfo-0000525185`
 - Alcea rufescens — `wfo-0000525186`
 - Alcea rugosa — `wfo-0000525187`
@@ -357613,7 +357623,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Ixora clarae — `wfo-0000835819`
 - Ixora clementium — `wfo-0000218308`
 - Ixora clerodendron — `wfo-0000218309`
-- Ixora coccinea — `wfo-0000218311`
+- Ixora coccinea — `wfo-0000218311` · authored study: `ixora`
 - Ixora coccinea var. caudata — `wfo-1200026879` · variety
 - Ixora coccinea var. coccinea — `wfo-0000218313` · variety
 - Ixora coffeoides — `wfo-0000218319`
@@ -362012,7 +362022,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Pentas glabrescens subsp. brevituba — `wfo-1200026836` · subspecies
 - Pentas glabrescens subsp. glabrescens — `wfo-0000778314` · subspecies
 - Pentas herbacea — `wfo-0000266944`
-- Pentas lanceolata — `wfo-0000266958`
+- Pentas lanceolata — `wfo-0000266958` · authored study: `pentas`
 - Pentas lanceolata subsp. cymosa — `wfo-0000266960` · subspecies
 - Pentas lanceolata subsp. lanceolata — `wfo-0000266961` · subspecies
 - Pentas lanceolata subsp. quartiniana — `wfo-0000266968` · subspecies

@@ -163,6 +163,7 @@ for (let c = 0; c < 4; c++) {
   NASTURTIUM_MODEL.organs.push(
     ...floralStamens({
       count: 8,
+      overviewSides: 3,
       cluster: c,
       radius: 0.059,
       height: 0.245,
@@ -176,6 +177,7 @@ for (let c = 0; c < 4; c++) {
   );
   NASTURTIUM_MODEL.organs.push({
     name: "central style",
+    overviewSides: 3,
     cluster: c,
     points: [
       [0, 0.025, 0],
@@ -190,6 +192,7 @@ for (let c = 0; c < 4; c++) {
     const a = (i * Math.PI * 2) / 3;
     NASTURTIUM_MODEL.organs.push({
       name: "style branch",
+      overviewSides: 3,
       cluster: c,
       points: [
         [0, 0.285, 0],

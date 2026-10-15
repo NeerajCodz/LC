@@ -1,5 +1,12 @@
 import type { Vec3 } from "../flowers/types";
-import { PetalContacts } from "./petalContacts";
+import { PetalContacts, type ContactCohesion } from "./petalContacts";
+
+/** Authored closed-bud mechanics; the release interval is not measured anthesis. */
+export interface ClosedCohesion {
+  group: number;
+  release: number;
+  persistent?: boolean;
+}
 
 export interface CagePatch {
   columns: number;
@@ -15,6 +22,7 @@ export interface CagePatch {
   triangles: Uint32Array;
   edges: Uint32Array;
   contactEdges: Uint32Array;
+  closedCohesion?: ClosedCohesion;
 }
 
 /** A midsurface cage is independent of the visible high/ultra tessellation. */
@@ -28,6 +36,7 @@ export function createCagePatch({
   compliance = 0.00008,
   shapeCompliance = compliance * 125,
   pinRows = 1,
+  closedCohesion,
 }: {
   columns: number;
   rows: number;
@@ -38,6 +47,7 @@ export function createCagePatch({
   compliance?: number;
   shapeCompliance?: number;
   pinRows?: number;
+  closedCohesion?: ClosedCohesion;
 }): CagePatch {
   const stride = periodic ? columns : columns + 1;
   const count = stride * (rows + 1);
@@ -82,6 +92,7 @@ export function createCagePatch({
     compliance,
     shapeCompliance,
     pinRows,
+    closedCohesion,
     open,
     folded,
     pressure,
@@ -131,6 +142,13 @@ export class PetalDynamics {
   contactCount = 0;
   private accumulated = 0;
   private readonly contacts: PetalContacts;
+  private readonly openness: Float64Array;
+  private readonly cohesion?: ContactCohesion;
+  private readonly cohesionMembers: {
+    patches: Uint32Array;
+    release: number;
+    persistent: boolean;
+  }[] = [];
 
   constructor(
     readonly patches: CagePatch[],
@@ -153,6 +171,7 @@ export class PetalDynamics {
     this.inverseMass = new Float64Array(count);
     this.thickness = new Float64Array(count);
     this.surface = new Uint16Array(count);
+    this.openness = new Float64Array(patches.length);
     const triangles: number[] = [],
       edges: number[] = [],
       patchOfEdge: number[] = [];
@@ -176,6 +195,78 @@ export class PetalDynamics {
     this.edges = Uint32Array.from(edges);
     this.patchOfEdge = Uint16Array.from(patchOfEdge);
     this.lambdas = new Float64Array(edges.length / 2);
+    if (patches.some((patch) => patch.closedCohesion)) {
+      const groups = new Map<number, number[]>(),
+        patchGroups = new Int32Array(patches.length).fill(-1),
+        nodeRows = new Int32Array(count).fill(-1),
+        rows: ContactCohesion["rows"] = [];
+      patches.forEach((patch, index) => {
+        const metadata = patch.closedCohesion;
+        if (!metadata) return;
+        if (
+          !Number.isSafeInteger(metadata.group) ||
+          metadata.group < 0 ||
+          !Number.isFinite(metadata.release) ||
+          metadata.release <= 0 ||
+          metadata.release > 1 ||
+          patch.periodic
+        )
+          throw new Error(
+            "Closed cohesion requires a nonperiodic cage and valid group/release metadata",
+          );
+        const members = groups.get(metadata.group) ?? [];
+        members.push(index);
+        groups.set(metadata.group, members);
+      });
+      for (const members of groups.values()) {
+        const first = patches[members[0]],
+          metadata = first.closedCohesion!,
+          group = this.cohesionMembers.length;
+        if (
+          members.length < 2 ||
+          members.some((i) => {
+            const patch = patches[i],
+              other = patch.closedCohesion!;
+            return (
+              patch.columns !== first.columns ||
+              patch.rows !== first.rows ||
+              patch.pinRows !== first.pinRows ||
+              other.release !== metadata.release ||
+              !!other.persistent !== !!metadata.persistent
+            );
+          })
+        )
+          throw new Error(
+            "Closed cohesion members require matching row grids, pins and release behavior",
+          );
+        this.cohesionMembers.push({
+          patches: Uint32Array.from(members),
+          release: metadata.release,
+          persistent: !!metadata.persistent,
+        });
+        members.forEach((i) => {
+          patchGroups[i] = group;
+        });
+        const stride = first.columns + 1;
+        for (let row = 0; row <= first.rows; row++) {
+          const nodes = new Uint32Array(members.length * stride);
+          let k = 0;
+          for (const member of members)
+            for (let column = 0; column < stride; column++) {
+              const node = this.offsets[member] + row * stride + column;
+              nodes[k++] = node;
+              nodeRows[node] = rows.length;
+            }
+          rows.push({ group, nodes });
+        }
+      }
+      this.cohesion = {
+        patchGroups,
+        weights: new Float64Array(this.cohesionMembers.length),
+        nodeRows,
+        rows,
+      };
+    }
     this.stepSize = constrained ? 1 / 60 : 1 / 120;
     this.iterations = constrained ? 4 : 6;
     // Contact uses the material cage's warp/weft edges, not artificial diagonals.
@@ -191,6 +282,7 @@ export class PetalDynamics {
       this.thickness,
       this.inverseMass,
       patches.map((p) => (p.periodic ? p.columns : p.columns + 1)),
+      this.cohesion,
     );
     this.reset();
   }
@@ -204,6 +296,7 @@ export class PetalDynamics {
     const p = this.patches[surface],
       offset = this.offsets[surface] * 3;
     const open = Math.max(0, Math.min(1, openness));
+    this.openness[surface] = open;
     const pressed = Math.max(0, Math.min(1, pressure)) * open;
     for (let i = 0; i < p.open.length; i += 3) {
       const x =
@@ -231,6 +324,7 @@ export class PetalDynamics {
   }
 
   reset() {
+    this.updateCohesion();
     this.positions.set(this.rest);
     this.previous.set(this.rest);
     this.velocity.fill(0);
@@ -244,6 +338,7 @@ export class PetalDynamics {
 
   step(dt: number, force: SurfaceForces = STILL) {
     if (!(dt > 0)) return;
+    this.updateCohesion();
     this.accumulated += Math.min(dt, 0.05);
     const max = this.constrained ? 2 : 4;
     let steps = 0;
@@ -341,6 +436,7 @@ export class PetalDynamics {
         for (let c = 0; c < 3; c++)
           p[i * 3 + c] += (r[i * 3 + c] - p[i * 3 + c]) * gain;
       }
+      this.projectCohesion();
       if (iteration === this.iterations - 1) this.solveContacts();
     }
     for (let i = 0; i < v.length; i++) {
@@ -352,6 +448,54 @@ export class PetalDynamics {
 
   protected solveContacts() {
     this.contactCount += this.contacts.solve(this.positions, this.previous);
+  }
+
+  private updateCohesion() {
+    if (!this.cohesion) return;
+    for (let group = 0; group < this.cohesionMembers.length; group++) {
+      const member = this.cohesionMembers[group];
+      let open = 0;
+      if (!member.persistent)
+        for (let i = 0; i < member.patches.length; i++)
+          open = Math.max(open, this.openness[member.patches[i]]);
+      const t = Math.min(1, open / member.release);
+      this.cohesion.weights[group] = 1 - t * t * (3 - 2 * t);
+    }
+  }
+
+  private projectCohesion() {
+    if (!this.cohesion) return;
+    for (let rowIndex = 0; rowIndex < this.cohesion.rows.length; rowIndex++) {
+      const row: ContactCohesion["rows"][number] = this.cohesion.rows[rowIndex];
+      const weight = this.cohesion.weights[row.group];
+      if (!weight) continue;
+      let x = 0,
+        y = 0,
+        z = 0,
+        pinned = false;
+      for (let i = 0; i < row.nodes.length; i++) {
+        const node = row.nodes[i];
+        const k = node * 3;
+        x += this.positions[k] - this.rest[k];
+        y += this.positions[k + 1] - this.rest[k + 1];
+        z += this.positions[k + 2] - this.rest[k + 2];
+        pinned ||= !this.inverseMass[node];
+      }
+      const scale = pinned ? 0 : 1 / row.nodes.length;
+      x *= scale;
+      y *= scale;
+      z *= scale;
+      for (let i = 0; i < row.nodes.length; i++) {
+        const node = row.nodes[i];
+        if (!this.inverseMass[node]) continue;
+        const k = node * 3;
+        this.positions[k] += (this.rest[k] + x - this.positions[k]) * weight;
+        this.positions[k + 1] +=
+          (this.rest[k + 1] + y - this.positions[k + 1]) * weight;
+        this.positions[k + 2] +=
+          (this.rest[k + 2] + z - this.positions[k + 2]) * weight;
+      }
+    }
   }
 
   computeNormals(points: Float64Array, result: Float64Array) {

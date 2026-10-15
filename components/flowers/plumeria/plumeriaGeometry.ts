@@ -120,6 +120,7 @@ export const PLUMERIA_MODEL: SpecimenModel = {
         const a = (i * Math.PI * 2) / 5;
         return {
           name: "included anther",
+          overviewSides: 3,
           cluster: k + 1,
           points: [
             [Math.sin(a) * 0.045, 0.04, Math.cos(a) * 0.045],
@@ -134,6 +135,7 @@ export const PLUMERIA_MODEL: SpecimenModel = {
     ),
     ...PLUMERIA_BLOSSOMS.map((_, k) => ({
       name: "included pistil",
+      overviewSides: 3,
       cluster: k + 1,
       points: [
         [0, 0.01, 0],

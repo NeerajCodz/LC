@@ -90,6 +90,7 @@ export const CARNATION_MODEL: SpecimenModel = {
       return {
         cluster: 0,
         name: "included stamen",
+        overviewSides: 3,
         points: [
           [Math.sin(a) * 0.035, 0.05, Math.cos(a) * 0.035],
           [Math.sin(a) * 0.055, 0.23, Math.cos(a) * 0.055],
@@ -103,6 +104,7 @@ export const CARNATION_MODEL: SpecimenModel = {
     ...[-1, 1].map((sign) => ({
       cluster: 0,
       name: "style",
+      overviewSides: 3,
       points: [
         [0, 0.05, 0],
         [sign * 0.012, 0.23, 0],

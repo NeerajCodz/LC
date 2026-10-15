@@ -81,17 +81,21 @@ export function createFuchsiaBlade(
 ) {
   return createParametricShell({
     columns:
-      quality === "overview" || quality === "low"
-        ? 14
-        : quality === "medium"
-          ? 22
-          : 36,
+      quality === "overview"
+        ? 6
+        : quality === "low"
+          ? 14
+          : quality === "medium"
+            ? 22
+            : 36,
     rows:
-      quality === "overview" || quality === "low"
-        ? 28
-        : quality === "medium"
-          ? 42
-          : 64,
+      quality === "overview"
+        ? 8
+        : quality === "low"
+          ? 28
+          : quality === "medium"
+            ? 42
+            : 64,
     thickness: kind === "sepal" ? 0.011 : 0.006,
     sample: (u, t, open) =>
       (kind === "sepal" ? fuchsiaSepalPoint : fuchsiaPetalPoint)(
@@ -105,7 +109,7 @@ export function createFuchsiaBlade(
 export function createFuchsiaHypanthium(quality: Quality) {
   return createParametricShell({
     columns: quality === "overview" || quality === "low" ? 24 : 48,
-    rows: quality === "overview" || quality === "low" ? 20 : 36,
+    rows: quality === "overview" ? 6 : quality === "low" ? 20 : 36,
     thickness: 0.01,
     periodic: true,
     sample: (u, t) => {

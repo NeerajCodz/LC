@@ -47,6 +47,7 @@ export default function FlowerGarden({
   const { reducedMotion, constrained } = useExperienceSettings();
   const { theme } = useTheme();
   const [degraded, setDegraded] = useState(false);
+  const shadows = !constrained && !degraded;
   const plantings = constrained ? MOBILE_GARDEN_PLANTINGS : GARDEN_PLANTINGS;
   const chosen = plantings.find((plant) => plant.type === selected);
   const focus = useMemo<Vec3 | undefined>(() => {
@@ -58,7 +59,7 @@ export default function FlowerGarden({
     <SafeCanvas
       events={botanicalEvents}
       frameloop="never"
-      shadows={botanicalShadowOptions(!constrained && !degraded)}
+      shadows={botanicalShadowOptions(shadows)}
       dpr={1}
       camera={{ position: [0, 3.6, 11], fov: 39, near: 0.1, far: 50 }}
       gl={{
@@ -69,7 +70,8 @@ export default function FlowerGarden({
     >
       <RenderBudget
         gpuPacing={constrained}
-        shaderScope={constrained ? "garden-specimens" : undefined}
+        shaderScope="garden-specimens"
+        shaderRevision={`${selected ?? "overview"}:${constrained}:${shadows}:${!reducedMotion}`}
         constrained={constrained || degraded}
         macro={!!selected}
       />
@@ -86,7 +88,7 @@ export default function FlowerGarden({
       <Suspense fallback={null}>
         <SceneReady onReady={onReady} />
         <Lighting
-          shadows={!constrained && !degraded}
+          shadows={shadows}
           extent={6}
           followCursor={!reducedMotion && !paused}
         />
@@ -134,6 +136,8 @@ export default function FlowerGarden({
                     reducedMotion={reducedMotion}
                     paused={paused}
                     pulse={pulse}
+                    // Garden pulse is advanced only by the explicit breeze button.
+                    pulseSerial={pulse}
                     onClick={() => onSelect(plant.type)}
                   />
                 </RenderActivity>
@@ -157,6 +161,7 @@ export default function FlowerGarden({
         gardenDistance={gardenDistance(constrained)}
         focus={focus}
         focusScale={chosen?.scale}
+        specimenStructure={chosen ? FLOWER_STRUCTURES[chosen.type] : undefined}
         reset={reset}
         reducedMotion={reducedMotion}
         paused={paused}

@@ -13,6 +13,110 @@ export interface FlowerInfo {
 
 export const FLOWERS: FlowerInfo[] = [
   {
+    type: "torenia",
+    name: "Wishbone Flower",
+    latin: "Torenia fournieri",
+    family: "Linderniaceae",
+    color: "#7770bb",
+    description:
+      "Violet lips and a yellow tongue.\nA quiet wishbone beneath the roof.",
+    detail:
+      "A hollow bilateral trumpet joins a broad upper lip to three rounded lower lobes above a five-winged calyx. Four paired unequal stamens and two stigma lamellae occupy its throat, above opposite toothed leaves.",
+  },
+  {
+    type: "lobelia",
+    name: "Lobelia",
+    latin: "Lobelia erinus",
+    family: "Campanulaceae",
+    color: "#4867bd",
+    description:
+      "A blue fan on slender stalks.\nTwo small lobes above, three below.",
+    detail:
+      "Dorsally split fused corollas retain sealed cut walls and a broad three-lobed lower lip. A fused anther tube, two bearded tips and pale mouth bumps remain distinct above alternate broad lower and narrow upper leaves.",
+  },
+  {
+    type: "pentas",
+    name: "Pentas",
+    latin: "Pentas lanceolata",
+    family: "Rubiaceae",
+    color: "#d95791",
+    description:
+      "Rose stars in a soft cluster.\nFine white hairs at every throat.",
+    detail:
+      "Five pointed fused lobes spread from a swollen hairy throat around included anthers and a long bifid style. Unequal hairy calyx lobes, petiolate opposite leaves and wiry stipules distinguish this cultivated long-styled study.",
+  },
+  {
+    type: "ixora",
+    name: "Ixora",
+    latin: "Ixora coccinea",
+    family: "Rubiaceae",
+    color: "#eb4b31",
+    description: "Scarlet stars.\nLong tubes gather above glossy leaves.",
+    detail:
+      "A branched terminal cyme carries slender four-lobed fused corollas, short throat anthers and bifid styles. Contorted young buds sit above leathery opposite leaves and pointed stipules.",
+  },
+  {
+    type: "tuberose",
+    name: "Tuberose",
+    latin: "Agave amica",
+    family: "Asparagaceae",
+    color: "#eee7d7",
+    description: "Ivory tubes, gently flaring.\nPaired along a slender scape.",
+    detail:
+      "Paired waxy flowers open upward along a scape above smooth basal strap leaves. Each bent continuous perianth has six flared lobes, six included stamens, three stigma divisions and an inferior ovary. This cultivated tuberose is also known as Polianthes tuberosa.",
+  },
+  {
+    type: "fritillaria",
+    name: "Crown Imperial",
+    latin: "Fritillaria imperialis",
+    family: "Liliaceae",
+    color: "#d87435",
+    description:
+      "Ember bells beneath a green crown.\nA poised circle, hanging low.",
+    detail:
+      "Five hanging bells retain six separate thick tepals, pale basal nectaries and long reproductive organs. Narrow leaflike crown bracts rise above the flowers; broader wavy leaves form whorls below the bare peduncle.",
+  },
+  {
+    type: "hollyhock",
+    name: "Hollyhock",
+    latin: "Alcea rosea",
+    family: "Malvaceae",
+    color: "#cb839d",
+    description: "Five softly notched petals.\nA rose-pink column of bloom.",
+    detail:
+      "Single cup-shaped flowers rise along a leafy shoot. A seven-lobed epicalyx surrounds the separate calyx, while numerous upper-column anthers and fine style branches remain visible inside each flower.",
+  },
+  {
+    type: "lupine",
+    name: "Lupine",
+    latin: "Lupinus polyphyllus",
+    family: "Fabaceae",
+    color: "#6663ac",
+    description: "Violet banners in quiet tiers.\nA fan of green below.",
+    detail:
+      "An upright raceme carries bilateral banner, wing and enclosing keel petals around ten joined stamens and a brushy style. Eleven leaflets radiate from each shared petiole junction.",
+  },
+  {
+    type: "impatiens",
+    name: "Impatiens",
+    latin: "Impatiens walleriana",
+    family: "Balsaminaceae",
+    color: "#e86f79",
+    description: "Coral petals, softly paired.\nA slender spur behind.",
+    detail:
+      "One dorsal petal and two joined lateral pairs frame a small reproductive cap. A boat-shaped lower sepal continues into a long curved hollow spur above a succulent leafy shoot.",
+  },
+  {
+    type: "hoya",
+    name: "Hoya",
+    latin: "Hoya carnosa",
+    family: "Apocynaceae",
+    color: "#eee1de",
+    description: "Porcelain stars.\nA quiet constellation on a vine.",
+    detail:
+      "A convex umbel carries papillose five-lobed corollas and thick ridged coronas around enclosed reproductive organs. Fleshy opposite leaves follow a supported twining shoot.",
+  },
+  {
     type: "agapanthus",
     name: "Agapanthus",
     latin: "Agapanthus praecox",

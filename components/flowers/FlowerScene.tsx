@@ -29,6 +29,7 @@ export interface SceneProps {
   macro?: boolean;
   paused?: boolean;
   pulse?: number;
+  pulseSerial?: number;
   lightLocked?: boolean;
   angle?: ViewAngle;
   active?: boolean;
@@ -42,6 +43,7 @@ export default function FlowerScene({
   macro = false,
   paused = false,
   pulse = 0,
+  pulseSerial = 0,
   lightLocked = false,
   angle,
   active = true,
@@ -103,6 +105,7 @@ export default function FlowerScene({
           reducedMotion={reducedMotion}
           paused={paused}
           pulse={pulse}
+          pulseSerial={pulseSerial}
           onHover={setHovered}
           onClick={onFlowerClick}
         />

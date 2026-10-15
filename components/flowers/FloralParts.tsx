@@ -11,7 +11,13 @@ import { createPetalMaterial } from "@/lib/three/materials";
 import { createOrganicTube } from "@/lib/three/organicTube";
 import { petalOpenness } from "@/lib/three/easing";
 import type { PlantMotion } from "@/lib/flowers/wind";
+import type { Ray } from "three";
+export type FlowerOrganRayProbe = (ray: Ray) => void;
 export interface FlowerOrgansProps {
+  /** Optional focused organ query, reached through the existing picking envelope. */
+  rayProbe?: RefObject<FlowerOrganRayProbe | null>;
+  /** External accessible UI action; distinct from the decaying tissue pulse. */
+  pulseSerial?: number;
   physics?: "ambient" | "detailed";
   motion?: RefObject<PlantMotion>;
   reducedMotion?: boolean;

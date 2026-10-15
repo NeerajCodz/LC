@@ -99,6 +99,7 @@ for (let c = 0; c < 7; c++) {
       z = Math.cos(a) * 0.027;
     PRIMROSE_MODEL.organs.push({
       name: "included stamen filament",
+      overviewSides: 3,
       cluster: c,
       points: [
         [x, 0.08, z],
@@ -116,6 +117,7 @@ for (let c = 0; c < 7; c++) {
     });
     PRIMROSE_MODEL.organs.push({
       name: "included anther",
+      overviewSides: 3,
       cluster: c,
       points: [
         [x, 0.22, z],
@@ -135,6 +137,7 @@ for (let c = 0; c < 7; c++) {
   }
   PRIMROSE_MODEL.organs.push({
     name: "pin style",
+    overviewSides: 3,
     cluster: c,
     points: [
       [0, 0.06, 0],

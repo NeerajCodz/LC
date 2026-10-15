@@ -71,6 +71,7 @@ for (let i = 0; i < 3; i++) {
 }
 ANEMONE_MODEL.surfaces.push({
   name: "receptacular neck",
+  overviewColumns: 12,
   cluster: 0,
   role: "calyx",
   periodic: true,
@@ -83,6 +84,7 @@ ANEMONE_MODEL.surfaces.push({
 });
 ANEMONE_MODEL.surfaces.push({
   name: "carpel receptacle",
+  overviewColumns: 12,
   cluster: 0,
   role: "bract",
   tissue: "disc",
@@ -97,6 +99,7 @@ ANEMONE_MODEL.surfaces.push({
 ANEMONE_MODEL.organs.push(
   ...floralStamens({
     count: 56,
+    overviewSides: 3,
     cluster: 0,
     radius: 0.25,
     height: 0.24,
@@ -129,6 +132,7 @@ ANEMONE_MODEL.instances = [
       },
       {
         name: "carpel style",
+        overviewSides: 3,
         cluster: 0,
         points: [
           [0, 0.035, 0],

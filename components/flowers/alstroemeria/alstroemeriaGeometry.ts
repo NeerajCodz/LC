@@ -114,6 +114,7 @@ for (let c = 0; c < 5; c++) {
     });
   ALSTROEMERIA_MODEL.surfaces.push({
     name: "inferior ovary",
+    overviewColumns: 12,
     cluster: c,
     role: "calyx",
     periodic: true,
@@ -135,6 +136,7 @@ for (let c = 0; c < 5; c++) {
       h = 0.38 + (i % 3) * 0.018;
     ALSTROEMERIA_MODEL.organs.push({
       name: "stamen filament",
+      overviewSides: 3,
       cluster: c,
       points: [
         [x * 0.5, 0.035, z * 0.5],
@@ -152,6 +154,7 @@ for (let c = 0; c < 5; c++) {
     });
     ALSTROEMERIA_MODEL.organs.push({
       name: "stamen anther",
+      overviewSides: 3,
       cluster: c,
       points: [
         [x, h, z],
@@ -171,6 +174,7 @@ for (let c = 0; c < 5; c++) {
   }
   ALSTROEMERIA_MODEL.organs.push({
     name: "pistil style",
+    overviewSides: 3,
     cluster: c,
     points: [
       [0, 0.03, 0],
@@ -190,6 +194,7 @@ for (let c = 0; c < 5; c++) {
     const a = (i * Math.PI * 2) / 3;
     ALSTROEMERIA_MODEL.organs.push({
       name: "pistil style arm",
+      overviewSides: 3,
       cluster: c,
       points: [
         [0, 0.44, 0],

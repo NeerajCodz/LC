@@ -116,6 +116,7 @@ for (let c = 0; c < 5; c++) {
   const ovary = radialTube(0.037, 0.087, 4);
   LISIANTHUS_MODEL.surfaces.push({
     name: "superior ovary",
+    overviewColumns: 12,
     cluster: c,
     role: "calyx",
     periodic: true,
@@ -146,6 +147,7 @@ for (let c = 0; c < 5; c++) {
   LISIANTHUS_MODEL.organs.push(
     ...floralStamens({
       count: 5,
+      overviewSides: 3,
       cluster: c,
       radius: 0.081,
       height: 0.35,
@@ -158,6 +160,7 @@ for (let c = 0; c < 5; c++) {
   );
   LISIANTHUS_MODEL.organs.push({
     name: "central style",
+    overviewSides: 3,
     cluster: c,
     points: [
       [0, 0.07, 0],
@@ -176,6 +179,7 @@ for (let c = 0; c < 5; c++) {
   for (const side of [-1, 1])
     LISIANTHUS_MODEL.organs.push({
       name: "stigma lobe",
+      overviewSides: 3,
       cluster: c,
       points: [
         [0, 0.398, 0],

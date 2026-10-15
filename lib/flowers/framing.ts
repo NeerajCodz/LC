@@ -1,4 +1,36 @@
 import type { FlowerStructure, Vec3 } from "./types";
+/** Retain the established low side diagnostic and opt in other presets by species. */
+export function flowerCameraElevation(structure: FlowerStructure, azimuth = 0) {
+  return Math.abs(Math.cos(azimuth)) < 1e-8
+    ? undefined
+    : structure.cameraElevation;
+}
+
+/** Legacy distances are horizontal; a changed elevation preserves the true camera distance. */
+export function flowerCameraPose(
+  structure: FlowerStructure,
+  target: Vec3,
+  distance: number,
+  azimuth = 0,
+  fallbackRise = 0.32,
+): { position: Vec3; target: Vec3 } {
+  const elevation = flowerCameraElevation(structure, azimuth),
+    length = distance * Math.hypot(1, fallbackRise),
+    horizontal =
+      elevation === undefined ? distance : length * Math.cos(elevation),
+    vertical =
+      elevation === undefined
+        ? distance * fallbackRise
+        : length * Math.sin(elevation);
+  return {
+    position: [
+      target[0] + Math.sin(azimuth) * horizontal,
+      target[1] + vertical,
+      target[2] + Math.cos(azimuth) * horizontal,
+    ],
+    target,
+  };
+}
 /** Shared portrait, garden and inspection macro target from anatomical coordinates. */
 export function flowerHeadTarget(
   structure: FlowerStructure,
@@ -31,10 +63,12 @@ export function flowerPortraitPose(
     (v, i) => v + (bounds.min[i] + bounds.max[i]) / 2,
   ) as Vec3;
   if (desktop) target[0] -= 0.6;
-  const inverse = 1 / Math.hypot(1, 0.16),
+  const elevation = flowerCameraElevation(structure, azimuth),
+    rise = elevation === undefined ? 0.16 : Math.tan(elevation),
+    inverse = 1 / Math.hypot(1, rise),
     sa = Math.sin(azimuth),
     ca = Math.cos(azimuth);
-  const back: Vec3 = [sa * inverse, 0.16 * inverse, ca * inverse];
+  const back: Vec3 = [sa * inverse, rise * inverse, ca * inverse];
   const right: Vec3 = [ca, 0, -sa],
     up: Vec3 = [-back[1] * sa, inverse, -back[1] * ca];
   const vertical = Math.tan((fov * Math.PI) / 360),

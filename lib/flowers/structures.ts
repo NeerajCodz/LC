@@ -81,7 +81,27 @@ import { hyacinthStructure } from "../../components/flowers/hyacinth/Hyacinth";
 import { amaryllisStructure } from "../../components/flowers/amaryllis/Amaryllis";
 import { cannaStructure } from "../../components/flowers/canna/Canna";
 import { agapanthusStructure } from "../../components/flowers/agapanthus/Agapanthus";
+import { hoyaStructure } from "../../components/flowers/hoya/Hoya";
+import { impatiensStructure } from "../../components/flowers/impatiens/Impatiens";
+import { lupineStructure } from "../../components/flowers/lupine/Lupine";
+import { hollyhockStructure } from "../../components/flowers/hollyhock/Hollyhock";
+import { fritillariaStructure } from "../../components/flowers/fritillaria/Fritillaria";
+import { tuberoseStructure } from "../../components/flowers/tuberose/Tuberose";
+import { ixoraStructure } from "../../components/flowers/ixora/Ixora";
+import { pentasStructure } from "../../components/flowers/pentas/Pentas";
+import { lobeliaStructure } from "../../components/flowers/lobelia/Lobelia";
+import { toreniaStructure } from "../../components/flowers/torenia/Torenia";
 export const FLOWER_STRUCTURES: Record<FlowerType, FlowerStructure> = {
+  torenia: toreniaStructure,
+  lobelia: lobeliaStructure,
+  pentas: pentasStructure,
+  ixora: ixoraStructure,
+  tuberose: tuberoseStructure,
+  fritillaria: fritillariaStructure,
+  hollyhock: hollyhockStructure,
+  lupine: lupineStructure,
+  impatiens: impatiensStructure,
+  hoya: hoyaStructure,
   agapanthus: agapanthusStructure,
   canna: cannaStructure,
   amaryllis: amaryllisStructure,

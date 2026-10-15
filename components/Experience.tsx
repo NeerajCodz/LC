@@ -44,6 +44,7 @@ export default function Experience({
     [macro, setMacro] = useState(false),
     [paused, setPaused] = useState(false),
     [pulse, setPulse] = useState(0),
+    [pulseSerial, setPulseSerial] = useState(0),
     [lightLocked, setLightLocked] = useState(false),
     [ready, setReady] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -129,6 +130,7 @@ export default function Experience({
               macro={macro}
               paused={paused}
               pulse={pulse}
+              pulseSerial={pulseSerial}
               lightLocked={lightLocked}
               onReady={() => setReady(true)}
               onFlowerClick={() => {
@@ -200,6 +202,7 @@ export default function Experience({
               onClick={() => {
                 setPaused(false);
                 setPulse((p) => p + 1);
+                setPulseSerial((p) => p + 1);
               }}
             >
               <Hand size={17} />

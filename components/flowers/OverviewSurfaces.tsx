@@ -5,7 +5,7 @@ import {
   RGBADepthPacking,
   type Mesh,
 } from "three";
-import type { FlowerType } from "@/lib/flowers/types";
+import type { FlowerType, Quality } from "@/lib/flowers/types";
 import { createSpecimenMaterial } from "@/lib/three/specimenMaterials";
 import type { SpecimenModel } from "@/lib/three/specimenModel";
 import {
@@ -25,7 +25,7 @@ export interface OverviewDraw {
   uniforms: SurfaceBatchUniforms;
 }
 
-/** Distant shells share submissions; selected contact meshes remain individual. */
+/** Ambient shells share submissions at their requested quality; contact meshes stay individual. */
 export function OverviewSurfaces({
   group,
   type,
@@ -33,6 +33,7 @@ export function OverviewSurfaces({
   assign,
   clusters,
   poses,
+  quality = "overview",
 }: {
   group: SurfaceBatchGroup;
   type: FlowerType;
@@ -40,10 +41,11 @@ export function OverviewSurfaces({
   assign: (draw: OverviewDraw | null) => void;
   clusters: SpecimenModel["clusters"];
   poses: SurfaceBatchPoses;
+  quality?: Quality;
 }) {
   const geometry = useMemo(
-    () => createSurfaceBatch(group.entries, clusters),
-    [group, clusters],
+    () => createSurfaceBatch(group.entries, clusters, quality),
+    [group, clusters, quality],
   );
   const uniforms = useMemo<SurfaceBatchUniforms>(
     () => ({

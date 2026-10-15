@@ -8,10 +8,8 @@ import {
   type Material,
 } from "three";
 import type { SpecimenInstanceGroup } from "@/lib/three/specimenModel";
-import {
-  specimenInstanceGeometry,
-  updateFloretInstances,
-} from "@/lib/three/floretInstances";
+import { updateFloretInstances } from "@/lib/three/floretInstances";
+import { specimenInstanceBatches } from "@/lib/three/floretBatches";
 import { createSpecimenMaterial } from "@/lib/three/specimenMaterials";
 import { useActiveFrame } from "@/hooks/useActiveFrame";
 import type { FlowerType } from "@/lib/flowers/types";
@@ -86,21 +84,24 @@ export function FloretInstances({
   ...props
 }: FlowerOrgansProps & { group: SpecimenInstanceGroup; type: FlowerType }) {
   const geometry = useMemo(
-    () => specimenInstanceGeometry(group, props.quality),
+    () => specimenInstanceBatches(group, props.quality),
     [group, props.quality],
   );
   const materials = useMemo(
     () => ({
-      surfaces: group.surfaces.map((s) =>
-        createSpecimenMaterial(type, s.role, props.color, s.tissue),
+      surfaces: geometry.surfaces.map(({ surface }) =>
+        createSpecimenMaterial(type, surface.role, props.color, surface.tissue),
       ),
       organs: new MeshStandardMaterial({ vertexColors: true, roughness: 0.65 }),
     }),
-    [group, type, props.color],
+    [geometry, type, props.color],
   );
   useEffect(
     () => () => {
-      [...geometry.surfaces, ...geometry.organs].forEach((g) => g.dispose());
+      [
+        ...geometry.surfaces.map((part) => part.geometry),
+        ...geometry.organs,
+      ].forEach((g) => g.dispose());
     },
     [geometry],
   );
@@ -113,7 +114,7 @@ export function FloretInstances({
   );
   return (
     <group>
-      {geometry.surfaces.map((g, i) => (
+      {geometry.surfaces.map(({ geometry: g }, i) => (
         <Instances
           key={`surface-${i}`}
           {...props}

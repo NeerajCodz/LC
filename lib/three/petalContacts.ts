@@ -1,3 +1,11 @@
+/** Precomputed closed-bud row cohorts; all storage belongs to the simulation. */
+export interface ContactCohesion {
+  patchGroups: Int32Array;
+  weights: Float64Array;
+  nodeRows: Int32Array;
+  rows: { group: number; nodes: Uint32Array }[];
+}
+
 /** Closest point and barycentric coordinates, using caller-owned scratch storage. */
 export function closestTriangle(
   p: Float64Array,
@@ -215,6 +223,7 @@ export class PetalContacts {
     private readonly thickness: Float64Array,
     private readonly inverseMass: Float64Array,
     private readonly strides: number[],
+    private readonly cohesion?: ContactCohesion,
   ) {
     this.trianglesGrid = new ContactGrid(triangles.length / 3);
     this.edgesGrid = new ContactGrid(edges.length / 2);
@@ -226,7 +235,15 @@ export class PetalContacts {
   }
 
   private adjacent(a: number, b: number) {
-    if (this.surface[a] !== this.surface[b]) return false;
+    if (this.surface[a] !== this.surface[b]) {
+      const group = this.cohesion?.patchGroups[this.surface[a]];
+      return (
+        group !== undefined &&
+        group >= 0 &&
+        this.cohesion!.patchGroups[this.surface[b]] === group &&
+        this.cohesion!.weights[group] === 1
+      );
+    }
     // Same surface's immediate topological neighbors are structural constraints.
     const stride = this.strides[this.surface[a]];
     return (
@@ -409,21 +426,30 @@ export class PetalContacts {
       weights[b] * wb * wb +
       weights[c] * wc * wc;
     if (!sum) return 0;
-    let amount = (gap - (distance === 1 ? 0 : distance)) / sum;
-    amount = this.limitProjection(node, weights[node], amount);
-    amount = this.limitProjection(a, weights[a] * wa, amount);
-    amount = this.limitProjection(b, weights[b] * wb, amount);
-    amount = this.limitProjection(c, weights[c] * wc, amount);
-    this.remainingProjection[node] -= amount * weights[node];
-    this.remainingProjection[a] -= amount * weights[a] * wa;
-    this.remainingProjection[b] -= amount * weights[b] * wb;
-    this.remainingProjection[c] -= amount * weights[c] * wc;
+    let amount =
+      ((gap - (distance === 1 ? 0 : distance)) / sum) *
+      this.seamRelease(node, a);
+    amount = this.limitContactProjection(
+      amount,
+      node,
+      weights[node],
+      a,
+      weights[a] * wa,
+      b,
+      weights[b] * wb,
+      c,
+      weights[c] * wc,
+    );
+    this.consumeProjection(node, amount * weights[node]);
+    this.consumeProjection(a, amount * weights[a] * wa);
+    this.consumeProjection(b, amount * weights[b] * wb);
+    this.consumeProjection(c, amount * weights[c] * wc);
     for (let component = 0; component < 3; component++) {
       const n = component === 0 ? dx : component === 1 ? dy : dz;
-      p[k + component] += amount * weights[node] * n;
-      p[a * 3 + component] -= amount * weights[a] * wa * n;
-      p[b * 3 + component] -= amount * weights[b] * wb * n;
-      p[c * 3 + component] -= amount * weights[c] * wc * n;
+      this.move(p, node, component, amount * weights[node] * n);
+      this.move(p, a, component, -amount * weights[a] * wa * n);
+      this.move(p, b, component, -amount * weights[b] * wb * n);
+      this.move(p, c, component, -amount * weights[c] * wc * n);
     }
     return 1;
   }
@@ -507,21 +533,28 @@ export class PetalContacts {
     // A contact arbitrarily close to a pinned endpoint has vanishing effective
     // mass. Dividing by it can move the remote free endpoint by metres. Bound
     // each projection to one tissue thickness while retaining weighted motion.
-    let amount = (gap - distance) / sum;
-    amount = this.limitProjection(a, weights[a] * wa, amount);
-    amount = this.limitProjection(b, weights[b] * wb, amount);
-    amount = this.limitProjection(c, weights[c] * wc, amount);
-    amount = this.limitProjection(d, weights[d] * wd, amount);
-    this.remainingProjection[a] -= amount * weights[a] * wa;
-    this.remainingProjection[b] -= amount * weights[b] * wb;
-    this.remainingProjection[c] -= amount * weights[c] * wc;
-    this.remainingProjection[d] -= amount * weights[d] * wd;
+    let amount = ((gap - distance) / sum) * this.seamRelease(a, c);
+    amount = this.limitContactProjection(
+      amount,
+      a,
+      weights[a] * wa,
+      b,
+      weights[b] * wb,
+      c,
+      weights[c] * wc,
+      d,
+      weights[d] * wd,
+    );
+    this.consumeProjection(a, amount * weights[a] * wa);
+    this.consumeProjection(b, amount * weights[b] * wb);
+    this.consumeProjection(c, amount * weights[c] * wc);
+    this.consumeProjection(d, amount * weights[d] * wd);
     for (let component = 0; component < 3; component++) {
       const n = component === 0 ? nx : component === 1 ? ny : nz;
-      p[a * 3 + component] += amount * weights[a] * wa * n;
-      p[b * 3 + component] += amount * weights[b] * wb * n;
-      p[c * 3 + component] -= amount * weights[c] * wc * n;
-      p[d * 3 + component] -= amount * weights[d] * wd * n;
+      this.move(p, a, component, amount * weights[a] * wa * n);
+      this.move(p, b, component, amount * weights[b] * wb * n);
+      this.move(p, c, component, -amount * weights[c] * wc * n);
+      this.move(p, d, component, -amount * weights[d] * wd * n);
     }
     return 1;
   }
@@ -530,5 +563,117 @@ export class PetalContacts {
     return weight > 0
       ? Math.min(amount, Math.max(0, this.remainingProjection[node]) / weight)
       : amount;
+  }
+
+  private limitContactProjection(
+    amount: number,
+    a: number,
+    wa: number,
+    b: number,
+    wb: number,
+    c: number,
+    wc: number,
+    d: number,
+    wd: number,
+  ) {
+    if (this.cohesion) {
+      // Sum all contributions to each shared row before spending its budget.
+      // Own-node response stays full strength; propagation releases continuously.
+      const ra = this.coupledRow(a),
+        rb = this.coupledRow(b),
+        rc = this.coupledRow(c),
+        rd = this.coupledRow(d),
+        ca =
+          wa +
+          (ra && ra === rb ? wb : 0) +
+          (ra && ra === rc ? wc : 0) +
+          (ra && ra === rd ? wd : 0),
+        cb =
+          wb +
+          (rb && rb === ra ? wa : 0) +
+          (rb && rb === rc ? wc : 0) +
+          (rb && rb === rd ? wd : 0),
+        cc =
+          wc +
+          (rc && rc === ra ? wa : 0) +
+          (rc && rc === rb ? wb : 0) +
+          (rc && rc === rd ? wd : 0),
+        cd =
+          wd +
+          (rd && rd === ra ? wa : 0) +
+          (rd && rd === rb ? wb : 0) +
+          (rd && rd === rc ? wc : 0);
+      amount = this.limitCohortProjection(a, wa, ca, amount);
+      amount = this.limitCohortProjection(b, wb, cb, amount);
+      amount = this.limitCohortProjection(c, wc, cc, amount);
+      return this.limitCohortProjection(d, wd, cd, amount);
+    }
+    amount = this.limitProjection(a, wa, amount);
+    amount = this.limitProjection(b, wb, amount);
+    amount = this.limitProjection(c, wc, amount);
+    return this.limitProjection(d, wd, amount);
+  }
+
+  private coupledRow(node: number) {
+    const index = this.cohesion?.nodeRows[node];
+    if (index === undefined || index < 0) return undefined;
+    const row = this.cohesion!.rows[index];
+    return this.cohesion!.weights[row.group] > 0 ? row : undefined;
+  }
+
+  private seamRelease(a: number, b: number) {
+    if (!this.cohesion || this.surface[a] === this.surface[b]) return 1;
+    const group = this.cohesion.patchGroups[this.surface[a]];
+    return group >= 0 && this.cohesion.patchGroups[this.surface[b]] === group
+      ? 1 - this.cohesion.weights[group]
+      : 1;
+  }
+
+  private limitCohortProjection(
+    node: number,
+    ownWeight: number,
+    totalWeight: number,
+    amount: number,
+  ) {
+    const row = this.coupledRow(node);
+    if (!row) return this.limitProjection(node, ownWeight, amount);
+    const blend = this.cohesion!.weights[row.group];
+    for (let i = 0; i < row.nodes.length; i++) {
+      const member = row.nodes[i],
+        weight =
+          totalWeight * blend + (member === node ? ownWeight * (1 - blend) : 0);
+      amount = this.limitProjection(member, weight, amount);
+    }
+    return amount;
+  }
+
+  private consumeProjection(node: number, amount: number) {
+    const row = this.coupledRow(node);
+    if (row) {
+      const blend = this.cohesion!.weights[row.group];
+      for (let i = 0; i < row.nodes.length; i++) {
+        const member = row.nodes[i];
+        this.remainingProjection[member] -=
+          amount * (member === node ? 1 : blend);
+      }
+    } else this.remainingProjection[node] -= amount;
+  }
+
+  private move(
+    positions: Float64Array,
+    node: number,
+    component: number,
+    amount: number,
+  ) {
+    const row = this.coupledRow(node);
+    if (row) {
+      const blend = this.cohesion!.weights[row.group];
+      for (let i = 0; i < row.nodes.length; i++) {
+        const member = row.nodes[i];
+        if (this.inverseMass[member])
+          positions[member * 3 + component] +=
+            amount * (member === node ? 1 : blend);
+      }
+    } else positions[node * 3 + component] += amount;
   }
 }

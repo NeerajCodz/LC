@@ -125,6 +125,7 @@ for (let cluster = 0; cluster < 10; cluster++) {
     }
   BLUEBELL_MODEL.surfaces.push({
     name: "superior three-celled ovary",
+    overviewColumns: 12,
     cluster,
     role: "calyx",
     periodic: true,
@@ -139,6 +140,7 @@ for (let cluster = 0; cluster < 10; cluster++) {
   });
   const stamens = floralStamens({
     count: 6,
+    overviewSides: 3,
     cluster,
     radius: 0.105,
     base: 0.15,
@@ -166,6 +168,7 @@ for (let cluster = 0; cluster < 10; cluster++) {
   });
   BLUEBELL_MODEL.organs.push(...stamens, {
     name: "included central style",
+    overviewSides: 3,
     cluster,
     points: [
       [0, 0.11, 0],
@@ -185,6 +188,7 @@ for (let cluster = 0; cluster < 10; cluster++) {
   for (const side of [-1, 1])
     BLUEBELL_STALKS.push({
       name: "paired narrow raceme bract",
+      overviewSides: 3,
       cluster: 0,
       points: [
         insertion,

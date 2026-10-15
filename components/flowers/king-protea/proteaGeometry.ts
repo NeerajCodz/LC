@@ -75,6 +75,7 @@ export const PROTEA_MODEL: SpecimenModel = {
       surfaces: [
         {
           name: "fused perianth base",
+          overviewColumns: 8,
           cluster: 0,
           role: "tube",
           thickness: 0.0025,
@@ -83,6 +84,7 @@ export const PROTEA_MODEL: SpecimenModel = {
         },
         ...Array.from({ length: 4 }, (_, i) => ({
           name: "perianth limb",
+          overviewColumns: 4,
           cluster: 0,
           role: "petal" as const,
           thickness: 0.0025,
@@ -101,6 +103,7 @@ export const PROTEA_MODEL: SpecimenModel = {
       organs: [
         {
           name: "pollen-presenting style",
+          overviewSides: 3,
           cluster: 0,
           points: [
             [0, 0.04, 0],
@@ -122,6 +125,7 @@ export const PROTEA_MODEL: SpecimenModel = {
           const a = (i * Math.PI) / 2;
           return {
             name: "included anther",
+            overviewSides: 3,
             cluster: 0,
             points: [
               [Math.sin(a) * 0.021, 0.21, Math.cos(a) * 0.021],

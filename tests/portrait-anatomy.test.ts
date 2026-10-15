@@ -20,8 +20,37 @@ import { AGAPANTHUS_MODEL } from "../components/flowers/agapanthus/agapanthusGeo
 import { WISTERIA_MODEL } from "../components/flowers/wisteria/wisteriaGeometry";
 import { BOTTLEBRUSH_MODEL } from "../components/flowers/bottlebrush/bottlebrushGeometry";
 import { SCABIOSA_MODEL } from "../components/flowers/scabiosa/scabiosaGeometry";
+import { HOYA_MODEL } from "../components/flowers/hoya/hoyaGeometry";
+
+import { IMPATIENS_MODEL } from "../components/flowers/impatiens/impatiensGeometry";
+
+import { LUPINE_MODEL } from "../components/flowers/lupine/lupineGeometry";
+
+import { HOLLYHOCK_MODEL } from "../components/flowers/hollyhock/hollyhockGeometry";
+
+import { FRITILLARIA_MODEL } from "../components/flowers/fritillaria/fritillariaGeometry";
+
+import { TUBEROSE_MODEL } from "../components/flowers/tuberose/tuberoseGeometry";
+
+import { IXORA_MODEL } from "../components/flowers/ixora/ixoraGeometry";
+
+import { PENTAS_MODEL } from "../components/flowers/pentas/pentasGeometry";
+
+import { LOBELIA_MODEL } from "../components/flowers/lobelia/lobeliaGeometry";
+
+import { TORENIA_MODEL } from "../components/flowers/torenia/toreniaGeometry";
 
 const models: Record<string, SpecimenModel> = {
+  torenia: TORENIA_MODEL,
+  lobelia: LOBELIA_MODEL,
+  pentas: PENTAS_MODEL,
+  ixora: IXORA_MODEL,
+  tuberose: TUBEROSE_MODEL,
+  fritillaria: FRITILLARIA_MODEL,
+  hollyhock: HOLLYHOCK_MODEL,
+  lupine: LUPINE_MODEL,
+  impatiens: IMPATIENS_MODEL,
+  hoya: HOYA_MODEL,
   pansy: PANSY_MODEL,
   "african-violet": AFRICAN_VIOLET_MODEL,
   bluebell: BLUEBELL_MODEL,

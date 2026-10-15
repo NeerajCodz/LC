@@ -131,6 +131,7 @@ for (let cluster = 0; cluster < 21; cluster++) {
     }
   HYACINTH_MODEL.surfaces.push({
     name: "superior hyacinth ovary",
+    overviewColumns: 12,
     cluster,
     role: "calyx",
     periodic: true,
@@ -145,6 +146,7 @@ for (let cluster = 0; cluster < 21; cluster++) {
   });
   const stamens = floralStamens({
     count: 6,
+    overviewSides: 3,
     cluster,
     radius: young ? 0.024 : 0.066,
     base: 0.14,
@@ -157,6 +159,7 @@ for (let cluster = 0; cluster < 21; cluster++) {
   });
   HYACINTH_MODEL.organs.push(...stamens, {
     name: "included hyacinth style",
+    overviewSides: 3,
     cluster,
     points: [
       [0, 0.09, 0],
@@ -176,6 +179,7 @@ for (let cluster = 0; cluster < 21; cluster++) {
     const a = (i * Math.PI * 2) / 3;
     HYACINTH_MODEL.organs.push({
       name: "three-lobed hyacinth stigma",
+      overviewSides: 3,
       cluster,
       points: [
         [0.005, 0.425, 0.005],
@@ -196,6 +200,7 @@ for (let cluster = 0; cluster < 21; cluster++) {
     a = cluster * 2.399963229728653;
   HYACINTH_STALKS.push({
     name: "small perianth-subtending bract",
+    overviewSides: 3,
     cluster: 0,
     points: [
       [Math.sin(a) * 0.03, c.position[1] - 0.026, Math.cos(a) * 0.03],

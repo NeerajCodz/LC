@@ -100,6 +100,7 @@ for (let c = 0; c < 7; c++) {
   FREESIA_MODEL.organs.push(
     ...floralStamens({
       count: 3,
+      overviewSides: 3,
       cluster: c,
       radius: 0.043,
       height: 0.52,
@@ -111,6 +112,7 @@ for (let c = 0; c < 7; c++) {
   );
   FREESIA_MODEL.organs.push({
     name: "central style",
+    overviewSides: 3,
     cluster: c,
     points: [
       [0, 0.08, 0],
@@ -132,6 +134,7 @@ for (let c = 0; c < 7; c++) {
       const b = a + fork * 0.12;
       FREESIA_MODEL.organs.push({
         name: "bifid style tip",
+        overviewSides: 3,
         cluster: c,
         points: [
           [0, 0.505, 0],

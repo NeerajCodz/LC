@@ -101,6 +101,7 @@ export const CYCLAMEN_MODEL: SpecimenModel = {
         const a = (i * Math.PI * 2) / 5;
         return {
           name: "included stamen",
+          overviewSides: 3,
           cluster: k + 1,
           points: [
             [Math.sin(a) * 0.018, -0.03, Math.cos(a) * 0.018],
@@ -114,6 +115,7 @@ export const CYCLAMEN_MODEL: SpecimenModel = {
       }),
       {
         name: "included style",
+        overviewSides: 3,
         cluster: k + 1,
         points: [
           [0, -0.03, 0],

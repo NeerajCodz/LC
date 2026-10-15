@@ -1,5 +1,51 @@
 # Development and verification
 
+`cymes-and-spikes.spec.ts` covers the Lupine, Hollyhock, Crown Imperial, Tuberose,
+Ixora, Pentas, Torenia, Lobelia, Hoya and Impatiens routes, controls, retained
+rendering, search and garden selection. `cymes-and-spikes-inspection.spec.ts`
+captures seven caption-free anatomical views of each plus Rose and Fuchsia, including the
+actual low/medium geometry tier on mobile WebKit. The contact sheet uses a
+1600-by-1100 inspection viewport at device scale 1. This keeps the wide contact
+sheet and normal trace captures at CSS resolution rather than enlarging an
+already capped WebGL image. Public route tests retain the configured phone
+viewport and device scale. Inspection also uses the actual device's capped renderer clock, GPU
+pacing and pixel budget, independently of its geometry-tier selector. An explicit
+one-times DPR ceiling preserves the contact sheet's original resolution on desktop.
+The fixture initially follows the detected device: low/medium on constrained
+devices and high/ultra on standard devices. Its selector permits an explicit
+override in either direction; overview geometry stays at overview. The startup
+browser regression checks the first seven tile qualities before manual input,
+both overrides, rendered pixels and renderer errors.
+It also checks the native drawing buffer, capture density and unchanged mobile
+WebKit user agent, touch and coarse-pointer signals. The pixel/error/context-loss
+criteria and flower geometry tiers are unchanged.
+
+Inspection checks separate client startup, scene readiness and pixels. After
+navigation, `expectInspectionLoaded` waits up to 60 seconds for the actual heading
+and three controls, without waiting for an initial draw. After selection,
+`expectInspectionReady` waits for every mounted tile's existing SceneReady
+boundary. The unchanged pixel predicate then samples eight frames within its
+20-second deadline. Tile readiness resets on species/quality/study changes and
+renderer teardown; it never replaces pixel or renderer-error assertions.
+`inspection-readiness.spec.ts` verifies native draw activity, retained canvases,
+revisits and explicit fallback/keyboard retry. See the
+[validation record](specimens/cymes-and-spikes-validation.md) for evidence and limits.
+
+Fritillaria's optional **Bell interior study** and Hoya's **Single-floret study**
+switch the seven standard tiles to two targeted views and back. They frame real
+single-flower surface and organ bounds while rendering the complete plant. They
+do not hide surrounding anatomy or change geometry, materials or bloom semantics.
+`inspection-studies.test.ts` checks transformed camera axes and bounds at every
+tier; separate browser cases inspect axial/oblique bell interiors and a full/bud
+Hoya floret with the same caption-free pixel and renderer-error checks.
+
+`cymes-and-spikes-dynamics.test.ts` exercises actual transformed contact cages at
+both node budgets. `cymes-and-spikes-attachments.test.ts` checks positive axes
+carried once by identity clusters as well as lower insertions bridged through
+the stem attachment path. Torenia's dedicated hit/probe/state tests use generated
+inner-face topology, actual mouth occluders and independent stigma state. Its
+explicit reset counter is separate from ordinary click pulses.
+
 `floral-forms-inspection.spec.ts` adds Rose and the Pansy, African Violet,
 Bluebell, Hyacinth, Amaryllis, Canna, Agapanthus, Wisteria, Bottlebrush and
 Scabiosa seven-view boards. `floral-forms.spec.ts` checks their public routes,
@@ -106,7 +152,7 @@ The mobile project still requires Playwright WebKit. The test tooling is pinned 
 
 The config starts the development server on 1607 when needed and reuses an existing server locally. Ordinary UI assertions allow 15 seconds; full-catalog garden startup has a bounded 60-second readiness window because initial geometry upload and shader compilation can exceed the ordinary deadline. Pixel, error, contact and retention assertions still run after readiness. Traces from failed tests are saved under the ignored `test-results/` directory.
 
-On a memory-constrained host, serialize GPU checks with `--workers=1` and run each browser file separately for each project. This gives each file a fresh browser while preserving every case and assertion. Collect a JSON report and exit status for every file; account for all tests rather than treating a passing rerun as a completed sweep. Run the three development inspection files separately with `DEV_INSPECTION=1` against the development server, with no species filter. Production and development checks both use port 1607.
+On a memory-constrained host, serialize GPU checks with `--workers=1` and run each browser file separately for each project. This gives each file a fresh browser while preserving every case and assertion. Collect a JSON report and exit status for every file; account for all tests rather than treating a passing rerun as a completed sweep. Include all development inspection suites and the separate readiness coverage with `DEV_INSPECTION=1` against the development server, with no species filter; use the discovered inspection matrix described below. Production and development checks both use port 1607.
 
 For GPU lifecycle checks on Windows WebKit, a fresh browser process per case avoids carrying native graphics state between closed browser contexts. `npm run test:browser:isolated` derives the complete production matrix from Playwright's JSON listing and runs every case with one worker, normal tracing and the existing project options. It verifies that each selection executes exactly one case and retains per-case reports. `npm run test:browser:isolated -- --inspection` runs every development inspection case against a development server on 1607; `--list`, `--project=mobile` and `--grep=<expression>` support explicit inspection and diagnosis. Keep all assertion, pixel and error checks intact. Shared-process failures remain separate evidence and must not be described as fixed merely because isolated cases pass.
 

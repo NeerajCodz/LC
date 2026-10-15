@@ -1,7 +1,12 @@
+import {
+  expectInspectionLoaded,
+  expectInspectionReady,
+} from "./inspection-ready";
 import { test, expect } from "@playwright/test";
 import { FLOWER_TYPES } from "../../lib/flowers/types";
 import { FLOWER_STRUCTURES } from "../../lib/flowers/structures";
 import { expectRenderedFlower } from "./pixel-content";
+test.use({ deviceScaleFactor: 1 });
 
 test.skip(
   process.env.DEV_INSPECTION !== "1",
@@ -23,12 +28,14 @@ for (const slug of FLOWER_TYPES.filter(
         errors.push(message.text());
     });
     await page.goto("/dev/inspection/");
+    await expectInspectionLoaded(page);
     await page
       .getByRole("combobox", { name: "Inspection detail" })
       .selectOption("overview");
     await page
       .getByRole("combobox", { name: "Inspection species" })
       .selectOption(slug);
+    await expectInspectionReady(page);
     await expectRenderedFlower(page.locator("canvas"), 0.004);
     const path = info.outputPath(`overview-${slug}.png`);
     await page.screenshot({ path });

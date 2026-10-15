@@ -53,7 +53,12 @@ export function specimenInstanceGeometry(
     // Six angular samples alias a true five/six-lobed fused corolla into a cone.
     const g = createParametricShell({
       ...surface,
-      columns: surface.periodic ? Math.max(24, columns) : columns,
+      columns:
+        quality === "overview" && surface.overviewColumns !== undefined
+          ? surface.overviewColumns
+          : surface.periodic
+            ? Math.max(24, columns)
+            : columns,
       rows,
     });
     const side = new Float32Array(g.getAttribute("position").count);

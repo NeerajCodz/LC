@@ -8,9 +8,16 @@ ongoing mission to create every flower; the current catalog is not its final sco
 Status: final browser validation is in progress. Product `dda2c98` passed all 699
 unit tests, full typecheck, lint and production build
 `EPlYJEnyz15ZLYF49PMmw`. All 14 targeted Hoya, readiness/retry and legacy
-regressions passed strict audit. The requested visual assessment is complete
-within the documented limits. Complete inspection and production browser sweeps
-and refreshed native rendering measurements are still pending.
+regressions passed strict audit. The full 238-case inspection sweep also passed,
+with 119 desktop and 119 mobile cases and no skips, flaky outcomes or report
+errors. The requested visual assessment is complete within the documented limits.
+The production sweep was stopped after 13 completed cases (12 passed, one
+failed) to diagnose Crown Imperial's return-to-garden pixel-evaluation deadline.
+Its final trace frame shows the garden, but the evaluation did not return before
+the unchanged deadline; this is not evidence of a measured zero-pixel result or
+a diagnosed renderer cause. That interrupted run is not accepted. A complete
+passing production sweep and refreshed native rendering measurements remain
+pending.
 
 The [research dossiers](../botanical-references.md) separate botanical evidence
 from authored counts, dimensions, pigments and mechanical parameters. No scanned
@@ -175,7 +182,11 @@ which still samples eight frames at the same threshold. Readiness alone never
 counts as rendered content. A dedicated regression observes native draws,
 revisited species/detail states, retained canvases and explicit fallback/retry.
 Final discovery includes 238 inspection cases and the unchanged 216 production
-cases; their complete final-source acceptance remains pending.
+cases. Inspection run `1792032078844` passed all 238 unique cases with zero skips,
+flaky outcomes or report errors. Both independent strict audits accepted all 119
+desktop and 119 mobile reports. Production run `1792036170655` was interrupted
+after 13 completed cases to investigate the return-to-garden failure described
+above. A full passing production sweep remains pending.
 
 The first targeted readiness run finished with 12 passes and two failures.
 Both new readiness/retry regressions and all four Delphinium/Gerbera checks

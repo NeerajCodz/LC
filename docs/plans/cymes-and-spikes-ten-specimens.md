@@ -111,7 +111,7 @@ diagnostic angular/axial landmarks and unchanged focused geometry.
       garden selection, fallback/failure/retry and live native budget coverage.
 - [x] 27. Seven-view botanical inspection against dossiers and Rose; correct
       actual geometry or shading defects in additional genuine fix slices.
-- [ ] 28. Generated inventory, API/source docs, measured rendering/contact costs,
+- [x] 28. Generated inventory, API/source docs, measured rendering/contact costs,
       full validation record and a separate PR.
 
 For every anatomy task, first write arrangement assertions for its table row and
@@ -140,3 +140,7 @@ dist/cymes-and-spikes-work/. Review anatomy, integration and batching diffs with
 independent agents before declaring the corresponding tasks complete. Resolve
 material findings, then perform one final branch review. Final reporting links
 the PR, gives checks actually run and preserves botanical/device evidence gaps.
+
+The completed batch is proposed in [PR #7](https://github.com/NeerajCodz/LC/pull/7).
+Its validation record preserves the full production pass, independently scoped
+inspection evidence, measured costs and remaining limitations.

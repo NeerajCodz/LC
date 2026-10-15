@@ -14,7 +14,8 @@ bounded visual assessment belong to `dda2c98`; geometry and the inspection fixtu
 are unchanged, but that sweep was not rerun on the later garden revisions.
 The program-ID observer confirms its recorded flower-color first uses were
 prepared and ready; at least 32 unattributed native warnings remain unresolved.
-These limits are retained below. PR creation remains pending.
+These limits are retained below. The completed batch is proposed in
+[PR #7](https://github.com/NeerajCodz/LC/pull/7).
 
 The [research dossiers](../botanical-references.md) separate botanical evidence
 from authored counts, dimensions, pigments and mechanical parameters. No scanned
@@ -251,8 +252,8 @@ engine, with zero unexpected results, skips, flakes or report errors. The strict
 acceptance audit SHA256 is
 `e9fc692e9e46971a4f1b41f728215dbaf51ee4506317f55beb5000c631e01d90`.
 The forty focused native observations also passed their separate audit; neither
-result resolves warnings outside the tests' error filters. PR creation remains
-pending. The published CPU raw data, its 23 input hashes and the
+result resolves warnings outside the tests' error filters. The published CPU
+raw data, its 23 input hashes and the
 table below are unchanged observations from Node 22.22.0 at `dda2c98`; they are
 not measurements of this Node 24.19.0 browser-diagnostic run.
 
@@ -576,6 +577,5 @@ papillae, tiny pollinia, hairs and obscured roots cannot all be resolved; nectar
 and reproductive-organ views retain documented occlusion. The evidence does not
 establish exhaustive botanical anatomy, measured optics or physical-phone quality.
 
-Required local verification and scoped native observations are complete. PR creation
-and its link remain pending; the documented visibility, device and warning limits
-continue to apply.
+Required local verification and scoped native observations are complete, and the
+PR is open. The documented visibility, device and warning limits continue to apply.

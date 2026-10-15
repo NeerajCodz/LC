@@ -5,15 +5,16 @@ studies are Lupine, single Hollyhock, Crown Imperial, single Tuberose, Ixora,
 Pentas, Torenia, Lobelia, Hoya and single Impatiens. This extends Living Colors'
 ongoing mission to create every flower; the current catalog is not its final scope.
 
-Status: final browser validation remains in progress. Product `754997b` passed
-706 unit tests, typecheck, lint, build `agHhhdIFXShw1jFTbX8Ky` and ten targeted
-browser cases. The latest program-ID observer confirms the recorded flower-color
-first uses were prepared and ready, with the limitations below; native warnings
-persist. A fresh full 218-case production sweep is running and is not yet
-accepted. The completed 238-case inspection sweep and bounded visual assessment
-belong to `dda2c98`; geometry and the inspection fixture are unchanged, but that
-sweep was not rerun on the later garden revisions. Full production acceptance,
-native40 measurements and the PR remain pending.
+Status: all required local checks passed within the recorded scopes. Product
+`754997b` passed 706 unit tests, typecheck, lint, build
+`agHhhdIFXShw1jFTbX8Ky`, ten targeted browser cases and the complete 218-case
+production sweep. Forty focused native observations and two constrained garden
+observations are recorded below. The completed 238-case inspection sweep and
+bounded visual assessment belong to `dda2c98`; geometry and the inspection fixture
+are unchanged, but that sweep was not rerun on the later garden revisions.
+The program-ID observer confirms its recorded flower-color first uses were
+prepared and ready; at least 32 unattributed native warnings remain unresolved.
+These limits are retained below. PR creation remains pending.
 
 The [research dossiers](../botanical-references.md) separate botanical evidence
 from authored counts, dimensions, pigments and mechanical parameters. No scanned
@@ -144,10 +145,12 @@ submitted inputs. Requested morph-texture uploads fell from 55,261,248 to
 139,822,240 bytes. These are native-call observations, not GPU timestamps or
 total VRAM measurements. One comparison does not establish the driver cause or
 a general memory reduction. Both originally failing uninstrumented Hoya mobile
-fixtures also passed on the candidate; complete final sweeps remain required.
+fixtures also passed on the candidate; the completed inspection and production
+sweeps are recorded below with their separate source scopes.
 
-The unchanged native garden limits are 8,000,000 submitted inputs and 1,800 draws
-per frame. The CPU dedicated-head limits remain 4,300,000 inputs and 800 draws. CPU
+The unchanged native garden limits are strictly fewer than 8,000,000 submitted
+inputs and 1,800 draws per observed renderer call. The CPU dedicated-head limits
+remain 4,300,000 inputs and 800 draws. CPU
 head counts do not include all body foliage or the stem bridge's native 22-by-6
 tessellation; the browser census remains the authority for complete garden costs.
 
@@ -242,10 +245,14 @@ at least 32 warnings occurred and the channels must not be added together. This
 is an instrumented observation, not a performance benchmark or a warning fix.
 
 The earlier 218-case run `1792039070896` was stopped after one pass because of
-diagnostic warnings. Neither interrupted broad sweep is acceptance. A fresh
-218-case production sweep on `754997b` is now running, with acceptance pending.
-The forty focused native measurements and the PR also remain pending. The
-published CPU raw data, its 23 input hashes and the
+diagnostic warnings. Neither interrupted broad sweep is acceptance. Final
+production run `1792044195839` on `754997b` passed all 218 unique cases, 109 per
+engine, with zero unexpected results, skips, flakes or report errors. The strict
+acceptance audit SHA256 is
+`e9fc692e9e46971a4f1b41f728215dbaf51ee4506317f55beb5000c631e01d90`.
+The forty focused native observations also passed their separate audit; neither
+result resolves warnings outside the tests' error filters. PR creation remains
+pending. The published CPU raw data, its 23 input hashes and the
 table below are unchanged observations from Node 22.22.0 at `dda2c98`; they are
 not measurements of this Node 24.19.0 browser-diagnostic run.
 
@@ -280,7 +287,7 @@ cases. Inspection run `1792032078844` passed all 238 unique cases with zero skip
 flaky outcomes or report errors. Both independent strict audits accepted all 119
 desktop and 119 mobile reports. Production run `1792036170655` was interrupted
 after 13 completed cases to investigate the return-to-garden failure described
-above. A full passing production sweep remains pending.
+above; the later 218-case acceptance is recorded in the current addendum.
 
 The first targeted readiness run finished with 12 passes and two failures.
 Both new readiness/retry regressions and all four Delphinium/Gerbera checks
@@ -296,14 +303,15 @@ Earlier acceptance at `0b8793c` passed all 40 new public-route cases in both
 engines, covering canonical routes,
 legacy redirects, name/Latin-name search, themes, reverse bloom, macro retention,
 keyboard pulse, pause/resume, reduced motion, complete garden options and selected
-specimen return/reselection. The remaining existing production cases are pending.
+specimen return/reselection. The later complete production acceptance includes
+the existing scenarios.
 
 Earlier acceptance at `231efbc` passed the actual native garden scenario in
-desktop Chromium and mobile WebKit,
+Chromium and WebKit, both using the constrained 390×844 viewport,
 including canvas resize, selected rendering, atlas sampling,
 shader reuse and pixels. Each connected renderer's overview submitted at most 7,660,890
-submitted inputs and 1,511 draws, with zero context losses or duplicate shader
-sources and at most one pending fenced frame. The initial 1,937-draw failure
+submitted inputs and 1,511 draws per renderer call, with zero garden-canvas losses
+or duplicate shader sources and at most one live fence object. The initial 1,937-draw failure
 motivated organ batching; no ceiling or pixel assertion was increased.
 
 The first complete 214-case production run had 212 passes and two mobile garden
@@ -317,7 +325,7 @@ completion browser regression also observed RED in both engines on the old build
 readiness stayed `ready` where newly recreated programs required `pending`.
 All six targeted fixed-build return checks passed, including both original
 failures and held-completion tests in both engines, with zero skips/flakes/errors.
-Final full fixed-build browser acceptance is pending. A high-volume observer capture
+The later full production acceptance is recorded above. A high-volume observer capture
 was terminated as inconclusive because logging overwhelmed transport; it does not
 establish the exact native driver call that caused the stall.
 
@@ -403,14 +411,156 @@ cause or explain native renderer behavior. These timings are not a controlled
 comparison with earlier runs, and no CPU timing threshold was used as a pass
 gate. They establish neither 60 FPS nor physical-phone performance.
 
-Final native rendering and approximate advance cadence measurements: pending.
-The prepared drivers record source hashes,
-browser versions, buffer sizes, raw counters and whether source changed during
-each run. They warm each view independently and distinguish rolling live counters
-from CPU-only median/p95 samples. Cadence is an approximate advance rate, not a
-GPU presentation-rate measurement. CPU texture preparation excludes GPU upload;
-initialization observations exclude tissue/HDR bake durations. Both node budgets
-run on the desktop host and cannot establish physical-phone performance.
+### Focused native rendering
+
+Run `e78bdbb0-94c3-4c10-8f7e-f5fed5b61453` collected twenty fresh species/device
+pairs, each retaining the normal specimen before switching to macro, on
+15 October 2026 from 07:27:25 to 07:38:49 UTC. All forty observations passed the
+strict audit on product `754997b`, build `agHhhdIFXShw1jFTbX8Ky`. The host was
+Windows 10.0.26300 with an Intel Core i7-13650HX and 20 logical processors;
+this run used Node 24.19.0, Chromium 155.0.8059.79 and Windows WebKit 27.2.
+The actual desktop viewport was 1600×1000 with device pixel ratio 1; mobile
+emulation reported 390×664, coarse pointer and device pixel ratio 3. Actual
+WebGL drawing buffers were 3098×1936 and 390×440 respectively. Mobile emulation
+ran on the same desktop host, not a physical phone.
+
+The [raw focused observations](cymes-and-spikes-rendering-measurements.json)
+retain the manifest, operator evidence, all twenty exact original report strings
+and all forty parsed rows. Their aggregate SHA256 is
+`cd6f1cf0b7ecc75bcde161a4923d600ac90e03cb21341e6a450accf340f080c3`;
+the strict audit SHA256 is
+`b3e3f8388e3a952a605298ccf1ad3d6f1492c5fcdf2924262153957a498322a4`.
+Original-byte hashes and UTF-8 round trips preserve each report separately.
+The audit checks 94 named source files, including 91 tracked files matched to
+`754997b` and three ignored measurement files; this is not a transitive source
+closure. Before/after process, listener and build evidence associates the run
+with the operator's retained server. This is not cryptographic attestation of
+all browser-executed code. The CPU report above remains its independently scoped
+23-hash, Node 22.22.0 observation.
+
+Each view warms 90 published advances, guaranteeing at least 60 fresh advances
+despite 30-advance publication bins. The cadence window crosses another boundary
+and records 120 published advances with 50 ms polling. A separate post-warmup
+native window records 60 published advances. Inputs count submitted indices or
+vertices multiplied by instance count across the four native draw methods.
+The table's inputs and draws are arithmetic means per qualifying
+`WebGLRenderer.render` boundary containing a visible flower head, not totals
+per R3F advance; shadow/postprocessing behavior affects that denominator.
+Native calls are counted before invocation, and render return is CPU submission,
+not GPU completion. Lifetime maxima and helper/postprocessing totals remain
+separate in the raw reports. These focused detailed scenes are distinct from
+the garden overview ceiling and do not measure Hoya's ambient batching.
+
+Actual tier evidence matches the first cage-bound shell's drawn indices,
+positions, UV grid and folded-target counts against the real factory before
+warmup and at both native-window endpoints, with fresh draw callbacks. It does
+not independently certify every organ or uninterrupted tier stability. All
+observed node counts match the species/device census, retain normal/macro
+equality and remain below the unchanged 2,048 / 512 caps. Display values below
+are rounded to two decimals; raw rows retain their original precision.
+
+| Species     | Profile / view   | Actual tier | Nodes | Buffer px | Native inputs / scene-render boundary | Native draws / scene-render boundary | Approx. R3F advances/s |
+| ----------- | ---------------- | ----------- | ----: | --------- | ------------------------------------: | -----------------------------------: | ---------------------: |
+| lupine      | desktop / normal | high        |  1680 | 3098×1936 |                            4061082.00 |                               255.00 |                  28.02 |
+| lupine      | desktop / macro  | ultra       |  1680 | 3098×1936 |                            6551874.00 |                               234.50 |                  35.90 |
+| hollyhock   | desktop / normal | high        |   750 | 3098×1936 |                            2151522.00 |                                95.00 |                  48.74 |
+| hollyhock   | desktop / macro  | ultra       |   750 | 3098×1936 |                            2970810.00 |                                88.00 |                  47.46 |
+| fritillaria | desktop / normal | high        |  1080 | 3098×1936 |                            1063914.00 |                                68.00 |                  43.35 |
+| fritillaria | desktop / macro  | ultra       |  1080 | 3098×1936 |                            1788090.00 |                                65.00 |                  46.28 |
+| tuberose    | desktop / normal | high        |   840 | 3098×1936 |                             975546.00 |                                45.00 |                  23.17 |
+| tuberose    | desktop / macro  | ultra       |   840 | 3098×1936 |                            1335282.00 |                                44.50 |                  32.46 |
+| ixora       | desktop / normal | high        |   880 | 3098×1936 |                            2619846.00 |                               195.00 |                  44.59 |
+| ixora       | desktop / macro  | ultra       |   880 | 3098×1936 |                            4595526.00 |                               195.00 |                  48.34 |
+| pentas      | desktop / normal | high        |  1100 | 3098×1936 |                            3798462.00 |                               249.00 |                  41.38 |
+| pentas      | desktop / macro  | ultra       |  1100 | 3098×1936 |                            5977830.00 |                               249.00 |                  27.18 |
+| torenia     | desktop / normal | high        |   640 | 3098×1936 |                             842778.00 |                                70.00 |                  38.65 |
+| torenia     | desktop / macro  | ultra       |   640 | 3098×1936 |                            1524330.00 |                                70.00 |                  48.72 |
+| lobelia     | desktop / normal | high        |   702 | 3098×1936 |                            1801194.00 |                               135.00 |                  48.50 |
+| lobelia     | desktop / macro  | ultra       |   702 | 3098×1936 |                            3281226.00 |                               135.00 |                  44.76 |
+| hoya        | desktop / normal | high        |  1100 | 3098×1936 |                            5372802.00 |                               383.50 |                  34.70 |
+| hoya        | desktop / macro  | ultra       |  1100 | 3098×1936 |                           10163970.00 |                               383.50 |                  46.98 |
+| impatiens   | desktop / normal | high        |   690 | 3098×1936 |                             564150.00 |                                49.00 |                  46.64 |
+| impatiens   | desktop / macro  | ultra       |   690 | 3098×1936 |                            1045542.00 |                                49.00 |                  42.58 |
+| lupine      | mobile / normal  | low         |   420 | 390×440   |                             861354.00 |                               254.00 |                  22.38 |
+| lupine      | mobile / macro   | medium      |   420 | 390×440   |                            2220084.00 |                               213.00 |                  23.64 |
+| hollyhock   | mobile / normal  | low         |   300 | 390×440   |                             457776.00 |                                94.00 |                  21.14 |
+| hollyhock   | mobile / macro   | medium      |   300 | 390×440   |                            1451628.00 |                                80.00 |                  20.17 |
+| fritillaria | mobile / normal  | low         |   432 | 390×440   |                             230622.00 |                                67.00 |                  20.72 |
+| fritillaria | mobile / macro   | medium      |   432 | 390×440   |                             620100.00 |                                61.00 |                  21.35 |
+| tuberose    | mobile / normal  | low         |   336 | 390×440   |                             229386.00 |                                44.00 |                  21.07 |
+| tuberose    | mobile / macro   | medium      |   336 | 390×440   |                             781092.00 |                                43.00 |                  22.07 |
+| ixora       | mobile / normal  | low         |   352 | 390×440   |                             566400.00 |                               194.00 |                  21.39 |
+| ixora       | mobile / macro   | medium      |   352 | 390×440   |                            1622400.00 |                               194.00 |                  21.98 |
+| pentas      | mobile / normal  | low         |   440 | 390×440   |                             727776.00 |                               248.00 |                  21.79 |
+| pentas      | mobile / macro   | medium      |   440 | 390×440   |                            2184048.00 |                               248.00 |                  25.36 |
+| torenia     | mobile / normal  | low         |   240 | 390×440   |                             180120.00 |                                69.00 |                  20.88 |
+| torenia     | mobile / macro   | medium      |   240 | 390×440   |                             498564.00 |                                69.00 |                  20.89 |
+| lobelia     | mobile / normal  | low         |   315 | 390×440   |                             363828.00 |                               134.00 |                  20.95 |
+| lobelia     | mobile / macro   | medium      |   315 | 390×440   |                             989460.00 |                               134.00 |                  21.46 |
+| hoya        | mobile / normal  | low         |   440 | 390×440   |                            1125948.00 |                               383.00 |                  22.46 |
+| hoya        | mobile / macro   | medium      |   440 | 390×440   |                            2952012.00 |                               383.00 |                  26.36 |
+| impatiens   | mobile / normal  | low         |   350 | 390×440   |                             120162.00 |                                48.00 |                  21.00 |
+| impatiens   | mobile / macro   | medium      |   350 | 390×440   |                             320976.00 |                                48.00 |                  21.82 |
+
+Approximate cadence measures successful R3F advances, not GPU presentation or
+compositor FPS. The driver targets 60 / 30 advances per second and bounds
+simulation delta to 50 ms; the observed rates do not establish a 60-FPS guarantee.
+The raw live CPU values are rolling arithmetic/EWMA means carried across views,
+not fresh-window medians or the CPU table above. Displacement preparation excludes
+GPU upload. Optional WebGPU bakes were disabled; fallback labels confirm backend
+completion, not bake duration. First native-render return and startup-to-30-advance
+fields are different CPU-side observations; twenty startups repeat across forty
+rows. No captured row reported a context loss or filtered page/shader error,
+but these filters do not resolve the separately documented native warnings.
+Background applications, power mode, instrumentation, polling, caches and thermal
+state were not isolated, so this is not a controlled performance comparison.
+
+The earlier invocation `63210242-ac3e-4944-b730-34b982e25182` failed in the
+PowerShell wrapper's date coercion and accepted zero pairs. Preserving date
+strings with `DateKind` corrected only the measurement wrapper, not product
+code. The successful new UUID collected all twenty pairs afresh; no rejected
+report was reused.
+
+### Constrained garden observations
+
+The two exact `shader-reuse.spec.ts` cases in accepted production run
+`1792044195839` preserve eight JSON attachments in the
+[raw garden observations](cymes-and-spikes-garden-measurements.json), SHA256
+`90c3ea39a9576f27e601928595902acd37168b77c9137e40fc4efba64bcfe5f7`.
+Both configured engines use a 390×844 CSS viewport, device scale factor 3,
+mobile/touch input and reduced motion, then resize to 400×854. The Chromium
+project's desktop label does not establish a wide desktop overview budget.
+The record associates seven named frozen sources and the operator's build/server
+evidence; original attachment bytes, case-report hashes and separately labelled
+capture stages are retained.
+
+| Configured engine / profile | Initial peak inputs / draws | Settled peak inputs | Post-resize cumulative peak inputs / draws | Initial links | Garden losses initial / post-resize |
+| --------------------------- | --------------------------: | ------------------: | -----------------------------------------: | ------------: | ----------------------------------: |
+| Chromium, constrained       |           7,694,970 / 1,511 |           7,694,970 |                          7,694,970 / 1,511 |            50 |                               0 / 0 |
+| WebKit, constrained         |           7,694,970 / 1,511 |           7,694,970 |                          7,694,970 / 1,511 |            50 |                               0 / 0 |
+
+These peaks are native-count deltas per actual renderer call, not whole R3F
+advances. Settled inputs passed the unchanged strict bounds
+1,000,000 < inputs < 8,000,000; settled draws passed <1,800. The exact settled
+draw number was not attached and is not substituted with the initial or resized
+value. Post-resize peaks are cumulative to that snapshot; the testcase does not
+reassert the input/draw ceilings after resize. Duplicate-source and garden-canvas
+loss checks passed at initial and resized capture, along with the unchanged
+0.007 pixel checks. Initial link counts stayed below the limit of 52, with
+positive tissue-atlas uniform assignments, at least 30 created fences and a
+maximum of one live fence object.
+
+Live fence counts do not measure unsignaled GPU work or latency; atlas uniform
+assignments are not texture-upload bytes. Startup raw data retains detached
+capability-probe contexts separately from the selected garden canvas. The
+configured constrained DPR request is 1 with a 1,500,000-pixel cap, but these
+attachments do not record actual buffer dimensions, applied DPR, tier, cage
+nodes or executable versions. None is inferred from another run. The case's
+page/shader-error filters do not establish absence of all WebGL warnings or a
+terminal error-queue state. The separate 4,300,000-input / 800-draw CPU head
+census is not the native garden budget.
+
+### Visual scope
 
 The bounded visual assessment covers front, side, 45-degree, macro, bud, half and
 full bloom for all ten additions at specimen and overview detail on both device
@@ -426,4 +576,6 @@ papillae, tiny pollinia, hairs and obscured roots cannot all be resolved; nectar
 and reproductive-organ views retain documented occlusion. The evidence does not
 establish exhaustive botanical anatomy, measured optics or physical-phone quality.
 
-Final full browser acceptance, native rendering measurements and PR link: pending.
+Required local verification and scoped native observations are complete. PR creation
+and its link remain pending; the documented visibility, device and warning limits
+continue to apply.

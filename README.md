@@ -106,7 +106,7 @@ The collection also includes `lupine`, `hollyhock`, `fritillaria`, `tuberose`, `
 
 Torenia's detailed interactive view responds only to a visible inner stigma face. The touched lobe closes independently and stays closed. The optional `pulseSerial` prop is an explicit authored reset counter; increment it separately from the general `pulse` animation counter. The accessible Pulse control advances both, while ordinary flower clicks retain closure. This reset does not represent measured natural reopening. Leaf blades follow rooted stem motion; they do not each have a separate contact cage.
 
-Their [validation record](docs/specimens/cymes-and-spikes-validation.md) records geometry, contact, visual and browser checks, measured costs and remaining botanical and device limits.
+Their [validation record](docs/specimens/cymes-and-spikes-validation.md) records geometry, contact, visual and browser checks, measured costs and remaining botanical and device limits. Raw [CPU measurements](docs/specimens/cymes-and-spikes-cpu-measurements.json), [focused rendering observations](docs/specimens/cymes-and-spikes-rendering-measurements.json) and [constrained garden observations](docs/specimens/cymes-and-spikes-garden-measurements.json) preserve their measurement scope and source provenance.
 
 ## Architecture
 

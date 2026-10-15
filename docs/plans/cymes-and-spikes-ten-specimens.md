@@ -107,7 +107,7 @@ diagnostic angular/axial landmarks and unchanged focused geometry.
       constrained quality transition coverage for the ten registered models.
 - [x] 25. Complete collection/search/15-item pagination and both garden layouts;
       asymmetric framing and exact-name inventory candidates.
-- [ ] 26. Desktop Chromium/mobile WebKit routes, controls, retained galleries,
+- [x] 26. Desktop Chromium/mobile WebKit routes, controls, retained galleries,
       garden selection, fallback/failure/retry and live native budget coverage.
 - [x] 27. Seven-view botanical inspection against dossiers and Rose; correct
       actual geometry or shading defects in additional genuine fix slices.

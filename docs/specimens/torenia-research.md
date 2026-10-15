@@ -83,7 +83,10 @@ an actual inner-face hit is followed by a rare occlusion query. Paused,
 offscreen, reduced-motion and young-bud views cannot trigger it. Only the
 external UI pulse serial resets closure; elapsed time never resets its target.
 The damping constant and maturity threshold remain authored. Six opposite
-toothed leaves are rendered. CPU inner-face and occlusion checks do not by
-themselves establish actual browser-hit behavior. Final full browser acceptance
-remains pending in the [validation record](cymes-and-spikes-validation.md),
-separate from the completed bounded visual assessment.
+toothed leaves are rendered. The full production browser suite passed all 218
+cases (109 desktop and 109 mobile), with zero errors, skips or flaky results;
+the [validation record](cymes-and-spikes-validation.md) records that acceptance
+separately from the completed bounded visual assessment. Actual browser pointer
+contact with an inner stigma face remains unverified. CPU inner-face and
+occlusion checks establish the tested geometry and probe behavior, not that
+end-to-end browser hit.

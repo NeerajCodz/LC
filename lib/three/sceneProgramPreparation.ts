@@ -18,6 +18,7 @@ interface PreparationRenderer {
 export class SceneProgramPreparation {
   private pending: Map<ReadyProgram, Material[]> | null = null;
   private revision: string | undefined;
+  private environment: Scene["environment"] | undefined;
   constructor(private readonly renderer: PreparationRenderer) {}
 
   get started() {
@@ -33,7 +34,10 @@ export class SceneProgramPreparation {
   }
 
   begin(scene: Scene, camera: Camera) {
-    if (this.pending) return;
+    if (this.pending && this.environment === scene.environment) return;
+    // The shared studio bake can replace the environment after the first draw.
+    // Prepare its new color variants before first-use queries in this pass.
+    this.environment = scene.environment;
     const pending = new Map<ReadyProgram, Material[]>();
     const draws: Object3D[] = [];
     scene.traverseVisible((object) => {
@@ -86,5 +90,6 @@ export class SceneProgramPreparation {
   reset() {
     this.pending?.clear();
     this.pending = null;
+    this.environment = undefined;
   }
 }

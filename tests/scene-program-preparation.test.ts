@@ -1,6 +1,13 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { Group, Material, Mesh, PerspectiveCamera, Scene } from "three";
+import {
+  Group,
+  Material,
+  Mesh,
+  PerspectiveCamera,
+  Scene,
+  Texture,
+} from "three";
 
 async function fixture() {
   const preparationApi = await import("../lib/three/sceneProgramPreparation");
@@ -205,3 +212,47 @@ test("native preparation failures propagate to the guarded render clock", async 
   preparation.reset();
   assert.equal(preparation.ready(), false);
 });
+
+for (const completed of [false, true]) {
+  test(`a late environment replaces ${completed ? "completed" : "pending"} visible program preparation`, async () => {
+    const f = await fixture();
+    f.preparation.begin(f.scene, f.camera);
+    if (completed) f.finish();
+    assert.equal(f.preparation.ready(), completed);
+    const priorPolls = f.counts().polls;
+    let replacementReady = false,
+      replacementPolls = 0;
+    const replacement = {
+      isReady: () => {
+        replacementPolls++;
+        return replacementReady;
+      },
+    };
+    f.properties.set(f.a, { currentProgram: replacement });
+    f.properties.set(f.b, { currentProgram: replacement });
+    const environment = new Texture();
+    f.scene.environment = environment;
+    f.preparation.begin(f.scene, f.camera);
+    assert.equal(f.counts().compiled, 2, "new environment needs new variants");
+    assert.equal(f.preparation.ready(), false);
+    assert.equal(replacementPolls, 1);
+    assert.equal(f.counts().polls, priorPolls, "old generation is not polled");
+    f.preparation.begin(f.scene, f.camera);
+    assert.equal(f.counts().compiled, 2, "same environment is prepared once");
+    replacementReady = true;
+    assert.equal(f.preparation.ready(), true);
+    f.scene.environment = null;
+    f.preparation.begin(f.scene, f.camera);
+    assert.equal(
+      f.counts().compiled,
+      3,
+      "removing the map changes variants too",
+    );
+    assert.equal(f.preparation.ready(), true);
+    f.preparation.reset();
+    f.preparation.begin(f.scene, f.camera);
+    assert.equal(f.counts().compiled, 4, "reset starts a fresh generation");
+    assert.equal(f.preparation.ready(), true);
+    environment.dispose();
+  });
+}

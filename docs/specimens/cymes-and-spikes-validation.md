@@ -5,19 +5,15 @@ studies are Lupine, single Hollyhock, Crown Imperial, single Tuberose, Ixora,
 Pentas, Torenia, Lobelia, Hoya and single Impatiens. This extends Living Colors'
 ongoing mission to create every flower; the current catalog is not its final scope.
 
-Status: final browser validation is in progress. Product `dda2c98` passed all 699
-unit tests, full typecheck, lint and production build
-`EPlYJEnyz15ZLYF49PMmw`. All 14 targeted Hoya, readiness/retry and legacy
-regressions passed strict audit. The full 238-case inspection sweep also passed,
-with 119 desktop and 119 mobile cases and no skips, flaky outcomes or report
-errors. The requested visual assessment is complete within the documented limits.
-The production sweep was stopped after 13 completed cases (12 passed, one
-failed) to diagnose Crown Imperial's return-to-garden pixel-evaluation deadline.
-Its final trace frame shows the garden, but the evaluation did not return before
-the unchanged deadline; this is not evidence of a measured zero-pixel result or
-a diagnosed renderer cause. That interrupted run is not accepted. A complete
-passing production sweep and refreshed native rendering measurements remain
-pending.
+Status: final browser validation remains in progress. Product `754997b` passed
+706 unit tests, typecheck, lint, build `agHhhdIFXShw1jFTbX8Ky` and ten targeted
+browser cases. The latest program-ID observer confirms the recorded flower-color
+first uses were prepared and ready, with the limitations below; native warnings
+persist. A fresh full 218-case production sweep is running and is not yet
+accepted. The completed 238-case inspection sweep and bounded visual assessment
+belong to `dda2c98`; geometry and the inspection fixture are unchanged, but that
+sweep was not rerun on the later garden revisions. Full production acceptance,
+native40 measurements and the PR remain pending.
 
 The [research dossiers](../botanical-references.md) separate botanical evidence
 from authored counts, dimensions, pigments and mechanical parameters. No scanned
@@ -157,6 +153,104 @@ tessellation; the browser census remains the authority for complete garden costs
 
 ## Verification
 
+### Current garden preparation addendum
+
+Product `754997b4dd44ae93631eec3859e2cc444dffa2ff` passed all 706 unit tests in
+147.6018672 seconds on Node 24.19.0, with zero failures, skips or cancellations,
+plus full typecheck, lint and build `agHhhdIFXShw1jFTbX8Ky`. All ten targeted
+browser cases in run `1792043949078` passed strict audit, five per device, without
+skips, flakes or report errors. They cover constrained/native profiles, held KHR
+query counts, context retry and original Fritillaria scenarios. Earlier product
+`f8058ed` passed 701 tests, build `1WApGjAmtsfjJDfrVrC6u` and the separate ten-case
+run `1792038756152`. Discovery remains 218 production cases.
+The 238-case inspection acceptance belongs to unchanged geometry and inspection
+code at `dda2c98`, not the later garden revisions.
+
+The latest fix waits for every retained program in each material's `programs`
+Map rather than only its last `currentProgram`. Four regressions first failed,
+then passed: a pending noncurrent variant blocks readiness; shared objects are
+polled once per readiness check across keys/materials; a cached alias remains
+pending until its last material is disposed; and an authoritative empty Map cancels a stale current
+reference without polling it. These are CPU lifecycle checks, not proof that
+the earlier native waits or warnings have been resolved.
+
+Preparation also compares the actual color-pass renderer state before drawing,
+retaining the existing selected/device/shadows/Pollen revision and late-environment
+guard. One new table-driven regression first failed, then passed across eight
+transitions: shadow enable/type, tone mapping, output color space, render-target
+attachment/removal, target color space and target texture type. It checks pending
+and completed replacement, unchanged-state reuse and reset. The earlier two
+late-environment regressions remain green. This class is enabled by the garden's
+`shaderScope`; it does not alter the inspection fixture. The original desktop
+native-profile RED in `1792038309250` remains earlier missing-preparation evidence.
+
+The earlier 216-case sweep `1792036170655` remains interrupted evidence: 12
+passes and one Fritillaria return-to-garden pixel-evaluation timeout. Its final
+trace shows the garden, not a measured zero-pixel result. A bounded V2 observer
+subsequently captured 48 consecutive `getProgramInfoLog` calls totaling
+12,702.7 ms inside a 12,920.4 ms render, with the `onFirstUse`/`getUniforms`
+caller confirmed. The browser/driver's internal wait cause and causal equivalence
+to the original timeout remain unproved.
+
+On `f8058ed`, build `1WApGjAmtsfjJDfrVrC6u`, the instrumented original test
+passed in 25,577 ms. Return first produced a zero-draw preparation render,
+then a 481.4 ms drawing render.
+This is not a formal performance comparison. Post-return shadows were disabled;
+earlier positive shadow submissions do not validate an enabled-shadow return.
+The observer retained at least 21 garden `GL_INVALID_VALUE: glGetProgramiv:
+Program object expected` warnings: its 24-event cap also contained three earlier
+events. A separate program-lifetime diagnostic passed the exact original testcase in
+31,957 ms (33,814.834 ms for the reported run) while retaining 12 of the same
+warnings. It observed 175 program creations, 150 `deleteProgram` returns and 6,576
+program-parameter queries, with zero queries after a recorded delete return,
+null query results or captured suspect references. That evidence does not
+establish stale completion queries as the cause. Program-information and upstream behavior remain under
+investigation; the warnings are unresolved, and the terminal WebGL error queue
+was not sampled.
+
+A later validity diagnostic passed in 51,922 ms on the actual CDP-reported
+Chrome 155.0.8059.79. It emitted no invalid-program warnings and returned terminal
+`NO_ERROR` from one explicitly post-test `getError` read, with zero earlier
+application error reads and no garden context loss. This does not establish the
+earlier warning runs' error-queue state. The exact-version
+[Chromium completion-query source](https://raw.githubusercontent.com/chromium/chromium/a49e2e3d4addfd84e765b52afe230bedb81096db/gpu/command_buffer/service/gles2_cmd_decoder_passthrough.cc)
+contains a compatible internal deleted-program path; runtime attribution remains
+unproved. More importantly, this same run retained 46 non-shadow
+`getProgramInfoLog` calls totaling 21,680.1 ms within one return render. That
+test pass did not establish resolution. A later program-ID observer in run
+`1792043204496-56248` proved two coverage gaps: compilation ran with shadows
+enabled, but the first color draw after shadows were disabled created IDs
+121–124 outside preparation, without completion polls; re-preparation followed
+that draw. IDs 9 and 77 were separately present in compiled material Maps but
+were not polled before first use because they were not `currentProgram`.
+Their waits were only 6.1 and 0.7 ms, so this proves missing readiness coverage,
+not a long-stall cause. The current Map/state fix addresses both gaps; the
+following observer checks its actual first-use coverage without establishing
+the original timeout's cause or resolution of the earlier warnings.
+
+On `754997b` and build `agHhhdIFXShw1jFTbX8Ky`, program-ID observer run
+`1792044143566-29792` passed the original testcase in 22,187 ms (23,460.714 ms
+for the reported run). All 101 recorded flower-color first uses were associated
+with compilation and had a true readiness result, including cache-only IDs 9
+and 77. All 126 info-log calls were retained with zero drops and no garden context
+loss. After the actual shadow-state change, compile 4 in render 68 and another
+preparation in render 69 held zero draws. The fixture reselected a flower before
+any subsequent disabled-shadow overview draw, so that draw path remains untested
+by this observer. Warnings persisted: 21 console entries and all 32 retained CDP
+entries reported the same invalid-program warning; the CDP cap was reached, so
+at least 32 warnings occurred and the channels must not be added together. This
+is an instrumented observation, not a performance benchmark or a warning fix.
+
+The earlier 218-case run `1792039070896` was stopped after one pass because of
+diagnostic warnings. Neither interrupted broad sweep is acceptance. A fresh
+218-case production sweep on `754997b` is now running, with acceptance pending.
+The forty focused native measurements and the PR also remain pending. The
+published CPU raw data, its 23 input hashes and the
+table below are unchanged observations from Node 22.22.0 at `dda2c98`; they are
+not measurements of this Node 24.19.0 browser-diagnostic run.
+
+### Earlier verification and retained evidence
+
 At product `dda2c98`, full typecheck, lint, all 699 unit tests and production
 build passed. The build generated all 76 catalog specimen routes. Browser
 discovery derives 216 production cases and 238 inspection cases across desktop
@@ -181,7 +275,7 @@ mounted tile scenes before starting the unchanged 20-second pixel predicate,
 which still samples eight frames at the same threshold. Readiness alone never
 counts as rendered content. A dedicated regression observes native draws,
 revisited species/detail states, retained canvases and explicit fallback/retry.
-Final discovery includes 238 inspection cases and the unchanged 216 production
+Discovery at `dda2c98` included 238 inspection cases and 216 production
 cases. Inspection run `1792032078844` passed all 238 unique cases with zero skips,
 flaky outcomes or report errors. Both independent strict audits accepted all 119
 desktop and 119 mobile reports. Production run `1792036170655` was interrupted

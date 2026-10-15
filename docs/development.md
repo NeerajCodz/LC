@@ -20,6 +20,17 @@ It also checks the native drawing buffer, capture density and unchanged mobile
 WebKit user agent, touch and coarse-pointer signals. The pixel/error/context-loss
 criteria and flower geometry tiers are unchanged.
 
+Inspection checks separate client startup, scene readiness and pixels. After
+navigation, `expectInspectionLoaded` waits up to 60 seconds for the actual heading
+and three controls, without waiting for an initial draw. After selection,
+`expectInspectionReady` waits for every mounted tile's existing SceneReady
+boundary. The unchanged pixel predicate then samples eight frames within its
+20-second deadline. Tile readiness resets on species/quality/study changes and
+renderer teardown; it never replaces pixel or renderer-error assertions.
+`inspection-readiness.spec.ts` verifies native draw activity, retained canvases,
+revisits and explicit fallback/keyboard retry. See the
+[validation record](specimens/cymes-and-spikes-validation.md) for evidence and limits.
+
 Fritillaria's optional **Bell interior study** and Hoya's **Single-floret study**
 switch the seven standard tiles to two targeted views and back. They frame real
 single-flower surface and organ bounds while rendering the complete plant. They

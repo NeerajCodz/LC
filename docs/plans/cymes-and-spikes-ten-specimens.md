@@ -96,20 +96,20 @@ diagnostic angular/axial landmarks and unchanged focused geometry.
 
 ## Coherent commit slices and verification
 
-- [ ] 1. Ten research dossiers, source index and this implementation plan.
-- [ ] 2. Compatible repeated-organ batching, with exact pose/morph/color/index
+- [x] 1. Ten research dossiers, source index and this implementation plan.
+- [x] 2. Compatible repeated-organ batching, with exact pose/morph/color/index
       equivalence and cleanup tests. Run existing floret/surface batch tests.
-- [ ] 3. Anatomical overview budget headroom, only if measured needed, with
+- [x] 3. Anatomical overview budget headroom, only if measured needed, with
       landmark preservation, unchanged focused geometry and CPU census checks.
-- [ ] 4–23. Two slices for each species in table order: anatomy/geometry first;
+- [x] 4–23. Two slices for each species in table order: anatomy/geometry first;
       then foliage, tissue optics, anchored motion and catalog integration.
-- [ ] 24. Whole-plant contact, reverse bloom, pause/resume, reduced motion and
+- [x] 24. Whole-plant contact, reverse bloom, pause/resume, reduced motion and
       constrained quality transition coverage for the ten registered models.
-- [ ] 25. Complete collection/search/15-item pagination and both garden layouts;
+- [x] 25. Complete collection/search/15-item pagination and both garden layouts;
       asymmetric framing and exact-name inventory candidates.
 - [ ] 26. Desktop Chromium/mobile WebKit routes, controls, retained galleries,
       garden selection, fallback/failure/retry and live native budget coverage.
-- [ ] 27. Seven-view botanical inspection against dossiers and Rose; correct
+- [x] 27. Seven-view botanical inspection against dossiers and Rose; correct
       actual geometry or shading defects in additional genuine fix slices.
 - [ ] 28. Generated inventory, API/source docs, measured rendering/contact costs,
       full validation record and a separate PR.

@@ -1,3 +1,7 @@
+import {
+  expectInspectionLoaded,
+  expectInspectionReady,
+} from "./inspection-ready";
 import { test, expect } from "@playwright/test";
 
 import { expectRenderedFlower } from "./pixel-content";
@@ -34,9 +38,11 @@ for (const slug of species)
         errors.push(m.text());
     });
     await page.goto("/dev/inspection/");
+    await expectInspectionLoaded(page);
     await page
       .getByRole("combobox", { name: "Inspection species" })
       .selectOption(slug);
+    await expectInspectionReady(page);
     await expectRenderedFlower(page.locator("canvas"), 0.004);
     const path = info.outputPath(`inspection-${slug}.png`);
     await page.screenshot({ path });

@@ -1,3 +1,7 @@
+import {
+  expectInspectionLoaded,
+  expectInspectionReady,
+} from "./inspection-ready";
 import { test, expect, devices } from "@playwright/test";
 import { CYMES_AND_SPIKES, observeRendering } from "./cymes-and-spikes-cases";
 import { expectRenderedFlower, expectScreenshotFlower } from "./pixel-content";
@@ -54,6 +58,7 @@ if (process.env.DEV_INSPECTION === "1") {
       record();
     });
     await page.goto("/dev/inspection/");
+    await expectInspectionLoaded(page);
     const tier = page.getByRole("combobox", {
         name: "Inspection device tier",
         exact: true,
@@ -89,6 +94,7 @@ if (process.env.DEV_INSPECTION === "1") {
     }
     await expect(tier).toHaveValue(constrained ? "constrained" : "standard");
     await expect.poll(qualities).toEqual(constrained ? low : high);
+    await expectInspectionReady(page);
     await expectRenderedFlower(page.locator("canvas"), 0.004);
     const native = await page.locator("canvas").evaluate((node) => {
       const canvas = node as HTMLCanvasElement,
@@ -200,6 +206,7 @@ if (process.env.DEV_INSPECTION === "1") {
     await expect.poll(qualities).toEqual(low);
     await tier.selectOption(constrained ? "constrained" : "standard");
     await expect.poll(qualities).toEqual(constrained ? low : high);
+    await expectInspectionReady(page);
     await expectRenderedFlower(page.locator("canvas"), 0.004);
     await healthy();
   });
@@ -215,6 +222,7 @@ if (process.env.DEV_INSPECTION === "1") {
         const healthy = await observeRendering(page),
           constrained = info.project.name === "mobile";
         await page.goto("/dev/inspection/");
+        await expectInspectionLoaded(page);
         await expect(
           page.getByRole("combobox", {
             name: "Inspection device tier",
@@ -260,6 +268,7 @@ if (process.env.DEV_INSPECTION === "1") {
             page.locator(`[data-inspection-view="${name}"]`),
           ).toHaveAttribute("data-inspection-quality", quality);
         }
+        await expectInspectionReady(page);
         await expectRenderedFlower(page.locator("canvas"), 0.004);
         await expect(page.locator("canvas")).toHaveAttribute(
           "data-render-budget",
@@ -309,6 +318,7 @@ if (process.env.DEV_INSPECTION === "1") {
         const healthy = await observeRendering(page),
           constrained = info.project.name === "mobile";
         await page.goto("/dev/inspection/");
+        await expectInspectionLoaded(page);
         await expect(page.locator("[data-inspection-view]")).toHaveCount(7);
         // Geometry choice is independent from the real renderer's device budget.
         await expect(
@@ -349,6 +359,7 @@ if (process.env.DEV_INSPECTION === "1") {
           slug === "fritillaria"
             ? ["Bell interior · axial", "Bell interior · oblique"]
             : ["Single floret · full", "Single floret · bud"];
+        await expectInspectionReady(page);
         await expectRenderedFlower(canvas, 0.004);
         for (const [index, name] of views.entries()) {
           const view = page.locator(`[data-inspection-view="${name}"]`);
@@ -379,6 +390,7 @@ if (process.env.DEV_INSPECTION === "1") {
         await toggle.click();
         await expect(page.locator("[data-inspection-view]")).toHaveCount(7);
         await expect(toggle).toHaveAttribute("aria-pressed", "false");
+        await expectInspectionReady(page);
         await expectRenderedFlower(canvas, 0.004);
         await healthy();
       });

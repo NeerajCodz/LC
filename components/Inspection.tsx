@@ -1,5 +1,12 @@
 "use client";
-import { useEffect, useRef, useState, type RefObject } from "react";
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type RefObject,
+} from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import { Box3, Group, PerspectiveCamera as ThreeCamera } from "three";
 import { botanicalEvents } from "@/lib/three/events";
@@ -14,6 +21,7 @@ import {
 } from "@/lib/three/inspectionStudies";
 import { useExperienceSettings } from "@/hooks/useExperienceSettings";
 import { RenderBudget } from "./scene/RenderBudget";
+import { SceneReady } from "./scene/SceneReady";
 
 function InspectionCameraFit({
   camera,
@@ -89,15 +97,21 @@ function InspectionSpecimen({
   wind,
   view,
   target,
+  onReady,
+  onPending,
 }: {
   type: FlowerType;
   quality: Quality;
   wind: boolean;
   view: InspectionView;
   target: Vec3;
+  onReady: () => void;
+  onPending: () => void;
 }) {
   const camera = useRef<ThreeCamera>(null),
     plant = useRef<Group>(null);
+  // The DOM tile survives SafeCanvas failure/retry; its disposed scene is no longer ready.
+  useLayoutEffect(() => () => onPending(), [onPending]);
   return (
     <>
       <PerspectiveCamera
@@ -126,6 +140,7 @@ function InspectionSpecimen({
         study={view.study}
         quality={quality}
       />
+      <SceneReady onReady={onReady} />
     </>
   );
 }
@@ -151,6 +166,53 @@ const VIEWS: readonly InspectionView[] = [
   { name: "Front · half", angle: 0, bloom: 0.5, macro: false },
   { name: "Side · bud", angle: Math.PI / 2, bloom: 0, macro: false },
 ];
+
+function InspectionTile({
+  type,
+  quality,
+  wind,
+  view,
+  target,
+  index,
+  studying,
+}: {
+  type: FlowerType;
+  quality: Quality;
+  wind: boolean;
+  view: InspectionView;
+  target: Vec3;
+  index: number;
+  studying: boolean;
+}) {
+  const [ready, setReady] = useState(false);
+  const markReady = useCallback(() => setReady(true), []);
+  const markPending = useCallback(() => setReady(false), []);
+  return (
+    <div
+      data-inspection-view={view.name}
+      data-inspection-quality={quality}
+      data-inspection-ready={ready ? "ready" : "pending"}
+      style={{
+        height: studying ? 665 : 410,
+        border: "1px solid #ffffff20",
+      }}
+    >
+      <p style={{ fontSize: 13, margin: 12 }}>{view.name}</p>
+      <View style={{ height: studying ? 620 : 365 }} index={index}>
+        <InspectionSpecimen
+          type={type}
+          quality={quality}
+          wind={wind}
+          view={view}
+          target={target}
+          onReady={markReady}
+          onPending={markPending}
+        />
+      </View>
+    </div>
+  );
+}
+
 /** Development-only visual fixture. Every tile renders the production Flower API. */
 export default function Inspection() {
   const container = useRef<HTMLDivElement>(null);
@@ -266,27 +328,16 @@ export default function Inspection() {
                 ? "ultra"
                 : "high";
           return (
-            <div
-              key={v.name}
-              data-inspection-view={v.name}
-              data-inspection-quality={quality}
-              style={{
-                height: studying ? 665 : 410,
-                border: "1px solid #ffffff20",
-              }}
-            >
-              <p style={{ fontSize: 13, margin: 12 }}>{v.name}</p>
-              <View style={{ height: studying ? 620 : 365 }} index={i + 1}>
-                <InspectionSpecimen
-                  key={`${type}:${quality}`}
-                  type={type}
-                  quality={quality}
-                  wind={wind}
-                  view={v}
-                  target={target}
-                />
-              </View>
-            </div>
+            <InspectionTile
+              key={`${type}:${quality}:${v.name}`}
+              type={type}
+              quality={quality}
+              wind={wind}
+              view={v}
+              target={target}
+              index={i + 1}
+              studying={studying}
+            />
           );
         })}
       </div>

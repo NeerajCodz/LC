@@ -130,9 +130,10 @@ contact with an inner stigma face remains unverified. CPU inner-face and
 occlusion checks establish the tested geometry and probe behavior, not that
 end-to-end browser hit.
 
-Acceptance of the October 18 revision requires fresh front, side, 45°, macro,
-bud, half-bloom and full-bloom inspection, including constrained quality. Check
-continuous lip tissue, an open throat, the upper fan and three lower lobes,
-localized pigment guides, included reproductive organs and winged calyx. The
-earlier browser and visual results above must not be carried forward as evidence
-that this revised geometry or material has passed those checks.
+The [October 18 repair record](torenia-repair-validation.md) documents fresh
+front, side, 45°, macro, bud, half-bloom and full-bloom inspection, including
+constrained quality and enlarged blossom/bud studies. It records continuous lip
+tissue, an open throat, the upper fan and three lower lobes, localized pigment
+guides, included reproductive organs, calyx clearance and the corrected pigment
+seam. Its source revisions, browser scopes and measured rendering limits remain
+separate from the earlier batch results above.

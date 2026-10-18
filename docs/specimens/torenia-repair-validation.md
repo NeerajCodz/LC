@@ -74,8 +74,17 @@ These targeted studies exercise ultra, medium and overview geometry; the CPU
 surface/containment tests cover all five tiers.
 
 The production build passes with Next.js 16.3.4, build ID
-`tcMZt64v-ViBxMcz4Ilcd`. Production browser checks are in progress; their results
-will be recorded before this branch is presented for review.
+`tcMZt64v-ViBxMcz4Ilcd`. All four targeted production cases pass in
+`isolated-production-1792300133569` (two desktop Chromium, two mobile WebKit),
+with no errors, context losses, skips or flaky results. They exercise actual
+flower pixels, canonical routing, reverse bloom, macro canvas retention,
+keyboard pulse, pause/resume, reduced motion, all themes, search and selected
+garden interaction with optional WebGPU disabled.
+
+The complete historical 218-case production sweep was not repeated for this
+species-only repair. Physical phones were not tested. WGSL, taxonomy and catalog
+sources are unchanged, so their separate generation/device checks were not rerun.
+The earlier results remain tied to their recorded source revisions.
 
 Earlier screenshots and measurements in
 [the batch validation record](cymes-and-spikes-validation.md) belong to the
@@ -98,3 +107,33 @@ These are short CPU observations on the same computer. They exclude browser
 cadence, GPU upload/drawing, shader work, independent stigma animation and moving
 carrier/rest preparation. They do not establish physical-phone performance or a
 frame-rate guarantee. Later GLSL changes are outside this CPU source set.
+
+## Production rendering observations
+
+The [raw rendering observations](torenia-repair-rendering-measurements.json)
+record four sequential windows on the production build. Independent audit
+confirmed all 94 source hashes, unchanged sources during measurement, unique
+observed shell tiers at both native endpoints, node budgets and zero recorded
+page/shader errors or context losses.
+
+| View                     | Observed tier / nodes | Advances per second | Live solver / packing (ms) | Mean main-scene draws / submitted inputs |
+| ------------------------ | --------------------- | ------------------: | -------------------------: | ---------------------------------------: |
+| Desktop specimen         | high / 640            |               47.46 |                9.03 / 0.06 |                             45 / 605,082 |
+| Desktop macro            | ultra / 640           |               47.43 |               12.16 / 0.08 |                             45 / 906,330 |
+| Emulated mobile specimen | low / 240             |                9.73 |               14.77 / 0.46 |                             44 / 214,440 |
+| Emulated mobile macro    | medium / 240          |               23.67 |                1.99 / 0.05 |                             44 / 455,508 |
+
+Desktop Chromium reports an NVIDIA RTX 3050 through ANGLE/D3D11 and draws a
+3098 × 1936 buffer; Windows WebKit uses iPhone emulation with a 390 × 440 buffer.
+These are different engine/buffer observations on one host. The slow mobile
+specimen observation is retained; this repair does not establish a performance
+improvement or a 60 FPS result.
+
+Advance cadence uses fresh 120-advance wall-time windows and is not presented
+frame rate. Live CPU counters are rolling means that carry across views, rather
+than isolated per-view medians. Native draw/input counts use a separate window;
+their main-scene render boundaries are not complete R3F advances. Instrumentation,
+background applications and startup/warmup effects limit comparisons. WebGPU was
+disabled; no bake timings were measured. This driver records page errors and
+selected shader console errors, not console warning counts. It cannot establish
+zero warnings or resolution of the historical `glGetProgramiv` warnings.

@@ -187,7 +187,7 @@ for (let c = 0; c < 5; c++) {
       cluster: c,
       role: "petal",
       tissue: "inner",
-      thickness: 0.006,
+      thickness: 0.003,
       overviewRows: 3,
       delay,
       sample: (u, v, o) => toreniaStigma(u, v, o * (young ? 0.05 : 1), lobe),
@@ -204,12 +204,13 @@ export function toreniaStigma(
   const side = lobe ? 1 : -1,
     w = 2 * u - 1,
     spread = 0.034 * open * (1 - closure),
-    width =
-      (0.004 + 0.026 * Math.sin(Math.PI * v) ** 0.8) * (0.45 + 0.55 * open);
+    size = 0.45 + 0.55 * open,
+    // Finite attachment widths and a smooth margin keep the offset skins from folding back.
+    width = (0.006 + 0.024 * Math.sin(Math.PI * v) ** 2) * size;
   return [
     w * width,
     0.022 + 0.11 * open + side * (0.004 + 0.002 * open + spread) * v,
-    0.47 + 0.09 * open + (0.028 + 0.013 * open) * v + 0.006 * w * w,
+    0.47 + 0.09 * open + (0.028 + 0.013 * open) * v + 0.001 * w * w * size,
   ];
 }
 export const TORENIA_HEAD_CENTER: Vec3 = [0, 0.02, 0.49];

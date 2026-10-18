@@ -87,7 +87,7 @@ for (let c = 0; c < 5; c++) {
     thickness: 0.008,
     overviewColumns: 32,
     overviewRows: 8,
-    minimumColumns: 40,
+    minimumColumns: 64,
     sample: (u, v, o) => toreniaCorolla(u, v, o, young),
     flexible: true,
     cage: [16, 7],
@@ -106,17 +106,18 @@ for (let c = 0; c < 5; c++) {
     overviewColumns: 30,
     overviewRows: 4,
     minimumColumns: 40,
-    sample: (u, v) => {
+    sample: (u, v, stage) => {
       const a = u * Math.PI * 2,
         wing = (0.5 + 0.5 * Math.cos(a * 5)) ** 7,
-        r =
-          0.047 +
-          0.044 * Math.sin(Math.PI * v * 0.7) +
-          0.051 * wing * Math.sin(Math.PI * v);
+        z = -0.025 + 0.355 * v + 0.035 * Math.cos(a * 2) * v ** 5,
+        open = stage * (young ? 0.05 : 1),
+        t = Math.max(0, Math.min(1, (z - 0.08) / (0.51 + 0.11 * open))),
+        tube = toreniaCorolla(u, t, stage, young),
+        clearance = 0.014 + 0.035 * wing * Math.sin(Math.PI * v);
       return [
-        Math.cos(a) * r,
-        Math.sin(a) * r,
-        -0.025 + 0.355 * v + 0.035 * Math.cos(a * 2) * v ** 5,
+        tube[0] + Math.cos(a) * clearance,
+        tube[1] + Math.sin(a) * clearance,
+        z,
       ];
     },
   });

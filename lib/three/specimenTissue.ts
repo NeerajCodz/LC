@@ -5,7 +5,7 @@ export const TISSUE_RESPONSE: Record<
   string,
   { roughness: number; sheen: number; coat: number; scatter: number }
 > = {
-  torenia: { roughness: 0.7, sheen: 0.21, coat: 0.005, scatter: 0.062 },
+  torenia: { roughness: 0.81, sheen: 0.16, coat: 0, scatter: 0.062 },
   lobelia: { roughness: 0.72, sheen: 0.18, coat: 0.003, scatter: 0.063 },
   pentas: { roughness: 0.7, sheen: 0.2, coat: 0.005, scatter: 0.06 },
   ixora: { roughness: 0.56, sheen: 0.16, coat: 0.035, scatter: 0.045 },
@@ -52,8 +52,6 @@ export const TISSUE_RESPONSE: Record<
   zinnia: { roughness: 0.78, sheen: 0.16, coat: 0, scatter: 0.055 },
 };
 export function specimenTissueColor(type: string, tissue?: SpecimenTissue) {
-  if (type === "torenia" && tissue === "guide") return "#705baf";
-  if (type === "torenia" && tissue === "disc") return "#b0a5da";
   if (type === "torenia" && tissue === "inner") return "#e2d8ad";
   if (type === "lobelia" && tissue === "guide") return "#ece6cb";
   if (type === "lobelia" && tissue === "inner") return "#9584ae";
@@ -89,11 +87,34 @@ export function specimenTissueShader(type: string, tissue?: SpecimenTissue) {
   if (tissue === "leaf") return "";
   switch (type) {
     case "torenia":
-      if (tissue === "disc")
-        return `float torRoofVein=pow(.5+.5*cos((vPetalUv.x-.5)*41.+vPetalUv.y*2.),22.); diffuseColor.rgb*=1.-torRoofVein*.035;`;
-      if (tissue === "guide")
-        return `float torTongueEye=exp(-pow((vPetalUv.x-.5)*7.,2.))*(1.-smoothstep(.16,.42,vPetalUv.y)); diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.91,.72,.21),torTongueEye*.83);`;
-      return `float torLower=1.-smoothstep(-.3,.15,sin(vPetalUv.x*6.283185)); float torYellow=exp(-pow((vPetalUv.x-.75)*12.,2.))*smoothstep(.69,.79,vPetalUv.y); diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.36,.24,.60),torLower*smoothstep(.7,.94,vPetalUv.y)*.35); diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.91,.72,.21),torYellow*.8);`;
+      // The stigma has its own cream tissue; corolla UVs run around one fused tube.
+      if (tissue === "inner") return "";
+      return `float torLip=smoothstep(.58,.80,vPetalUv.y);
+      float torRoof=1.-smoothstep(.18,.25,abs(vPetalUv.x-.25));
+      float torLower=smoothstep(.475,.52,vPetalUv.x)*(1.-smoothstep(.98,1.,vPetalUv.x));
+      vec3 torPigment=mix(vec3(.83,.80,.78),vec3(.39,.32,.57),torLip*(.18+.78*torRoof));
+      vec2 torLeft=vec2((vPetalUv.x-.575)/.105,(vPetalUv.y-.875)/.24);
+      float torRightAcross=abs(vPetalUv.x-.925);
+      vec2 torRight=vec2(min(torRightAcross,1.-torRightAcross)/.105,(vPetalUv.y-.875)/.24);
+      float torBlotch=(1.-smoothstep(.68,1.,min(length(torLeft),length(torRight))))*smoothstep(.64,.74,vPetalUv.y);
+      torPigment=mix(torPigment,vec3(.004,.0008,.018),torBlotch);
+      float torRim=torLower*smoothstep(.88,.96,vPetalUv.y);
+      torPigment=mix(torPigment,vec3(.027,.003,.095),torRim*.98);
+      if(uSpecimenCustomColor>.5){
+        vec3 torCustom=diffuseColor.rgb;
+        vec3 torCustomThroat=mix(torCustom,vec3(.83,.80,.78),.72);
+        vec3 torCustomLip=mix(torCustom,vec3(1.),torRoof*.12);
+        torPigment=mix(torCustomThroat,torCustomLip,torLip);
+        torPigment=mix(torPigment,torCustom*.035,torBlotch);
+        torPigment=mix(torPigment,torCustom*.15,torRim*.98);
+      }
+      vec2 torGuide=vec2((vPetalUv.x-.75)/.037,(vPetalUv.y-.815)/.12);
+      float torYellow=(1.-smoothstep(.58,1.,length(torGuide)))*(1.-smoothstep(.91,.94,vPetalUv.y));
+      torPigment=mix(torPigment,vec3(.93,.64,.001),torYellow);
+      float torVeinPhase=vPetalUv.x*100.530965+.55*sin(vPetalUv.y*6.283185);
+      float torVeinVisibility=1.-smoothstep(.3,1.2,fwidth(torVeinPhase));
+      float torVein=pow(.5+.5*cos(torVeinPhase),24.)*torVeinVisibility*smoothstep(.5,.85,vPetalUv.y);
+      diffuseColor.rgb=torPigment*(1.+(tissue.g-.5)*.035)*(1.-torVein*.04);`;
     case "lobelia":
       return `float lobThroat=exp(-pow((vPetalUv.x-.5)*7.,2.))*(1.-smoothstep(.5,.8,vPetalUv.y)); float lobVein=pow(.5+.5*cos(vPetalUv.x*31.416),21.)*smoothstep(.66,.91,vPetalUv.y); diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.84,.88,.96),lobThroat*.33); diffuseColor.rgb*=1.-lobVein*.052;`;
     case "pentas":

@@ -31,13 +31,13 @@ const palette = (
 
 export const PETAL_PALETTES: Record<FlowerType, PetalPalette> = {
   torenia: {
-    root: "#d9d0ef",
-    body: "#7770bb",
-    tip: "#60509d",
-    vein: "#554894",
-    rootFalloff: 0.26,
-    tipStart: 0.81,
-    veinStrength: 0.033,
+    root: "#eee9de",
+    body: "#e4dfed",
+    tip: "#c3b7d9",
+    vein: "#a89ac2",
+    rootFalloff: 0.3,
+    tipStart: 0.84,
+    veinStrength: 0.022,
   },
   lobelia: {
     root: "#bfc8e9",

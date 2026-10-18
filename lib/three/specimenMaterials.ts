@@ -196,6 +196,12 @@ export function createSpecimenMaterial(
       s.uniforms.uSpecimenKind = { value: specimenTissueKind(type) };
       s.uniforms.uSpecimenRegion = { value: specimenTissueRegion(tissue) };
       s.uniforms.uSpecimenScatter = { value: response.scatter };
+      s.uniforms.uSpecimenCustomColor = {
+        value:
+          type === "torenia" && role === "tube" && color && tissue !== "inner"
+            ? 1
+            : 0,
+      };
       s.fragmentShader = s.fragmentShader.replace(
         "scatter*.11",
         "scatter*uSpecimenScatter",
@@ -203,7 +209,7 @@ export function createSpecimenMaterial(
       s.fragmentShader = s.fragmentShader
         .replace(
           "#include <common>",
-          "#include <common>\nuniform int uSpecimenKind, uSpecimenRegion; uniform float uSpecimenScatter;",
+          "#include <common>\nuniform int uSpecimenKind, uSpecimenRegion; uniform float uSpecimenScatter, uSpecimenCustomColor;",
         )
         .replace(
           "#include <roughnessmap_fragment>",
@@ -218,7 +224,7 @@ export function createSpecimenMaterial(
         : "specimen-calyx-v2";
     if (!green && tissue === "leaf" && response) return "specimen-calyx-v2";
     // Pigments are uniforms. Organ names alone must not compile duplicate programs.
-    if (!green && response) return "specimen-shared-tissue-v3";
+    if (!green && response) return "specimen-shared-tissue-v4";
     // Legacy organs also share a program when only their uniform pigments differ.
     // Three adds material features (sheen, clearcoat, morphs, instancing) itself.
     if (type === "king-protea") return "specimen-protea-fibers-v2";

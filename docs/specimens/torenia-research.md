@@ -6,6 +6,8 @@ This is an implemented unnamed single-flowered study, without cultivar or hybrid
 identification. The [earlier validation record](cymes-and-spikes-validation.md)
 records the original registration and bounded desktop and constrained assessment;
 it does not validate the October 18 corolla and pigment revision.
+The [focused repair record](torenia-repair-validation.md) tracks this revision's
+fresh checks and their scope.
 
 ## Source-backed traits
 
@@ -75,7 +77,7 @@ lamellae retain cream tissue. RGB values, blotch boundaries, vein contrast and
 matte tissue response are authored visual choices, not measured spectra or
 microscopic surface reconstructions.
 
-Corolla opening, curled volumetric bud tissue and stigma maturation need distinct
+Corolla opening, furled volumetric bud tissue and stigma maturation need distinct
 states. An optional touch response may close only the inner stigma lobe that is
 actually reached by the contact. Contact with outer faces, petals or empty
 space must not be described as a biological trigger. An accessible pulse action

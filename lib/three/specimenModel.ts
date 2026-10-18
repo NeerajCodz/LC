@@ -33,6 +33,9 @@ export interface SpecimenSurface {
   overviewColumns?: number;
   /** Axial landmarks that must survive the distant overview grid. */
   overviewRows?: number;
+  /** Minimum samples needed to preserve this organ's anatomical silhouette at any tier. */
+  minimumColumns?: number;
+  minimumRows?: number;
   cage?: [number, number];
   mobileCage?: [number, number];
   /** Same-cluster valvate tissue shares row motion only while closed. */
@@ -150,7 +153,10 @@ function specimenGrid(surface: SpecimenSurface, quality: Quality) {
     quality === "overview"
       ? (surface.overviewRows ?? resolution[1])
       : resolution[1];
-  return { columns, rows };
+  return {
+    columns: Math.max(columns, surface.minimumColumns ?? 0),
+    rows: Math.max(rows, surface.minimumRows ?? 0),
+  };
 }
 
 /** Interpolate the same two triangles used by the carrier's real shell grid. */

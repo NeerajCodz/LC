@@ -7,6 +7,7 @@ import {
   Mesh,
   MeshBasicMaterial,
   Ray,
+  Raycaster,
   Vector3,
 } from "three";
 import {
@@ -61,9 +62,26 @@ test("Torenia's actual contact-deformed roof blocks an inner stigma ray that und
     ),
     scratch = createToreniaStigmaProbeScratch();
   assert.equal(probeToreniaStigmaRay(ray, stigma, 1, root, scratch), true);
+  // The broad roof needs a deeper authored press to cross this inner-face ray.
+  // Keep the fixture inside the solver's 0.18 per-axis displacement ceiling.
   for (let i = 0; i < sim.inverseMass.length; i++)
-    if (sim.inverseMass[i]) sim.positions[i * 3 + 1] -= 0.04;
+    if (sim.inverseMass[i]) sim.positions[i * 3 + 1] -= 0.14;
   deformation.update([new Matrix4()]);
+  let maximumOffset = 0;
+  for (let i = 0; i < sim.inverseMass.length; i++) {
+    const offset = Math.hypot(
+      deformation.data[i * 4],
+      deformation.data[i * 4 + 1],
+      deformation.data[i * 4 + 2],
+    );
+    maximumOffset = Math.max(maximumOffset, offset);
+    if (!sim.inverseMass[i])
+      assert.equal(offset, 0, "the insertion stays pinned");
+  }
+  assert.ok(
+    maximumOffset <= 0.18,
+    "the roof press stays within the contact budget",
+  );
   assert.equal(
     probeToreniaStigmaRay(ray, stigma, 1, root, scratch),
     true,
@@ -71,6 +89,30 @@ test("Torenia's actual contact-deformed roof blocks an inner stigma ray that und
   );
   const cleanup = bindCageRaycast(corolla, deformation);
   try {
+    const raycaster = new Raycaster(ray.origin, ray.direction),
+      roofHit = raycaster.intersectObject(corolla, false)[0],
+      stigmaHit = raycaster.intersectObjects(stigma, false)[0];
+    assert.ok(
+      roofHit?.face,
+      "the displaced roof physically intersects the ray",
+    );
+    assert.ok(stigmaHit, "the inner lamella remains on the same ray");
+    assert.ok(
+      roofHit.distance < stigmaHit.distance - 0.005,
+      "actual displaced tissue crosses ahead of the lamella rather than behind it",
+    );
+    const a = new Vector3(),
+      b = new Vector3(),
+      c = new Vector3();
+    corolla.getVertexPosition(roofHit.face.a, a);
+    corolla.getVertexPosition(roofHit.face.b, b);
+    corolla.getVertexPosition(roofHit.face.c, c);
+    const triangleHit = ray.intersectTriangle(a, b, c, false, new Vector3());
+    assert.ok(
+      triangleHit,
+      "the actual cage-deformed triangle contains the crossing",
+    );
+    assert.ok(triangleHit.distanceTo(roofHit.point) < 0.000001);
     assert.equal(probeToreniaStigmaRay(ray, stigma, 1, root, scratch), false);
     assert.equal(scratch.occlusion[0].object, corolla);
     deformation.setEnabled(false);

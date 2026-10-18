@@ -1,7 +1,7 @@
 import type { Vec3 } from "@/lib/flowers/types";
 import type { SpecimenModel, SpecimenOrgan } from "@/lib/three/specimenModel";
 
-/** One hollow bilateral corolla: fused upper pair and a three-lobed lower lip. */
+/** One continuous hollow corolla: broad notched roof and three rounded landing lobes. */
 export function toreniaCorolla(
   u: number,
   v: number,
@@ -10,27 +10,30 @@ export function toreniaCorolla(
 ): Vec3 {
   const open = stage * (young ? 0.05 : 1),
     a = u * Math.PI * 2,
-    t = Math.max(0, (v - 0.57) / 0.43),
-    upper = Math.max(0, Math.sin(a));
-  let lobes = 0;
-  for (const [center, size] of [
-    [1.18, 0.14],
-    [Math.PI - 1.18, 0.14],
-    [Math.PI + 0.4, 0.145],
-    [Math.PI * 1.5, 0.2],
-    [Math.PI * 2 - 0.4, 0.145],
-  ]) {
+    t = Math.max(0, (v - 0.53) / 0.47),
+    flare = t * t * (3 - 2 * t),
+    upper = Math.max(0, Math.sin(a)),
+    lower = Math.max(0, -Math.sin(a)),
+    roofBlend = 0.5 + 0.5 * Math.tanh(Math.sin(a) * 7);
+  let lowerLobes = 0;
+  for (const center of [Math.PI + 0.48, Math.PI * 1.5, Math.PI * 2 - 0.48]) {
     const d = Math.atan2(Math.sin(a - center), Math.cos(a - center));
-    lobes += size * Math.exp(-((d / 0.34) ** 2));
+    lowerLobes += 0.125 * Math.exp(-((d / 0.42) ** 4));
   }
-  const mature =
-      0.048 + 0.105 * Math.sin(v * Math.PI * 0.72) + t ** 2 * (0.065 + lobes),
-    bud = 0.028 + 0.07 * Math.sin(Math.PI * v);
+  const notch = 0.018 * Math.exp(-(((a - Math.PI / 2) / 0.1) ** 2)),
+    fan = 0.32 * (0.58 + 0.42 * (1 - Math.exp(-(upper * upper) / 0.08))),
+    outline = (fan - notch) * roofBlend + (0.18 + lowerLobes) * (1 - roofBlend),
+    neck = 0.023 + 0.1 * Math.sin(v * Math.PI * 0.7),
+    mature = neck * (1 - flare) + outline * flare,
+    // Keep a finite furled tip: its two skins never collapse onto the axis.
+    bud = 0.027 + 0.06 * Math.sin(Math.PI * v) - 0.021 * v ** 5;
   const r = bud * (1 - open) + mature * open;
   return [
     Math.cos(a) * r,
-    Math.sin(a) * r * (0.64 + 0.13 * upper * open),
-    0.1 + (0.49 + 0.11 * open) * v + 0.058 * lobes * t * open,
+    Math.sin(a) * r * (0.84 + 0.04 * lower * open),
+    0.08 +
+      (0.51 + 0.11 * open) * v +
+      flare * (0.025 * lower - 0.09 * upper) * open,
   ];
 }
 export const TORENIA_MODEL: SpecimenModel = {
@@ -81,9 +84,10 @@ for (let c = 0; c < 5; c++) {
     cluster: c,
     role: "tube",
     periodic: true,
-    thickness: 0.014,
+    thickness: 0.008,
     overviewColumns: 32,
-    overviewRows: 5,
+    overviewRows: 8,
+    minimumColumns: 40,
     sample: (u, v, o) => toreniaCorolla(u, v, o, young),
     flexible: true,
     cage: [16, 7],
@@ -101,6 +105,7 @@ for (let c = 0; c < 5; c++) {
     thickness: 0.011,
     overviewColumns: 30,
     overviewRows: 4,
+    minimumColumns: 40,
     sample: (u, v) => {
       const a = u * Math.PI * 2,
         wing = (0.5 + 0.5 * Math.cos(a * 5)) ** 7,
@@ -115,57 +120,19 @@ for (let c = 0; c < 5; c++) {
       ];
     },
   });
-  // Finite overlapping lips close the bud without collapsing a periodic rim to a point.
-  for (let i = 0; i < 5; i++)
-    TORENIA_MODEL.surfaces.push({
-      name: "folded torenia lip tissue",
-      cluster: c,
-      role: "petal",
-      tissue: i < 2 ? "disc" : i === 3 ? "guide" : undefined,
-      thickness: 0.012,
-      overviewRows: 2,
-      delay,
-      sample: (u, v, stage) => {
-        const open = stage * (young ? 0.05 : 1),
-          a = [
-            1.18,
-            Math.PI - 1.18,
-            Math.PI + 0.4,
-            Math.PI * 1.5,
-            Math.PI * 2 - 0.4,
-          ][i],
-          w = 2 * u - 1,
-          angle = a + w * 0.72,
-          root = toreniaCorolla(angle / (Math.PI * 2), 0.82, stage, young),
-          rim = toreniaCorolla(angle / (Math.PI * 2), 1, stage, young),
-          width = w * (0.009 + 0.016 * Math.sin(Math.PI * v)),
-          radius = 0.057 * (1 - v) - 0.011 * v;
-        const closed: Vec3 = [
-          Math.cos(a) * radius - Math.sin(a) * width,
-          Math.sin(a) * radius + Math.cos(a) * width,
-          0.565 + 0.071 * v + i * 0.001,
-        ];
-        return [
-          closed[0] * (1 - open) + (root[0] * (1 - v) + rim[0] * v) * open,
-          closed[1] * (1 - open) + (root[1] * (1 - v) + rim[1] * v) * open,
-          closed[2] * (1 - open) +
-            (root[2] * (1 - v) + rim[2] * v + 0.019 * v) * open,
-        ];
-      },
-    });
   for (let i = 0; i < 4; i++) {
     const side = i % 2 ? 1 : -1,
       long = i >= 2,
-      z = long ? 0.51 : 0.41,
+      z = long ? 0.58 : 0.46,
       points: Vec3[] = [
-        [side * 0.043, 0.042, 0.18],
-        [side * 0.064, 0.107, z - 0.13],
-        [side * 0.013, 0.122, z],
+        [side * 0.043, 0.02, 0.24],
+        [side * 0.08, 0.05, z - 0.12],
+        [side * 0.009, 0.1, z],
       ];
     const folded: Vec3[] = points.map(([px, py, pz]) => [
       px * 0.32,
       py * 0.3,
-      pz * 0.83,
+      pz * 0.72,
     ]);
     TORENIA_MODEL.organs.push({
       name: "didynamous torenia filament",
@@ -182,14 +149,14 @@ for (let c = 0; c < 5; c++) {
         name: "paired torenia anther chamber",
         cluster: c,
         points: [
-          [side * 0.013, 0.122, z],
-          [side * 0.022, 0.122 + chamber * 0.009, z + 0.013],
-          [side * 0.037, 0.122 + chamber * 0.007, z + 0.024],
+          [side * 0.009, 0.1, z],
+          [side * 0.005, 0.1 + chamber * 0.009, z + 0.008],
+          [side * 0.003, 0.1 + chamber * 0.007, z + 0.016],
         ],
         foldedPoints: [
-          [side * 0.004, 0.037, z * 0.83],
-          [side * 0.007, 0.037 + chamber * 0.003, z * 0.83 + 0.01],
-          [side * 0.012, 0.037 + chamber * 0.002, z * 0.83 + 0.02],
+          [side * 0.003, 0.03, z * 0.72],
+          [side * 0.002, 0.03 + chamber * 0.003, z * 0.72 + 0.006],
+          [side * 0.001, 0.03 + chamber * 0.002, z * 0.72 + 0.012],
         ],
         radius: 0.006,
         endRadius: 0.004,
@@ -208,7 +175,7 @@ for (let c = 0; c < 5; c++) {
     foldedPoints: [
       [0, 0.005, 0.035],
       [0, 0.022, 0.26],
-      [0, 0.036, 0.49],
+      [0, 0.022, 0.47],
     ],
     radius: 0.0045,
     endRadius: 0.003,
@@ -237,11 +204,12 @@ export function toreniaStigma(
   const side = lobe ? 1 : -1,
     w = 2 * u - 1,
     spread = 0.034 * open * (1 - closure),
-    width = 0.004 + 0.026 * Math.sin(Math.PI * v) ** 0.8;
+    width =
+      (0.004 + 0.026 * Math.sin(Math.PI * v) ** 0.8) * (0.45 + 0.55 * open);
   return [
     w * width,
-    0.036 + 0.096 * open + side * (0.006 + spread) * v,
-    0.49 + 0.07 * open + 0.041 * v + 0.006 * w * w,
+    0.022 + 0.11 * open + side * (0.004 + 0.002 * open + spread) * v,
+    0.47 + 0.09 * open + (0.028 + 0.013 * open) * v + 0.006 * w * w,
   ];
 }
 export const TORENIA_HEAD_CENTER: Vec3 = [0, 0.02, 0.49];
@@ -260,4 +228,11 @@ for (let cluster = 0; cluster < 5; cluster++)
   });
 for (const organ of TORENIA_MODEL.organs)
   if (organ.cluster >= 3 && organ.foldedPoints)
-    organ.points = organ.foldedPoints.map((p) => [...p] as Vec3);
+    organ.points = organ.foldedPoints.map((p, i) =>
+      organ.name === "included torenia style"
+        ? (p.map(
+            (coordinate, axis) =>
+              coordinate * 0.95 + organ.points[i][axis] * 0.05,
+          ) as Vec3)
+        : ([...p] as Vec3),
+    );

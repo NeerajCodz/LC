@@ -2,6 +2,7 @@ import { Box3, Euler, Matrix4, Vector3, type BufferGeometry } from "three";
 import type { FlowerType, Quality, Vec3 } from "../flowers/types";
 import { FRITILLARIA_MODEL } from "../../components/flowers/fritillaria/fritillariaGeometry";
 import { HOYA_MODEL } from "../../components/flowers/hoya/hoyaGeometry";
+import { TORENIA_MODEL } from "../../components/flowers/torenia/toreniaGeometry";
 import { petalOpenness } from "./easing";
 import {
   specimenGeometry,
@@ -48,6 +49,26 @@ const STUDIES: Partial<Record<FlowerType, readonly InspectionStudy[]>> = {
   hoya: [
     { ...HOYA, name: "Single floret · full", bloom: 1, target: [0, 0.06, 0] },
     { ...HOYA, name: "Single floret · bud", bloom: 0, target: [0, 0.17, 0] },
+  ],
+  torenia: [
+    {
+      model: TORENIA_MODEL,
+      cluster: 0,
+      name: "Single floret · full",
+      bloom: 1,
+      target: [0, 0, 0.48],
+      back: [0, 0, 1],
+      up: [0, 1, 0],
+    },
+    {
+      model: TORENIA_MODEL,
+      cluster: 0,
+      name: "Single floret · bud",
+      bloom: 0,
+      target: [0, 0, 0.34],
+      back: [0.65, 0, 1],
+      up: [0, 1, 0],
+    },
   ],
 };
 export function inspectionStudies(

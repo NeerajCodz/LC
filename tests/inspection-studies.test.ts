@@ -150,7 +150,7 @@ test("targeted inspection frames real single-flower anatomy at every geometry ti
   );
   assert.ok(studies, "targeted inspection studies are missing");
   assert.equal(studies.inspectionStudies("rose").length, 0);
-  for (const type of ["fritillaria", "hoya"] as const) {
+  for (const type of ["fritillaria", "hoya", "torenia"] as const) {
     const descriptors = studies.inspectionStudies(type);
     assert.equal(descriptors.length, 2);
     const head = new Matrix4()
@@ -166,10 +166,17 @@ test("targeted inspection frames real single-flower anatomy at every geometry ti
       for (const study of descriptors) {
         const frame = studies.inspectionStudyFrame(study, quality, head);
         assert.ok(!frame.box.isEmpty());
-        assert.ok(
-          frame.box.getSize(new Vector3()).length() < 1,
-          "frame must contain one flower rather than the complete umbel/crown",
-        );
+        const size = frame.box.getSize(new Vector3());
+        if (type === "torenia")
+          assert.ok(
+            size.x < 0.68 && size.y < 0.56 && size.z < 0.85,
+            "frame must contain one trumpet rather than the whole flowering shoot",
+          );
+        else
+          assert.ok(
+            size.length() < 1,
+            "frame must contain one flower rather than the complete umbel/crown",
+          );
         const pose = fitInspectionBounds(
           frame.box,
           1.04,

@@ -308,7 +308,7 @@ if (process.env.DEV_INSPECTION === "1") {
         await healthy();
       });
 
-  for (const slug of ["fritillaria", "hoya"] as const)
+  for (const slug of ["fritillaria", "hoya", "torenia"] as const)
     for (const detail of ["specimen", "overview"] as const)
       test(`${slug}: targeted ${detail} anatomy inspection`, async ({
         page,

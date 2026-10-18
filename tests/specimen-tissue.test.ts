@@ -110,6 +110,48 @@ test("identical calyx shaders share a program while bicolored zinnia remains dis
   reference.dispose();
 });
 
+test("torenia custom corolla pigments opt in without tinting its stigma or changing shader programs", () => {
+  const plain = createSpecimenMaterial("torenia", "tube"),
+    red = createSpecimenMaterial("torenia", "tube", "#de315b"),
+    blue = createSpecimenMaterial("torenia", "tube", "#2878d4"),
+    stigma = createSpecimenMaterial("torenia", "petal", "#de315b", "inner"),
+    lobelia = createSpecimenMaterial("lobelia", "tube", "#de315b");
+  const materials = [plain, red, blue, stigma, lobelia];
+  try {
+    const shaders = materials.map(compile);
+    assert.deepEqual(
+      shaders.map((shader) => shader.uniforms.uSpecimenCustomColor?.value),
+      [0, 1, 1, 0, 0],
+      "only an explicit Torenia corolla color selects the custom pigment path",
+    );
+    assert.ok(
+      (shaders[1].uniforms.uPigmentBody.value as Color).equals(
+        new Color("#de315b"),
+      ),
+    );
+    assert.ok(
+      (shaders[2].uniforms.uPigmentBody.value as Color).equals(
+        new Color("#2878d4"),
+      ),
+    );
+    assert.ok(
+      (shaders[3].uniforms.uPigmentBody.value as Color).equals(
+        new Color("#e2d8ad"),
+      ),
+      "the stigma retains its independent cream tissue",
+    );
+    for (let i = 1; i < materials.length; i++) {
+      assert.equal(
+        materials[i].customProgramCacheKey(),
+        plain.customProgramCacheKey(),
+      );
+      assert.equal(shaders[i].fragmentShader, shaders[0].fragmentShader);
+    }
+  } finally {
+    materials.forEach((material) => material.dispose());
+  }
+});
+
 test("leaf programs share venation code while retaining independent pigment uniforms", () => {
   for (const venation of ["parallel", "palmate", "pinnate"] as const) {
     const first = createBotanicalBladeMaterial("hellebore", {

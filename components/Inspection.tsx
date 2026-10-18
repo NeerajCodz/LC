@@ -12,7 +12,12 @@ import { Box3, Group, PerspectiveCamera as ThreeCamera } from "three";
 import { botanicalEvents } from "@/lib/three/events";
 import { PerspectiveCamera, View } from "@react-three/drei";
 import { FLOWERS } from "@/lib/flowers/catalog";
-import type { FlowerType, Quality, Vec3 } from "@/lib/flowers/types";
+import type {
+  FlowerProps,
+  FlowerType,
+  Quality,
+  Vec3,
+} from "@/lib/flowers/types";
 import { fitInspectionBounds } from "@/lib/three/inspectionFraming";
 import {
   inspectionStudies,
@@ -95,6 +100,7 @@ function InspectionSpecimen({
   type,
   quality,
   wind,
+  color,
   view,
   target,
   onReady,
@@ -103,6 +109,7 @@ function InspectionSpecimen({
   type: FlowerType;
   quality: Quality;
   wind: boolean;
+  color?: FlowerProps["color"];
   view: InspectionView;
   target: Vec3;
   onReady: () => void;
@@ -124,6 +131,7 @@ function InspectionSpecimen({
       <group ref={plant} rotation={[0, view.angle, 0]}>
         <Flower
           type={type}
+          color={color}
           bloom={view.bloom}
           position={[0, 0.25, 0]}
           quality={quality}
@@ -171,6 +179,7 @@ function InspectionTile({
   type,
   quality,
   wind,
+  color,
   view,
   target,
   index,
@@ -179,6 +188,7 @@ function InspectionTile({
   type: FlowerType;
   quality: Quality;
   wind: boolean;
+  color?: FlowerProps["color"];
   view: InspectionView;
   target: Vec3;
   index: number;
@@ -203,6 +213,7 @@ function InspectionTile({
           type={type}
           quality={quality}
           wind={wind}
+          color={color}
           view={view}
           target={target}
           onReady={markReady}
@@ -219,6 +230,7 @@ export default function Inspection() {
   const [type, setType] = useState<FlowerType>("rose");
   const [wind, setWind] = useState(false);
   const [overview, setOverview] = useState(false);
+  const [palette, setPalette] = useState<"botanical" | "coral">("botanical");
   const [tierOverride, setTierOverride] = useState<
     "standard" | "constrained" | null
   >(null);
@@ -247,6 +259,7 @@ export default function Inspection() {
       <div
         style={{
           display: "flex",
+          flexWrap: "wrap",
           alignItems: "center",
           gap: 24,
           position: "relative",
@@ -295,6 +308,19 @@ export default function Inspection() {
             <option value="constrained">Constrained detail</option>
           </select>
         </label>
+        <label>
+          Palette{" "}
+          <select
+            aria-label="Inspection palette"
+            value={palette}
+            onChange={(event) =>
+              setPalette(event.target.value as "botanical" | "coral")
+            }
+          >
+            <option value="botanical">Botanical palette</option>
+            <option value="coral">Coral study tint</option>
+          </select>
+        </label>
         <button aria-pressed={wind} onClick={() => setWind(!wind)}>
           Wind study
         </button>
@@ -333,6 +359,7 @@ export default function Inspection() {
               type={type}
               quality={quality}
               wind={wind}
+              color={palette === "coral" ? "#e66a54" : undefined}
               view={v}
               target={target}
               index={i + 1}

@@ -4,12 +4,13 @@ import type { SpecimenOrgan } from "@/lib/three/specimenModel";
 
 const blade = leafBlade("coarsely serrate torenia blade", 0.66, 0.245, {
   teeth: 12,
-  depth: 0.18,
+  depth: 0.13,
   cup: 0.049,
   thickness: 0.01,
 });
 export const TORENIA_LEAF = {
   ...blade,
+  minimumRows: 36,
   sample: (u: number, v: number, open: number): Vec3 => {
     const p = blade.sample(u, v, open);
     return [p[0], p[1] + 0.105, p[2]];

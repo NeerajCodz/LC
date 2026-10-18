@@ -1,0 +1,921 @@
+{
+  "status": "passed",
+  "failure": null,
+  "startedAt": "2026-10-18T05:11:55.311Z",
+  "finishedAt": "2026-10-18T05:13:09.496Z",
+  "environment": {
+    "node": "v24.19.0",
+    "platform": "win32",
+    "arch": "x64",
+    "osRelease": "10.0.26300",
+    "cpu": "13th Gen Intel(R) Core(TM) i7-13650HX",
+    "logicalProcessors": 20
+  },
+  "configuration": {
+    "species": [
+      "torenia"
+    ],
+    "devices": [
+      "desktop",
+      "mobile"
+    ],
+    "frames": 120,
+    "baseUrl": "http://localhost:1607",
+    "optionalWebGPU": "disabled",
+    "cases": "sequential; fresh page per species/device; specimen then macro"
+  },
+  "methodology": {
+    "cadence": "Shared captureRenderingCost: 90-count per-view warmup guarantees 60 fresh advances despite 30-advance publication bins; cross another boundary, then sample >=120 advances by default with 50ms polling/RPC. Approximate successful R3F advances, not GPU completion or compositor presentation.",
+    "liveCpu": "Solver and CPU displacement/normal texture preparation are arithmetic means for first 60 calls, then EWMA coefficient 1/60; rounded to 2 decimals, carry across views and do not describe only the sampled cadence window. Texture preparation excludes GPU upload and tissue/HDR baking.",
+    "geometryQuality": "Each view must uniquely match the stable first authored cage-bound shell's actual draw geometry (indices, position/UV/folded counts and UV steps) to the real species factory's low/medium/high/ultra outputs before warmup and at both native-window endpoints; fresh mesh draw callbacks are required during that window. N8AO's temporary material visibility passes cannot erase or substitute the selected shell. This verifies the sampled shell tier, not a physical-device class or every organ mesh.",
+    "native": "Separate post-warmup >=60-published-advance window. Actual native draw inputs count submitted indices/vertices, multiplied by instance count. Main-scene render boundaries are renderer.render calls containing a visible flower-head, not complete R3F advances; totals also include helper/postprocessing draws. Lifetime maxima include startup and earlier views. Instrumentation overhead is included.",
+    "firstRender": "documentTimeOriginToFirstNativeMainSceneRenderReturnMs records the first qualifying native main-scene CPU submission return; no GPU fence or compositor confirmation. startupTo30FramesMs includes navigation/startup and 30 advances.",
+    "bake": "No bake durations measured. Optional WebGPU is disabled; backend labels only confirm fallback completion. Application-wide tissue/raw HDR and per-renderer PMREM caches exist; native sampling begins after warmup.",
+    "limits": "Same desktop host for Chromium and Windows WebKit iPhone emulation; no physical-phone/FPS claim. Power mode/CPU affinity/background apps are not isolated. R3F targets 60/30 advances per second and bounds simulation delta to 50ms; report wall time independently."
+  },
+  "sourceHashes": {
+    "components/Experience.tsx": "a7da3fa628021e63289d3f607c72958ba06751acc0106f18a1ec5565e2d6ac37",
+    "components/flowers/BotanicalStem.tsx": "a3bed9f0a5bf5e5f7cc1454e841bcfc534e10693ea3949f44a57a415c701ea89",
+    "components/flowers/BotanicalView.tsx": "47fb3ab1facdc424cdaf310d5efb3f80b05aa6e85981a04a5affe31655f78c86",
+    "components/flowers/FloretInstances.tsx": "e8e3177dcb2ab38d220e3c80714786b0d085a7d9d6a193bbe12d8ba4e95f5132",
+    "components/flowers/Flower.tsx": "3da7062b7fd895c311e0e19fd5f7d60db5ad466aaf231a400e14ab0363dc06b3",
+    "components/flowers/FlowerPlant.tsx": "85c4ba0691f7822bfbdaa5699fd74d9099aea43b9e0b2e8634659b0298cedd26",
+    "components/flowers/FlowerScene.tsx": "8b7e3622a8fea09265ccfdc5899562fb6a7de4bb4eb6a5d6931190c01151c316",
+    "components/flowers/OverviewSurfaces.tsx": "cd29cd7efb3218303dd02cbde613d8c655613a5e4866dd375daf8fa3d4e2fad3",
+    "components/flowers/SpecimenAssembly.tsx": "6e6ff5acc218224178a924e6c16eadae8262d9073f4c128385db8cc762087096",
+    "components/flowers/fritillaria/Fritillaria.tsx": "5911167d975d622d93d2b0f797efcab3b985e4730eb11fbf5edfac96b46d812b",
+    "components/flowers/fritillaria/FritillariaFoliage.tsx": "97b739278b1bfacbc2ed12c9e74f960ea180f0b097e0ea45bd5774393a5b6b5d",
+    "components/flowers/fritillaria/fritillariaGeometry.ts": "492ddc32a86f685aa291d84cb2f807f7a2538293a7f704e08a89825fc31156d2",
+    "components/flowers/fritillaria/fritillariaLeaf.ts": "fa8de66e35eb6dd63989bab5f13f00cb9cb97d71a86e3895e1dbf9f63017c854",
+    "components/flowers/hollyhock/Hollyhock.tsx": "819ae47226e724fe42a0bb83ffa19af45e7d326d389dd2be9cea66ff7df63f58",
+    "components/flowers/hollyhock/HollyhockFoliage.tsx": "f49a13dcab246724bbce12c813f273abe26303826acaf7bf7bcca36d3229fb71",
+    "components/flowers/hollyhock/hollyhockGeometry.ts": "09668a805fdf254373a3bb4b9c57e3709a999c6341e3e075b2f562ad55e518e2",
+    "components/flowers/hollyhock/hollyhockLeaf.ts": "6e6595823d4cfa479803d1bb5409344b269b6dec3f28c47850fea174ca74d5b8",
+    "components/flowers/hollyhock/hollyhockPubescence.ts": "cc10092b32470260de051cc41b84f1cd1bbc81a0b48fa63f5459811594cc6a42",
+    "components/flowers/hoya/Hoya.tsx": "12610174dd34d5f47e533c2bf6829b5a9d8ad2a286cb6d819c6802b8916a39a5",
+    "components/flowers/hoya/HoyaFoliage.tsx": "677f33998f105081abd4f099ac89b4ca2bbe51a2cc32d06d27cf8e05d7acb99c",
+    "components/flowers/hoya/hoyaGeometry.ts": "fef95ab61d5d9b884c793cf155a4f1088c6b26735a0bea9e12e3672dbef1f912",
+    "components/flowers/hoya/hoyaLeaf.ts": "90bbdb20173fe5c369424e2101767bc05fa06177bd01504fa3298f34e1990625",
+    "components/flowers/impatiens/Impatiens.tsx": "aeaeb1c27de206123cff2163909d1fbdbca504297163b2e206ef7a36d5b3d86a",
+    "components/flowers/impatiens/ImpatiensFoliage.tsx": "dfe1efacc8cc5fdff7bb15a01923b25420885acd061837c6e9dd4a897ac1b582",
+    "components/flowers/impatiens/impatiensGeometry.ts": "ee307af3ac50485c5d717406436df60f389fda9675a2b246123739cd70f7ecb9",
+    "components/flowers/impatiens/impatiensLeaf.ts": "d56d9d5a32fe20b486c7f6c3401387d2358d908783cc954e072e6225f46ff350",
+    "components/flowers/ixora/Ixora.tsx": "4f2a83a36210c400ba9757f32af44b9d732da2817bb9fa01baeb35beb83681d6",
+    "components/flowers/ixora/IxoraFoliage.tsx": "987c72facad8f1f49e1e19e23d688eff5ba1998f27016f726f3bab478ff44bf9",
+    "components/flowers/ixora/ixoraGeometry.ts": "feb9efdf09e1ad4498045c23763b9c3a1eb02a5bcb07393972d224eba3c81f7f",
+    "components/flowers/ixora/ixoraLeaf.ts": "9744010bc87d22b097505965684fe5aefbc8bfa966c9b1713134b913fa563f76",
+    "components/flowers/lobelia/Lobelia.tsx": "601be334dfe406a4f4fefce475cfb802eacd9934455fcd126153822c7a01b5df",
+    "components/flowers/lobelia/LobeliaFoliage.tsx": "945207b46213a48d2cbd8cc0784f31a0012ee018c868d70c7bbb4ea52615fc3c",
+    "components/flowers/lobelia/lobeliaGeometry.ts": "9fa895b2822ac45f92d23ffc45951e9b600d9f6495be272fe6178a613f040d18",
+    "components/flowers/lobelia/lobeliaLeaf.ts": "56ab92ce230da22dfe540d8af6c7151e291a90fb83991cae466a379e690cebe6",
+    "components/flowers/lobelia/lobeliaLeafAttachments.ts": "f5f8a50834e7940d863febb205737c37375df3dbfcb3ccca9a62616589dcde66",
+    "components/flowers/lupine/Lupine.tsx": "dea06362f254d6b0764fb9679bf77c92ea9320a94ef5e2ed9c433fdce666999a",
+    "components/flowers/lupine/LupineFoliage.tsx": "87de5c1b8ed805403f5511250895427f911bb194d90f0bfdc183adf38ab19b0f",
+    "components/flowers/lupine/lupineGeometry.ts": "24d2d3a4ccde780c5e432a4cf0948feb257dadf1eb16e2c749b7dc18d175aab9",
+    "components/flowers/lupine/lupineLeaf.ts": "077ce8d50fe2c91d1a8f63cc591ae1e69787cebba85390e6cd8d96a91f0268e3",
+    "components/flowers/pentas/Pentas.tsx": "b654138ef7981e9d10f1159cb00544313a23197dc0938e3c7a2ed3563216c92c",
+    "components/flowers/pentas/PentasFoliage.tsx": "00f8a9770aca8083454818547de27536fb6f2c920d23f1f2f766bf851e109ddb",
+    "components/flowers/pentas/pentasGeometry.ts": "49df55293c486dcd975ca70e70448f407ac3d39b731b0ca5eb43fac418625b0d",
+    "components/flowers/pentas/pentasLeaf.ts": "92f2a5bfb9aa06f3047a76cc20e97d227a96e45dd7030140e39180a880f0bfbc",
+    "components/flowers/pentas/pentasPubescence.ts": "64daf226ae17f4983e3bb99abaa96df8fa459eab3ccb8c9129771af1d0a22c9f",
+    "components/flowers/torenia/Torenia.tsx": "664453466386d57dcee8fbbc3ab69d3ff35e9c20d8b909c33e06f66073359fa0",
+    "components/flowers/torenia/ToreniaFoliage.tsx": "67ae39d08707f7eba4a7c6a26453193637748e05f9a60ac56eb7c098192eb835",
+    "components/flowers/torenia/ToreniaStigmas.tsx": "12081000f3298390a9211b17046b4568bbe7ef153ddc8d21a6fcf5133665a4fe",
+    "components/flowers/torenia/toreniaGeometry.ts": "6c5c2192a7920c295b697105db35a6cdf05392d4d9cd4238270584837180fddd",
+    "components/flowers/torenia/toreniaLeaf.ts": "bc3a59c73b6877f7fcad403528c133f35a61ec6905b533ec0a0c4a1ad25d1265",
+    "components/flowers/torenia/toreniaStigmaGeometry.ts": "95d60fb64b846ad3292c5fa9514df93e424180e593d077ed3560cf415431b38a",
+    "components/flowers/torenia/toreniaStigmaProbe.ts": "0fd85155f086ffad6c9d8ba7a4dfa403e17e1262a588e271fc73c30ec1b166ec",
+    "components/flowers/torenia/toreniaStigmaState.ts": "39b6bceec5b9a26dd3fb87a3a673a92f821aee8dea54d7dd595e6a6ea858c27d",
+    "components/flowers/tuberose/Tuberose.tsx": "91aaae56b82f5d1f0af672438e29f3eb743cc3e1b7641f224fdec6701ea94a04",
+    "components/flowers/tuberose/TuberoseFoliage.tsx": "31ac4962e258e7304ba644f755735d5c9831d3479f2fdee29f49163f5c6ded17",
+    "components/flowers/tuberose/tuberoseGeometry.ts": "c590c8b606a32b7816c688a3c4d6a35308262fcda0725f213e99ae977209164b",
+    "components/flowers/tuberose/tuberoseLeaf.ts": "7de0dc8fbb597d20bbe04532be1af0a0e81275a7f78242a7a05000232054def5",
+    "components/scene/CameraRig.tsx": "b428d8d46ba126c61d39541705fdaf0f68078d1b14ae3ee07f04da5b9587c15d",
+    "components/scene/Environment.tsx": "2c0512fef3094743e3d45f82701403436e258f4c9e4fc102cd72e1faf7dc55f7",
+    "components/scene/RenderBudget.tsx": "752207852b79766c333c49e18b0ae16d08582711e6dfb13dfd05d8c6de6d8f16",
+    "components/scene/SafeCanvas.tsx": "2064b5d8721f35fd49aa996becf119a3eff2885dae2b819bde8c9a5fb8c31bf9",
+    "components/scene/SceneReady.tsx": "e88d90a721ec41bbec185406a883f5c34d70eec34c9539f63c99adcdd1b999a1",
+    "components/scene/SurfaceDetail.tsx": "2f98eb61db39d4f36e58d2f041aee8c69d84a74c89d6519746cb638b7fda7f5b",
+    "dist/cymes-and-spikes-work/measure-cymes-and-spikes-rendering.ts": "086768c82e60478e6cbf50828b9f23fb4c005e4dac02ee86a0544d4347a06eeb",
+    "dist/cymes-and-spikes-work/measurement-common.ts": "1a1cd38da657c3d3ec03ebf89c9dab9e32f990fafb5ac6d72262455f9fd15766",
+    "dist/cymes-and-spikes-work/native-render-costs.ts": "9dafa2c6df5e75e75d17a78b56112b8e54c0a0578d8306eddc77f9cfa1bec8ec",
+    "hooks/useExperienceSettings.ts": "0cf9282eaec19458a4d58440a23d8b48aa6ccf141c75273528395d8ca4b2698f",
+    "lib/flowers/catalog.ts": "3751f46078c66b00d226d8cfa8de26ffe9743a317d3017756f56c18da3da9b99",
+    "lib/flowers/framing.ts": "f7460dffef79bb00854a46bef9e974cd53191e9b1da376acacfec17da1a4b267",
+    "lib/flowers/structures.ts": "730cf1c0b1b490aba68a5790670a1436352f872056c32595377e8a09c452391f",
+    "lib/flowers/types.ts": "c99f46551ad8b83b3e441a2470471c94a80c283bde8b196ab6d23cf8033b74e5",
+    "lib/gpu/bake-queue.ts": "3a3ee55862a3b4b9aff4852538fcb88e5064a6d97881ed179b600b057fc14111",
+    "lib/gpu/studio-field.ts": "ad38826336b7395dfca1d3577d7f36dddf1a09636b1bfef629095127741f8227",
+    "lib/gpu/tissue-atlas.ts": "8a7c9cc66d7a5be8b8dccc770bc4ee52590874d58fadb7b3a0de6ba898debd3a",
+    "lib/gpu/tissue-fallback.ts": "dc840dcc27909e00fad5c7b322d5f1fd3461a389330b12e54ab00f50930befd2",
+    "lib/performance.ts": "7de2e2211436b320c9b7256bd756bdfa18034a02878d654e0bad951e73a565b7",
+    "lib/three/floralOrgans.ts": "a7ffa66437f81f82743f4ae4637873640a7a9e5cc62d322689560ec61b714dec",
+    "lib/three/geometry.ts": "08c966428a6c1d1fa6c0181994a94ed1793fb41f6ff448a524d05949a6511de8",
+    "lib/three/materials.ts": "5bed0e5bb56a9d1d745350485e11cf4254c6d0b96a2150b87b5b5034b5b5ad13",
+    "lib/three/organicTube.ts": "5dee2ec6711aaa2e497bfcf62ff06d5911bc9390e4f2e582c86dc126495460eb",
+    "lib/three/petalContacts.ts": "00e987f3ad7819e75c27737a9c5e9d24766ac82014831b7c59150a9513a5eafd",
+    "lib/three/petalDeformation.ts": "c0c730435a496a5bf51be3cbfe38d87bd4e23f28bb319d1f961a74f3296c0dc3",
+    "lib/three/petalDynamics.ts": "8b90eedb0f183d90c89dea796e303e294b2cb36b57ff42bb9b78a80726071549",
+    "lib/three/specimenMaterials.ts": "c629132ce9a590f0d09d84d9ac556a2e1c57517e16e2de1e68d2d11de3c92c92",
+    "lib/three/specimenModel.ts": "a4ffa0f9151e516ce22e186708e12d69dad8b3eedbb8da7b2039ee2134da3970",
+    "lib/three/specimenTissue.ts": "65a60681c2c5901a006a072c35c5261f00cf4e2d754e09ef840c7842fc8f8997",
+    "lib/three/studio-environment.ts": "40240db946ddd44242f722a8e1bffa931a07c9f7cdabd34e493734fd93f0bc86",
+    "lib/three/surfaceBatch.ts": "7849afbd58b734e1a57838bf51a685a0a1595c9677b5dc9852c84dfff44bb3da",
+    "lib/three/surfaceBatchPose.ts": "3828b9fa54592c0fabec565c586aa32763cb4fbd0db8629719ea2c5a5324e91e",
+    "lib/three/surfaceClock.ts": "4ac05b7d2f33bfaf31bf1a4b84ce3c609c14052a1fb527bb1621af2374c28474",
+    "package.json": "23ae756e4fcbadc6ddc2615a5257f47955b617e527df164eed5f86952a5d60a2",
+    "pnpm-lock.yaml": "fbda95cd23ef06288880893a9334d5a4c2c844d43d4b3c8dafa91aaf24091783",
+    "tests/browser/pixel-content.ts": "e17440741b6c19980c2935cb1e842f942d2a2130621ca10032663adcdba57851",
+    "tests/browser/render-costs.ts": "06832feb291036852408808ae88cca55496557cd92393c6aebd37a016121c4b2",
+    "tests/cymes-and-spikes-models.ts": "f1ab6e89c35364dc2857e3aa1022fbc2e339501240dd70a0b6650409f2b2832a"
+  },
+  "sourceFilesUnchangedDuringRun": true,
+  "qualityDiagnostics": [
+    {
+      "slug": "torenia",
+      "target": "desktop",
+      "view": "specimen",
+      "expectedQuality": "high",
+      "factoryTiers": [
+        {
+          "quality": "low",
+          "evidence": {
+            "positionVertices": 2176,
+            "indexedInputs": 13056,
+            "uvVertices": 2176,
+            "foldedPositionVertices": 2176,
+            "foldedNormalVertices": 2176,
+            "uStep": 0.015625,
+            "vStep": 0.0625
+          }
+        },
+        {
+          "quality": "medium",
+          "evidence": {
+            "positionVertices": 3200,
+            "indexedInputs": 19200,
+            "uvVertices": 3200,
+            "foldedPositionVertices": 3200,
+            "foldedNormalVertices": 3200,
+            "uStep": 0.015625,
+            "vStep": 0.0416666679084301
+          }
+        },
+        {
+          "quality": "high",
+          "evidence": {
+            "positionVertices": 4224,
+            "indexedInputs": 25344,
+            "uvVertices": 4224,
+            "foldedPositionVertices": 4224,
+            "foldedNormalVertices": 4224,
+            "uStep": 0.015625,
+            "vStep": 0.03125
+          }
+        },
+        {
+          "quality": "ultra",
+          "evidence": {
+            "positionVertices": 5760,
+            "indexedInputs": 34560,
+            "uvVertices": 5760,
+            "foldedPositionVertices": 5760,
+            "foldedNormalVertices": 5760,
+            "uStep": 0.015625,
+            "vStep": 0.022727273404598236
+          }
+        }
+      ],
+      "observed": {
+        "positionVertices": 4224,
+        "indexedInputs": 25344,
+        "uvVertices": 4224,
+        "foldedPositionVertices": 4224,
+        "foldedNormalVertices": 4224,
+        "uStep": 0.015625,
+        "vStep": 0.03125
+      },
+      "errors": []
+    },
+    {
+      "slug": "torenia",
+      "target": "desktop",
+      "view": "macro",
+      "expectedQuality": "ultra",
+      "factoryTiers": [
+        {
+          "quality": "low",
+          "evidence": {
+            "positionVertices": 2176,
+            "indexedInputs": 13056,
+            "uvVertices": 2176,
+            "foldedPositionVertices": 2176,
+            "foldedNormalVertices": 2176,
+            "uStep": 0.015625,
+            "vStep": 0.0625
+          }
+        },
+        {
+          "quality": "medium",
+          "evidence": {
+            "positionVertices": 3200,
+            "indexedInputs": 19200,
+            "uvVertices": 3200,
+            "foldedPositionVertices": 3200,
+            "foldedNormalVertices": 3200,
+            "uStep": 0.015625,
+            "vStep": 0.0416666679084301
+          }
+        },
+        {
+          "quality": "high",
+          "evidence": {
+            "positionVertices": 4224,
+            "indexedInputs": 25344,
+            "uvVertices": 4224,
+            "foldedPositionVertices": 4224,
+            "foldedNormalVertices": 4224,
+            "uStep": 0.015625,
+            "vStep": 0.03125
+          }
+        },
+        {
+          "quality": "ultra",
+          "evidence": {
+            "positionVertices": 5760,
+            "indexedInputs": 34560,
+            "uvVertices": 5760,
+            "foldedPositionVertices": 5760,
+            "foldedNormalVertices": 5760,
+            "uStep": 0.015625,
+            "vStep": 0.022727273404598236
+          }
+        }
+      ],
+      "observed": {
+        "positionVertices": 5760,
+        "indexedInputs": 34560,
+        "uvVertices": 5760,
+        "foldedPositionVertices": 5760,
+        "foldedNormalVertices": 5760,
+        "uStep": 0.015625,
+        "vStep": 0.022727273404598236
+      },
+      "errors": []
+    },
+    {
+      "slug": "torenia",
+      "target": "mobile",
+      "view": "specimen",
+      "expectedQuality": "low",
+      "factoryTiers": [
+        {
+          "quality": "low",
+          "evidence": {
+            "positionVertices": 2176,
+            "indexedInputs": 13056,
+            "uvVertices": 2176,
+            "foldedPositionVertices": 2176,
+            "foldedNormalVertices": 2176,
+            "uStep": 0.015625,
+            "vStep": 0.0625
+          }
+        },
+        {
+          "quality": "medium",
+          "evidence": {
+            "positionVertices": 3200,
+            "indexedInputs": 19200,
+            "uvVertices": 3200,
+            "foldedPositionVertices": 3200,
+            "foldedNormalVertices": 3200,
+            "uStep": 0.015625,
+            "vStep": 0.0416666679084301
+          }
+        },
+        {
+          "quality": "high",
+          "evidence": {
+            "positionVertices": 4224,
+            "indexedInputs": 25344,
+            "uvVertices": 4224,
+            "foldedPositionVertices": 4224,
+            "foldedNormalVertices": 4224,
+            "uStep": 0.015625,
+            "vStep": 0.03125
+          }
+        },
+        {
+          "quality": "ultra",
+          "evidence": {
+            "positionVertices": 5760,
+            "indexedInputs": 34560,
+            "uvVertices": 5760,
+            "foldedPositionVertices": 5760,
+            "foldedNormalVertices": 5760,
+            "uStep": 0.015625,
+            "vStep": 0.022727273404598236
+          }
+        }
+      ],
+      "observed": {
+        "positionVertices": 2176,
+        "indexedInputs": 13056,
+        "uvVertices": 2176,
+        "foldedPositionVertices": 2176,
+        "foldedNormalVertices": 2176,
+        "uStep": 0.015625,
+        "vStep": 0.0625
+      },
+      "errors": []
+    },
+    {
+      "slug": "torenia",
+      "target": "mobile",
+      "view": "macro",
+      "expectedQuality": "medium",
+      "factoryTiers": [
+        {
+          "quality": "low",
+          "evidence": {
+            "positionVertices": 2176,
+            "indexedInputs": 13056,
+            "uvVertices": 2176,
+            "foldedPositionVertices": 2176,
+            "foldedNormalVertices": 2176,
+            "uStep": 0.015625,
+            "vStep": 0.0625
+          }
+        },
+        {
+          "quality": "medium",
+          "evidence": {
+            "positionVertices": 3200,
+            "indexedInputs": 19200,
+            "uvVertices": 3200,
+            "foldedPositionVertices": 3200,
+            "foldedNormalVertices": 3200,
+            "uStep": 0.015625,
+            "vStep": 0.0416666679084301
+          }
+        },
+        {
+          "quality": "high",
+          "evidence": {
+            "positionVertices": 4224,
+            "indexedInputs": 25344,
+            "uvVertices": 4224,
+            "foldedPositionVertices": 4224,
+            "foldedNormalVertices": 4224,
+            "uStep": 0.015625,
+            "vStep": 0.03125
+          }
+        },
+        {
+          "quality": "ultra",
+          "evidence": {
+            "positionVertices": 5760,
+            "indexedInputs": 34560,
+            "uvVertices": 5760,
+            "foldedPositionVertices": 5760,
+            "foldedNormalVertices": 5760,
+            "uStep": 0.015625,
+            "vStep": 0.022727273404598236
+          }
+        }
+      ],
+      "observed": {
+        "positionVertices": 3200,
+        "indexedInputs": 19200,
+        "uvVertices": 3200,
+        "foldedPositionVertices": 3200,
+        "foldedNormalVertices": 3200,
+        "uStep": 0.015625,
+        "vStep": 0.0416666679084301
+      },
+      "errors": []
+    }
+  ],
+  "results": [
+    {
+      "target": "desktop",
+      "browserVersion": "155.0.8059.80",
+      "slug": "torenia",
+      "view": "specimen",
+      "geometryQuality": "high",
+      "geometryQualityEvidence": {
+        "scope": "Stable first authored cage-bound specimen shell observed from its actual mesh draw callback, compared with exact topology and UV grid counts from its real factory at all four focused tiers; uniquely matched before warmup and at both native-window endpoints, with fresh observed shell draws during the native window.",
+        "expectedSurfaceName": "bilateral torenia trumpet",
+        "factoryTiers": [
+          {
+            "quality": "low",
+            "evidence": {
+              "positionVertices": 2176,
+              "indexedInputs": 13056,
+              "uvVertices": 2176,
+              "foldedPositionVertices": 2176,
+              "foldedNormalVertices": 2176,
+              "uStep": 0.015625,
+              "vStep": 0.0625
+            }
+          },
+          {
+            "quality": "medium",
+            "evidence": {
+              "positionVertices": 3200,
+              "indexedInputs": 19200,
+              "uvVertices": 3200,
+              "foldedPositionVertices": 3200,
+              "foldedNormalVertices": 3200,
+              "uStep": 0.015625,
+              "vStep": 0.0416666679084301
+            }
+          },
+          {
+            "quality": "high",
+            "evidence": {
+              "positionVertices": 4224,
+              "indexedInputs": 25344,
+              "uvVertices": 4224,
+              "foldedPositionVertices": 4224,
+              "foldedNormalVertices": 4224,
+              "uStep": 0.015625,
+              "vStep": 0.03125
+            }
+          },
+          {
+            "quality": "ultra",
+            "evidence": {
+              "positionVertices": 5760,
+              "indexedInputs": 34560,
+              "uvVertices": 5760,
+              "foldedPositionVertices": 5760,
+              "foldedNormalVertices": 5760,
+              "uStep": 0.015625,
+              "vStep": 0.022727273404598236
+            }
+          }
+        ]
+      },
+      "frames": 120,
+      "elapsedMs": 2528.365499999998,
+      "solverStartSteps": 150,
+      "width": 3098,
+      "height": 1936,
+      "contextLost": false,
+      "budget": "desktop",
+      "tissue": "webgl",
+      "lighting": "webgl",
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3050 6GB Laptop GPU (0x000025EC) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "physics": "detailed",
+      "nodes": 640,
+      "solverSteps": 300,
+      "solverStepDelta": 150,
+      "approximateSuccessfulAdvancesPerSecond": 47.46149241476365,
+      "liveSolverCpuRollingMeanMs": 9.03,
+      "liveDisplacementTexturePreparationCpuRollingMeanMs": 0.06,
+      "startupTo30FramesMs": 6806.821000000001,
+      "startupScope": "Node wall time immediately before page.goto through publication of at least 30 successful advances; includes navigation and startup, not first-frame latency.",
+      "warmPageElapsedMs": 14252.818299999999,
+      "deviceSignals": {
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+        "hardwareConcurrency": 20,
+        "deviceMemoryGiB": 16,
+        "coarsePointer": false,
+        "viewport": {
+          "width": 1600,
+          "height": 1000
+        },
+        "devicePixelRatio": 1
+      },
+      "native": {
+        "elapsedMs": 1231.5,
+        "publishedAdvanceDelta": 60,
+        "nativeDrawCalls": 5900,
+        "nativeSubmittedInputs": 71401446,
+        "mainSceneRenderBoundaries": 118,
+        "mainSceneDrawCalls": 5310,
+        "mainSceneSubmittedInputs": 71399676,
+        "meanDrawCallsPerMainSceneRenderBoundary": 45,
+        "meanInputsPerMainSceneRenderBoundary": 605082,
+        "lifetimeMaxMainSceneDrawCalls": 89,
+        "lifetimeMaxMainSceneSubmittedInputs": 1210158,
+        "documentTimeOriginToFirstNativeMainSceneRenderReturnMs": 2808.5,
+        "contextLosses": 0,
+        "surfaceAtStart": {
+          "positionVertices": 4224,
+          "indexedInputs": 25344,
+          "uvVertices": 4224,
+          "foldedPositionVertices": 4224,
+          "foldedNormalVertices": 4224,
+          "uStep": 0.015625,
+          "vStep": 0.03125
+        },
+        "surfaceAtEnd": {
+          "positionVertices": 4224,
+          "indexedInputs": 25344,
+          "uvVertices": 4224,
+          "foldedPositionVertices": 4224,
+          "foldedNormalVertices": 4224,
+          "uStep": 0.015625,
+          "vStep": 0.03125
+        },
+        "observedSurfaceDraws": 59,
+        "surfaceGeometryUuidAtStart": "b9c582a5-a9b8-4f9a-a5e9-73161ca38d54",
+        "surfaceGeometryUuidAtEnd": "b9c582a5-a9b8-4f9a-a5e9-73161ca38d54",
+        "scope": "Separate post-warmup native window. Inputs are index/vertex draw counts multiplied by instance count, not unique vertices. Main-scene render boundaries contain a visible flower-head; helper/postprocessing calls remain in native totals. A render return is CPU submission, not GPU completion or compositor presentation. Lifetime maxima include startup and previous views."
+      },
+      "errors": []
+    },
+    {
+      "target": "desktop",
+      "browserVersion": "155.0.8059.80",
+      "slug": "torenia",
+      "view": "macro",
+      "geometryQuality": "ultra",
+      "geometryQualityEvidence": {
+        "scope": "Stable first authored cage-bound specimen shell observed from its actual mesh draw callback, compared with exact topology and UV grid counts from its real factory at all four focused tiers; uniquely matched before warmup and at both native-window endpoints, with fresh observed shell draws during the native window.",
+        "expectedSurfaceName": "bilateral torenia trumpet",
+        "factoryTiers": [
+          {
+            "quality": "low",
+            "evidence": {
+              "positionVertices": 2176,
+              "indexedInputs": 13056,
+              "uvVertices": 2176,
+              "foldedPositionVertices": 2176,
+              "foldedNormalVertices": 2176,
+              "uStep": 0.015625,
+              "vStep": 0.0625
+            }
+          },
+          {
+            "quality": "medium",
+            "evidence": {
+              "positionVertices": 3200,
+              "indexedInputs": 19200,
+              "uvVertices": 3200,
+              "foldedPositionVertices": 3200,
+              "foldedNormalVertices": 3200,
+              "uStep": 0.015625,
+              "vStep": 0.0416666679084301
+            }
+          },
+          {
+            "quality": "high",
+            "evidence": {
+              "positionVertices": 4224,
+              "indexedInputs": 25344,
+              "uvVertices": 4224,
+              "foldedPositionVertices": 4224,
+              "foldedNormalVertices": 4224,
+              "uStep": 0.015625,
+              "vStep": 0.03125
+            }
+          },
+          {
+            "quality": "ultra",
+            "evidence": {
+              "positionVertices": 5760,
+              "indexedInputs": 34560,
+              "uvVertices": 5760,
+              "foldedPositionVertices": 5760,
+              "foldedNormalVertices": 5760,
+              "uStep": 0.015625,
+              "vStep": 0.022727273404598236
+            }
+          }
+        ]
+      },
+      "frames": 120,
+      "elapsedMs": 2530.2681999999986,
+      "solverStartSteps": 480,
+      "width": 3098,
+      "height": 1936,
+      "contextLost": false,
+      "budget": "desktop",
+      "tissue": "webgl",
+      "lighting": "webgl",
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3050 6GB Laptop GPU (0x000025EC) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "physics": "detailed",
+      "nodes": 640,
+      "solverSteps": 630,
+      "solverStepDelta": 150,
+      "approximateSuccessfulAdvancesPerSecond": 47.425802529550054,
+      "liveSolverCpuRollingMeanMs": 12.16,
+      "liveDisplacementTexturePreparationCpuRollingMeanMs": 0.08,
+      "startupTo30FramesMs": 6806.821000000001,
+      "startupScope": "Node wall time immediately before page.goto through publication of at least 30 successful advances; includes navigation and startup, not first-frame latency.",
+      "warmPageElapsedMs": 22060.2637,
+      "deviceSignals": {
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+        "hardwareConcurrency": 20,
+        "deviceMemoryGiB": 16,
+        "coarsePointer": false,
+        "viewport": {
+          "width": 1600,
+          "height": 1000
+        },
+        "devicePixelRatio": 1
+      },
+      "native": {
+        "elapsedMs": 1188.4000000059605,
+        "publishedAdvanceDelta": 60,
+        "nativeDrawCalls": 5700,
+        "nativeSubmittedInputs": 103323330,
+        "mainSceneRenderBoundaries": 114,
+        "mainSceneDrawCalls": 5130,
+        "mainSceneSubmittedInputs": 103321620,
+        "meanDrawCallsPerMainSceneRenderBoundary": 45,
+        "meanInputsPerMainSceneRenderBoundary": 906330,
+        "lifetimeMaxMainSceneDrawCalls": 89,
+        "lifetimeMaxMainSceneSubmittedInputs": 1812654,
+        "documentTimeOriginToFirstNativeMainSceneRenderReturnMs": 2808.5,
+        "contextLosses": 0,
+        "surfaceAtStart": {
+          "positionVertices": 5760,
+          "indexedInputs": 34560,
+          "uvVertices": 5760,
+          "foldedPositionVertices": 5760,
+          "foldedNormalVertices": 5760,
+          "uStep": 0.015625,
+          "vStep": 0.022727273404598236
+        },
+        "surfaceAtEnd": {
+          "positionVertices": 5760,
+          "indexedInputs": 34560,
+          "uvVertices": 5760,
+          "foldedPositionVertices": 5760,
+          "foldedNormalVertices": 5760,
+          "uStep": 0.015625,
+          "vStep": 0.022727273404598236
+        },
+        "observedSurfaceDraws": 57,
+        "surfaceGeometryUuidAtStart": "8c0f6c7d-7c59-49fa-b9f2-a64312919a09",
+        "surfaceGeometryUuidAtEnd": "8c0f6c7d-7c59-49fa-b9f2-a64312919a09",
+        "scope": "Separate post-warmup native window. Inputs are index/vertex draw counts multiplied by instance count, not unique vertices. Main-scene render boundaries contain a visible flower-head; helper/postprocessing calls remain in native totals. A render return is CPU submission, not GPU completion or compositor presentation. Lifetime maxima include startup and previous views."
+      },
+      "errors": []
+    },
+    {
+      "target": "mobile",
+      "browserVersion": "27.2",
+      "slug": "torenia",
+      "view": "specimen",
+      "geometryQuality": "low",
+      "geometryQualityEvidence": {
+        "scope": "Stable first authored cage-bound specimen shell observed from its actual mesh draw callback, compared with exact topology and UV grid counts from its real factory at all four focused tiers; uniquely matched before warmup and at both native-window endpoints, with fresh observed shell draws during the native window.",
+        "expectedSurfaceName": "bilateral torenia trumpet",
+        "factoryTiers": [
+          {
+            "quality": "low",
+            "evidence": {
+              "positionVertices": 2176,
+              "indexedInputs": 13056,
+              "uvVertices": 2176,
+              "foldedPositionVertices": 2176,
+              "foldedNormalVertices": 2176,
+              "uStep": 0.015625,
+              "vStep": 0.0625
+            }
+          },
+          {
+            "quality": "medium",
+            "evidence": {
+              "positionVertices": 3200,
+              "indexedInputs": 19200,
+              "uvVertices": 3200,
+              "foldedPositionVertices": 3200,
+              "foldedNormalVertices": 3200,
+              "uStep": 0.015625,
+              "vStep": 0.0416666679084301
+            }
+          },
+          {
+            "quality": "high",
+            "evidence": {
+              "positionVertices": 4224,
+              "indexedInputs": 25344,
+              "uvVertices": 4224,
+              "foldedPositionVertices": 4224,
+              "foldedNormalVertices": 4224,
+              "uStep": 0.015625,
+              "vStep": 0.03125
+            }
+          },
+          {
+            "quality": "ultra",
+            "evidence": {
+              "positionVertices": 5760,
+              "indexedInputs": 34560,
+              "uvVertices": 5760,
+              "foldedPositionVertices": 5760,
+              "foldedNormalVertices": 5760,
+              "uStep": 0.015625,
+              "vStep": 0.022727273404598236
+            }
+          }
+        ]
+      },
+      "frames": 120,
+      "elapsedMs": 12328.684000000001,
+      "solverStartSteps": 150,
+      "width": 390,
+      "height": 440,
+      "contextLost": false,
+      "budget": "mobile",
+      "tissue": "webgl",
+      "lighting": "webgl",
+      "renderer": "Apple GPU",
+      "physics": "detailed",
+      "nodes": 240,
+      "solverSteps": 240,
+      "solverStepDelta": 90,
+      "approximateSuccessfulAdvancesPerSecond": 9.733398958072085,
+      "liveSolverCpuRollingMeanMs": 14.77,
+      "liveDisplacementTexturePreparationCpuRollingMeanMs": 0.46,
+      "startupTo30FramesMs": 6549.726699999999,
+      "startupScope": "Node wall time immediately before page.goto through publication of at least 30 successful advances; includes navigation and startup, not first-frame latency.",
+      "warmPageElapsedMs": 31348.9608,
+      "deviceSignals": {
+        "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.2 Mobile/15E148 Safari/604.1",
+        "hardwareConcurrency": 8,
+        "deviceMemoryGiB": null,
+        "coarsePointer": true,
+        "viewport": {
+          "width": 390,
+          "height": 664
+        },
+        "devicePixelRatio": 3
+      },
+      "native": {
+        "elapsedMs": 4892,
+        "publishedAdvanceDelta": 60,
+        "nativeDrawCalls": 2596,
+        "nativeSubmittedInputs": 12651960,
+        "mainSceneRenderBoundaries": 59,
+        "mainSceneDrawCalls": 2596,
+        "mainSceneSubmittedInputs": 12651960,
+        "meanDrawCallsPerMainSceneRenderBoundary": 44,
+        "meanInputsPerMainSceneRenderBoundary": 214440,
+        "lifetimeMaxMainSceneDrawCalls": 44,
+        "lifetimeMaxMainSceneSubmittedInputs": 214440,
+        "documentTimeOriginToFirstNativeMainSceneRenderReturnMs": 4996,
+        "contextLosses": 0,
+        "surfaceAtStart": {
+          "positionVertices": 2176,
+          "indexedInputs": 13056,
+          "uvVertices": 2176,
+          "foldedPositionVertices": 2176,
+          "foldedNormalVertices": 2176,
+          "uStep": 0.015625,
+          "vStep": 0.0625
+        },
+        "surfaceAtEnd": {
+          "positionVertices": 2176,
+          "indexedInputs": 13056,
+          "uvVertices": 2176,
+          "foldedPositionVertices": 2176,
+          "foldedNormalVertices": 2176,
+          "uStep": 0.015625,
+          "vStep": 0.0625
+        },
+        "observedSurfaceDraws": 59,
+        "surfaceGeometryUuidAtStart": "8814fe68-5f34-40e3-b123-7ff125584b3e",
+        "surfaceGeometryUuidAtEnd": "8814fe68-5f34-40e3-b123-7ff125584b3e",
+        "scope": "Separate post-warmup native window. Inputs are index/vertex draw counts multiplied by instance count, not unique vertices. Main-scene render boundaries contain a visible flower-head; helper/postprocessing calls remain in native totals. A render return is CPU submission, not GPU completion or compositor presentation. Lifetime maxima include startup and previous views."
+      },
+      "errors": []
+    },
+    {
+      "target": "mobile",
+      "browserVersion": "27.2",
+      "slug": "torenia",
+      "view": "macro",
+      "geometryQuality": "medium",
+      "geometryQualityEvidence": {
+        "scope": "Stable first authored cage-bound specimen shell observed from its actual mesh draw callback, compared with exact topology and UV grid counts from its real factory at all four focused tiers; uniquely matched before warmup and at both native-window endpoints, with fresh observed shell draws during the native window.",
+        "expectedSurfaceName": "bilateral torenia trumpet",
+        "factoryTiers": [
+          {
+            "quality": "low",
+            "evidence": {
+              "positionVertices": 2176,
+              "indexedInputs": 13056,
+              "uvVertices": 2176,
+              "foldedPositionVertices": 2176,
+              "foldedNormalVertices": 2176,
+              "uStep": 0.015625,
+              "vStep": 0.0625
+            }
+          },
+          {
+            "quality": "medium",
+            "evidence": {
+              "positionVertices": 3200,
+              "indexedInputs": 19200,
+              "uvVertices": 3200,
+              "foldedPositionVertices": 3200,
+              "foldedNormalVertices": 3200,
+              "uStep": 0.015625,
+              "vStep": 0.0416666679084301
+            }
+          },
+          {
+            "quality": "high",
+            "evidence": {
+              "positionVertices": 4224,
+              "indexedInputs": 25344,
+              "uvVertices": 4224,
+              "foldedPositionVertices": 4224,
+              "foldedNormalVertices": 4224,
+              "uStep": 0.015625,
+              "vStep": 0.03125
+            }
+          },
+          {
+            "quality": "ultra",
+            "evidence": {
+              "positionVertices": 5760,
+              "indexedInputs": 34560,
+              "uvVertices": 5760,
+              "foldedPositionVertices": 5760,
+              "foldedNormalVertices": 5760,
+              "uStep": 0.015625,
+              "vStep": 0.022727273404598236
+            }
+          }
+        ]
+      },
+      "frames": 120,
+      "elapsedMs": 5070.03330000001,
+      "solverStartSteps": 480,
+      "width": 390,
+      "height": 440,
+      "contextLost": false,
+      "budget": "mobile",
+      "tissue": "webgl",
+      "lighting": "webgl",
+      "renderer": "Apple GPU",
+      "physics": "detailed",
+      "nodes": 240,
+      "solverSteps": 570,
+      "solverStepDelta": 90,
+      "approximateSuccessfulAdvancesPerSecond": 23.668483597533722,
+      "liveSolverCpuRollingMeanMs": 1.99,
+      "liveDisplacementTexturePreparationCpuRollingMeanMs": 0.05,
+      "startupTo30FramesMs": 6549.726699999999,
+      "startupScope": "Node wall time immediately before page.goto through publication of at least 30 successful advances; includes navigation and startup, not first-frame latency.",
+      "warmPageElapsedMs": 48685.18659999999,
+      "deviceSignals": {
+        "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.2 Mobile/15E148 Safari/604.1",
+        "hardwareConcurrency": 8,
+        "deviceMemoryGiB": null,
+        "coarsePointer": true,
+        "viewport": {
+          "width": 390,
+          "height": 664
+        },
+        "devicePixelRatio": 3
+      },
+      "native": {
+        "elapsedMs": 3949,
+        "publishedAdvanceDelta": 60,
+        "nativeDrawCalls": 2640,
+        "nativeSubmittedInputs": 27330480,
+        "mainSceneRenderBoundaries": 60,
+        "mainSceneDrawCalls": 2640,
+        "mainSceneSubmittedInputs": 27330480,
+        "meanDrawCallsPerMainSceneRenderBoundary": 44,
+        "meanInputsPerMainSceneRenderBoundary": 455508,
+        "lifetimeMaxMainSceneDrawCalls": 44,
+        "lifetimeMaxMainSceneSubmittedInputs": 455508,
+        "documentTimeOriginToFirstNativeMainSceneRenderReturnMs": 4996,
+        "contextLosses": 0,
+        "surfaceAtStart": {
+          "positionVertices": 3200,
+          "indexedInputs": 19200,
+          "uvVertices": 3200,
+          "foldedPositionVertices": 3200,
+          "foldedNormalVertices": 3200,
+          "uStep": 0.015625,
+          "vStep": 0.0416666679084301
+        },
+        "surfaceAtEnd": {
+          "positionVertices": 3200,
+          "indexedInputs": 19200,
+          "uvVertices": 3200,
+          "foldedPositionVertices": 3200,
+          "foldedNormalVertices": 3200,
+          "uStep": 0.015625,
+          "vStep": 0.0416666679084301
+        },
+        "observedSurfaceDraws": 60,
+        "surfaceGeometryUuidAtStart": "7fba22e8-8fb0-4527-a14c-3701cd208191",
+        "surfaceGeometryUuidAtEnd": "7fba22e8-8fb0-4527-a14c-3701cd208191",
+        "scope": "Separate post-warmup native window. Inputs are index/vertex draw counts multiplied by instance count, not unique vertices. Main-scene render boundaries contain a visible flower-head; helper/postprocessing calls remain in native totals. A render return is CPU submission, not GPU completion or compositor presentation. Lifetime maxima include startup and previous views."
+      },
+      "errors": []
+    }
+  ]
+}

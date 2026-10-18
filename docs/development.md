@@ -31,13 +31,17 @@ renderer teardown; it never replaces pixel or renderer-error assertions.
 revisits and explicit fallback/keyboard retry. See the
 [validation record](specimens/cymes-and-spikes-validation.md) for evidence and limits.
 
-Fritillaria's optional **Bell interior study** and Hoya's **Single-floret study**
+Fritillaria's optional **Bell interior study** and Hoya/Torenia's **Single-floret study**
 switch the seven standard tiles to two targeted views and back. They frame real
 single-flower surface and organ bounds while rendering the complete plant. They
 do not hide surrounding anatomy or change geometry, materials or bloom semantics.
 `inspection-studies.test.ts` checks transformed camera axes and bounds at every
 tier; separate browser cases inspect axial/oblique bell interiors and a full/bud
-Hoya floret with the same caption-free pixel and renderer-error checks.
+Hoya or Torenia floret with the same caption-free pixel and renderer-error checks.
+The development-only **Inspection palette** control passes an optional coral tint
+through the real Flower API. `torenia-color-inspection.spec.ts` compares actual
+upper-fan pixels before tinting and after botanical-palette recovery, while
+asserting that the canvas remains retained and the renderer stays healthy.
 
 `cymes-and-spikes-dynamics.test.ts` exercises actual transformed contact cages at
 both node budgets. `cymes-and-spikes-attachments.test.ts` checks positive axes

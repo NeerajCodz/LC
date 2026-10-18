@@ -100,9 +100,10 @@ test("torenia: all four generated filaments follow the actual included renderer 
 });
 test("torenia: the upper lip is broad and genuinely notched between its two fused sectors", () => {
   const middle = toreniaCorolla(0.25, 1, 1);
-  for (const angle of [1.18, Math.PI - 1.18])
+  // A shallow central emargination in one broad fan, rather than two radial spikes.
+  for (const angle of [Math.PI / 2 - 0.15, Math.PI / 2 + 0.15])
     assert.ok(
-      toreniaCorolla(angle / (Math.PI * 2), 1, 1)[1] > middle[1] + 0.02,
+      toreniaCorolla(angle / (Math.PI * 2), 1, 1)[1] > middle[1] + 0.008,
     );
 });
 test("torenia: actual terminal-bud reproductive buffers stay inside the closed lips", () => {

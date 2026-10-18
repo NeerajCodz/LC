@@ -6,7 +6,10 @@ import {
   isInnerToreniaStigmaHit,
   TORENIA_RENDER_MODEL,
 } from "../components/flowers/torenia/toreniaStigmaGeometry";
-import { toreniaStigma } from "../components/flowers/torenia/toreniaGeometry";
+import {
+  TORENIA_MODEL,
+  toreniaStigma,
+} from "../components/flowers/torenia/toreniaGeometry";
 test("only real generated inner stigma faces qualify, with no duplicate lamellae in shared assembly", () => {
   assert.ok(
     TORENIA_RENDER_MODEL.surfaces.every(
@@ -43,6 +46,9 @@ test("only real generated inner stigma faces qualify, with no duplicate lamellae
   }
 });
 test("independent closure retains sealed thickness and both matched bloom/contact normal targets", () => {
+  const thickness = TORENIA_MODEL.surfaces.find(
+    (surface) => surface.name === "bilamellate torenia stigma",
+  )!.thickness;
   for (const lobe of [0, 1] as const) {
     const geometry = createToreniaStigmaGeometry(0, lobe, "low"),
       position = geometry.getAttribute("position"),
@@ -69,7 +75,8 @@ test("independent closure retains sealed thickness and both matched bloom/contac
               target.getX(i) - target.getX(i + half),
               target.getY(i) - target.getY(i + half),
               target.getZ(i) - target.getZ(i + half),
-            ) > 0.0047,
+            ) >
+              thickness * 0.79,
           );
     } finally {
       geometry.dispose();

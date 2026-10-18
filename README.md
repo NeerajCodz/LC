@@ -106,6 +106,8 @@ The collection also includes `lupine`, `hollyhock`, `fritillaria`, `tuberose`, `
 
 Torenia's detailed interactive view responds only to a visible inner stigma face. The touched lobe closes independently and stays closed. The optional `pulseSerial` prop is an explicit authored reset counter; increment it separately from the general `pulse` animation counter. The accessible Pulse control advances both, while ordinary flower clicks retain closure. This reset does not represent measured natural reopening. Leaf blades follow rooted stem motion; they do not each have a separate contact cage.
 
+The [Wishbone Flower repair record](docs/specimens/torenia-repair-validation.md) documents its researched bilateral corolla, closed-organ containment, calyx clearance, pigment seam and fresh validation.
+
 Their [validation record](docs/specimens/cymes-and-spikes-validation.md) records geometry, contact, visual and browser checks, measured costs and remaining botanical and device limits. Raw [CPU measurements](docs/specimens/cymes-and-spikes-cpu-measurements.json), [focused rendering observations](docs/specimens/cymes-and-spikes-rendering-measurements.json) and [constrained garden observations](docs/specimens/cymes-and-spikes-garden-measurements.json) preserve their measurement scope and source provenance.
 
 ## Architecture
@@ -113,6 +115,8 @@ Their [validation record](docs/specimens/cymes-and-spikes-validation.md) records
 The tissue atlas receives a cached CPU-generated field at the device budget before the first tissue material compiles. Its deterministic samples match the optional GPU bake; devices without WebGPU sample the same shared texture rather than evaluating the full noise field for every fragment. A successful GPU bake upgrades that texture in place. The procedural shader remains a preparation-failure safety net.
 
 Internal `SpecimenSurface.tissue` channels distinguish inner segments, guides, disk tissue and leaves without extending the public Flower props. Dedicated leaf geometry initializes morph targets and supplies neutral vertex colors to the tissue shader; leaf pigments remain independent of petal root gradients.
+
+Internal `SpecimenSurface.minimumColumns` and `minimumRows` optionally preserve anatomical silhouette features across all quality tiers. These sampling floors apply after the quality or overview grid is chosen; surfaces without them retain their existing grid. They affect rendered shells and their attachment sampling, not the separate contact-cage resolution. Torenia uses them to preserve rounded lips, calyx wings and leaf teeth.
 
 Compatible tissue and calyx materials share shader programs while species, marked regions, scattering and pigments remain independent uniforms. Dedicated blades share programs by venation, with separate underside and vein colors per material. Geometry, organ arrangements and authored optical responses remain species-specific.
 

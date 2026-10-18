@@ -89,12 +89,13 @@ export function specimenTissueShader(type: string, tissue?: SpecimenTissue) {
     case "torenia":
       // The stigma has its own cream tissue; corolla UVs run around one fused tube.
       if (tissue === "inner") return "";
-      return `float torLip=smoothstep(.58,.80,vPetalUv.y);
-      float torRoof=1.-smoothstep(.18,.25,abs(vPetalUv.x-.25));
-      float torLower=smoothstep(.475,.52,vPetalUv.x)*(1.-smoothstep(.98,1.,vPetalUv.x));
+      return `float torU=fract(atan(vSpecimenAngle.y,vSpecimenAngle.x)/6.28318530718+1.);
+      float torLip=smoothstep(.58,.80,vPetalUv.y);
+      float torRoof=1.-smoothstep(.18,.25,abs(torU-.25));
+      float torLower=smoothstep(.475,.52,torU)*(1.-smoothstep(.98,1.,torU));
       vec3 torPigment=mix(vec3(.83,.80,.78),vec3(.39,.32,.57),torLip*(.18+.78*torRoof));
-      vec2 torLeft=vec2((vPetalUv.x-.575)/.105,(vPetalUv.y-.875)/.24);
-      float torRightAcross=abs(vPetalUv.x-.925);
+      vec2 torLeft=vec2((torU-.575)/.105,(vPetalUv.y-.875)/.24);
+      float torRightAcross=abs(torU-.925);
       vec2 torRight=vec2(min(torRightAcross,1.-torRightAcross)/.105,(vPetalUv.y-.875)/.24);
       float torBlotch=(1.-smoothstep(.68,1.,min(length(torLeft),length(torRight))))*smoothstep(.64,.74,vPetalUv.y);
       torPigment=mix(torPigment,vec3(.004,.0008,.018),torBlotch);
@@ -108,10 +109,10 @@ export function specimenTissueShader(type: string, tissue?: SpecimenTissue) {
         torPigment=mix(torPigment,torCustom*.035,torBlotch);
         torPigment=mix(torPigment,torCustom*.15,torRim*.98);
       }
-      vec2 torGuide=vec2((vPetalUv.x-.75)/.037,(vPetalUv.y-.815)/.12);
+      vec2 torGuide=vec2((torU-.75)/.037,(vPetalUv.y-.815)/.12);
       float torYellow=(1.-smoothstep(.58,1.,length(torGuide)))*(1.-smoothstep(.91,.94,vPetalUv.y));
       torPigment=mix(torPigment,vec3(.93,.64,.001),torYellow);
-      float torVeinPhase=vPetalUv.x*100.530965+.55*sin(vPetalUv.y*6.283185);
+      float torVeinPhase=torU*100.530965+.55*sin(vPetalUv.y*6.283185);
       float torVeinVisibility=1.-smoothstep(.3,1.2,fwidth(torVeinPhase));
       float torVein=pow(.5+.5*cos(torVeinPhase),24.)*torVeinVisibility*smoothstep(.5,.85,vPetalUv.y);
       diffuseColor.rgb=torPigment*(1.+(tissue.g-.5)*.035)*(1.-torVein*.04);`;

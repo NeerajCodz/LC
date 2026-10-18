@@ -6,6 +6,7 @@ import { test, expect, devices } from "@playwright/test";
 import { CYMES_AND_SPIKES, observeRendering } from "./cymes-and-spikes-cases";
 import { expectRenderedFlower, expectScreenshotFlower } from "./pixel-content";
 import { boundedDpr } from "../../lib/performance";
+import { expectNoToreniaBudPigmentSeam } from "./torenia-seam-pixels";
 
 // Wide inspection sheets keep compositor captures at CSS resolution.
 test.use({ deviceScaleFactor: 1 });
@@ -377,6 +378,8 @@ if (process.env.DEV_INSPECTION === "1") {
             png = await view.locator(":scope > div").screenshot({ path });
           await expectScreenshotFlower(canvas, png, 0.004);
           await info.attach(name, { path, contentType: "image/png" });
+          if (slug === "torenia" && name === "Single floret · bud")
+            await expectNoToreniaBudPigmentSeam(page, png, info, detail);
         }
         const buffer = await canvas.evaluate((node) => ({
           width: (node as HTMLCanvasElement).width,

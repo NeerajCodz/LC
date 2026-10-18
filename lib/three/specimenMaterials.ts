@@ -202,6 +202,15 @@ export function createSpecimenMaterial(
             ? 1
             : 0,
       };
+      s.vertexShader = s.vertexShader
+        .replace(
+          "#include <common>",
+          "#include <common>\nvarying vec2 vSpecimenAngle;",
+        )
+        .replace(
+          "#include <begin_vertex>",
+          "#include <begin_vertex>\nvSpecimenAngle=vec2(cos(uv.x*6.28318530718),sin(uv.x*6.28318530718));",
+        );
       s.fragmentShader = s.fragmentShader.replace(
         "scatter*.11",
         "scatter*uSpecimenScatter",
@@ -209,7 +218,7 @@ export function createSpecimenMaterial(
       s.fragmentShader = s.fragmentShader
         .replace(
           "#include <common>",
-          "#include <common>\nuniform int uSpecimenKind, uSpecimenRegion; uniform float uSpecimenScatter, uSpecimenCustomColor;",
+          "#include <common>\nvarying vec2 vSpecimenAngle;\nuniform int uSpecimenKind, uSpecimenRegion; uniform float uSpecimenScatter, uSpecimenCustomColor;",
         )
         .replace(
           "#include <roughnessmap_fragment>",
@@ -224,7 +233,7 @@ export function createSpecimenMaterial(
         : "specimen-calyx-v2";
     if (!green && tissue === "leaf" && response) return "specimen-calyx-v2";
     // Pigments are uniforms. Organ names alone must not compile duplicate programs.
-    if (!green && response) return "specimen-shared-tissue-v4";
+    if (!green && response) return "specimen-shared-tissue-v5";
     // Legacy organs also share a program when only their uniform pigments differ.
     // Three adds material features (sheen, clearcoat, morphs, instancing) itself.
     if (type === "king-protea") return "specimen-protea-fibers-v2";

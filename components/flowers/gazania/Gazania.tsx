@@ -30,7 +30,7 @@ export const gazaniaStructure: FlowerStructure = {
   calyx: false,
   airbornePollen: false,
   simulatedSurfaces: true,
-  portraitBounds: { min: [-1.23, -1.73, -1.2], max: [1.23, 0.79, 1.2] },
+  portraitBounds: { min: [-1.23, -1.73, -1.2], max: [1.23, 1.08, 1.3] },
 };
 function GazaniaStem(props: StemProps) {
   return (

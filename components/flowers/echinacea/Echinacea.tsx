@@ -32,7 +32,7 @@ export const echinaceaStructure: FlowerStructure = {
   calyx: false,
   airbornePollen: false,
   simulatedSurfaces: true,
-  portraitBounds: { min: [-1.22, -2.43, -1.22], max: [1.22, 0.67, 1.22] },
+  portraitBounds: { min: [-1.22, -2.43, -1.22], max: [1.22, 1.06, 1.3] },
 };
 function EchinaceaStem(props: StemProps) {
   return (

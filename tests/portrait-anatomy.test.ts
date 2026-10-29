@@ -1,4 +1,5 @@
 import test from "node:test";
+import { FIVE_FLORAL_MODELS } from "./five-floral-forms-models";
 import assert from "node:assert/strict";
 import { Box3, Matrix4, Object3D, PerspectiveCamera, Vector3 } from "three";
 import { FLOWER_TYPES } from "../lib/flowers/types";
@@ -41,6 +42,9 @@ import { LOBELIA_MODEL } from "../components/flowers/lobelia/lobeliaGeometry";
 import { TORENIA_MODEL } from "../components/flowers/torenia/toreniaGeometry";
 
 const models: Record<string, SpecimenModel> = {
+  ...Object.fromEntries(
+    FIVE_FLORAL_MODELS.map(({ slug, model }) => [slug, model]),
+  ),
   torenia: TORENIA_MODEL,
   lobelia: LOBELIA_MODEL,
   pentas: PENTAS_MODEL,

@@ -170,7 +170,16 @@ for (const slug of [
     await healthy();
     await link.click();
     await expect(page).toHaveURL(new RegExp(`/flower/${slug}/$`));
-    await expectRenderedFlower(page.locator(".flower-canvas canvas"), 0.007);
+    const linkedCanvas = page.locator(".flower-canvas canvas");
+    // Navigation can commit the DOM before the new renderer has initialized.
+    await expect
+      .poll(
+        async () =>
+          Number(await linkedCanvas.getAttribute("data-render-frames")),
+        { timeout: 120000 },
+      )
+      .toBeGreaterThanOrEqual(30);
+    await expectRenderedFlower(linkedCanvas, 0.007);
     await healthy();
     await page.goto(`/?flower=${slug}`);
     await expect(page).toHaveURL(new RegExp(`/flower/${slug}/$`));
@@ -220,6 +229,9 @@ for (const slug of [
       info.project.name === "mobile" ? 512 : 2048,
     );
     await expect(bloom).toHaveValue("0.5");
+    await expect(canvas).toHaveAttribute("data-shader-preparation", "ready", {
+      timeout: 120000,
+    });
     await expectRenderedFlower(canvas, 0.007);
     if (info.project.name === "mobile") await expectConstrainedBuffer(canvas);
     const retainedCanvas = await canvas.elementHandle();
@@ -229,6 +241,11 @@ for (const slug of [
       .click();
     await expect(selection).toHaveValue("");
     await expect(bloom).toHaveValue("0.5");
+    // Returning retained plants may recompile their evicted GPU programs.
+    // Pixel sampling starts after that explicit state, with its own unchanged deadline.
+    await expect(canvas).toHaveAttribute("data-shader-preparation", "ready", {
+      timeout: 120000,
+    });
     await expectRenderedFlower(canvas, 0.007);
     await selection.selectOption(slug);
     await expect(bloom).toHaveValue("0.5");
@@ -238,6 +255,9 @@ for (const slug of [
         retainedCanvas,
       ),
     ).toBe(true);
+    await expect(canvas).toHaveAttribute("data-shader-preparation", "ready", {
+      timeout: 120000,
+    });
     await expectRenderedFlower(canvas, 0.007);
     await expect(page).toHaveURL(/\/garden\/$/);
     expect(

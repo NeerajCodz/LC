@@ -304,7 +304,7 @@ export function specimenOrganGeometry(organ: SpecimenOrgan, quality: Quality) {
     ...organ,
     segments:
       quality === "overview"
-        ? Math.max(4, organ.points.length)
+        ? Math.max(2, organ.points.length - 1)
         : quality === "low"
           ? 10
           : 24,

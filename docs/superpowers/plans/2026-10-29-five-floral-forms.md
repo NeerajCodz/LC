@@ -21,7 +21,13 @@ Source-backed traits, authored counts/palettes/mechanical constants and evidence
 - [x] Add parameterized production browser scenarios and seven-view inspection coverage, including constrained tiers. Inspect front/side/45°/macro/bud/half/full views against research.
 - [x] Run full typecheck, lint, unit tests, taxonomy/inventory audit and build. Test focused desktop/mobile controls, retained gallery and selected garden behavior with WebGPU disabled. Run renderer lifecycle tests if shared lifecycle changes are needed.
 - [x] Record actual simulation/render costs and limitations; independently review; commit validation and generated inventory.
-- [ ] Verify author/committer Neeraj Sathish Kumar <neerajcodz@gmail.com>, no trailers, push focused slices and create/attach a new PR. Preserve unrelated history.
+- [x] Verify author/committer Neeraj Sathish Kumar <neerajcodz@gmail.com>, no trailers, push focused slices and create/link a new PR. Preserve unrelated history.
+
+[Draft PR #9](https://github.com/NeerajCodz/LC/pull/9) contains the five studies
+and measured validation record. It remains draft because the earlier intermittent
+mobile WebKit preparation stall has no confirmed cause or fix, despite passing
+subsequent repetitions. No merge was performed. The app review panel was queued;
+artifact registration was unavailable in the active tool set.
 
 ## Review focus
 

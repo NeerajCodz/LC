@@ -1,4 +1,5 @@
 import type { Vec3 } from "@/lib/flowers/types";
+import { Euler, Matrix4, Vector3 } from "three";
 import type {
   SpecimenModel,
   SpecimenOrgan,
@@ -52,17 +53,17 @@ export const LANTANA_STALKS: SpecimenOrgan[] = LANTANA_HEADS.map((head, i) => ({
 }));
 for (let head = 0; head < 2; head++) {
   const center = LANTANA_HEADS[head];
-  // The short broad axis carries sessile flowers, rather than a cyme of pedicels.
+  // A short axial support meets the continuous receptacle above it.
   LANTANA_STALKS.push({
-    name: "domed lantana receptacle",
+    name: "short lantana receptacle axis",
     cluster: 0,
     points: [
       [center[0], center[1] - 0.025, center[2]],
-      [center[0], center[1] + 0.018, center[2]],
-      [center[0], center[1] + 0.095, center[2]],
+      [center[0], center[1] + 0.06, center[2]],
+      [center[0], center[1] + 0.125, center[2]],
     ],
-    radius: 0.34,
-    endRadius: 0.22,
+    radius: 0.045,
+    endRadius: 0.035,
     color: "#6e844b",
   });
   for (let j = 0; j < 21; j++) {
@@ -94,9 +95,9 @@ for (let head = 0; head < 2; head++) {
         tissue,
         periodic: true,
         thickness: 0.0055,
-        overviewColumns: 24,
-        overviewRows: 5,
-        minimumColumns: 24,
+        overviewColumns: 16,
+        overviewRows: 4,
+        minimumColumns: 16,
         flexible: true,
         cage: [8, 4],
         mobileCage: [4, 2],
@@ -112,7 +113,7 @@ for (let head = 0; head < 2; head++) {
         periodic: true,
         thickness: 0.004,
         overviewColumns: 8,
-        overviewRows: 2,
+        overviewRows: 1,
         sample: (u, v) => {
           const a = u * Math.PI * 2,
             r = 0.025 + 0.004 * v;
@@ -130,7 +131,7 @@ for (let head = 0; head < 2; head++) {
         tissue: "leaf",
         thickness: 0.006,
         overviewColumns: 2,
-        overviewRows: 4,
+        overviewRows: 3,
         sample: (u, v) => {
           const w = 2 * u - 1;
           return [
@@ -246,4 +247,36 @@ for (let head = 0; head < 2; head++) {
         color: "#e2b83e",
       });
   }
+}
+for (let head = 0; head < 2; head++) {
+  const c = head * 21,
+    cluster = LANTANA_MODEL.clusters[c],
+    center = LANTANA_HEADS[head],
+    e = new Matrix4()
+      .makeRotationFromEuler(new Euler(...cluster.rotation))
+      .scale(new Vector3(cluster.scale, cluster.scale, cluster.scale))
+      .setPosition(...cluster.position)
+      .invert().elements;
+  LANTANA_MODEL.surfaces.push({
+    name: "continuous domed lantana receptacle",
+    cluster: c,
+    role: "calyx",
+    tissue: "leaf",
+    periodic: true,
+    thickness: 0.035,
+    overviewColumns: 24,
+    overviewRows: 6,
+    sample: (u, v) => {
+      const a = u * Math.PI * 2,
+        r = 0.008 + 0.427 * (1 - v),
+        x = center[0] + Math.sin(a) * r,
+        y = center[1] + 0.055 + 0.09 * v,
+        z = center[2] + Math.cos(a) * r;
+      return [
+        e[0] * x + e[4] * y + e[8] * z + e[12],
+        e[1] * x + e[5] * y + e[9] * z + e[13],
+        e[2] * x + e[6] * y + e[10] * z + e[14],
+      ];
+    },
+  });
 }

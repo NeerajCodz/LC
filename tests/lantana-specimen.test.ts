@@ -104,3 +104,26 @@ test("lantana: four didynamous included stamens, oblique stigma and superior ova
   }
 });
 verifySpecimen("lantana", LANTANA_MODEL);
+test("lantana: actual continuous receptacles meet each sessile open-flower base", () => {
+  const receptacles = LANTANA_MODEL.surfaces.filter(
+    (s) => s.name === "continuous domed lantana receptacle",
+  );
+  assert.equal(receptacles.length, 2);
+  for (let h = 0; h < 2; h++)
+    for (let j = 0; j < 18; j++) {
+      const flower = LANTANA_MODEL.clusters[h * 21 + j],
+        center = LANTANA_HEADS[h],
+        dx = flower.position[0] - center[0],
+        dz = flower.position[2] - center[2],
+        a = Math.atan2(dx, dz),
+        v = 1 - (Math.hypot(dx, dz) - 0.008) / 0.427,
+        local = receptacles[h].sample(a / (Math.PI * 2), v, 1),
+        world = specimenClusterPoint(
+          LANTANA_MODEL.clusters[receptacles[h].cluster],
+          local,
+        );
+      assert.ok(
+        Math.hypot(...world.map((n, k) => n - flower.position[k])) < 0.007,
+      );
+    }
+});

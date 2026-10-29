@@ -36,7 +36,9 @@ export function createSpecimenMaterial(
       : undefined;
   const m = createPetalMaterial(
     green
-      ? "#608065"
+      ? type === "salvia"
+        ? "#9e3039"
+        : "#608065"
       : cream
         ? "#f4ecd8"
         : (tissueColor ?? color ?? PETAL_PALETTES[type].body),

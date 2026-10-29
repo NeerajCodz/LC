@@ -1,5 +1,14 @@
 # Development and verification
 
+`five-floral-forms.spec.ts` exercises Gazania, Salvia, Nicotiana, Lantana and
+Echinacea through specimen controls, themes, search and garden selection on both
+browser projects. `five-floral-forms-inspection.spec.ts` captures seven anatomical
+poses at specimen/overview detail. The corresponding model registry and dynamics
+tests use actual transformed cages. The [batch record](specimens/five-floral-forms-validation.md)
+separates evidence from authored anatomy and unmeasured mechanics. The CPU
+benchmark accepts these five slugs; rendering measurements use the existing
+species-filtered production benchmark on port 1607.
+
 `cymes-and-spikes.spec.ts` covers the Lupine, Hollyhock, Crown Imperial, Tuberose,
 Ixora, Pentas, Torenia, Lobelia, Hoya and Impatiens routes, controls, retained
 rendering, search and garden selection. `cymes-and-spikes-inspection.spec.ts`

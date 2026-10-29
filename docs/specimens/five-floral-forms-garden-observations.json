@@ -1,0 +1,125 @@
+{
+  "source": "test-results/isolated-production-1793293189362",
+  "revision": "df35134",
+  "scope": "Constrained browser emulation; instrumented native garden frame maxima and shader reuse, no FPS claim.",
+  "observations": [
+    {
+      "case": "desktop-001.json",
+      "name": "initial-shader-reuse",
+      "stats": {
+        "connected": true,
+        "contextOptions": {
+          "alpha": true,
+          "depth": true,
+          "stencil": false,
+          "antialias": true,
+          "premultipliedAlpha": true,
+          "preserveDrawingBuffer": false,
+          "powerPreference": "low-power",
+          "failIfMajorPerformanceCaveat": false
+        },
+        "links": 50,
+        "duplicates": [],
+        "sampledAtlasUploads": 31,
+        "submittedVertices": 255197220,
+        "losses": 0,
+        "maximumVerticesPerFrame": 7974894,
+        "maximumDrawsPerFrame": 1596,
+        "maximumPendingFrames": 1,
+        "fencesCreated": 33
+      }
+    },
+    {
+      "case": "desktop-001.json",
+      "name": "overview-submitted-vertices-per-frame",
+      "stats": {
+        "verticesPerFrame": 7974894
+      }
+    },
+    {
+      "case": "desktop-001.json",
+      "name": "resized-shader-reuse",
+      "stats": {
+        "connected": true,
+        "contextOptions": {
+          "alpha": true,
+          "depth": true,
+          "stencil": false,
+          "antialias": true,
+          "premultipliedAlpha": true,
+          "preserveDrawingBuffer": false,
+          "powerPreference": "low-power",
+          "failIfMajorPerformanceCaveat": false
+        },
+        "links": 50,
+        "duplicates": [],
+        "sampledAtlasUploads": 31,
+        "submittedVertices": 350895948,
+        "losses": 0,
+        "maximumVerticesPerFrame": 7974894,
+        "maximumDrawsPerFrame": 1596,
+        "maximumPendingFrames": 1,
+        "fencesCreated": 45
+      }
+    },
+    {
+      "case": "mobile-002.json",
+      "name": "initial-shader-reuse",
+      "stats": {
+        "connected": true,
+        "contextOptions": {
+          "alpha": true,
+          "depth": true,
+          "stencil": false,
+          "antialias": true,
+          "premultipliedAlpha": true,
+          "preserveDrawingBuffer": false,
+          "powerPreference": "low-power",
+          "failIfMajorPerformanceCaveat": false
+        },
+        "links": 50,
+        "duplicates": [],
+        "sampledAtlasUploads": 31,
+        "submittedVertices": 334946160,
+        "losses": 0,
+        "maximumVerticesPerFrame": 7974894,
+        "maximumDrawsPerFrame": 1596,
+        "maximumPendingFrames": 1,
+        "fencesCreated": 43
+      }
+    },
+    {
+      "case": "mobile-002.json",
+      "name": "overview-submitted-vertices-per-frame",
+      "stats": {
+        "verticesPerFrame": 7974894
+      }
+    },
+    {
+      "case": "mobile-002.json",
+      "name": "resized-shader-reuse",
+      "stats": {
+        "connected": true,
+        "contextOptions": {
+          "alpha": true,
+          "depth": true,
+          "stencil": false,
+          "antialias": true,
+          "premultipliedAlpha": true,
+          "preserveDrawingBuffer": false,
+          "powerPreference": "low-power",
+          "failIfMajorPerformanceCaveat": false
+        },
+        "links": 50,
+        "duplicates": [],
+        "sampledAtlasUploads": 31,
+        "submittedVertices": 526343616,
+        "losses": 0,
+        "maximumVerticesPerFrame": 7974894,
+        "maximumDrawsPerFrame": 1596,
+        "maximumPendingFrames": 1,
+        "fencesCreated": 67
+      }
+    }
+  ]
+}

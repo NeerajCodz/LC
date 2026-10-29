@@ -112,6 +112,12 @@ Their [validation record](docs/specimens/cymes-and-spikes-validation.md) records
 
 ## Architecture
 
+The collection also includes researched Gazania, Scarlet Sage, Flowering Tobacco,
+Lantana and Purple Coneflower studies, with separate true florets, fused corollas,
+foliage and bounded contact cages. Their [validation record](docs/specimens/five-floral-forms-validation.md)
+links the anatomy, geometry/browser checks and measured limits. They extend the
+ongoing collection rather than defining its final scope.
+
 The tissue atlas receives a cached CPU-generated field at the device budget before the first tissue material compiles. Its deterministic samples match the optional GPU bake; devices without WebGPU sample the same shared texture rather than evaluating the full noise field for every fragment. A successful GPU bake upgrades that texture in place. The procedural shader remains a preparation-failure safety net.
 
 Internal `SpecimenSurface.tissue` channels distinguish inner segments, guides, disk tissue and leaves without extending the public Flower props. Dedicated leaf geometry initializes morph targets and supplies neutral vertex colors to the tissue shader; leaf pigments remain independent of petal root gradients.

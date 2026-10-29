@@ -52,6 +52,8 @@ The lotus leaf is a curved, sealed, circular blade with radial veins and a separ
 
 ## Rendering and interpretation
 
+The October 2026 additions use dedicated studies of [Gazania](specimens/gazania-research.md), [Scarlet Sage](specimens/salvia-research.md), [Flowering Tobacco](specimens/nicotiana-research.md), [Lantana](specimens/lantana-research.md) and [Purple Coneflower](specimens/echinacea-research.md). They distinguish true disk florets from showy sterile rays, bilateral and salverform tubes, persistent calyces, woody cluster supports and species foliage. Each dossier separates botanical evidence from authored counts, pigments, opening trajectories and mechanical response.
+
 Macro views keep high pixel density and use finer petal subdivisions. Depth-of-field and glow effects are omitted to preserve visible organ detail. Pigments, subtle papillae, vein relief, and back-light response remain real-time material approximations. Flowering is a reversible artistic animation, not a time-resolved biological simulation.
 
 WebGL 2 renders these structures and their physical materials. vgpu supplies procedural tissue data and studio HDR illumination when WebGPU is available; matching GLSL/CPU fallbacks preserve viewing on WebGL-only devices. These generated textures encode surface properties and light, not images of flowers.

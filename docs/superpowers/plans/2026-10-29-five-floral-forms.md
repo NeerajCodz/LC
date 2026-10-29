@@ -14,11 +14,11 @@ Source-backed traits, authored counts/palettes/mechanical constants and evidence
 
 ## Sequenced slices
 
-- [ ] Add five source dossiers and meaningful failing anatomy tests before production geometry.
-- [ ] For each species, implement deterministic sealed geometry and actual organs; check normals, thickness, topology, intermediate bloom and whole-plant node ceilings; commit anatomy independently.
-- [ ] For each species, implement its foliage, rooted stem attachments and renderer wrapper; check the focused tests; commit the completed species slice.
-- [ ] Register typed dispatch, catalog, palettes, tissue optics, wind and framing. Verify all five use dedicated components and complete metadata.
-- [ ] Add parameterized production browser scenarios and seven-view inspection coverage, including constrained tiers. Inspect front/side/45°/macro/bud/half/full views against research.
+- [x] Add five source dossiers and meaningful failing anatomy tests before production geometry.
+- [x] For each species, implement deterministic sealed geometry and actual organs; check normals, thickness, topology, intermediate bloom and whole-plant node ceilings; commit anatomy independently.
+- [x] For each species, implement its foliage, rooted stem attachments and renderer wrapper; check the focused tests; commit the completed species slice.
+- [x] Register typed dispatch, catalog, palettes, tissue optics, wind and framing. Verify all five use dedicated components and complete metadata.
+- [x] Add parameterized production browser scenarios and seven-view inspection coverage, including constrained tiers. Inspect front/side/45°/macro/bud/half/full views against research.
 - [ ] Run full typecheck, lint, unit tests, taxonomy/inventory audit and build. Test focused desktop/mobile controls, retained gallery and selected garden behavior with WebGPU disabled. Run renderer lifecycle tests if shared lifecycle changes are needed.
 - [ ] Record actual simulation/render costs and limitations; independently review; commit validation and generated inventory.
 - [ ] Verify author/committer Neeraj Sathish Kumar <neerajcodz@gmail.com>, no trailers, push focused slices and create/attach a new PR. Preserve unrelated history.

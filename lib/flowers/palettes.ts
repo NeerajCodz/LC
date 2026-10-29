@@ -30,6 +30,51 @@ const palette = (
 });
 
 export const PETAL_PALETTES: Record<FlowerType, PetalPalette> = {
+  gazania: palette(
+    "#d9a138",
+    "#efb73c",
+    "#f4ca64",
+    "#b76c22",
+    0.22,
+    0.8,
+    0.035,
+  ),
+  salvia: palette(
+    "#822b37",
+    "#d83c38",
+    "#ed594b",
+    "#a42c33",
+    0.28,
+    0.85,
+    0.025,
+  ),
+  nicotiana: palette(
+    "#a9b58a",
+    "#e6e5d4",
+    "#f5f0df",
+    "#b9bea6",
+    0.24,
+    0.86,
+    0.03,
+  ),
+  lantana: palette(
+    "#b7546c",
+    "#dc7795",
+    "#ec9ab0",
+    "#aa527a",
+    0.25,
+    0.8,
+    0.025,
+  ),
+  echinacea: palette(
+    "#784852",
+    "#bb638c",
+    "#cf81a5",
+    "#974668",
+    0.3,
+    0.82,
+    0.045,
+  ),
   torenia: {
     root: "#eee9de",
     body: "#e4dfed",

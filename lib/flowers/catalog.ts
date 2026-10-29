@@ -13,6 +13,62 @@ export interface FlowerInfo {
 
 export const FLOWERS: FlowerInfo[] = [
   {
+    type: "gazania",
+    name: "Gazania",
+    latin: "Gazania rigens",
+    family: "Asteraceae",
+    color: "#e9a52b",
+    description:
+      "Golden rays with dark eyes.\nA warm disk above silver-backed leaves.",
+    detail:
+      "Sterile ligulate rays surround true disk florets above a fused involucre.",
+  },
+  {
+    type: "salvia",
+    name: "Scarlet Sage",
+    latin: "Salvia splendens",
+    family: "Lamiaceae",
+    color: "#dc3d35",
+    description:
+      "Scarlet hoods on a rising spike.\nPersistent calyces hold their color.",
+    detail:
+      "Bilateral tubular flowers emerge from persistent calyces in whorls above opposite toothed leaves.",
+  },
+  {
+    type: "nicotiana",
+    name: "Flowering Tobacco",
+    latin: "Nicotiana alata",
+    family: "Solanaceae",
+    color: "#e9e6d5",
+    description:
+      "White stars on slender tubes.\nFurled buds along a leafy shoot.",
+    detail:
+      "Continuous salverform corollas carry five lobes and included reproductive organs above decurrent leaves.",
+  },
+  {
+    type: "lantana",
+    name: "Lantana",
+    latin: "Lantana camara",
+    family: "Verbenaceae",
+    color: "#df7653",
+    description:
+      "Small flowers gather in warm clusters.\nYellow, orange and pink beside rough leaves.",
+    detail:
+      "Asymmetric fused floral tubes form rounded heads on a woody opposite-leaved shoot. The colors illustrate authored age cohorts.",
+  },
+  {
+    type: "echinacea",
+    name: "Purple Coneflower",
+    latin: "Echinacea purpurea",
+    family: "Asteraceae",
+    color: "#bd628e",
+    description:
+      "Rose rays below a raised cone.\nRust-colored points catch the light.",
+    detail:
+      "Drooping sterile rays surround a cone of true disk florets and pointed receptacular scales above coarse foliage.",
+  },
+
+  {
     type: "torenia",
     name: "Wishbone Flower",
     latin: "Torenia fournieri",

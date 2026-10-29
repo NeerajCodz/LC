@@ -1,4 +1,10 @@
 export const FLOWER_TYPES = [
+  "gazania",
+  "salvia",
+  "nicotiana",
+  "lantana",
+  "echinacea",
+
   "rose",
   "lotus",
   "marigold",

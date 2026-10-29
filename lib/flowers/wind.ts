@@ -10,6 +10,12 @@ export interface WindProfile {
 // Art-directed response classes informed by habit, stem construction and head load.
 // These are not measured species-specific elastic constants. See wind-and-contact.md.
 export const WIND_PROFILES: Record<FlowerType, WindProfile> = {
+  gazania: { compliance: 0.1, stiffness: 53, damping: 0.9, flutter: 0.48 },
+  salvia: { compliance: 0.08, stiffness: 61, damping: 0.91, flutter: 0.25 },
+  nicotiana: { compliance: 0.13, stiffness: 46, damping: 0.88, flutter: 0.49 },
+  lantana: { compliance: 0.07, stiffness: 64, damping: 0.92, flutter: 0.3 },
+  echinacea: { compliance: 0.12, stiffness: 51, damping: 0.9, flutter: 0.53 },
+
   torenia: { compliance: 0.12, stiffness: 47, damping: 0.87, flutter: 0.46 },
   lobelia: { compliance: 0.15, stiffness: 42, damping: 0.86, flutter: 0.61 },
   pentas: { compliance: 0.11, stiffness: 50, damping: 0.87, flutter: 0.39 },

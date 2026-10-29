@@ -1,0 +1,32 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import { GAZANIA_MODEL, GAZANIA_HEAD_CENTER } from "../components/flowers/gazania/gazaniaGeometry";
+import { specimenClusterPoint } from "../lib/three/specimenModel";
+import { verifySpecimen } from "./specimen-checks";
+verifySpecimen("gazania", GAZANIA_MODEL);
+verifySpecimen("gazania disk prototypes", { clusters: [], surfaces: GAZANIA_MODEL.instances![0].surfaces, organs: [] });
+test("gazania keeps sterile rays, a fused involucre and true five-lobed disk florets", () => {
+  assert.equal(GAZANIA_MODEL.surfaces.filter(s => s.name === "sterile ray ligule").length, 20);
+  assert.equal(GAZANIA_MODEL.surfaces.filter(s => s.name === "free phyllary apex").length, 24);
+  assert.equal(GAZANIA_MODEL.organs.filter(o => /ray.*(style|stamen)/.test(o.name)).length, 0);
+  const disk = GAZANIA_MODEL.instances![0];
+  assert.equal(disk.poses.length, 96);
+  assert.equal(disk.organs.filter(o => o.name === "stamen filament").length, 5);
+  assert.equal(disk.organs.filter(o => o.name === "stamen anther chamber").length, 10);
+  assert.equal(disk.organs.filter(o => o.name === "disk style arm").length, 2);
+  const tube = disk.surfaces[0];
+  for (let i = 0; i < 5; i++) assert.ok(tube.sample(i / 5, 1, 1)[1] > tube.sample((i + 0.5) / 5, 1, 1)[1] + 0.015);
+  const cup = GAZANIA_MODEL.surfaces.find(s => s.name === "connate involucral cup")!;
+  assert.ok(cup.periodic);
+  assert.ok(Math.hypot(...[cup.sample(0, 0, 1)[0], cup.sample(0, 0, 1)[2]]) < 0.06);
+});
+test("gazania rays close over the disk and head insertion remains rooted", () => {
+  const ray = GAZANIA_MODEL.surfaces.find(s => s.name === "sterile ray ligule")!;
+  assert.deepEqual(ray.sample(0.5, 0, 0), ray.sample(0.5, 0, 1));
+  const bud = ray.sample(0.5, 1, 0), full = ray.sample(0.5, 1, 1);
+  assert.ok(Math.hypot(bud[0], bud[2]) < 0.015);
+  assert.ok(Math.hypot(full[0], full[2]) > 1);
+  const insertion = specimenClusterPoint(GAZANIA_MODEL.clusters[0], [0, -0.18, 0]);
+  assert.ok(Math.hypot(insertion[0], insertion[1] + 0.18, insertion[2]) < 1e-9);
+  assert.ok(GAZANIA_HEAD_CENTER.every(Number.isFinite));
+});

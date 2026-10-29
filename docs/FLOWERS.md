@@ -20,6 +20,11 @@ Generated from `lib/flowers/catalog.ts`; genus or ornamental studies never mark 
 
 | Study | Catalog scientific name | Taxonomic mapping |
 | --- | --- | --- |
+| [Gazania](http://localhost:1607/flower/gazania/) | Gazania rigens | Exact accepted-name match: `wfo-0000087259` |
+| [Scarlet Sage](http://localhost:1607/flower/salvia/) | Salvia splendens | Exact accepted-name match: `wfo-0001277169` |
+| [Flowering Tobacco](http://localhost:1607/flower/nicotiana/) | Nicotiana alata | Exact accepted-name match: `wfo-0001023652` |
+| [Lantana](http://localhost:1607/flower/lantana/) | Lantana camara | Exact accepted-name match: `wfo-0000223016` |
+| [Purple Coneflower](http://localhost:1607/flower/echinacea/) | Echinacea purpurea | Exact accepted-name match: `wfo-0000036347` |
 | [Rose](http://localhost:1607/flower/rose/) | Rosa × hybrida | Taxonomic mapping requires review |
 | [Lotus](http://localhost:1607/flower/lotus/) | Nelumbo nucifera | Exact accepted-name match: `wfo-0000382378` |
 | [Marigold](http://localhost:1607/flower/marigold/) | Tagetes erecta | Exact accepted-name match: `wfo-0000082627` |
@@ -58216,7 +58221,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Echinacea pallida — `wfo-0000020152`
 - Echinacea paradoxa — `wfo-0000018862`
 - Echinacea paradoxa var. neglecta — `wfo-0000104960` · variety
-- Echinacea purpurea — `wfo-0000036347`
+- Echinacea purpurea — `wfo-0000036347` · authored study: `echinacea`
 - Echinacea sanguinea — `wfo-0000118307`
 - Echinacea serotina — `wfo-0000027464`
 - Echinacea simulata — `wfo-0000042098`
@@ -60758,7 +60763,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Gazania pectinata — `wfo-0000086587`
 - Gazania pectinata — `wfo-1000043279`
 - Gazania pinnata — `wfo-0000083686`
-- Gazania rigens — `wfo-0000087259`
+- Gazania rigens — `wfo-0000087259` · authored study: `gazania`
 - Gazania rigens var. leucolaena — `wfo-0001421288` · variety
 - Gazania rigens var. rigens — `wfo-0000109994` · variety
 - Gazania rigida — `wfo-0000067562`
@@ -215780,7 +215785,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Salvia spinosa — `wfo-0000302354`
 - Salvia spinosa subsp. maroccana — `wfo-0001361671` · subspecies
 - Salvia spinosa subsp. spinosa — `wfo-0000914903` · subspecies
-- Salvia splendens — `wfo-0001277169`
+- Salvia splendens — `wfo-0001277169` · authored study: `salvia`
 - Salvia sprucei — `wfo-0000302360`
 - Salvia squalens — `wfo-0000302361`
 - Salvia stachydifolia — `wfo-0000302364`
@@ -383051,7 +383056,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Nicotiana acaulis — `wfo-0001023638`
 - Nicotiana acuminata — `wfo-0001023639`
 - Nicotiana africana — `wfo-0001023651`
-- Nicotiana alata — `wfo-0001023652`
+- Nicotiana alata — `wfo-0001023652` · authored study: `nicotiana`
 - Nicotiana ameghinoi — `wfo-0001023663`
 - Nicotiana amplexicaulis — `wfo-0001023664`
 - Nicotiana arentsii — `wfo-0001023676`
@@ -391796,7 +391801,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Lantana boyacana — `wfo-0000223004`
 - Lantana buchii — `wfo-0000223012`
 - Lantana caatingensis — `wfo-0000223014`
-- Lantana camara — `wfo-0000223016`
+- Lantana camara — `wfo-0000223016` · authored study: `lantana`
 - Lantana camara subsp. aculeata — `wfo-0000808946` · subspecies
 - Lantana camara subsp. camara — `wfo-0001425848` · subspecies
 - Lantana camara subsp. glandulosissima — `wfo-0001362571` · subspecies

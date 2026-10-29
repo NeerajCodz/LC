@@ -47,7 +47,9 @@ four short stamens at two levels, paired anther chambers, a short style and
 an oblique thick stigma. A superior ovary, small membranous calyx and narrow
 imbricate bract accompany every floret. Closed bud crowns retain real volume.
 The two continuous domed receptacles meet the sessile floral bases; peduncles
-bridge the head geometry to the rooted shoot at separate leaf axils.
+bridge the head geometry to the rooted shoot at two upper-shoot insertions.
+Those insertions approximate the axillary habit; they do not coincide exactly
+with the authored leaf nodes.
 
 Eight opposite decussate leaves have independent green pigments, real serrate
 margins, rugose relief and petioles. Four-angled young green shoot tissue grades

@@ -38,7 +38,7 @@ export const LANTANA_MODEL: SpecimenModel = {
   surfaces: [],
   organs: [],
 };
-/** Roots occur at leaf axils; tips meet the center of each broad receptacle. */
+/** Authored shoot insertions approximate leaf axils; tips meet each receptacle. */
 export const LANTANA_STALKS: SpecimenOrgan[] = LANTANA_HEADS.map((head, i) => ({
   name: "axillary lantana peduncle",
   cluster: 0,

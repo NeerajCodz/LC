@@ -1,4 +1,5 @@
 import type { Vec3 } from "@/lib/flowers/types";
+import { Euler } from "three";
 import {
   SINGLE_CLUSTER,
   type SpecimenModel,
@@ -40,7 +41,12 @@ export const NICOTIANA_MODEL: SpecimenModel = {
           0.08 + i * 0.175,
           Math.cos(a) * (0.11 + i * 0.013),
         ] as Vec3,
-        rotation: [-0.2 - (i % 2) * 0.09, a, 0] as Vec3,
+        rotation: (() => {
+          const pose = new Euler(-0.08 - (i % 4) * 0.06, a, 0, "YXZ").reorder(
+            "XYZ",
+          );
+          return [pose.x, pose.y, pose.z] as Vec3;
+        })(),
         scale: i >= 5 ? 0.48 : 0.76 - i * 0.018,
         nod: 0.016,
       };

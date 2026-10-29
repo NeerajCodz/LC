@@ -1,4 +1,5 @@
 import type { Vec3 } from "@/lib/flowers/types";
+import { Euler } from "three";
 import {
   SINGLE_CLUSTER,
   type SpecimenModel,
@@ -51,14 +52,23 @@ export const SALVIA_MODEL: SpecimenModel = {
     SINGLE_CLUSTER,
     ...Array.from({ length: 20 }, (_, i) => {
       const tier = Math.floor(i / 4),
-        a = ((i % 4) * Math.PI) / 2 + ((tier % 2) * Math.PI) / 4;
+        a =
+          ((i % 4) * Math.PI) / 2 +
+          ((tier % 2) * Math.PI) / 4 +
+          0.08 * Math.sin(i * 1.7),
+        rotation = new Euler(
+          -0.6 - tier * 0.07 + 0.025 * Math.sin(i),
+          a,
+          0,
+          "YXZ",
+        ).reorder("XYZ");
       return {
         position: [
           Math.sin(a) * 0.065,
-          0.12 + tier * 0.29,
+          0.12 + tier * 0.2 + 0.012 * Math.sin(i * 2.1),
           Math.cos(a) * 0.065,
         ] as Vec3,
-        rotation: [-0.24, a, 0] as Vec3,
+        rotation: [rotation.x, rotation.y, rotation.z] as Vec3,
         scale: tier === 4 ? 0.36 : 0.58 - tier * 0.025,
         nod: 0.012,
       };

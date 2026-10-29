@@ -5,10 +5,31 @@ import {
   NICOTIANA_STALKS,
   nicotianaCorolla,
 } from "../components/flowers/nicotiana/nicotianaGeometry";
-import { specimenGeometry, SINGLE_CLUSTER } from "../lib/three/specimenModel";
+import {
+  specimenGeometry,
+  specimenClusterPoint,
+  SINGLE_CLUSTER,
+} from "../lib/three/specimenModel";
 import { verifySpecimen } from "./specimen-checks";
 
 verifySpecimen("nicotiana", NICOTIANA_MODEL);
+test("nicotiana: authored near-horizontal tube elevation survives every azimuth and keeps the limb upright", () => {
+  const rises = NICOTIANA_MODEL.clusters.slice(1).map((c) => {
+    const tip = specimenClusterPoint(c, [0, 0, 1]),
+      up = specimenClusterPoint(c, [0, 1, 0]),
+      rise = (tip[1] - c.position[1]) / c.scale;
+    assert.ok(rise > 0.06, "azimuth cancelled or reversed corolla pitch");
+    assert.ok(
+      up[1] > c.position[1] + c.scale * 0.85,
+      "limb lost its upright pose",
+    );
+    return rise;
+  });
+  assert.ok(
+    Math.max(...rises) - Math.min(...rises) > 0.08,
+    "all tubes have identical elevation",
+  );
+});
 test("nicotiana: few-flowered raceme retains continuous five-lobed tubes and five included unequal stamens", () => {
   assert.deepEqual(NICOTIANA_MODEL.clusters[0], SINGLE_CLUSTER);
   for (let c = 1; c < NICOTIANA_MODEL.clusters.length; c++) {

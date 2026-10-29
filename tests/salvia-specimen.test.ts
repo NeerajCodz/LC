@@ -8,11 +8,35 @@ import {
 import {
   specimenGeometry,
   specimenCages,
+  specimenClusterPoint,
   SINGLE_CLUSTER,
 } from "../lib/three/specimenModel";
 import { verifySpecimen } from "./specimen-checks";
 
 verifySpecimen("salvia", SALVIA_MODEL);
+test("salvia: every actual flower ascends radially with an upright hood in a compact graduated spike", () => {
+  const elevations: number[] = [];
+  for (const c of SALVIA_MODEL.clusters.slice(1)) {
+    const tip = specimenClusterPoint(c, [0, 0, 1]),
+      up = specimenClusterPoint(c, [0, 1, 0]),
+      rise = (tip[1] - c.position[1]) / c.scale;
+    assert.ok(rise > 0.4, `corolla axis lacks consistent ascent: ${rise}`);
+    assert.ok(
+      up[1] > c.position[1] + c.scale * 0.55,
+      "hood rolls below flower's upper side",
+    );
+    elevations.push(Math.asin(rise));
+  }
+  assert.ok(
+    Math.max(...elevations) - Math.min(...elevations) > 0.18,
+    "identical pitches look manufactured",
+  );
+  const y = SALVIA_MODEL.clusters.slice(1).map((c) => c.position[1]);
+  assert.ok(
+    Math.max(...y) - Math.min(...y) < 0.9,
+    "terminal whorls are too far apart",
+  );
+});
 test("salvia: each verticillaster has four connected flowers with one continuous hooded tube", () => {
   assert.equal(SALVIA_MODEL.clusters.length, 21);
   assert.deepEqual(SALVIA_MODEL.clusters[0], SINGLE_CLUSTER);

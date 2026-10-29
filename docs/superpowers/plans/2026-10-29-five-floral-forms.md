@@ -19,8 +19,8 @@ Source-backed traits, authored counts/palettes/mechanical constants and evidence
 - [x] For each species, implement its foliage, rooted stem attachments and renderer wrapper; check the focused tests; commit the completed species slice.
 - [x] Register typed dispatch, catalog, palettes, tissue optics, wind and framing. Verify all five use dedicated components and complete metadata.
 - [x] Add parameterized production browser scenarios and seven-view inspection coverage, including constrained tiers. Inspect front/side/45°/macro/bud/half/full views against research.
-- [ ] Run full typecheck, lint, unit tests, taxonomy/inventory audit and build. Test focused desktop/mobile controls, retained gallery and selected garden behavior with WebGPU disabled. Run renderer lifecycle tests if shared lifecycle changes are needed.
-- [ ] Record actual simulation/render costs and limitations; independently review; commit validation and generated inventory.
+- [x] Run full typecheck, lint, unit tests, taxonomy/inventory audit and build. Test focused desktop/mobile controls, retained gallery and selected garden behavior with WebGPU disabled. Run renderer lifecycle tests if shared lifecycle changes are needed.
+- [x] Record actual simulation/render costs and limitations; independently review; commit validation and generated inventory.
 - [ ] Verify author/committer Neeraj Sathish Kumar <neerajcodz@gmail.com>, no trailers, push focused slices and create/attach a new PR. Preserve unrelated history.
 
 ## Review focus

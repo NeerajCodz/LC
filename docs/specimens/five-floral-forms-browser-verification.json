@@ -1,0 +1,683 @@
+{
+  "recordedAt": "2026-10-29T18:31:11.023Z",
+  "buildId": "CVEih5fHdSNCJQc5K2Ooq",
+  "runtimeImplementationRevision": "f072863",
+  "scope": "Twenty-two unique production scenarios have passing latest observations across the initial controls/native checks, nine collection cases in the third run, and the final mobile Echinacea case. All three historical failed attempts remain listed. Per-run flaky=0 means no automatic retry, not absence of observed intermittency across runs. Inspection runs total38 executions and28 unique scenarios, seven views each. No claim that one clean22-case sweep was rerun or that the intermittent preparation stall was fixed.",
+  "inspectionExecutions": 38,
+  "uniqueInspectionScenarios": 28,
+  "uniqueInspectionViewSlots": 196,
+  "uniqueProductionScenarios": 22,
+  "latestProductionFailures": 0,
+  "finalDefinitionHashes": {
+    "tests/browser/five-floral-forms.spec.ts": "d5a1b179a72db001df194f2dbb1a4e3b44c1cb88d79f3290d12e0d986ebeadc8",
+    "tests/browser/five-floral-forms-inspection.spec.ts": "b3316fb55ff323a8e3227c2c0d1ab8e187b846762bca2020c61d9d6163c12d68",
+    "tests/browser/shader-reuse.spec.ts": "bae8c44e3bae8ae61d089b525e7660001633baf04f599878c41ecc80edb3cf7b"
+  },
+  "runs": [
+    {
+      "kind": "inspection",
+      "source": "test-results/isolated-inspection-1793292821090",
+      "note": "Before overview carrier optimization; focused buffers unchanged.",
+      "passed": 20,
+      "failed": 0,
+      "skipped": 0,
+      "flaky": 0,
+      "runnerErrors": [],
+      "cases": [
+        {
+          "project": "desktop",
+          "file": "five-floral-forms-inspection.spec.ts",
+          "title": "gazania: five floral forms specimen seven-view anatomy review",
+          "status": "passed",
+          "durationMs": 10565.23
+        },
+        {
+          "project": "desktop",
+          "file": "five-floral-forms-inspection.spec.ts",
+          "title": "gazania: five floral forms overview seven-view anatomy review",
+          "status": "passed",
+          "durationMs": 6349.1849999999995
+        },
+        {
+          "project": "desktop",
+          "file": "five-floral-forms-inspection.spec.ts",
+          "title": "salvia: five floral forms specimen seven-view anatomy review",
+          "status": "passed",
+          "durationMs": 10409.259
+        },
+        {
+          "project": "desktop",
+          "file": "five-floral-forms-inspection.spec.ts",
+          "title": "salvia: five floral forms overview seven-view anatomy review",
+          "status": "passed",
+          "durationMs": 6416.529
+        },
+        {
+          "project": "desktop",
+          "file": "five-floral-forms-inspection.spec.ts",
+          "title": "nicotiana: five floral forms specimen seven-view anatomy review",
+          "status": "passed",
+          "durationMs": 7269.0419999999995
+        },
+        {
+          "project": "desktop",
+          "file": "five-floral-forms-inspection.spec.ts",
+          "title": "nicotiana: five floral forms overview seven-view anatomy review",
+          "status": "passed",
+          "durationMs": 6077.915
+        },
+        {
+          "project": "desktop",
+          "file": "five-floral-forms-inspection.spec.ts",
+          "title": "lantana: five floral forms specimen seven-view anatomy review",
+          "status": "passed",
+          "durationMs": 17983.199
+        },
+        {
+          "project": "desktop",
+          "file": "five-floral-forms-inspection.spec.ts",
+          "title": "lantana: five floral forms overview seven-view anatomy review",
+          "status": "passed",
+          "durationMs": 7389.521000000001
+        },
+        {
+          "project": "desktop",
+          "file": "five-floral-forms-inspection.spec.ts",
+          "title": "echinacea: five floral forms specimen seven-view anatomy review",
+          "status": "passed",
+          "durationMs": 10987.5
+        },
+        {
+          "project": "desktop",
+          "file": "five-floral-forms-inspection.spec.ts",
+          "title": "echinacea: five floral forms overview seven-view anatomy review",
+          "status": "passed",
+          "durationMs": 5886.123
+        },
+        {
+          "project": "mobile",
+          "file": "five-floral-forms-inspection.spec.ts",
+          "title": "gazania: five floral forms specimen seven-view anatomy review",
+          "status": "passed",
+          "durationMs": 7538.44
+        },
+        {
+          "project": "mobile",
+          "file": "five-floral-forms-inspection.spec.ts",
+          "title": "gazania: five floral forms overview seven-view anatomy review",
+          "status": "passed",
+          "durationMs": 7200.635
+        },
+        {
+          "project": "mobile",
+          "file": "five-floral-forms-inspection.spec.ts",
+          "title": "salvia: five floral forms specimen seven-view anatomy review",
+          "status": "passed",
+          "durationMs": 10033.845
+        },
+        {
+          "project": "mobile",
+          "file": "five-floral-forms-inspection.spec.ts",
+          "title": "salvia: five floral forms overview seven-view anatomy review",
+          "status": "passed",
+          "durationMs": 6654.956
+        },
+        {
+          "project": "mobile",
+          "file": "five-floral-forms-inspection.spec.ts",
+          "title": "nicotiana: five floral forms specimen seven-view anatomy review",
+          "status": "passed",
+          "durationMs": 6072.4
+        },
+        {
+          "project": "mobile",
+          "file": "five-floral-forms-inspection.spec.ts",
+          "title": "nicotiana: five floral forms overview seven-view anatomy review",
+          "status": "passed",
+          "durationMs": 7278.875999999999
+        },
+        {
+          "project": "mobile",
+          "file": "five-floral-forms-inspection.spec.ts",
+          "title": "lantana: five floral forms specimen seven-view anatomy review",
+          "status": "passed",
+          "durationMs": 21501.186
+        },
+        {
+          "project": "mobile",
+          "file": "five-floral-forms-inspection.spec.ts",
+          "title": "lantana: five floral forms overview seven-view anatomy review",
+          "status": "passed",
+          "durationMs": 8165.003000000001
+        },
+        {
+          "project": "mobile",
+          "file": "five-floral-forms-inspection.spec.ts",
+          "title": "echinacea: five floral forms specimen seven-view anatomy review",
+          "status": "passed",
+          "durationMs": 8887.476
+        },
+        {
+          "project": "mobile",
+          "file": "five-floral-forms-inspection.spec.ts",
+          "title": "echinacea: five floral forms overview seven-view anatomy review",
+          "status": "passed",
+          "durationMs": 8699.383
+        }
+      ]
+    },
+    {
+      "kind": "inspection",
+      "source": "test-results/isolated-inspection-1793293233417",
+      "note": "Post-optimization overview: new five plus Rose, Fuchsia, Hoya and Torenia.",
+      "passed": 18,
+      "failed": 0,
+      "skipped": 0,
+      "flaky": 0,
+      "runnerErrors": [],
+      "cases": [
+        {
+          "project": "desktop",
+          "file": "cymes-and-spikes-inspection.spec.ts",
+          "title": "rose: cymes and spikes overview seven-view anatomy review",
+          "status": "passed",
+          "durationMs": 4144.024
+        },
+        {
+          "project": "desktop",
+          "file": "cymes-and-spikes-inspection.spec.ts",
+          "title": "fuchsia: cymes and spikes overview seven-view anatomy review",
+          "status": "passed",
+          "durationMs": 3747.286
+        },
+        {
+          "project": "desktop",
+          "file": "cymes-and-spikes-inspection.spec.ts",
+          "title": "torenia: cymes and spikes overview seven-view anatomy review",
+          "status": "passed",
+          "durationMs": 5415.879999999999
+        },
+        {
+          "project": "desktop",
+          "file": "cymes-and-spikes-inspection.spec.ts",
+          "title": "hoya: cymes and spikes overview seven-view anatomy review",
+          "status": "passed",
+          "durationMs": 6110.939
+        },
+        {
+          "project": "mobile",
+          "file": "cymes-and-spikes-inspection.spec.ts",
+          "title": "rose: cymes and spikes overview seven-view anatomy review",
+          "status": "passed",
+          "durationMs": 6082.2
+        },
+        {
+          "project": "mobile",
+          "file": "cymes-and-spikes-inspection.spec.ts",
+          "title": "fuchsia: cymes and spikes overview seven-view anatomy review",
+          "status": "passed",
+          "durationMs": 6461.868
+        },
+        {
+          "project": "mobile",
+          "file": "cymes-and-spikes-inspection.spec.ts",
+          "title": "torenia: cymes and spikes overview seven-view anatomy review",
+          "status": "passed",
+          "durationMs": 7688.898
+        },
+        {
+          "project": "mobile",
+          "file": "cymes-and-spikes-inspection.spec.ts",
+          "title": "hoya: cymes and spikes overview seven-view anatomy review",
+          "status": "passed",
+          "durationMs": 7691.939
+        },
+        {
+          "project": "desktop",
+          "file": "five-floral-forms-inspection.spec.ts",
+          "title": "gazania: five floral forms overview seven-view anatomy review",
+          "status": "passed",
+          "durationMs": 7780.029
+        },
+        {
+          "project": "desktop",
+          "file": "five-floral-forms-inspection.spec.ts",
+          "title": "salvia: five floral forms overview seven-view anatomy review",
+          "status": "passed",
+          "durationMs": 7935.874
+        },
+        {
+          "project": "desktop",
+          "file": "five-floral-forms-inspection.spec.ts",
+          "title": "nicotiana: five floral forms overview seven-view anatomy review",
+          "status": "passed",
+          "durationMs": 6776.494
+        },
+        {
+          "project": "desktop",
+          "file": "five-floral-forms-inspection.spec.ts",
+          "title": "lantana: five floral forms overview seven-view anatomy review",
+          "status": "passed",
+          "durationMs": 8568.365000000002
+        },
+        {
+          "project": "desktop",
+          "file": "five-floral-forms-inspection.spec.ts",
+          "title": "echinacea: five floral forms overview seven-view anatomy review",
+          "status": "passed",
+          "durationMs": 8840.653
+        },
+        {
+          "project": "mobile",
+          "file": "five-floral-forms-inspection.spec.ts",
+          "title": "gazania: five floral forms overview seven-view anatomy review",
+          "status": "passed",
+          "durationMs": 12098.726999999999
+        },
+        {
+          "project": "mobile",
+          "file": "five-floral-forms-inspection.spec.ts",
+          "title": "salvia: five floral forms overview seven-view anatomy review",
+          "status": "passed",
+          "durationMs": 13431.874
+        },
+        {
+          "project": "mobile",
+          "file": "five-floral-forms-inspection.spec.ts",
+          "title": "nicotiana: five floral forms overview seven-view anatomy review",
+          "status": "passed",
+          "durationMs": 12900.236
+        },
+        {
+          "project": "mobile",
+          "file": "five-floral-forms-inspection.spec.ts",
+          "title": "lantana: five floral forms overview seven-view anatomy review",
+          "status": "passed",
+          "durationMs": 13621.226
+        },
+        {
+          "project": "mobile",
+          "file": "five-floral-forms-inspection.spec.ts",
+          "title": "echinacea: five floral forms overview seven-view anatomy review",
+          "status": "passed",
+          "durationMs": 8903.027
+        }
+      ]
+    },
+    {
+      "kind": "native",
+      "source": "test-results/isolated-production-1793293189362",
+      "note": "Constrained layout in both engines; before and after resize.",
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "flaky": 0,
+      "runnerErrors": [],
+      "cases": [
+        {
+          "project": "desktop",
+          "file": "shader-reuse.spec.ts",
+          "title": "shadowless garden shader sources stay shared through canvas reconfiguration",
+          "status": "passed",
+          "durationMs": 11630.503
+        },
+        {
+          "project": "mobile",
+          "file": "shader-reuse.spec.ts",
+          "title": "shadowless garden shader sources stay shared through canvas reconfiguration",
+          "status": "passed",
+          "durationMs": 14613.215
+        }
+      ]
+    },
+    {
+      "kind": "production",
+      "source": "test-results/isolated-production-1793293927655",
+      "note": "Initial run: mobile Salvia garden-return pixel deadline failed during preparation.",
+      "passed": 21,
+      "failed": 1,
+      "skipped": 0,
+      "flaky": 0,
+      "runnerErrors": [],
+      "cases": [
+        {
+          "project": "desktop",
+          "file": "five-floral-forms.spec.ts",
+          "title": "gazania: five floral forms preserve bloom, macro, pulse, pause and reduced motion",
+          "status": "passed",
+          "durationMs": 33842.92
+        },
+        {
+          "project": "desktop",
+          "file": "five-floral-forms.spec.ts",
+          "title": "gazania: five floral forms collection, canonical redirect and selected garden stay usable",
+          "status": "passed",
+          "durationMs": 56709.909
+        },
+        {
+          "project": "desktop",
+          "file": "five-floral-forms.spec.ts",
+          "title": "salvia: five floral forms preserve bloom, macro, pulse, pause and reduced motion",
+          "status": "passed",
+          "durationMs": 27205.051000000003
+        },
+        {
+          "project": "desktop",
+          "file": "five-floral-forms.spec.ts",
+          "title": "salvia: five floral forms collection, canonical redirect and selected garden stay usable",
+          "status": "passed",
+          "durationMs": 44920.083
+        },
+        {
+          "project": "desktop",
+          "file": "five-floral-forms.spec.ts",
+          "title": "nicotiana: five floral forms preserve bloom, macro, pulse, pause and reduced motion",
+          "status": "passed",
+          "durationMs": 21210.591
+        },
+        {
+          "project": "desktop",
+          "file": "five-floral-forms.spec.ts",
+          "title": "nicotiana: five floral forms collection, canonical redirect and selected garden stay usable",
+          "status": "passed",
+          "durationMs": 45662.054
+        },
+        {
+          "project": "desktop",
+          "file": "five-floral-forms.spec.ts",
+          "title": "lantana: five floral forms preserve bloom, macro, pulse, pause and reduced motion",
+          "status": "passed",
+          "durationMs": 50996.525
+        },
+        {
+          "project": "desktop",
+          "file": "five-floral-forms.spec.ts",
+          "title": "lantana: five floral forms collection, canonical redirect and selected garden stay usable",
+          "status": "passed",
+          "durationMs": 55559.634999999995
+        },
+        {
+          "project": "desktop",
+          "file": "five-floral-forms.spec.ts",
+          "title": "echinacea: five floral forms preserve bloom, macro, pulse, pause and reduced motion",
+          "status": "passed",
+          "durationMs": 25094.537
+        },
+        {
+          "project": "desktop",
+          "file": "five-floral-forms.spec.ts",
+          "title": "echinacea: five floral forms collection, canonical redirect and selected garden stay usable",
+          "status": "passed",
+          "durationMs": 53419.129
+        },
+        {
+          "project": "mobile",
+          "file": "five-floral-forms.spec.ts",
+          "title": "gazania: five floral forms preserve bloom, macro, pulse, pause and reduced motion",
+          "status": "passed",
+          "durationMs": 105863.71500000001
+        },
+        {
+          "project": "mobile",
+          "file": "five-floral-forms.spec.ts",
+          "title": "gazania: five floral forms collection, canonical redirect and selected garden stay usable",
+          "status": "passed",
+          "durationMs": 61238.278
+        },
+        {
+          "project": "mobile",
+          "file": "five-floral-forms.spec.ts",
+          "title": "salvia: five floral forms preserve bloom, macro, pulse, pause and reduced motion",
+          "status": "passed",
+          "durationMs": 40710.902
+        },
+        {
+          "project": "mobile",
+          "file": "five-floral-forms.spec.ts",
+          "title": "salvia: five floral forms collection, canonical redirect and selected garden stay usable",
+          "status": "failed",
+          "durationMs": 86756.198
+        },
+        {
+          "project": "mobile",
+          "file": "five-floral-forms.spec.ts",
+          "title": "nicotiana: five floral forms preserve bloom, macro, pulse, pause and reduced motion",
+          "status": "passed",
+          "durationMs": 54987.848
+        },
+        {
+          "project": "mobile",
+          "file": "five-floral-forms.spec.ts",
+          "title": "nicotiana: five floral forms collection, canonical redirect and selected garden stay usable",
+          "status": "passed",
+          "durationMs": 44689.864
+        },
+        {
+          "project": "mobile",
+          "file": "five-floral-forms.spec.ts",
+          "title": "lantana: five floral forms preserve bloom, macro, pulse, pause and reduced motion",
+          "status": "passed",
+          "durationMs": 70727.525
+        },
+        {
+          "project": "mobile",
+          "file": "five-floral-forms.spec.ts",
+          "title": "lantana: five floral forms collection, canonical redirect and selected garden stay usable",
+          "status": "passed",
+          "durationMs": 55253.714
+        },
+        {
+          "project": "mobile",
+          "file": "five-floral-forms.spec.ts",
+          "title": "echinacea: five floral forms preserve bloom, macro, pulse, pause and reduced motion",
+          "status": "passed",
+          "durationMs": 46470.112
+        },
+        {
+          "project": "mobile",
+          "file": "five-floral-forms.spec.ts",
+          "title": "echinacea: five floral forms collection, canonical redirect and selected garden stay usable",
+          "status": "passed",
+          "durationMs": 47319.856999999996
+        },
+        {
+          "project": "desktop",
+          "file": "shader-reuse.spec.ts",
+          "title": "shadowless garden shader sources stay shared through canvas reconfiguration",
+          "status": "passed",
+          "durationMs": 18718.974000000002
+        },
+        {
+          "project": "mobile",
+          "file": "shader-reuse.spec.ts",
+          "title": "shadowless garden shader sources stay shared through canvas reconfiguration",
+          "status": "passed",
+          "durationMs": 18756.614
+        }
+      ]
+    },
+    {
+      "kind": "production",
+      "source": "test-results/isolated-production-1793295257297",
+      "note": "Next collection run: mobile Echinacea initial pixel evaluation stalled before renderer initialization.",
+      "passed": 9,
+      "failed": 1,
+      "skipped": 0,
+      "flaky": 0,
+      "runnerErrors": [],
+      "cases": [
+        {
+          "project": "desktop",
+          "file": "five-floral-forms.spec.ts",
+          "title": "gazania: five floral forms collection, canonical redirect and selected garden stay usable",
+          "status": "passed",
+          "durationMs": 38626.873999999996
+        },
+        {
+          "project": "desktop",
+          "file": "five-floral-forms.spec.ts",
+          "title": "salvia: five floral forms collection, canonical redirect and selected garden stay usable",
+          "status": "passed",
+          "durationMs": 41961.652
+        },
+        {
+          "project": "desktop",
+          "file": "five-floral-forms.spec.ts",
+          "title": "nicotiana: five floral forms collection, canonical redirect and selected garden stay usable",
+          "status": "passed",
+          "durationMs": 38652.819
+        },
+        {
+          "project": "desktop",
+          "file": "five-floral-forms.spec.ts",
+          "title": "lantana: five floral forms collection, canonical redirect and selected garden stay usable",
+          "status": "passed",
+          "durationMs": 47099.133
+        },
+        {
+          "project": "desktop",
+          "file": "five-floral-forms.spec.ts",
+          "title": "echinacea: five floral forms collection, canonical redirect and selected garden stay usable",
+          "status": "passed",
+          "durationMs": 40747.368
+        },
+        {
+          "project": "mobile",
+          "file": "five-floral-forms.spec.ts",
+          "title": "gazania: five floral forms collection, canonical redirect and selected garden stay usable",
+          "status": "passed",
+          "durationMs": 69197.31700000001
+        },
+        {
+          "project": "mobile",
+          "file": "five-floral-forms.spec.ts",
+          "title": "salvia: five floral forms collection, canonical redirect and selected garden stay usable",
+          "status": "passed",
+          "durationMs": 67087.892
+        },
+        {
+          "project": "mobile",
+          "file": "five-floral-forms.spec.ts",
+          "title": "nicotiana: five floral forms collection, canonical redirect and selected garden stay usable",
+          "status": "passed",
+          "durationMs": 84789.845
+        },
+        {
+          "project": "mobile",
+          "file": "five-floral-forms.spec.ts",
+          "title": "lantana: five floral forms collection, canonical redirect and selected garden stay usable",
+          "status": "passed",
+          "durationMs": 84113.59300000001
+        },
+        {
+          "project": "mobile",
+          "file": "five-floral-forms.spec.ts",
+          "title": "echinacea: five floral forms collection, canonical redirect and selected garden stay usable",
+          "status": "failed",
+          "durationMs": 86050.48999999999
+        }
+      ]
+    },
+    {
+      "kind": "production",
+      "source": "test-results/isolated-production-1793296164675",
+      "note": "Bounded startup/preparation assertions; mobile Echinacea second garden selection remained pending120seconds. Nine cases pass.",
+      "passed": 9,
+      "failed": 1,
+      "skipped": 0,
+      "flaky": 0,
+      "runnerErrors": [],
+      "cases": [
+        {
+          "project": "desktop",
+          "file": "five-floral-forms.spec.ts",
+          "title": "gazania: five floral forms collection, canonical redirect and selected garden stay usable",
+          "status": "passed",
+          "durationMs": 38644.937999999995
+        },
+        {
+          "project": "desktop",
+          "file": "five-floral-forms.spec.ts",
+          "title": "salvia: five floral forms collection, canonical redirect and selected garden stay usable",
+          "status": "passed",
+          "durationMs": 34558.059
+        },
+        {
+          "project": "desktop",
+          "file": "five-floral-forms.spec.ts",
+          "title": "nicotiana: five floral forms collection, canonical redirect and selected garden stay usable",
+          "status": "passed",
+          "durationMs": 23304.255
+        },
+        {
+          "project": "desktop",
+          "file": "five-floral-forms.spec.ts",
+          "title": "lantana: five floral forms collection, canonical redirect and selected garden stay usable",
+          "status": "passed",
+          "durationMs": 28870.327999999998
+        },
+        {
+          "project": "desktop",
+          "file": "five-floral-forms.spec.ts",
+          "title": "echinacea: five floral forms collection, canonical redirect and selected garden stay usable",
+          "status": "passed",
+          "durationMs": 34741.268000000004
+        },
+        {
+          "project": "mobile",
+          "file": "five-floral-forms.spec.ts",
+          "title": "gazania: five floral forms collection, canonical redirect and selected garden stay usable",
+          "status": "passed",
+          "durationMs": 54805.779
+        },
+        {
+          "project": "mobile",
+          "file": "five-floral-forms.spec.ts",
+          "title": "salvia: five floral forms collection, canonical redirect and selected garden stay usable",
+          "status": "passed",
+          "durationMs": 49630.775
+        },
+        {
+          "project": "mobile",
+          "file": "five-floral-forms.spec.ts",
+          "title": "nicotiana: five floral forms collection, canonical redirect and selected garden stay usable",
+          "status": "passed",
+          "durationMs": 48512.522999999994
+        },
+        {
+          "project": "mobile",
+          "file": "five-floral-forms.spec.ts",
+          "title": "lantana: five floral forms collection, canonical redirect and selected garden stay usable",
+          "status": "passed",
+          "durationMs": 69174.8
+        },
+        {
+          "project": "mobile",
+          "file": "five-floral-forms.spec.ts",
+          "title": "echinacea: five floral forms collection, canonical redirect and selected garden stay usable",
+          "status": "failed",
+          "durationMs": 219594.867
+        }
+      ]
+    },
+    {
+      "kind": "production",
+      "source": "test-results/isolated-production-1793298531543",
+      "note": "Regular production runner, final mobile Echinacea collection scenario with unchanged pixel/preparation deadlines.",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "flaky": 0,
+      "runnerErrors": [],
+      "cases": [
+        {
+          "project": "mobile",
+          "file": "five-floral-forms.spec.ts",
+          "title": "echinacea: five floral forms collection, canonical redirect and selected garden stay usable",
+          "status": "passed",
+          "durationMs": 33769.311
+        }
+      ]
+    }
+  ]
+}

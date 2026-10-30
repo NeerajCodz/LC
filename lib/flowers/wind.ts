@@ -8,7 +8,7 @@ export interface WindProfile {
   flutter: number;
 }
 // Art-directed response classes informed by habit, stem construction and head load.
-// These are not measured species-specific elastic constants. See wind-and-contact.md.
+// These are not measured species-specific elastic constants. See docs/architecture/wind-and-contact.md.
 export const WIND_PROFILES: Record<FlowerType, WindProfile> = {
   gazania: { compliance: 0.1, stiffness: 53, damping: 0.9, flutter: 0.48 },
   salvia: { compliance: 0.08, stiffness: 61, damping: 0.91, flutter: 0.25 },

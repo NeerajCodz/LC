@@ -20,14 +20,14 @@ Counts, exact dimensions, pigments, curvature and mechanical coefficients remain
 
 ## Ownership and coherent slices
 
-- [ ] Research and baseline record: update the five dossiers, identify specific before-view defects, and commit this plan and source evidence.
-- [ ] Gazania geometry: add real ray relief/variation and staged disk anatomy; add regression checks using generated buffers and open/folded states. Owner: ray-flower agent; only Gazania files and its tests/dossier.
-- [ ] Echinacea geometry: refine the cone/paleae and ray relief; check actual tissue role, geometry colors, overlap and transformed support. Owner: ray-flower agent; only Echinacea files and its tests/dossier.
-- [ ] Salvia geometry: improve calyx/corolla proportions, whorl arrangement and distinct closed/open silhouettes. Owner: tube-flower agent; only Salvia files and its tests/dossier.
-- [ ] Nicotiana geometry: refine pointed stars, crease relief, flexible tubes and varied inflorescence poses. Owner: tube-flower agent; only Nicotiana files, its tests/dossier and shared Salvia/Nicotiana quality tests.
-- [ ] Lantana geometry: replace the exposed broad bowl with compact converging floral bases and a dense domed crown; preserve all 42 florets, true included organs and four unequal lobes. Owner: cluster agent; only Lantana files and tests/dossier.
-- [ ] Shared tissue integration: explicitly type receptacle surfaces and optional organ tip pigments; add species-specific filtered micro-relief and restrained pigment gradients while preserving shader sharing and fallback. Owner: root; `lib/three/specimenModel.ts`, `specimenTissue.ts`, `specimenMaterials.ts`, palettes and material tests. Agents request shared edits instead of making them.
-- [ ] Integration/framing: update bounds only if actual generated envelopes require it; verify all stages and catalog-wide portrait containment. Root owns registries.
+- [x] Research and baseline record: update the five dossiers, identify specific before-view defects, and commit this plan and source evidence.
+- [x] Gazania geometry: add real ray relief/variation and staged disk anatomy; add regression checks using generated buffers and open/folded states. Owner: ray-flower agent; only Gazania files and its tests/dossier.
+- [x] Echinacea geometry: refine the cone/paleae and ray relief; check actual tissue role, geometry colors, overlap and transformed support. Owner: ray-flower agent; only Echinacea files and its tests/dossier.
+- [x] Salvia geometry: improve calyx/corolla proportions, whorl arrangement and distinct closed/open silhouettes. Owner: tube-flower agent; only Salvia files and its tests/dossier.
+- [x] Nicotiana geometry: refine pointed stars, crease relief, flexible tubes and varied inflorescence poses. Owner: tube-flower agent; only Nicotiana files, its tests/dossier and shared Salvia/Nicotiana quality tests.
+- [x] Lantana geometry: replace the exposed broad bowl with compact converging floral bases and a dense domed crown; preserve all 42 florets, true included organs and four unequal lobes. Owner: cluster agent; only Lantana files and tests/dossier.
+- [x] Shared tissue integration: explicitly type receptacle surfaces and optional organ tip pigments; add species-specific filtered micro-relief and restrained pigment gradients while preserving shader sharing and fallback. Owner: root; `lib/three/specimenModel.ts`, `specimenTissue.ts`, `specimenMaterials.ts`, palettes and material tests. Agents request shared edits instead of making them.
+- [x] Integration/framing: update bounds only if actual generated envelopes require it; verify all stages and catalog-wide portrait containment. Root owns registries.
 - [ ] Fresh verification and visual comparison: typecheck, lint, unit/geometry/contact tests, seven-view inspection at specimen/overview and standard/constrained tiers, focused controls, selected garden and native budget scenarios. Inspect real images after rendering. Lifecycle code is outside the proposed refinement; the previously observed intermittent WebKit stall remains documented unless a cause is established.
 - [ ] Publish fresh rendering costs and validation evidence, verify author/committer identity and trailer absence, push each checked coherent slice, and update PR #9. Preserve the original measurements as historical evidence.
 

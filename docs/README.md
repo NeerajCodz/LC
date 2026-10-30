@@ -36,6 +36,7 @@ Raw measurement and browser verification artifacts live in `validation/data/`; e
 - [Next ten specimens](validation/next-ten-specimens-validation.md)
 - [Floral forms](validation/floral-forms-validation.md)
 - [Five floral forms](validation/five-floral-forms-validation.md)
+- [Five-flower realism and documentation refinement](validation/five-flower-realism-validation.md)
 - [Cymes and spikes](validation/cymes-and-spikes-validation.md)
 - [Torenia repair](validation/torenia-repair-validation.md)
 

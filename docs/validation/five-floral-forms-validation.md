@@ -5,8 +5,10 @@ Work starts from merged main `6f9857c` on
 studies are Gazania rigens, Salvia splendens, Nicotiana alata, Lantana camara and
 Echinacea purpurea. Living Colors remains an ever-growing collection.
 
-[Draft PR #9](https://github.com/NeerajCodz/LC/pull/9) publishes this work. The
+[PR #9](https://github.com/NeerajCodz/LC/pull/9) publishes this work. The
 intermittent preparation observation below remains an open review limitation.
+
+This record describes the initial implementation. See the [realism refinement record](five-flower-realism-validation.md) for subsequent geometry, material and documentation changes and their fresh checks.
 
 ## Construction and evidence
 

@@ -18,7 +18,7 @@ existing rendering ceilings.
 TypeScript and vgpu 0.4.1; retain the installed lockfile.
 
 **Spec:** The user-approved ongoing specimen workflow, AGENTS.md and the ten
-source-linked research dossiers in docs/specimens/ are the requirements.
+source-linked research dossiers in docs/research/ are the requirements.
 
 **Baseline:** main 508ee7f, the reviewed PR #6 tree; 459 unit checks and 174
 production browser cases passed for that tree. Work in E:/codz/Projects/lc on

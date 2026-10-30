@@ -41,6 +41,13 @@ for (const folder of ["research", "specimens"]) {
       failures.push(`Unexpected non-Markdown file in ${folder}: ${entry}`);
     if (/-(research|validation)\.md$/.test(entry))
       failures.push(`Unorganized document: ${folder}/${entry}`);
+    if (
+      folder === "specimens" &&
+      entry !== "README.md" &&
+      entry.endsWith(".md") &&
+      !existsSync(resolve(root, "docs/research", entry))
+    )
+      failures.push(`Missing research companion: ${entry}`);
   }
 }
 assert.equal(failures.length, 0, failures.join("\n"));

@@ -1,3 +1,8 @@
+import { gazaniaStructure } from "../../components/flowers/gazania/Gazania";
+import { salviaStructure } from "../../components/flowers/salvia/Salvia";
+import { nicotianaStructure } from "../../components/flowers/nicotiana/Nicotiana";
+import { lantanaStructure } from "../../components/flowers/lantana/Lantana";
+import { echinaceaStructure } from "../../components/flowers/echinacea/Echinacea";
 import { fuchsiaStructure } from "../../components/flowers/fuchsia/Fuchsia";
 import { carnationStructure } from "../../components/flowers/carnation/Carnation";
 import { plumeriaStructure } from "../../components/flowers/plumeria/Plumeria";
@@ -92,6 +97,11 @@ import { pentasStructure } from "../../components/flowers/pentas/Pentas";
 import { lobeliaStructure } from "../../components/flowers/lobelia/Lobelia";
 import { toreniaStructure } from "../../components/flowers/torenia/Torenia";
 export const FLOWER_STRUCTURES: Record<FlowerType, FlowerStructure> = {
+  gazania: gazaniaStructure,
+  salvia: salviaStructure,
+  nicotiana: nicotianaStructure,
+  lantana: lantanaStructure,
+  echinacea: echinaceaStructure,
   torenia: toreniaStructure,
   lobelia: lobeliaStructure,
   pentas: pentasStructure,

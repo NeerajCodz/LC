@@ -1,3 +1,8 @@
+import { GAZANIA_MODEL } from "../components/flowers/gazania/gazaniaGeometry";
+import { SALVIA_MODEL } from "../components/flowers/salvia/salviaGeometry";
+import { NICOTIANA_MODEL } from "../components/flowers/nicotiana/nicotianaGeometry";
+import { LANTANA_MODEL } from "../components/flowers/lantana/lantanaGeometry";
+import { ECHINACEA_MODEL } from "../components/flowers/echinacea/echinaceaGeometry";
 import { performance } from "node:perf_hooks";
 import os from "node:os";
 import { Matrix4, Quaternion, Euler, Vector3 } from "three";
@@ -55,6 +60,12 @@ const environment = {
   availableMemoryMiBAtStart: os.freemem() / 2 ** 20,
 };
 for (const [name, model] of Object.entries({
+  gazania: GAZANIA_MODEL,
+  salvia: SALVIA_MODEL,
+  nicotiana: NICOTIANA_MODEL,
+  lantana: LANTANA_MODEL,
+  echinacea: ECHINACEA_MODEL,
+
   pansy: PANSY_MODEL,
   "african-violet": AFRICAN_VIOLET_MODEL,
   bluebell: BLUEBELL_MODEL,

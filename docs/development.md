@@ -1,5 +1,22 @@
 # Development and verification
 
+## Documentation maintenance
+
+Use the [documentation index](README.md) to find flower research, specimen implementation guides, shared architecture, plans and validation records. Keep botanical sources in `research/<flower>.md` and implementation guidance in `specimens/<flower>.md`; pair the two with relative links. Store measurement artifacts under `validation/data/`, beside their linked historical records in `validation/`. Preserve source dates, provenance, authored choices and unavailable checks when moving or updating evidence.
+
+Run `npm run docs:check` after documentation changes. It checks local Markdown link targets and research/specimen companions. It does not fetch external sources or certify their scientific claims. Keep `AGENTS.md` as the sole agent instruction file.
+
+## Specimen verification suites
+
+`five-floral-forms.spec.ts` exercises Gazania, Salvia, Nicotiana, Lantana and
+Echinacea through specimen controls, themes, search and garden selection on both
+browser projects. `five-floral-forms-inspection.spec.ts` captures seven anatomical
+poses at specimen/overview detail. The corresponding model registry and dynamics
+tests use actual transformed cages. The [batch record](validation/five-floral-forms-validation.md)
+separates evidence from authored anatomy and unmeasured mechanics. The CPU
+benchmark accepts these five slugs; rendering measurements use the existing
+species-filtered production benchmark on port 1607.
+
 `cymes-and-spikes.spec.ts` covers the Lupine, Hollyhock, Crown Imperial, Tuberose,
 Ixora, Pentas, Torenia, Lobelia, Hoya and Impatiens routes, controls, retained
 rendering, search and garden selection. `cymes-and-spikes-inspection.spec.ts`
@@ -29,7 +46,7 @@ boundary. The unchanged pixel predicate then samples eight frames within its
 renderer teardown; it never replaces pixel or renderer-error assertions.
 `inspection-readiness.spec.ts` verifies native draw activity, retained canvases,
 revisits and explicit fallback/keyboard retry. See the
-[validation record](specimens/cymes-and-spikes-validation.md) for evidence and limits.
+[validation record](validation/cymes-and-spikes-validation.md) for evidence and limits.
 
 Fritillaria's optional **Bell interior study** and Hoya/Torenia's **Single-floret study**
 switch the seven standard tiles to two targeted views and back. They frame real
@@ -56,7 +73,7 @@ Scabiosa seven-view boards. `floral-forms.spec.ts` checks their public routes,
 focused physics lifecycle, pulses, bloom, themes, search and selected garden,
 plus tall portrait fog and macro restoration. The corresponding specimen tests,
 `floral-forms-dynamics.test.ts`, real stalk/junction tests and portrait tests check
-the production geometry and transformations. The [validation record](specimens/floral-forms-validation.md)
+the production geometry and transformations. The [validation record](validation/floral-forms-validation.md)
 separates anatomical evidence, authored mechanics, visual refinements and measured
 costs. Use the same isolated browser runner and port 1607 described below.
 
@@ -84,9 +101,9 @@ contact tests are in the corresponding `*-specimen.test.ts` files and
 
 The material regression also compares shader source across organ/tissue combinations, preserves Zinnia's bicolored calyx program, and verifies independent species/region/scatter and blade pigment uniforms. Shared program keys must never merge different source code or embed per-material colors as shared GLSL literals.
 
-`ten-specimens.spec.ts` covers rendered pixels, bloom, themes, collection/search, both garden layouts and focused physics lifecycle. `DEV_INSPECTION=1` enables `ten-specimen-inspection.spec.ts`; `SPECIMENS_TO_INSPECT` optionally filters its comma-separated slugs. Inspect the seven-view captures against Rose and the dossiers; keep images/logs in ignored outputs. Rendering and CPU drivers accept the new slugs as comma-separated filters. See [measured validation](specimens/ten-specimens-validation.md).
+`ten-specimens.spec.ts` covers rendered pixels, bloom, themes, collection/search, both garden layouts and focused physics lifecycle. `DEV_INSPECTION=1` enables `ten-specimen-inspection.spec.ts`; `SPECIMENS_TO_INSPECT` optionally filters its comma-separated slugs. Inspect the seven-view captures against Rose and the dossiers; keep images/logs in ignored outputs. Rendering and CPU drivers accept the new slugs as comma-separated filters. See [measured validation](validation/ten-specimens-validation.md).
 
-Project LC's mission is to bring every single flower in the world to life in 3D. Living Colors is its standalone Next.js App Router application, with a catalog that grows as specimens are developed. [README](../README.md) documents the rendering architecture and Flower API; [AGENTS.md](../AGENTS.md) holds the project brief and coding requirements. Botanical changes should follow the [reference notes](botanical-references.md) and [wind/contact model](wind-and-contact.md).
+Project LC's mission is to bring every single flower in the world to life in 3D. Living Colors is its standalone Next.js App Router application, with a catalog that grows as specimens are developed. [README](../README.md) documents the rendering architecture and Flower API; [AGENTS.md](../AGENTS.md) holds the project brief and coding requirements. Botanical changes should follow the [reference notes](botanical-references.md) and [wind/contact model](architecture/wind-and-contact.md).
 
 ## Local setup
 
@@ -205,21 +222,21 @@ Useful runtime diagnostics:
 
 Wait for a fresh page to settle before comparing scene IDs; hot reloads during code edits can replace scenes. Offscreen retention lasts for the mounted route, not navigation away or a browser reload. The collection uses one WebGL context after every species is visited; a complete specimen page uses three after its angle gallery and scroll study initialize. The shared gallery backing buffer covers its finite grid but its DPR is bounded by pixel and dimension limits. Browser emulation does not establish performance on a physical phone. Use the Wind study toggle in the inspection fixture to check anchored bases and moving attachments.
 
-Custom organ geometry is tested in `floral-surfaces.test.ts`; the [specimen dossier](specimens/expanded-forms.md) records research and interpretation. Run the seven-view fixture after changing shell sampling or folds.
+Custom organ geometry is tested in `floral-surfaces.test.ts`; the [specimen dossier](architecture/expanded-forms.md) records research and interpretation. Run the seven-view fixture after changing shell sampling or folds.
 
-`passionflower.test.ts` adds continuous palmate-leaf topology, corona pigment zones, finite folded normals, low-quality geometry bounds and fixed-support derivative checks. The [passionflower dossier](specimens/passionflower-research.md) describes its modular corolla, reproductive organs and climbing stem. Its canonical route and garden macro selection are included in `expanded-specimens.spec.ts`. Preserve optional organ interaction refs and the custom stem slot when extending these systems; no existing flower should acquire the vine's support constraint by default.
+`passionflower.test.ts` adds continuous palmate-leaf topology, corona pigment zones, finite folded normals, low-quality geometry bounds and fixed-support derivative checks. The [passionflower dossier](research/passionflower.md) describes its modular corolla, reproductive organs and climbing stem. Its canonical route and garden macro selection are included in `expanded-specimens.spec.ts`. Preserve optional organ interaction refs and the custom stem slot when extending these systems; no existing flower should acquire the vine's support constraint by default.
 
 `passionflower.spec.ts` disables WebGPU to exercise the GLSL material fallback through bloom, macro and all themes. It rejects runtime/shader errors and samples actual canvas pixels. Driver informational warnings are not compile failures. `mobile-performance.spec.ts` also checks that entering macro keeps the mobile framebuffer size stable and the flower drawn; frame counters alone cannot establish visible rendering. Inspect a composited screenshot as well as pixel readback when checking WebKit behavior.
 
 Spadix checks include capped topology, normal direction and mobile tessellation bounds. When validating retained galleries, check the framebuffer after registering all previews as well as after resizing: Canvas configuration can reset DPR even when its DOM size does not change. `RenderBudget` subscribes to renderer-store changes to reapply its limit.
 
-`morning-glory.test.ts` verifies its periodic sealed shell, matched bud normals, thickness and nondegenerate unfolding triangles. `morning-glory.spec.ts` covers visible pixels, bloom, macro, themes, collection search and garden selection. Its [dossier](specimens/morning-glory-research.md) records the distinction between artistic reverse bloom and biological mature closure. `previewScale` is optional authored camera framing; it must not change geometry scale or existing species framing by default.
+`morning-glory.test.ts` verifies its periodic sealed shell, matched bud normals, thickness and nondegenerate unfolding triangles. `morning-glory.spec.ts` covers visible pixels, bloom, macro, themes, collection search and garden selection. Its [dossier](research/morning-glory.md) records the distinction between artistic reverse bloom and biological mature closure. `previewScale` is optional authored camera framing; it must not change geometry scale or existing species framing by default.
 
-`fuchsia.test.ts` checks sealed parametric shells, intermediate triangles, valvate bud seams, two stamen lengths and pendant stability. `fuchsia.spec.ts` checks real rendering, reverse bloom, macro, themes, collection search and garden selection with WebGPU disabled. Its [dossier](specimens/fuchsia-research.md) documents source proportions and uncalibrated mechanics. Custom `Organs` now receive the optional `leaves` flag so upper-branch foliage honors the public API. Shared leaf shaders support an optional `veinColor`; absent values preserve the original appearance.
+`fuchsia.test.ts` checks sealed parametric shells, intermediate triangles, valvate bud seams, two stamen lengths and pendant stability. `fuchsia.spec.ts` checks real rendering, reverse bloom, macro, themes, collection search and garden selection with WebGPU disabled. Its [dossier](research/fuchsia.md) documents source proportions and uncalibrated mechanics. Custom `Organs` now receive the optional `leaves` flag so upper-branch foliage honors the public API. Shared leaf shaders support an optional `veinColor`; absent values preserve the original appearance.
 
 `specimen-geometry.test.ts` checks the five flexible specimens' sealed surfaces, positive thickness, deterministic normals, intermediate bloom triangles, organ arrangement and complete cage budgets including pinned obstacles. `petal-dynamics.test.ts`, `petal-deformation.test.ts` and `petal-lifecycle.test.ts` cover contact, pinned insertions, elastic recovery, extreme inputs, reverse bloom, frame-rate consistency, render bindings, shadows and retained time. `five-specimens.spec.ts` exercises actual flower pixels, themes, reverse bloom, search, both garden layouts, macro, keyboard pulse, pause, reduced motion and responsive cage budgets with WebGPU disabled. Cold software WebKit renderer/shader startup can exceed 15 seconds; the new readiness assertions allow 60 seconds without adding any product loading delay.
 
-Run `npx tsx scripts/benchmark-petal-physics.ts` for warmed CPU-only measurements. Browser canvases expose `data-petal-physics`, `data-petal-nodes`, `data-petal-steps` and sampled `data-petal-ms`; macro must keep the same node count and advance the same step counter. Paused/offscreen counters freeze. CPU timing excludes draw and texture-upload cost. See the [validation record](specimens/five-specimens-validation.md) for measured results and limitations.
+Run `npx tsx scripts/benchmark-petal-physics.ts` for warmed CPU-only measurements. Browser canvases expose `data-petal-physics`, `data-petal-nodes`, `data-petal-steps` and sampled `data-petal-ms`; macro must keep the same node count and advance the same step counter. Paused/offscreen counters freeze. CPU timing excludes draw and texture-upload cost. See the [validation record](validation/five-specimens-validation.md) for measured results and limitations.
 
 ## Maintenance
 
@@ -237,4 +254,4 @@ Keep docs aligned with changed APIs and behavior. Use conventional commits for c
 
 `next-specimen-geometry.test.ts` and `next-specimen-dynamics.test.ts` add sex-specific Begonia, Cyclamen basal/reflexed anatomy, fertile lacecap and Protea floret checks, folded-tip containment, sealed dense prototypes, and transformed/pinned cage stress at both budgets. `floret-instances.test.ts` checks first-draw transforms, morph texture retention, full counts and folded Protea carriers. `snapdragon-pressure.test.ts` checks the same mouth pressure in cage rest and pinned insertions. `next-specimens.spec.ts` covers the new routes, rendered pixels, controls, gallery search and garden selection; `DEV_INSPECTION=1` enables the development-only `specimen-inspection.spec.ts` seven-view captures. Keep screenshots in ignored validation outputs.
 
-Run `npx tsx scripts/benchmark-specimen-rendering.ts cyclamen,snapdragon,hardy-begonia,hydrangea,king-protea desktop,mobile` against a production server on 1607 for sequential warm frame samples. Fresh 30-frame boundaries avoid counting historical frames. Output includes renderer, buffer budget, tissue/HDR fallback, solver and CPU cage-texture preparation; GPU upload and drawing remain combined in frame wall time. `benchmark-petal-physics.ts` accepts the same optional comma-separated species filter. See [validation](specimens/next-five-validation.md) for exact results and limits.
+Run `npx tsx scripts/benchmark-specimen-rendering.ts cyclamen,snapdragon,hardy-begonia,hydrangea,king-protea desktop,mobile` against a production server on 1607 for sequential warm frame samples. Fresh 30-frame boundaries avoid counting historical frames. Output includes renderer, buffer budget, tissue/HDR fallback, solver and CPU cage-texture preparation; GPU upload and drawing remain combined in frame wall time. `benchmark-petal-physics.ts` accepts the same optional comma-separated species filter. See [validation](validation/next-five-validation.md) for exact results and limits.

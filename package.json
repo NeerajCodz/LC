@@ -9,6 +9,7 @@
     "build": "next build",
     "start": "next start --port 1607",
     "lint": "eslint .",
+    "docs:check": "node scripts/check-documentation.mjs",
     "typecheck": "tsc --noEmit",
     "test": "tsx --test tests/*.test.ts",
     "test:browser": "playwright test",

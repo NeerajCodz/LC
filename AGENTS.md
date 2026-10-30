@@ -33,16 +33,16 @@ The global target inventory is [docs/FLOWERS.md](docs/FLOWERS.md). It is generat
 - Share the tissue atlas and raw HDR bake application-wide. Share PMREM output per renderer with reference-counted cleanup. Do not bake or read back textures every frame.
 - `BloomLoader` is the shared DOM loading state. It uses CSS-animated SVG petals and rotation, pauses entirely for reduced motion, and requires no 3D engine. `SceneReady` releases specimen/garden overlays after the first drawn scene frame. Do not add artificial delays or restart loaders when retained scenes re-enter view.
 
-- Preserve anchored planting points: bend stems and attachments with the shared clamped curve, never rotate the entire plant around its head. Consult [wind and contact](docs/wind-and-contact.md); response constants are authored, not measured. Extend `FLOWER_STRUCTURES` and `WIND_PROFILES` when adding species.
+- Preserve anchored planting points: bend stems and attachments with the shared clamped curve, never rotate the entire plant around its head. Consult [wind and contact](docs/architecture/wind-and-contact.md); response constants are authored, not measured. Extend `FLOWER_STRUCTURES` and `WIND_PROFILES` when adding species.
 - Preserve `RenderBudget`, initial constrained-device quality, serialized optional GPU bakes, and inexpensive mobile interaction. Keep garden planting clearance separate from runtime head contact; never squeeze the desktop layout onto mobile or omit catalog species from the garden.
 
-- Non-radial flowers use the typed `Organs` slot and `FloralParts` shell/blade helpers. Preserve initialized morph targets, folded normals, explicit disposal, and quality-scaled small organs. Consult [expanded forms](docs/specimens/expanded-forms.md). Never replace these structures with radial placeholder whorls.
+- Non-radial flowers use the typed `Organs` slot and `FloralParts` shell/blade helpers. Preserve initialized morph targets, folded normals, explicit disposal, and quality-scaled small organs. Consult [expanded forms](docs/architecture/expanded-forms.md). Never replace these structures with radial placeholder whorls.
 - Use `headCenter` for asymmetric macro targets. Keep mobile garden controls outside the viewing surface, and enforce renderer budgets when Canvas configuration changes as well as on resize.
-- Climbing specimens may supply `StemComponent` and `supportHeight`. Preserve the fixed support's zero displacement/slope and use the free stem length for head deformation. Blue Passionflower's dedicated organs, continuous palmate leaves and instanced corona are documented in [its dossier](docs/specimens/passionflower-research.md). Do not replace them with generic radial petals or compound leaflets.
+- Climbing specimens may supply `StemComponent` and `supportHeight`. Preserve the fixed support's zero displacement/slope and use the free stem length for head deformation. Blue Passionflower's dedicated organs, continuous palmate leaves and instanced corona are documented in [its dossier](docs/research/passionflower.md). Do not replace them with generic radial petals or compound leaflets.
 
 ## Working and validation
 
-Morning Glory uses a continuous periodic corolla and a twining shoot, not separate petals or tendrils. Preserve its folded normals, included organs, cordate leaves and quality-scaled pubescence. See [its dossier](docs/specimens/morning-glory-research.md); reverse UI bloom is not biological reopening. `previewScale` adjusts framing for projecting specimens, not their geometry.
+Morning Glory uses a continuous periodic corolla and a twining shoot, not separate petals or tendrils. Preserve its folded normals, included organs, cordate leaves and quality-scaled pubescence. See [its dossier](docs/research/morning-glory.md); reverse UI bloom is not biological reopening. `previewScale` adjusts framing for projecting specimens, not their geometry.
 
 Inspect the current diff before editing and preserve unrelated user changes. Keep TypeScript fully typed, modules focused, and cleanup explicit. Read relevant bundled Next.js documentation before changing framework behavior.
 

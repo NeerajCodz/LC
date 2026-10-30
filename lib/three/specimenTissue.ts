@@ -5,6 +5,11 @@ export const TISSUE_RESPONSE: Record<
   string,
   { roughness: number; sheen: number; coat: number; scatter: number }
 > = {
+  gazania: { roughness: 0.71, sheen: 0.18, coat: 0.005, scatter: 0.055 },
+  salvia: { roughness: 0.65, sheen: 0.2, coat: 0.01, scatter: 0.055 },
+  nicotiana: { roughness: 0.68, sheen: 0.17, coat: 0.008, scatter: 0.07 },
+  lantana: { roughness: 0.73, sheen: 0.16, coat: 0.003, scatter: 0.058 },
+  echinacea: { roughness: 0.77, sheen: 0.15, coat: 0, scatter: 0.055 },
   torenia: { roughness: 0.81, sheen: 0.16, coat: 0, scatter: 0.062 },
   lobelia: { roughness: 0.72, sheen: 0.18, coat: 0.003, scatter: 0.063 },
   pentas: { roughness: 0.7, sheen: 0.2, coat: 0.005, scatter: 0.06 },
@@ -52,6 +57,12 @@ export const TISSUE_RESPONSE: Record<
   zinnia: { roughness: 0.78, sheen: 0.16, coat: 0, scatter: 0.055 },
 };
 export function specimenTissueColor(type: string, tissue?: SpecimenTissue) {
+  if (type === "gazania" && tissue === "disc") return "#c7932e";
+  if (type === "echinacea" && tissue === "disc") return "#69452c";
+  if (type === "echinacea" && tissue === "inner") return "#45303b";
+  if (type === "lantana" && tissue === "disc") return "#ed8d2b";
+  if (type === "lantana" && tissue === "guide") return "#f1c62d";
+  if (type === "lantana" && tissue === "inner") return "#e5d6ac";
   if (type === "torenia" && tissue === "inner") return "#e2d8ad";
   if (type === "lobelia" && tissue === "guide") return "#ece6cb";
   if (type === "lobelia" && tissue === "inner") return "#9584ae";
@@ -86,6 +97,44 @@ export function specimenTissueColor(type: string, tissue?: SpecimenTissue) {
 export function specimenTissueShader(type: string, tissue?: SpecimenTissue) {
   if (tissue === "leaf") return "";
   switch (type) {
+    case "gazania":
+      if (tissue === "disc")
+        return `diffuseColor.rgb*=1.-.07*pow(.5+.5*cos(vPetalUv.x*31.416),12.);`;
+      return `float gaAcross=vPetalUv.x-.5+.012*vSpecimenVariation;
+      float gaW=abs(gaAcross);
+      float gaStripe=exp(-gaW*gaW*145.)*smoothstep(.18,.38,vPetalUv.y)*(1.-.6*smoothstep(.82,1.,vPetalUv.y));
+      float gaEye=exp(-pow(gaW/.34,6.)-pow(abs((vPetalUv.y-.14-.006*vSpecimenVariation)/.095),4.));
+      vec2 gaWhiteOffset=vec2((gaAcross-.008*vSpecimenVariation)/.085,(vPetalUv.y-.19-.004*vSpecimenVariation)/.025);
+      float gaWhite=exp(-dot(gaWhiteOffset,gaWhiteOffset))*gaEye;
+      diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.52,.11,.014),gaStripe*.46);
+      diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.0027,.0013,.002),gaEye*.98);
+      diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.70,.68,.57),gaWhite*.96);`;
+    case "salvia":
+      return `float saPhase=vPetalUv.x*50.265;float saVisibility=1.-smoothstep(.35,1.5,fwidth(saPhase));float saRib=pow(.5+.5*cos(saPhase),14.)*saVisibility;diffuseColor.rgb*=1.-saRib*.035*smoothstep(.1,.5,vPetalUv.y);`;
+    case "nicotiana":
+      return `float niExterior=step(0.,vTissueSide);
+      float niTube=1.-smoothstep(.38,.81,vPetalUv.y);
+      diffuseColor.rgb=mix(uSpecimenInteriorColor,diffuseColor.rgb,niExterior);
+      diffuseColor.rgb=mix(diffuseColor.rgb,uPigmentRoot,niTube*niExterior*.66);
+      float niPhase=vPetalUv.x*31.415927;
+      float niVisibility=1.-smoothstep(.35,1.5,fwidth(niPhase));
+      float niVein=pow(.5+.5*cos(niPhase),23.)*niVisibility;
+      diffuseColor.rgb*=1.-niVein*.032*smoothstep(.45,.82,vPetalUv.y);`;
+    case "lantana":
+      if (tissue === "inner") return "";
+      return `float laInside=1.-step(0.,vTissueSide);
+      float laEye=smoothstep(.68,.82,vPetalUv.y)*(1.-smoothstep(.9,.99,vPetalUv.y))*laInside;
+      diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.56,.23,.035),laEye*.30);
+      float laPhase=vPetalUv.x*25.132741;
+      float laVisible=1.-smoothstep(.35,1.5,fwidth(laPhase));
+      diffuseColor.rgb*=1.-.04*pow(.5+.5*cos(laPhase),16.)*laVisible;`;
+    case "echinacea":
+      if (tissue === "disc" || tissue === "inner")
+        return `diffuseColor.rgb*=1.+(tissue.g-.5)*.065;`;
+      return `float ecPhase=vPetalUv.x*18.849556+.12*sin(vPetalUv.y*7.);
+      float ecVisible=1.-smoothstep(.35,1.5,fwidth(ecPhase));
+      float ecRib=pow(.5+.5*cos(ecPhase),17.)*ecVisible;
+      diffuseColor.rgb*=1.-ecRib*.065*sin(vPetalUv.y*3.14159265);`;
     case "torenia":
       // The stigma has its own cream tissue; corolla UVs run around one fused tube.
       if (tissue === "inner") return "";

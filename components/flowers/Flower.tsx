@@ -1,4 +1,9 @@
 "use client";
+import { Gazania } from "./gazania/Gazania";
+import { Salvia } from "./salvia/Salvia";
+import { Nicotiana } from "./nicotiana/Nicotiana";
+import { Lantana } from "./lantana/Lantana";
+import { Echinacea } from "./echinacea/Echinacea";
 import type { FlowerProps } from "@/lib/flowers/types";
 import { Rose } from "./rose/Rose";
 import { Lotus } from "./lotus/Lotus";
@@ -77,6 +82,11 @@ import { Pentas } from "./pentas/Pentas";
 import { Lobelia } from "./lobelia/Lobelia";
 import { Torenia } from "./torenia/Torenia";
 const SPECIES = {
+  gazania: Gazania,
+  salvia: Salvia,
+  nicotiana: Nicotiana,
+  lantana: Lantana,
+  echinacea: Echinacea,
   torenia: Torenia,
   lobelia: Lobelia,
   pentas: Pentas,

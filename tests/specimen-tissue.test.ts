@@ -26,6 +26,7 @@ test("new specimen tissue programs depend on shader source rather than organ lab
     "petal",
     "tube",
     "calyx",
+    "receptacle",
     "bract",
     "banner",
     "wing",

@@ -21,7 +21,7 @@ export const nicotianaStructure: FlowerStructure = {
   calyx: false,
   airbornePollen: false,
   simulatedSurfaces: true,
-  portraitBounds: { min: [-1.24, -1.86, -1.24], max: [1.24, 1.55, 1.24] },
+  portraitBounds: { min: [-1.36, -1.86, -1.28], max: [1.36, 1.65, 2] },
 };
 const anatomy: StemAnatomy = {
   color: "#82975d",

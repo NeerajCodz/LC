@@ -16,16 +16,19 @@ export function nicotianaCorolla(
   const open = stage * (young ? 0.035 : 1),
     a = u * Math.PI * 2,
     limb = Math.max(0, (v - 0.78) / 0.22),
-    lobe = (0.5 + 0.5 * Math.cos(5 * a)) ** 0.8,
+    lobe = (0.5 + 0.5 * Math.cos(5 * a)) ** 1.8,
     closed = 0.018 + 0.019 * Math.sin(Math.PI * v) + 0.005 * limb,
-    full = 0.022 + 0.024 * v * v + limb ** 1.5 * (0.12 + 0.205 * lobe),
+    full = 0.022 + 0.024 * v * v + limb ** 1.5 * (0.105 + 0.18 * lobe),
     r = closed * (1 - open) + full * open,
-    turn = a + 0.52 * (1 - open) * limb;
+    // A modest bud twist keeps the two offset skins separated during linear unfolding.
+    turn = a + 0.32 * (1 - open) * limb;
   return [
     Math.sin(turn) * r,
-    Math.cos(turn) * r,
+    Math.cos(turn) * r -
+      0.065 * (0.5 + 0.5 * open) * Math.sin(Math.PI * Math.min(v / 0.78, 1)),
     (1.12 + 0.16 * open) * Math.min(v / 0.78, 1) +
-      (0.1 - 0.047 * lobe * open) * limb,
+      (0.1 - 0.085 * lobe * open) * limb +
+      0.008 * Math.sin(10 * a) * limb ** 3 * open,
   ];
 }
 export const NICOTIANA_HEAD_CENTER: Vec3 = [0, 0.57, 0.29];
@@ -34,17 +37,17 @@ export const NICOTIANA_MODEL: SpecimenModel = {
   clusters: [
     SINGLE_CLUSTER,
     ...Array.from({ length: 7 }, (_, i) => {
-      const a = i * 2.399963229728653;
+      const a = [-0.6, 1.62, 3.5, 5.35, 7.6, 9.8, 12][i],
+        radius = [0.19, 0.27, 0.16, 0.25, 0.15, 0.11, 0.075][i],
+        pitch = [-0.24, 0.12, -0.1, 0.24, 0.05, 0.58, 0.72][i];
       return {
         position: [
-          Math.sin(a) * (0.11 + i * 0.013),
-          0.08 + i * 0.175,
-          Math.cos(a) * (0.11 + i * 0.013),
+          Math.sin(a) * radius,
+          [0.12, 0.31, 0.47, 0.65, 0.83, 1.02, 1.16][i],
+          Math.cos(a) * radius,
         ] as Vec3,
         rotation: (() => {
-          const pose = new Euler(-0.08 - (i % 4) * 0.06, a, 0, "YXZ").reorder(
-            "XYZ",
-          );
+          const pose = new Euler(-pitch, a, 0, "YXZ").reorder("XYZ");
           return [pose.x, pose.y, pose.z] as Vec3;
         })(),
         scale: i >= 5 ? 0.48 : 0.76 - i * 0.018,
@@ -90,6 +93,7 @@ for (let c = 1; c < NICOTIANA_MODEL.clusters.length; c++) {
       name: "continuous five-lobed nicotiana salver corolla",
       cluster: c,
       role: "tube",
+      outerSide: -1,
       periodic: true,
       sample: (u, v, o) => nicotianaCorolla(u, v, o, young),
       thickness: 0.008,
@@ -132,12 +136,21 @@ for (let c = 1; c < NICOTIANA_MODEL.clusters.length; c++) {
     color: string,
     endRadius = radius * 0.65,
   ) => {
+    const bent = (o: number) =>
+      points(o).map((p): Vec3 => {
+        const t = Math.max(0, Math.min(1, p[2] / (1.12 + 0.16 * o)));
+        return [
+          p[0],
+          p[1] - 0.065 * (0.5 + 0.5 * o) * Math.sin(Math.PI * t),
+          p[2],
+        ];
+      });
     NICOTIANA_MODEL.organs.push({
       name,
       cluster: c,
       bloomMorph: true,
-      points: points(maturity(1)),
-      foldedPoints: points(0),
+      points: bent(maturity(1)),
+      foldedPoints: bent(0),
       radius,
       foldedRadius: radius * 0.8,
       endRadius,
@@ -148,18 +161,18 @@ for (let c = 1; c < NICOTIANA_MODEL.clusters.length; c++) {
     const a = (j * Math.PI * 2) / 5,
       z = j === 4 ? 1.12 : 1.2;
     const tip = (o: number): Vec3 => [
-      Math.sin(a) * 0.021,
-      Math.cos(a) * 0.021,
-      z * (0.86 + 0.14 * o),
+      Math.sin(a) * 0.016,
+      Math.cos(a) * 0.016,
+      z * (0.875 + 0.125 * o),
     ];
     add(
       "included nicotiana filament",
       (o) => [
-        [Math.sin(a) * 0.032, Math.cos(a) * 0.032, 0.86 * (0.86 + 0.14 * o)],
+        [Math.sin(a) * 0.018, Math.cos(a) * 0.018, 0.86 * (0.875 + 0.125 * o)],
         [
-          Math.sin(a) * 0.024,
-          Math.cos(a) * 0.024,
-          (z - 0.07) * (0.86 + 0.14 * o),
+          Math.sin(a) * 0.016,
+          Math.cos(a) * 0.016,
+          (z - 0.07) * (0.875 + 0.125 * o),
         ],
         tip(o),
       ],
@@ -181,8 +194,8 @@ for (let c = 1; c < NICOTIANA_MODEL.clusters.length; c++) {
     "included nicotiana style",
     (o) => [
       [0, 0, 0.035],
-      [0, 0, 0.64 * (0.86 + 0.14 * o)],
-      [0, 0, 1.21 * (0.86 + 0.14 * o)],
+      [0, 0, 0.64 * (0.875 + 0.125 * o)],
+      [0, 0, 1.21 * (0.875 + 0.125 * o)],
     ],
     0.004,
     "#dce0b6",
@@ -190,8 +203,8 @@ for (let c = 1; c < NICOTIANA_MODEL.clusters.length; c++) {
   add(
     "capitate nicotiana stigma",
     (o) => [
-      [0, 0, 1.2 * (0.86 + 0.14 * o)],
-      [0, 0, 1.215 * (0.86 + 0.14 * o)],
+      [0, 0, 1.2 * (0.875 + 0.125 * o)],
+      [0, 0, 1.215 * (0.875 + 0.125 * o)],
     ],
     0.012,
     "#b6c58a",

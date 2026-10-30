@@ -15,7 +15,7 @@ export const NICOTIANA_LEAF: SpecimenSurface = {
       x = w * width * (0.3 + 0.7 * o);
     return [
       x,
-      0.94 * v,
+      1.08 * v,
       0.045 * w * w + 0.035 * v * v + 0.004 * Math.sin(v * 32) * (1 - w * w),
     ];
   },
@@ -31,12 +31,16 @@ export const NICOTIANA_DECURRENT_WINGS: SpecimenSurface[] = [-1, 1].map(
     overviewRows: 8,
     sample: (u: number, v: number): Vec3 => [
       side * (0.025 + u * (0.006 + 0.025 * Math.sin(Math.PI * v) ** 2)),
-      -0.25 + 0.32 * v,
+      -0.09 + 0.16 * v,
       0.006 * Math.sin(Math.PI * v) * (2 * u - 1),
     ],
   }),
 );
 export const NICOTIANA_FOLIAGE_NODES = [0.12, 0.29, 0.48, 0.67, 0.84].map(
-  (t, i) => ({ t, angle: i * 2.399963229728653, scale: 1.17 - i * 0.14 }),
+  (t, i) => ({
+    t,
+    angle: i * 2.399963229728653,
+    scale: [2, 1.45, 1, 0.62, 0.4][i],
+  }),
 );
 export const NICOTIANA_LEAF_TILT = 1.1;

@@ -13,22 +13,69 @@ import {
 import { verifySpecimen } from "./specimen-checks";
 
 verifySpecimen("nicotiana", NICOTIANA_MODEL);
-test("nicotiana: authored near-horizontal tube elevation survives every azimuth and keeps the limb upright", () => {
+test("nicotiana: lax raceme mixes inclined mature tubes and erect buds while keeping limbs upright", () => {
   const rises = NICOTIANA_MODEL.clusters.slice(1).map((c) => {
     const tip = specimenClusterPoint(c, [0, 0, 1]),
       up = specimenClusterPoint(c, [0, 1, 0]),
       rise = (tip[1] - c.position[1]) / c.scale;
-    assert.ok(rise > 0.06, "azimuth cancelled or reversed corolla pitch");
+    assert.ok(rise > -0.42 && rise < 0.78, "unbounded corolla pitch");
     assert.ok(
-      up[1] > c.position[1] + c.scale * 0.85,
+      up[1] > c.position[1] + c.scale * 0.7,
       "limb lost its upright pose",
     );
     return rise;
   });
   assert.ok(
-    Math.max(...rises) - Math.min(...rises) > 0.08,
-    "all tubes have identical elevation",
+    rises.slice(0, 5).some((rise) => rise < -0.08),
+    "mature long tubes never incline below their insertion",
   );
+  assert.ok(
+    rises.slice(-2).every((rise) => rise > 0.3),
+    "young buds lost their erect presentation",
+  );
+  assert.ok(
+    Math.max(...rises) - Math.min(...rises) > 0.5,
+    "raceme lacks graded pitch variation",
+  );
+  const pedicelLengths = NICOTIANA_STALKS.slice(1).map((s) =>
+    Math.hypot(...s.points.at(-1)!.map((n, k) => n - s.points[0][k])),
+  );
+  assert.ok(
+    Math.max(...pedicelLengths) / Math.min(...pedicelLengths) > 1.6,
+    "even pedicels preserve a mechanical spoke arrangement",
+  );
+});
+test("nicotiana: actual tube buffers bow between rooted base and a creased five-pointed limb", () => {
+  const s = NICOTIANA_MODEL.surfaces.find((s) => s.role === "tube")!;
+  const g = specimenGeometry(s, "high"),
+    p = g.getAttribute("position"),
+    uv = g.getAttribute("uv");
+  try {
+    const row = (v: number) => {
+      const indices = Array.from({ length: p.count / 2 }, (_, i) => i).filter(
+        (i) => Math.abs(uv.getY(i) - v) < 1e-5,
+      );
+      return indices.map((i) => [p.getX(i), p.getY(i), p.getZ(i)]);
+    };
+    const middle = row(0.5);
+    assert.ok(middle.length > 0);
+    const midY = middle.reduce((sum, n) => sum + n[1], 0) / middle.length;
+    assert.ok(midY < -0.025, "long narrow tube has no gentle downward bow");
+    const limb = row(1);
+    assert.ok(
+      Math.max(...limb.map((n) => n[2])) - Math.min(...limb.map((n) => n[2])) >
+        0.075,
+      "limb has no physical radial creases or shallow edge curl",
+    );
+    const tip = nicotianaCorolla(0, 1, 1),
+      shoulder = nicotianaCorolla(0.025, 1, 1);
+    assert.ok(
+      Math.hypot(tip[0], tip[1]) > Math.hypot(shoulder[0], shoulder[1]) * 1.12,
+      "distal lobes remain rounded instead of an angular star",
+    );
+  } finally {
+    g.dispose();
+  }
 });
 test("nicotiana: few-flowered raceme retains continuous five-lobed tubes and five included unequal stamens", () => {
   assert.deepEqual(NICOTIANA_MODEL.clusters[0], SINGLE_CLUSTER);

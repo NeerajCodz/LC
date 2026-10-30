@@ -2,6 +2,11 @@ import type { FlowerType } from "../flowers/types";
 import { PETAL_PALETTES } from "../flowers/palettes";
 import { createPetalMaterial } from "./materials";
 import type { SpecimenSurface } from "./specimenModel";
+import { Color, Vector3 } from "three";
+import {
+  SPECIMEN_SURFACE_RELIEF,
+  SPECIMEN_SURFACE_RELIEF_SHADER,
+} from "./specimenSurfaceDetail";
 import {
   TISSUE_RESPONSE,
   specimenTissueColor,
@@ -17,7 +22,8 @@ export function createSpecimenMaterial(
   color?: string,
   tissue?: SpecimenSurface["tissue"],
 ) {
-  const green = role === "calyx";
+  const green =
+    role === "calyx" || (role === "receptacle" && tissue === "leaf");
   const cream =
     (type === "bougainvillea" && role === "tube") ||
     (type === "king-protea" && role !== "bract" && !green);
@@ -36,7 +42,7 @@ export function createSpecimenMaterial(
       : undefined;
   const m = createPetalMaterial(
     green
-      ? type === "salvia"
+      ? type === "salvia" && role === "calyx"
         ? "#9e3039"
         : "#608065"
       : cream
@@ -198,6 +204,16 @@ export function createSpecimenMaterial(
       s.uniforms.uSpecimenKind = { value: specimenTissueKind(type) };
       s.uniforms.uSpecimenRegion = { value: specimenTissueRegion(tissue) };
       s.uniforms.uSpecimenScatter = { value: response.scatter };
+      const relief = SPECIMEN_SURFACE_RELIEF[type] ?? [0, 0, 0];
+      const reliefScale = tissue ? 0.25 : 1;
+      s.uniforms.uSpecimenRelief = {
+        value: new Vector3(
+          relief[0] * reliefScale,
+          relief[1] * reliefScale,
+          relief[2],
+        ),
+      };
+      s.uniforms.uSpecimenInteriorColor = { value: new Color("#f3f1e4") };
       s.uniforms.uSpecimenCustomColor = {
         value:
           type === "torenia" && role === "tube" && color && tissue !== "inner"
@@ -207,11 +223,11 @@ export function createSpecimenMaterial(
       s.vertexShader = s.vertexShader
         .replace(
           "#include <common>",
-          "#include <common>\nvarying vec2 vSpecimenAngle;",
+          "#include <common>\nvarying vec2 vSpecimenAngle; varying float vSpecimenVariation;",
         )
         .replace(
           "#include <begin_vertex>",
-          "#include <begin_vertex>\nvSpecimenAngle=vec2(cos(uv.x*6.28318530718),sin(uv.x*6.28318530718));",
+          "#include <begin_vertex>\nvSpecimenAngle=vec2(cos(uv.x*6.28318530718),sin(uv.x*6.28318530718));\nvSpecimenVariation=sin(atan(position.x+.000001,position.z+.000001)*7.+1.3);",
         );
       s.fragmentShader = s.fragmentShader.replace(
         "scatter*.11",
@@ -220,11 +236,15 @@ export function createSpecimenMaterial(
       s.fragmentShader = s.fragmentShader
         .replace(
           "#include <common>",
-          "#include <common>\nvarying vec2 vSpecimenAngle;\nuniform int uSpecimenKind, uSpecimenRegion; uniform float uSpecimenScatter, uSpecimenCustomColor;",
+          "#include <common>\nvarying vec2 vSpecimenAngle; varying float vSpecimenVariation;\nuniform int uSpecimenKind, uSpecimenRegion; uniform float uSpecimenScatter, uSpecimenCustomColor; uniform vec3 uSpecimenRelief, uSpecimenInteriorColor;",
         )
         .replace(
           "#include <roughnessmap_fragment>",
           `${SHARED_SPECIMEN_TISSUE_SHADER}\n#include <roughnessmap_fragment>`,
+        )
+        .replace(
+          "vec3 dpdx=dFdx(-vViewPosition), dpdy=dFdy(-vViewPosition);",
+          `${SPECIMEN_SURFACE_RELIEF_SHADER}\nvec3 dpdx=dFdx(-vViewPosition), dpdy=dFdy(-vViewPosition);`,
         );
     }
   };
@@ -235,7 +255,7 @@ export function createSpecimenMaterial(
         : "specimen-calyx-v2";
     if (!green && tissue === "leaf" && response) return "specimen-calyx-v2";
     // Pigments are uniforms. Organ names alone must not compile duplicate programs.
-    if (!green && response) return "specimen-shared-tissue-v5";
+    if (!green && response) return "specimen-shared-tissue-v6";
     // Legacy organs also share a program when only their uniform pigments differ.
     // Three adds material features (sheen, clearcoat, morphs, instancing) itself.
     if (type === "king-protea") return "specimen-protea-fibers-v2";

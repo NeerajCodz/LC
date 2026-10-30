@@ -18,10 +18,20 @@ export interface SpecimenSurface {
   tissue?: SpecimenTissue;
   name: string;
   cluster: number;
-  role: "petal" | "tube" | "calyx" | "bract" | "banner" | "wing" | "keel";
+  role:
+    | "petal"
+    | "tube"
+    | "calyx"
+    | "bract"
+    | "banner"
+    | "wing"
+    | "keel"
+    | "receptacle";
   sample: (u: number, v: number, open: number) => Vec3;
   pressureSample?: (u: number, v: number, open: number) => Vec3;
   thickness: number;
+  /** Which parametric offset skin is outside; winding alone does not identify it. */
+  outerSide?: 1 | -1;
   periodic?: boolean;
   flexible?: boolean;
   contactObstacle?: boolean;
@@ -96,6 +106,8 @@ export interface SpecimenOrgan {
   radius: number;
   endRadius?: number;
   color: string;
+  /** Optional distal pigment, interpolated along the real transported organ. */
+  tipColor?: string;
   flatten?: number;
   /** Rotate flattened tissue about its carrier tangent, in radians. */
   sectionRoll?: number;
@@ -218,7 +230,8 @@ export function specimenGeometry(surface: SpecimenSurface, quality: Quality) {
     sample,
   });
   const side = new Float32Array(g.getAttribute("position").count);
-  for (let i = 0; i < side.length; i++) side[i] = i < side.length / 2 ? 1 : -1;
+  for (let i = 0; i < side.length; i++)
+    side[i] = (i < side.length / 2 ? 1 : -1) * (surface.outerSide ?? 1);
   g.setAttribute("tissueSide", new Float32BufferAttribute(side, 1));
   if (surface.pressureSample) {
     const pressed = createParametricShell({

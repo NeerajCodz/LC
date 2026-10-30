@@ -25,7 +25,9 @@ test("Nicotiana portrait contains every actual enlarged basal and upper leaf", (
           0.025 * Math.sin(node.t * Math.PI),
           -nicotianaStructure.stemLength * (1 - node.t),
           0,
-        );
+        )
+        // NicotianaLeaf turns its own blade inside the BotanicalStem node frame.
+        .multiply(new Matrix4().makeRotationY(Math.PI));
       for (const positions of [
         geometry.getAttribute("position"),
         geometry.morphAttributes.position![0],

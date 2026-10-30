@@ -7,17 +7,21 @@ import {
   type SpecimenOrgan,
 } from "@/lib/three/specimenModel";
 import { floralStamens } from "@/lib/three/floralStamens";
+import { Euler, Quaternion, Vector3 } from "three";
 
+const rayAngle = (index: number) =>
+  (index * Math.PI * 2) / 21 + 0.016 * Math.sin(index * 2.13);
 export function echinaceaRay(index: number): SpecimenSurface["sample"] {
-  const a = (index * Math.PI * 2) / 21,
+  const a = rayAngle(index),
     length = 0.79 + 0.045 * Math.sin(index * 1.9);
   return (u, v, open) => {
     const across = 2 * u - 1,
       tooth = 0.014 * (0.5 + 0.5 * Math.cos(u * Math.PI * 6)) * v ** 12;
     const w =
       across *
-      (0.0025 + 0.102 * Math.sin(v * Math.PI * 0.95) ** 0.64) *
-      (0.16 + 0.84 * open);
+        (0.0025 + 0.102 * Math.sin(v * Math.PI * 0.95) ** 0.64) *
+        (0.16 + 0.84 * open) +
+      0.012 * Math.sin(index * 2.7) * Math.sin(v * Math.PI) * open;
     const r =
       0.3 * (1 - v) * (1 - open) +
       (1 - open) * 0.1 * Math.sin(v * Math.PI) +
@@ -28,7 +32,12 @@ export function echinaceaRay(index: number): SpecimenSurface["sample"] {
       open *
         (0.075 * Math.sin(v * Math.PI) -
           0.46 * v * v +
-          0.025 * across * across * Math.sin(v * Math.PI));
+          0.025 * across * across * Math.sin(v * Math.PI) +
+          0.007 *
+            (1 - across * across) *
+            Math.cos(across * Math.PI * 3) *
+            Math.sin(v * Math.PI) +
+          0.009 * Math.sin(index * 1.31) * across * Math.sin(v * Math.PI));
     return [
       Math.sin(a) * r + Math.cos(a) * w,
       y,
@@ -40,7 +49,7 @@ const corolla: SpecimenSurface = {
   name: "five-lobed fertile corolla",
   cluster: 0,
   role: "tube",
-  tissue: "disc",
+  tissue: "inner",
   periodic: true,
   thickness: 0.0025,
   overviewColumns: 15,
@@ -120,11 +129,28 @@ diskOrgans.push({
     [0, 0.038, -0.019],
     [0, 0.081, -0.022],
   ],
-  radius: 0.014,
+  radius: 0.036,
   endRadius: 0.0007,
-  flatten: 0.45,
-  color: "#bf6328",
+  flatten: 0.52,
+  color: "#866027",
+  tipColor: "#f36e26",
 });
+const radial = new Vector3(),
+  tangent = new Vector3(),
+  up = new Vector3(0, 1, 0);
+const tiltRotation = new Quaternion(),
+  yawRotation = new Quaternion(),
+  poseEuler = new Euler();
+/** One-time pose preparation; the complete ring follows the cone's outward direction. */
+function floretRotation(angle: number, radius: number): Vec3 {
+  const tilt = 0.12 + (0.7 * radius) / 0.305;
+  radial.set(Math.sin(angle), 0, Math.cos(angle));
+  tangent.crossVectors(up, radial);
+  tiltRotation.setFromAxisAngle(tangent, tilt);
+  yawRotation.setFromAxisAngle(up, angle);
+  poseEuler.setFromQuaternion(tiltRotation.multiply(yawRotation));
+  return [poseEuler.x, poseEuler.y, poseEuler.z];
+}
 export const ECHINACEA_MODEL: SpecimenModel = {
   ambientSurfaceBatching: true,
   clusters: [anchoredHeadCluster(0.62, -0.18, 1, 0.012)],
@@ -151,7 +177,7 @@ export const ECHINACEA_MODEL: SpecimenModel = {
             0.06 + 0.1 * t,
             Math.cos(a) * r * 0.77,
           ] as Vec3,
-          rotation: [Math.cos(a) * 0.36, a, -Math.sin(a) * 0.36] as Vec3,
+          rotation: floretRotation(a, r),
           scale: 0.9 + 0.08 * Math.sin(i * 1.7) ** 2,
           delay: 0.08 + 0.21 * t,
           phase: i * 0.31,
@@ -161,7 +187,7 @@ export const ECHINACEA_MODEL: SpecimenModel = {
   ],
 };
 for (let i = 0; i < 21; i++) {
-  const a = (i * Math.PI * 2) / 21;
+  const a = rayAngle(i);
   ECHINACEA_MODEL.surfaces.push({
     name: "sterile recurved ray",
     cluster: 0,
@@ -196,7 +222,8 @@ for (let i = 0; i < 21; i++) {
 ECHINACEA_MODEL.surfaces.push({
   name: "conical receptacle",
   cluster: 0,
-  role: "calyx",
+  role: "receptacle",
+  tissue: "disc",
   periodic: true,
   thickness: 0.018,
   contactObstacle: true,

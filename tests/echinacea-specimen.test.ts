@@ -7,8 +7,17 @@ import {
 import {
   specimenClusterPoint,
   specimenGeometry,
+  specimenOrganGeometry,
 } from "../lib/three/specimenModel";
 import { verifySpecimen } from "./specimen-checks";
+import {
+  DoubleSide,
+  Euler,
+  Mesh,
+  MeshBasicMaterial,
+  Raycaster,
+  Vector3,
+} from "three";
 import {
   ECHINACEA_LEAF,
   createEchinaceaLeaf,
@@ -135,4 +144,98 @@ test("echinacea cone and head insertion retain their anchored carrier", () => {
   );
   assert.ok(Math.hypot(insertion[0], insertion[1] + 0.18, insertion[2]) < 1e-9);
   assert.ok(ECHINACEA_HEAD_CENTER.every(Number.isFinite));
+});
+test("echinacea rays retain real fluting without increasing the overview grid", () => {
+  const ray = ECHINACEA_MODEL.surfaces.find(
+    (surface) => surface.name === "sterile recurved ray",
+  )!;
+  const cross = Array.from(
+    { length: 7 },
+    (_, i) => ray.sample(i / 6, 0.5, 1)[1],
+  );
+  const curvature = cross
+    .slice(1, -1)
+    .map((y, i) => cross[i] - 2 * y + cross[i + 2]);
+  assert.ok(Math.max(...curvature) - Math.min(...curvature) > 0.012);
+  const geometry = specimenGeometry(ray, "overview");
+  assert.equal(geometry.getAttribute("position").count, 98);
+  geometry.dispose();
+});
+test("echinacea paleae present broad warm bodies, sharp contrasting tips and outward axes", () => {
+  const disk = ECHINACEA_MODEL.instances![0];
+  const palea = disk.organs.find(
+    (organ) => organ.name === "sharp receptacular palea",
+  )!;
+  const geometry = specimenOrganGeometry(palea, "high");
+  const positions = geometry.getAttribute("position"),
+    colors = geometry.getAttribute("color");
+  let bodyMin = Infinity,
+    bodyMax = -Infinity;
+  let rootRed = 0,
+    rootCount = 0,
+    tipRed = 0,
+    tipCount = 0;
+  for (let i = 0; i < positions.count; i++) {
+    const y = positions.getY(i);
+    if (y > 0.025 && y < 0.075) {
+      bodyMin = Math.min(bodyMin, positions.getX(i));
+      bodyMax = Math.max(bodyMax, positions.getX(i));
+    }
+    if (y < 0) {
+      rootRed += colors.getX(i);
+      rootCount++;
+    }
+    if (y > 0.12) {
+      tipRed += colors.getX(i);
+      tipCount++;
+    }
+  }
+  assert.ok(
+    bodyMax - bodyMin > 0.025,
+    "palea body covers supporting tissue instead of reading as a needle",
+  );
+  assert.ok(
+    tipRed / tipCount > (rootRed / rootCount) * 1.8,
+    "red-orange tip differs from the dark basal body in actual vertex pigments",
+  );
+  for (const pose of disk.poses) {
+    const r = Math.hypot(pose.position[0], pose.position[2]);
+    if (r < 0.2) continue;
+    const axis = new Vector3(0, 1, 0).applyEuler(new Euler(...pose.rotation));
+    assert.ok(
+      (axis.x * pose.position[0] + axis.z * pose.position[2]) / r > 0.3,
+      "outer paleae lean outward around the complete cone",
+    );
+  }
+  geometry.dispose();
+});
+test("echinacea floret origins meet the real tilted receptacle at bud and full bloom", () => {
+  const cone = ECHINACEA_MODEL.surfaces.find(
+    (surface) => surface.name === "conical receptacle",
+  )!;
+  const geometry = specimenGeometry(cone, "high"),
+    material = new MeshBasicMaterial({ side: DoubleSide });
+  const mesh = new Mesh(geometry, material),
+    cluster = ECHINACEA_MODEL.clusters[0];
+  mesh.position.set(...cluster.position);
+  mesh.rotation.set(...cluster.rotation);
+  mesh.scale.setScalar(cluster.scale);
+  mesh.updateMatrixWorld();
+  const ray = new Raycaster(),
+    up = new Vector3(0, 1, 0).transformDirection(mesh.matrixWorld);
+  for (const bloom of [0, 1]) {
+    mesh.morphTargetInfluences![0] = 1 - bloom;
+    for (const pose of ECHINACEA_MODEL.instances![0].poses) {
+      const position = bloom ? pose.position : pose.foldedPosition!;
+      const root = new Vector3(...position).applyMatrix4(mesh.matrixWorld);
+      ray.set(root.clone().add(up), up.clone().negate());
+      const hit = ray.intersectObject(mesh)[0];
+      assert.ok(
+        hit && hit.point.distanceTo(root) < 0.025,
+        "floret insertion retains real supporting tissue",
+      );
+    }
+  }
+  geometry.dispose();
+  material.dispose();
 });

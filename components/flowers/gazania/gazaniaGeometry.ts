@@ -5,19 +5,23 @@ import {
   type SpecimenModel,
   type SpecimenOrgan,
   type SpecimenSurface,
+  type SpecimenInstanceGroup,
 } from "@/lib/three/specimenModel";
 import { floralStamens } from "@/lib/three/floralStamens";
 
 /** Authored single-row ray count; no fertile structures are attached to these rays. */
+const rayAngle = (index: number) =>
+  (index * Math.PI) / 10 + 0.014 * Math.sin(index * 2.17);
 export function gazaniaLigule(index: number): SpecimenSurface["sample"] {
-  const angle = (index * Math.PI) / 10,
+  const angle = rayAngle(index),
     length = 0.82 + 0.035 * Math.sin(index * 1.71);
   return (u, v, open) => {
     const across = 2 * u - 1;
     const width =
       across *
-      (0.003 + 0.128 * Math.sin(v * Math.PI * 0.92) ** 0.72) *
-      (0.16 + 0.84 * open);
+        (0.003 + 0.128 * Math.sin(v * Math.PI * 0.92) ** 0.72) *
+        (0.16 + 0.84 * open) +
+      0.012 * Math.sin(index * 2.7) * Math.sin(v * Math.PI) * open;
     const teeth = 0.016 * (0.5 + 0.5 * Math.cos(u * Math.PI * 6)) * v ** 12;
     const r =
       0.29 * (1 - v) * (1 - open) +
@@ -29,7 +33,12 @@ export function gazaniaLigule(index: number): SpecimenSurface["sample"] {
       open *
         (0.06 * Math.sin(v * Math.PI) -
           0.035 * v * v +
-          0.032 * across * across * Math.sin(v * Math.PI));
+          0.032 * across * across * Math.sin(v * Math.PI) +
+          0.006 *
+            (1 - across * across) *
+            Math.cos(across * Math.PI * 3) *
+            Math.sin(v * Math.PI) +
+          0.008 * Math.sin(index * 1.31) * across * Math.sin(v * Math.PI));
     return [
       Math.sin(angle) * r + Math.cos(angle) * width,
       y,
@@ -37,7 +46,7 @@ export function gazaniaLigule(index: number): SpecimenSurface["sample"] {
     ];
   };
 }
-const diskTube: SpecimenSurface = {
+const diskTube = (maturity: number): SpecimenSurface => ({
   name: "five-lobed disk corolla",
   cluster: 0,
   role: "tube",
@@ -47,16 +56,18 @@ const diskTube: SpecimenSurface = {
   overviewColumns: 15,
   sample: (u, v, open) => {
     const a = u * Math.PI * 2,
-      lobe = 0.5 + 0.5 * Math.cos(a * 5);
-    const r =
-      0.009 + v * v * (0.008 + 0.007 * open) + 0.003 * lobe * v ** 8 * open;
+      lobe = 0.5 + 0.5 * Math.cos(a * 5),
+      development = open * maturity;
+    const closedRadius = 0.008 + 0.009 * Math.sin(v * Math.PI) - 0.003 * v ** 8;
+    const openRadius = 0.009 + 0.015 * v * v + 0.003 * lobe * v ** 8;
+    const r = closedRadius + (openRadius - closedRadius) * development;
     return [
       Math.sin(a) * r,
-      v * (0.058 + 0.023 * open) + 0.018 * lobe * v ** 9 * open,
+      v * (0.063 + 0.018 * development) + 0.018 * lobe * v ** 9 * development,
       Math.cos(a) * r,
     ];
   },
-};
+});
 const diskOrgans = floralStamens({
   count: 5,
   overviewSides: 3,
@@ -107,6 +118,60 @@ for (const side of [-1, 1])
     endRadius: 0.0016,
     color: "#ffcc4e",
   });
+/** A photographed flowering stage: older outside florets surround retained young inner buds. */
+const diskCohorts = [1, 0.48, 0.08].map(
+  (maturity, cohort): SpecimenInstanceGroup => ({
+    name: [
+      "open marginal disk florets",
+      "opening intermediate disk florets",
+      "young central disk florets",
+    ][cohort],
+    cluster: 0,
+    surfaces: [diskTube(maturity)],
+    organs: diskOrgans.map((organ) => {
+      const height = 0.5 + 0.5 * maturity;
+      const transform = (points: Vec3[]) =>
+        points.map(([x, y, z]): Vec3 => [x * height, y * height, z * height]);
+      return {
+        ...organ,
+        points: transform(organ.points),
+        foldedPoints: organ.foldedPoints
+          ? transform(organ.foldedPoints)
+          : undefined,
+        radius: organ.radius * height,
+        endRadius:
+          organ.endRadius === undefined ? undefined : organ.endRadius * height,
+      };
+    }),
+    poses: Array.from({ length: 96 }, (_, i) => {
+      const a = i * 2.399963229728653,
+        r = 0.265 * Math.sqrt((i + 0.5) / 96);
+      return {
+        position: [
+          Math.sin(a) * r,
+          0.045 + 0.022 * (1 - r / 0.265),
+          Math.cos(a) * r,
+        ] as Vec3,
+        foldedPosition: [
+          Math.sin(a) * r * 0.78,
+          0.054,
+          Math.cos(a) * r * 0.78,
+        ] as Vec3,
+        rotation: [0, a, 0] as Vec3,
+        scale: 0.86 + 0.11 * Math.sin(i * 0.71) ** 2,
+        delay: 0.06 + 0.17 * (1 - r / 0.265),
+        phase: i * 0.37,
+      };
+    }).filter((pose) => {
+      const r = Math.hypot(pose.position[0], pose.position[2]);
+      return cohort === 0
+        ? r >= 0.195
+        : cohort === 1
+          ? r >= 0.105 && r < 0.195
+          : r < 0.105;
+    }),
+  }),
+);
 export const GAZANIA_MODEL: SpecimenModel = {
   ambientSurfaceBatching: true,
   clusters: [anchoredHeadCluster(0.77, -0.18, 1, 0.012)],
@@ -126,37 +191,10 @@ export const GAZANIA_MODEL: SpecimenModel = {
       color: "#aa873b",
     },
   ],
-  instances: [
-    {
-      name: "bisexual five-lobed disk florets",
-      cluster: 0,
-      surfaces: [diskTube],
-      organs: diskOrgans,
-      poses: Array.from({ length: 96 }, (_, i) => {
-        const a = i * 2.399963229728653,
-          r = 0.265 * Math.sqrt((i + 0.5) / 96);
-        return {
-          position: [
-            Math.sin(a) * r,
-            0.045 + 0.022 * (1 - r / 0.265),
-            Math.cos(a) * r,
-          ] as Vec3,
-          foldedPosition: [
-            Math.sin(a) * r * 0.78,
-            0.054,
-            Math.cos(a) * r * 0.78,
-          ] as Vec3,
-          rotation: [0, a, 0] as Vec3,
-          scale: 0.86 + 0.11 * Math.sin(i * 0.71) ** 2,
-          delay: 0.06 + 0.17 * (1 - r / 0.265),
-          phase: i * 0.37,
-        };
-      }),
-    },
-  ],
+  instances: diskCohorts,
 };
 for (let i = 0; i < 20; i++) {
-  const a = (i * Math.PI) / 10;
+  const a = rayAngle(i);
   GAZANIA_MODEL.surfaces.push({
     name: "sterile ray ligule",
     cluster: 0,
@@ -200,7 +238,10 @@ GAZANIA_MODEL.surfaces.push({
   mobileCage: [6, 3],
   sample: (u, v) => {
     const a = u * Math.PI * 2,
-      r = 0.033 + 0.246 * Math.sin(v * Math.PI * 0.5);
+      r =
+        0.033 +
+        0.246 * Math.sin(v * Math.PI * 0.5) +
+        0.0025 * Math.cos(a * 12) * Math.sin(v * Math.PI);
     return [Math.sin(a) * r, -0.18 + 0.2 * v, Math.cos(a) * r];
   },
 });

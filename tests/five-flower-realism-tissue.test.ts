@@ -6,6 +6,14 @@ import {
   specimenOrganGeometry,
   type SpecimenOrgan,
 } from "../lib/three/specimenModel";
+import { specimenTissueShader } from "../lib/three/specimenTissue";
+
+test("Gazania eye Gaussians use defined GLSL powers on both sides of each marking", () => {
+  const source = specimenTissueShader("gazania");
+  assert.match(source, /pow\(abs\(\(vPetalUv\.y/);
+  assert.match(source, /dot\(gaWhiteOffset,gaWhiteOffset\)/);
+  assert.doesNotMatch(source, /pow\(\(gaAcross/);
+});
 
 function compile(material: ReturnType<typeof createSpecimenMaterial>) {
   const shader = {

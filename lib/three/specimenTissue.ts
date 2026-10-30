@@ -103,8 +103,9 @@ export function specimenTissueShader(type: string, tissue?: SpecimenTissue) {
       return `float gaAcross=vPetalUv.x-.5+.012*vSpecimenVariation;
       float gaW=abs(gaAcross);
       float gaStripe=exp(-gaW*gaW*145.)*smoothstep(.18,.38,vPetalUv.y)*(1.-.6*smoothstep(.82,1.,vPetalUv.y));
-      float gaEye=exp(-pow(gaW/.34,6.)-pow((vPetalUv.y-.14-.006*vSpecimenVariation)/.095,4.));
-      float gaWhite=exp(-pow((gaAcross-.008*vSpecimenVariation)/.085,2.)-pow((vPetalUv.y-.19-.004*vSpecimenVariation)/.025,2.))*gaEye;
+      float gaEye=exp(-pow(gaW/.34,6.)-pow(abs((vPetalUv.y-.14-.006*vSpecimenVariation)/.095),4.));
+      vec2 gaWhiteOffset=vec2((gaAcross-.008*vSpecimenVariation)/.085,(vPetalUv.y-.19-.004*vSpecimenVariation)/.025);
+      float gaWhite=exp(-dot(gaWhiteOffset,gaWhiteOffset))*gaEye;
       diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.52,.11,.014),gaStripe*.46);
       diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.0027,.0013,.002),gaEye*.98);
       diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.70,.68,.57),gaWhite*.96);`;

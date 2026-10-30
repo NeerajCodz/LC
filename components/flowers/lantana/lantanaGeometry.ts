@@ -5,6 +5,7 @@ import type {
   SpecimenOrgan,
   SpecimenTissue,
 } from "@/lib/three/specimenModel";
+import { LANTANA_LEAF_NODES, LANTANA_SHOOT_LENGTH } from "./lantanaLeaf";
 
 /** Unequal rounded lobes belong to the same salverform wall, without overlaid petals. */
 export function lantanaCorolla(
@@ -32,25 +33,37 @@ export const LANTANA_HEADS: Vec3[] = [
   [0.62, -0.31, 0.14],
 ];
 export const LANTANA_HEAD_CENTER: Vec3 = [0, 0.28, 0.07];
+const RECEPTACLE_RADIUS = 0.24;
+/** Shared midsurface keeps sessile flowers and persistent buds on the same dome. */
+function receptacleHeight(radius: number) {
+  return 0.04 + 0.104 * (1 - (radius / RECEPTACLE_RADIUS) ** 2);
+}
 export const LANTANA_MODEL: SpecimenModel = {
   ambientSurfaceBatching: true,
   clusters: [],
   surfaces: [],
   organs: [],
 };
-/** Authored shoot insertions approximate leaf axils; tips meet each receptacle. */
-export const LANTANA_STALKS: SpecimenOrgan[] = LANTANA_HEADS.map((head, i) => ({
-  name: "axillary lantana peduncle",
-  cluster: 0,
-  points: [
-    [0, i ? -0.78 : -0.39, 0],
-    [head[0] * 0.44, head[1] - 0.25, head[2] * 0.4],
-    head,
-  ],
-  radius: 0.026,
-  endRadius: 0.02,
-  color: "#71854e",
-}));
+/** Share exact upper leaf-node insertions with the shoot; tips meet each receptacle. */
+export const LANTANA_STALKS: SpecimenOrgan[] = LANTANA_HEADS.map((head, i) => {
+  const node = LANTANA_LEAF_NODES[i ? 4 : 6];
+  return {
+    name: "axillary lantana peduncle",
+    cluster: 0,
+    points: [
+      [
+        0.025 * Math.sin(node.t * Math.PI),
+        -LANTANA_SHOOT_LENGTH * (1 - node.t),
+        0,
+      ],
+      [head[0] * 0.44, head[1] - 0.25, head[2] * 0.4],
+      head,
+    ],
+    radius: 0.026,
+    endRadius: 0.02,
+    color: "#71854e",
+  };
+});
 for (let head = 0; head < 2; head++) {
   const center = LANTANA_HEADS[head];
   // A short axial support meets the continuous receptacle above it.
@@ -70,20 +83,34 @@ for (let head = 0; head < 2; head++) {
     const ring = j < 10 ? 0 : j < 15 ? 1 : j < 18 ? 2 : 3,
       n = [10, 5, 3, 3][ring],
       k = j - [0, 10, 15, 18][ring],
-      a = (k / n) * Math.PI * 2 + head * 0.36 + ring * 0.72,
-      r = [0.395, 0.235, 0.098, 0.055][ring],
+      a =
+        (k / n) * Math.PI * 2 +
+        head * 0.36 +
+        ring * 0.72 +
+        0.035 * Math.sin(j * 4.7 + head),
+      r =
+        [0.185, 0.104, 0.048, 0.033][ring] *
+        (1 + 0.035 * Math.sin(j * 2.3 + head)),
       young = ring === 3,
       c = LANTANA_MODEL.clusters.length,
-      tilt = ring === 0 ? 0.2 : ring === 1 ? 0.1 : 0,
+      tilt = [0.42, 0.22, 0.065, 0.08][ring] + 0.018 * Math.sin(j * 3.1 + head),
+      rotation = new Euler().setFromRotationMatrix(
+        new Matrix4()
+          .makeRotationY(a)
+          .multiply(new Matrix4().makeRotationX(tilt))
+          .multiply(
+            new Matrix4().makeRotationY(0.22 * Math.sin(j * 1.9 + head)),
+          ),
+      ),
       tissue: SpecimenTissue | undefined =
         ring === 0 ? undefined : ring === 1 ? "disc" : "guide";
     LANTANA_MODEL.clusters.push({
       position: [
         center[0] + Math.sin(a) * r,
-        center[1] + 0.055 + 0.09 * (1 - r / 0.42) - (young ? 0.06 : 0),
+        center[1] + receptacleHeight(r),
         center[2] + Math.cos(a) * r,
       ],
-      rotation: [tilt * Math.cos(a), a * 0.13, -tilt * Math.sin(a)],
+      rotation: [rotation.x, rotation.y, rotation.z],
       scale: young ? 0.6 : 0.9 + 0.045 * Math.sin(j * 2.3 + head),
       nod: 0,
     });
@@ -135,9 +162,9 @@ for (let head = 0; head < 2; head++) {
         sample: (u, v) => {
           const w = 2 * u - 1;
           return [
-            w * (0.003 + 0.027 * Math.sin(Math.PI * v)),
-            0.16 * v,
-            0.025 + 0.052 * v + 0.01 * w * w,
+            w * (0.003 + 0.029 * Math.sin(Math.PI * v)),
+            0.075 * v - 0.025 * Math.sin(Math.PI * v),
+            0.025 + 0.092 * v + 0.008 * w * w,
           ];
         },
       },
@@ -260,17 +287,17 @@ for (let head = 0; head < 2; head++) {
   LANTANA_MODEL.surfaces.push({
     name: "continuous domed lantana receptacle",
     cluster: c,
-    role: "calyx",
+    role: "receptacle",
     tissue: "leaf",
     periodic: true,
-    thickness: 0.035,
+    thickness: 0.012,
     overviewColumns: 24,
     overviewRows: 6,
     sample: (u, v) => {
       const a = u * Math.PI * 2,
-        r = 0.008 + 0.427 * (1 - v),
+        r = 0.004 + (RECEPTACLE_RADIUS - 0.004) * (1 - v),
         x = center[0] + Math.sin(a) * r,
-        y = center[1] + 0.055 + 0.09 * v,
+        y = center[1] + receptacleHeight(r),
         z = center[2] + Math.cos(a) * r;
       return [
         e[0] * x + e[4] * y + e[8] * z + e[12],

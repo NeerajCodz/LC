@@ -2,6 +2,15 @@ import type { Quality, Vec3 } from "@/lib/flowers/types";
 import type { SpecimenOrgan, SpecimenSurface } from "@/lib/three/specimenModel";
 import { createOrganicTube } from "@/lib/three/organicTube";
 
+export const LANTANA_SHOOT_LENGTH = 1.8;
+export const LANTANA_LEAF_NODES = [0.25, 0.49, 0.68, 0.84].flatMap((t, i) =>
+  [0, Math.PI].map((side) => ({
+    t,
+    angle: side + ((i % 2) * Math.PI) / 2,
+    scale: 1 - i * 0.09,
+  })),
+);
+
 export const LANTANA_LEAF: SpecimenSurface = {
   name: "rough ovate crenate lantana blade",
   cluster: 0,

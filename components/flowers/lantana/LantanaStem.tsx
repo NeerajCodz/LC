@@ -8,20 +8,18 @@ import {
 import { useActiveFrame } from "@/hooks/useActiveFrame";
 import { supportedBendSlope, supportedBendWeight } from "@/lib/flowers/wind";
 import { LANTANA_STALKS } from "./lantanaGeometry";
-import { createLantanaShoot, LANTANA_LEAF_TILT } from "./lantanaLeaf";
+import {
+  createLantanaShoot,
+  LANTANA_LEAF_TILT,
+  LANTANA_LEAF_NODES,
+} from "./lantanaLeaf";
 import { LantanaLeaf } from "./LantanaFoliage";
 const anatomy: StemAnatomy = {
   axis: false,
   color: "#857057",
   leafTilt: LANTANA_LEAF_TILT,
   headExtras: LANTANA_STALKS,
-  nodes: [0.25, 0.49, 0.68, 0.84].flatMap((t, i) =>
-    [0, Math.PI].map((side) => ({
-      t,
-      angle: side + ((i % 2) * Math.PI) / 2,
-      scale: 1 - i * 0.09,
-    })),
-  ),
+  nodes: LANTANA_LEAF_NODES,
 };
 function LantanaAxis({
   quality,

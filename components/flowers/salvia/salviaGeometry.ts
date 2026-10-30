@@ -18,34 +18,42 @@ export function salviaCorolla(
     limb = Math.max(0, (v - 0.66) / 0.34),
     upper = Math.max(0, Math.cos(a)),
     lower = Math.max(0, -Math.cos(a)),
-    lowerLobes = 0.65 + 0.35 * Math.cos(3 * (a - Math.PI)),
+    lowerLobes = 0.68 + 0.32 * Math.cos(3 * (a - Math.PI)),
     closed = 0.018 + 0.024 * Math.sin(Math.PI * v),
     rx =
       closed * (1 - open) +
-      (0.035 + 0.021 * Math.sin(Math.PI * v) + 0.028 * limb * limb) * open,
+      (0.035 +
+        0.021 * Math.sin(Math.PI * v) +
+        limb * limb * (0.034 - 0.027 * upper + 0.034 * lower)) *
+        open,
     ry =
       closed * (1 - open) +
       (0.035 + 0.024 * Math.sin(Math.PI * v) + 0.075 * limb * limb) * open;
   return [
     Math.sin(a) * rx,
-    0.035 * v * v + Math.cos(a) * ry,
+    0.035 * v * v -
+      0.035 * open * Math.sin(Math.PI * v) +
+      Math.cos(a) * ry +
+      0.008 * open * limb * limb * Math.sin(3 * a),
     (0.69 + 0.15 * open) * v +
-      limb * limb * open * (0.19 * upper ** 4 + 0.063 * lower * lowerLobes),
+      limb * limb * open * (0.19 * upper ** 4 + 0.075 * lower * lowerLobes),
   ];
 }
 export function salviaCalyx(u: number, v: number): Vec3 {
   const a = u * Math.PI * 2,
     upper = Math.max(0, Math.cos(a)),
     lower = Math.max(0, -Math.cos(a)),
-    r = 0.043 + 0.022 * Math.sin(Math.PI * v) + 0.009 * v;
+    rib = 1 + 0.025 * Math.cos(8 * a) * Math.sin(Math.PI * v),
+    r = (0.04 + 0.052 * Math.sin(Math.PI * v) + 0.065 * v * v) * rib;
   return [
     Math.sin(a) * r,
     Math.cos(a) * r,
-    0.36 * v +
-      v ** 4 * (0.065 * upper + 0.045 * lower * (0.5 + 0.5 * Math.cos(2 * a))),
+    0.37 * v +
+      v ** 4 *
+        (0.12 * upper ** 2 + 0.08 * lower * (0.5 + 0.5 * Math.cos(2 * a))),
   ];
 }
-export const SALVIA_HEAD_CENTER: Vec3 = [0, 0.8, 0.08];
+export const SALVIA_HEAD_CENTER: Vec3 = [0, 0.55, 0.08];
 export const SALVIA_MODEL: SpecimenModel = {
   ambientSurfaceBatching: true,
   clusters: [
@@ -55,21 +63,20 @@ export const SALVIA_MODEL: SpecimenModel = {
         a =
           ((i % 4) * Math.PI) / 2 +
           ((tier % 2) * Math.PI) / 4 +
-          0.08 * Math.sin(i * 1.7),
-        rotation = new Euler(
-          -0.6 - tier * 0.07 + 0.025 * Math.sin(i),
-          a,
-          0,
-          "YXZ",
-        ).reorder("XYZ");
+          0.13 * Math.sin(i * 1.7),
+        pitch = 0.08 + tier * 0.14 + 0.17 * Math.sin(i * 1.7 - 0.9),
+        rotation = new Euler(-pitch, a, 0, "YXZ").reorder("XYZ");
       return {
         position: [
-          Math.sin(a) * 0.065,
-          0.12 + tier * 0.2 + 0.012 * Math.sin(i * 2.1),
-          Math.cos(a) * 0.065,
+          Math.sin(a) * (0.055 + 0.008 * Math.sin(i * 2.4)),
+          0.12 + tier * 0.18 + 0.018 * Math.sin(i * 2.1),
+          Math.cos(a) * (0.055 + 0.008 * Math.sin(i * 2.4)),
         ] as Vec3,
         rotation: [rotation.x, rotation.y, rotation.z] as Vec3,
-        scale: tier === 4 ? 0.36 : 0.58 - tier * 0.025,
+        scale:
+          tier === 4
+            ? 0.36
+            : (0.6 - tier * 0.025) * (1 + 0.035 * Math.sin(i * 2.7)),
         nod: 0.012,
       };
     }),
@@ -83,8 +90,8 @@ export const SALVIA_STALKS: SpecimenOrgan[] = [
     cluster: 0,
     points: [
       [0, 0, 0],
-      [0, 0.72, 0],
-      [0, 1.4, 0],
+      [0, 0.48, 0],
+      [0, 0.89, 0],
     ],
     radius: 0.025,
     endRadius: 0.01,
@@ -113,6 +120,7 @@ for (let c = 1; c < SALVIA_MODEL.clusters.length; c++) {
       name: "continuous bilabiate hooded salvia corolla",
       cluster: c,
       role: "tube",
+      outerSide: -1,
       periodic: true,
       sample: (u, v, o) => salviaCorolla(u, v, o, young),
       thickness: 0.009,
@@ -145,12 +153,24 @@ for (let c = 1; c < SALVIA_MODEL.clusters.length; c++) {
     endRadius = radius * 0.6,
     flatten = 1,
   ) => {
+    // The internal organs bend with the continuous tube and pack below its furled rim.
+    const contained = (o: number) =>
+      points(o).map((p): Vec3 => {
+        const z = p[2] * (0.85 + 0.15 * o),
+          t = Math.max(0, Math.min(1, z / (0.69 + 0.15 * o))),
+          width = 0.72 + 0.28 * o;
+        return [
+          p[0] * width,
+          p[1] * width - 0.035 * o * Math.sin(Math.PI * t),
+          z,
+        ];
+      });
     SALVIA_MODEL.organs.push({
       name,
       cluster: c,
       bloomMorph: true,
-      points: points(maturity(1)),
-      foldedPoints: points(0),
+      points: contained(maturity(1)),
+      foldedPoints: contained(0),
       radius,
       foldedRadius: radius * 0.8,
       endRadius,
@@ -173,18 +193,20 @@ for (let c = 1; c < SALVIA_MODEL.clusters.length; c++) {
       "salvia staminal connective",
       (o) => [
         [side * 0.018, 0.026 + 0.05 * o, 0.63 + 0.12 * o],
-        [side * 0.018, 0.035 + 0.045 * o, 0.68 + 0.13 * o],
-        [side * 0.018, 0.042 + 0.045 * o, 0.71 + 0.13 * o],
+        [side * 0.015, 0.033 + 0.045 * o, 0.68 + 0.13 * o],
+        [side * 0.012, 0.038 + 0.045 * o, 0.71 + 0.13 * o],
       ],
       0.0045,
       "#cba098",
     );
+    // Leave space for the anther's transported cross-section below the inner hood,
+    // including the narrower cavity at half bloom, rather than fitting only its axis.
     add(
       "fertile salvia anther",
       (o) => [
-        [side * 0.018, 0.042 + 0.045 * o, 0.69 + 0.13 * o],
-        [side * 0.018, 0.046 + 0.045 * o, 0.712 + 0.13 * o],
-        [side * 0.018, 0.045 + 0.045 * o, 0.735 + 0.13 * o],
+        [side * 0.012, 0.038 + 0.045 * o, 0.69 + 0.13 * o],
+        [side * 0.012, 0.042 + 0.045 * o, 0.712 + 0.13 * o],
+        [side * 0.012, 0.041 + 0.045 * o, 0.735 + 0.13 * o],
       ],
       0.009,
       "#dac1a2",

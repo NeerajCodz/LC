@@ -1,6 +1,6 @@
 # Five distinct floral forms — validation record
 
-Recorded 3 November 2026. [Plan](../plans/2026-11-02-five-distinct-floral-forms.md). Research and implementation companions: [Trillium](../research/trillium.md), [Datura](../research/datura.md), [Giant Allium](../research/allium.md), [Rosemary Grevillea](../research/grevillea.md) and [Yellow Slipperwort](../research/calceolaria.md).
+Recorded 3 November 2026. [PR #10](https://github.com/NeerajCodz/LC/pull/10), open for review. [Plan](../plans/2026-11-02-five-distinct-floral-forms.md). Research and implementation companions: [Trillium](../research/trillium.md), [Datura](../research/datura.md), [Giant Allium](../research/allium.md), [Rosemary Grevillea](../research/grevillea.md) and [Yellow Slipperwort](../research/calceolaria.md).
 
 ## Implementation and checks
 

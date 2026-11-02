@@ -1,3 +1,8 @@
+import { TRILLIUM_MODEL } from "../components/flowers/trillium/trilliumGeometry";
+import { DATURA_MODEL } from "../components/flowers/datura/daturaGeometry";
+import { ALLIUM_MODEL } from "../components/flowers/allium/alliumGeometry";
+import { GREVILLEA_MODEL } from "../components/flowers/grevillea/grevilleaGeometry";
+import { CALCEOLARIA_MODEL } from "../components/flowers/calceolaria/calceolariaGeometry";
 import { GAZANIA_MODEL } from "../components/flowers/gazania/gazaniaGeometry";
 import { SALVIA_MODEL } from "../components/flowers/salvia/salviaGeometry";
 import { NICOTIANA_MODEL } from "../components/flowers/nicotiana/nicotianaGeometry";
@@ -60,6 +65,12 @@ const environment = {
   availableMemoryMiBAtStart: os.freemem() / 2 ** 20,
 };
 for (const [name, model] of Object.entries({
+  trillium: TRILLIUM_MODEL,
+  datura: DATURA_MODEL,
+  allium: ALLIUM_MODEL,
+  grevillea: GREVILLEA_MODEL,
+  calceolaria: CALCEOLARIA_MODEL,
+
   gazania: GAZANIA_MODEL,
   salvia: SALVIA_MODEL,
   nicotiana: NICOTIANA_MODEL,

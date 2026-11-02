@@ -55,6 +55,8 @@ The original Lucide `Flower2` emblem sits beside **LC** in the header and appear
 
 The shared loader covers route Suspense, collection/inspection code loading, and initial specimen/garden preparation. `SceneReady` removes the specimen and garden overlays after their first drawn frame, without an artificial minimum wait. vgpu bakes continue asynchronously with working material and lighting fallbacks. Scrolling back to an already visited preview resumes its retained scene without replaying loading. The SVG ornament is UI only; every specimen remains real 3D geometry.
 
+The collection also includes [Great White Trillium](docs/research/trillium.md), [Devil’s Trumpet](docs/research/datura.md), [Giant Allium](docs/research/allium.md), [Rosemary Grevillea](docs/research/grevillea.md) and [Yellow Slipperwort](docs/research/calceolaria.md). Each uses dedicated floral and leaf geometry with the same typed API, anchored motion and optional detailed contact. Their research dossiers distinguish authored display choices from source-backed anatomy.
+
 ## Flower API
 
 Use inside a React Three Fiber canvas:

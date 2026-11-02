@@ -30,6 +30,7 @@ Research explains the evidence behind a flower; specimen documentation explains 
 
 Raw measurement and browser verification artifacts live in `validation/data/`; each record links to its associated data. Preserve historical hashes and dates rather than presenting older measurements as current results.
 
+- [Five distinct floral forms](validation/distinct-floral-forms-validation.md)
 - [Five specimens](validation/five-specimens-validation.md)
 - [Next five specimens](validation/next-five-validation.md)
 - [Ten specimens](validation/ten-specimens-validation.md)

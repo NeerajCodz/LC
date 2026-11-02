@@ -10,6 +10,8 @@ Route: `/flower/allium/`. [Research and evidence gaps](../research/allium.md).
 
 Twelve distributed flowers have individually simulated petals; 168 complete flowers share instanced geometry. Keep every flower and organ at constrained/overview tiers. Each tepal is a separate sealed blade, not a continuous web between six points. The dry spathe has its own tissue response rather than inheriting the living tepals’ sheen.
 
+Mount `ALLIUM_STALKS` through `BotanicalStem.headExtras`; declaring it beside the pedicels does not render the supporting scape-to-umbel neck. [Attachment tests](../../tests/distinct-floral-forms-attachments.test.ts) inspect the actual species stem wiring. Full-foliage planting clearance is independent of the head collider.
+
 ## Verification
 
 [Specimen tests](../../tests/allium-specimen.test.ts), [foliage tests](../../tests/allium-leaf.test.ts), [batch dynamics](../../tests/distinct-floral-forms-dynamics.test.ts) and [tissue checks](../../tests/distinct-floral-forms-tissue.test.ts) cover generated anatomy and budgets. Inspect all seven views at both detail modes. [Batch validation](../validation/distinct-floral-forms-validation.md) separates measured costs from biological evidence. Head/stem proportions and senescent color are authored; no seasonal dieback progression is simulated.

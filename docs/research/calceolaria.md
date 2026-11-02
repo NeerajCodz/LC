@@ -14,7 +14,7 @@ Four mature flowers and two permanently younger buds form a compact display clus
 
 Six rugose oblong leaves in three opposite decussate pairs sit on a 1.78-unit shoot. The flower count, larger display proportions, yellow pigment, warmth at the mouth, roughness 0.70 and scattering 0.06 are authored. This is not the large spotted florist hybrid commonly sold under the same common name. No invented polka-dot pattern is applied.
 
-Independent stalk motion carries each pouch, and local deformation uses 864 / 288 contact nodes with fixed basal attachments. Material relief suggests epidermal texture and lower-leaf hairiness without a separate hair simulation.
+Carried stalks support independently nodding pouches, and local deformation uses 864 / 288 contact nodes with fixed basal attachments. Material relief suggests epidermal texture and lower-leaf hairiness without a separate hair simulation.
 
 ## Evidence gaps and verification
 

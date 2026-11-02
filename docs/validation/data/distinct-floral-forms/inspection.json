@@ -1,0 +1,896 @@
+{
+  "sourceCommit": "49da8396d9c39a2f120e3393f586c26295bdb83f",
+  "status": "passed-after-recorded-retries",
+  "acceptedCases": 24,
+  "attempts": 26,
+  "failedAttempts": [
+    {
+      "run": "isolated-inspection-1793609112479",
+      "project": "mobile",
+      "file": "distinct-floral-forms-inspection.spec.ts",
+      "title": "calceolaria: distinct floral forms specimen seven-view anatomy review",
+      "exit": 1,
+      "passed": false,
+      "stats": {
+        "startTime": "2026-11-02T08:49:18.181Z",
+        "duration": 146123.354,
+        "expected": 0,
+        "skipped": 0,
+        "unexpected": 1,
+        "flaky": 0
+      },
+      "reportSha256": "8106b0d65d040507b62cc4fe4c0f54363401f7952a28f5718bfbbc7f0d5dcf45"
+    },
+    {
+      "run": "isolated-inspection-1793609112479",
+      "project": "mobile",
+      "file": "distinct-floral-forms-inspection.spec.ts",
+      "title": "calceolaria: distinct floral forms overview seven-view anatomy review",
+      "exit": 1,
+      "passed": false,
+      "stats": {
+        "startTime": "2026-11-02T08:51:56.063Z",
+        "duration": 342665.513,
+        "expected": 0,
+        "skipped": 0,
+        "unexpected": 1,
+        "flaky": 0
+      },
+      "reportSha256": "14cc011b352bc893cf7bfc7dfb414579c5de85a09370a3ee7d42210bad0b993b"
+    }
+  ],
+  "accepted": [
+    {
+      "run": "isolated-inspection-1793609112479",
+      "project": "desktop",
+      "file": "cymes-and-spikes-inspection.spec.ts",
+      "title": "rose: cymes and spikes specimen seven-view anatomy review",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T08:45:12.907Z",
+        "duration": 6270.735000000001,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "reportSha256": "0f8fa8e7914c6e41ae292db61a738cf7ef42ae040fd0a481720c8002f0dc8e4d"
+    },
+    {
+      "run": "isolated-inspection-1793609112479",
+      "project": "desktop",
+      "file": "cymes-and-spikes-inspection.spec.ts",
+      "title": "rose: cymes and spikes overview seven-view anatomy review",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T08:45:19.657Z",
+        "duration": 4898.844999999999,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "reportSha256": "787372af0143e718bc2027c7b24844b0ffe9f1a8adc6d5357b7f861bbf5c8b72"
+    },
+    {
+      "run": "isolated-inspection-1793609112479",
+      "project": "mobile",
+      "file": "cymes-and-spikes-inspection.spec.ts",
+      "title": "rose: cymes and spikes specimen seven-view anatomy review",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T08:45:25.047Z",
+        "duration": 7161.638,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "reportSha256": "6e6a3d02b7b75fff7962d480ae3f530403ebcf321cfba88ce07233a95f1f8bf7"
+    },
+    {
+      "run": "isolated-inspection-1793609112479",
+      "project": "mobile",
+      "file": "cymes-and-spikes-inspection.spec.ts",
+      "title": "rose: cymes and spikes overview seven-view anatomy review",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T08:45:32.647Z",
+        "duration": 10693.062999999998,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "reportSha256": "1eed4ecb5be24a9c9bb5529bc6ab2c737c4e45b85000e6c6e9ec305dfc778e74"
+    },
+    {
+      "run": "isolated-inspection-1793609112479",
+      "project": "desktop",
+      "file": "distinct-floral-forms-inspection.spec.ts",
+      "title": "trillium: distinct floral forms specimen seven-view anatomy review",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T08:45:43.919Z",
+        "duration": 7653.3859999999995,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "reportSha256": "2fa1bcec84b941dd7e91543031fd1c4d383b0284a6711a2511f9aea2d1bb5a2c"
+    },
+    {
+      "run": "isolated-inspection-1793609112479",
+      "project": "desktop",
+      "file": "distinct-floral-forms-inspection.spec.ts",
+      "title": "trillium: distinct floral forms overview seven-view anatomy review",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T08:45:52.119Z",
+        "duration": 6150.763,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "reportSha256": "3fd3c6aa318a852cc9d860f158ceae4fd0dc60d127ac63634f8b4e5ff5f82bac"
+    },
+    {
+      "run": "isolated-inspection-1793609112479",
+      "project": "desktop",
+      "file": "distinct-floral-forms-inspection.spec.ts",
+      "title": "datura: distinct floral forms specimen seven-view anatomy review",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T08:45:58.773Z",
+        "duration": 6911.211,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "reportSha256": "80e30afa510832b9aca0844de5a7122dc77d6113fbcb928d52dfd27d080268e3"
+    },
+    {
+      "run": "isolated-inspection-1793609112479",
+      "project": "desktop",
+      "file": "distinct-floral-forms-inspection.spec.ts",
+      "title": "datura: distinct floral forms overview seven-view anatomy review",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T08:46:06.360Z",
+        "duration": 7028.807,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "reportSha256": "3c1bd10ea298562a19eb6cf21faea9a315b1bb9733d3aaca27bbe649efa033a6"
+    },
+    {
+      "run": "isolated-inspection-1793609112479",
+      "project": "desktop",
+      "file": "distinct-floral-forms-inspection.spec.ts",
+      "title": "allium: distinct floral forms specimen seven-view anatomy review",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T08:46:13.935Z",
+        "duration": 16015.721,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "reportSha256": "3dba5c2605f912ec8dd53a1950c68caf262ab04564691889fdd034929ee74213"
+    },
+    {
+      "run": "isolated-inspection-1793609112479",
+      "project": "desktop",
+      "file": "distinct-floral-forms-inspection.spec.ts",
+      "title": "allium: distinct floral forms overview seven-view anatomy review",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T08:46:30.464Z",
+        "duration": 7606.612,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "reportSha256": "e297da1640321399df11a7b03444d6b13e57bcedc3c5ce893fbcf96485d6269b"
+    },
+    {
+      "run": "isolated-inspection-1793609112479",
+      "project": "desktop",
+      "file": "distinct-floral-forms-inspection.spec.ts",
+      "title": "grevillea: distinct floral forms specimen seven-view anatomy review",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T08:46:38.499Z",
+        "duration": 8363.611,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "reportSha256": "932a4974dd64ad59632bbae07a5da22c47d682ba015117212b87103784d0b7c6"
+    },
+    {
+      "run": "isolated-inspection-1793609112479",
+      "project": "desktop",
+      "file": "distinct-floral-forms-inspection.spec.ts",
+      "title": "grevillea: distinct floral forms overview seven-view anatomy review",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T08:46:47.270Z",
+        "duration": 5757.072,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "reportSha256": "eebe225e150b1269680fd96f2a51bb644a6af6d74a61ca41e59623744f34b7c9"
+    },
+    {
+      "run": "isolated-inspection-1793609112479",
+      "project": "desktop",
+      "file": "distinct-floral-forms-inspection.spec.ts",
+      "title": "calceolaria: distinct floral forms specimen seven-view anatomy review",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T08:46:53.436Z",
+        "duration": 6661.703,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "reportSha256": "cf4c2cf339599f2124df237aa0dedb8a0e0872e4581f420c8cd23f365de9a3e6"
+    },
+    {
+      "run": "isolated-inspection-1793609112479",
+      "project": "desktop",
+      "file": "distinct-floral-forms-inspection.spec.ts",
+      "title": "calceolaria: distinct floral forms overview seven-view anatomy review",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T08:47:00.521Z",
+        "duration": 4417.571,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "reportSha256": "03c4fde92899526eda7b8b3bb799208ed3866acffb4bfa866d36005f3a06deda"
+    },
+    {
+      "run": "isolated-inspection-1793609112479",
+      "project": "mobile",
+      "file": "distinct-floral-forms-inspection.spec.ts",
+      "title": "trillium: distinct floral forms specimen seven-view anatomy review",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T08:47:05.387Z",
+        "duration": 6597.943,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "reportSha256": "d6aa31fc510ed049540416d7e1d3d600302a679ecc76d19513d18834848733e4"
+    },
+    {
+      "run": "isolated-inspection-1793609112479",
+      "project": "mobile",
+      "file": "distinct-floral-forms-inspection.spec.ts",
+      "title": "trillium: distinct floral forms overview seven-view anatomy review",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T08:47:12.535Z",
+        "duration": 7545.139,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "reportSha256": "1292175ffd0a8e0086cbd382b4a01cdacb24aa805650ceb71b0f8e5d4f252e23"
+    },
+    {
+      "run": "isolated-inspection-1793609112479",
+      "project": "mobile",
+      "file": "distinct-floral-forms-inspection.spec.ts",
+      "title": "datura: distinct floral forms specimen seven-view anatomy review",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T08:47:20.572Z",
+        "duration": 7438.65,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "reportSha256": "0830edadf620f2985e3474a4be827913e8ddfae53fd3be476c5f994489a0a16e"
+    },
+    {
+      "run": "isolated-inspection-1793609112479",
+      "project": "mobile",
+      "file": "distinct-floral-forms-inspection.spec.ts",
+      "title": "datura: distinct floral forms overview seven-view anatomy review",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T08:47:28.458Z",
+        "duration": 7239.415,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "reportSha256": "34563941952b40a064ab1cebe3c06795583b4594dba13f6ad7a0b0bb71c3b5cb"
+    },
+    {
+      "run": "isolated-inspection-1793609112479",
+      "project": "mobile",
+      "file": "distinct-floral-forms-inspection.spec.ts",
+      "title": "allium: distinct floral forms specimen seven-view anatomy review",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T08:47:36.195Z",
+        "duration": 11796.942000000001,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "reportSha256": "c24c3cfcf8afa8d0b44f92dde878b9b8afc0085d6b4a9447f0f582fbd1468d3d"
+    },
+    {
+      "run": "isolated-inspection-1793609112479",
+      "project": "mobile",
+      "file": "distinct-floral-forms-inspection.spec.ts",
+      "title": "allium: distinct floral forms overview seven-view anatomy review",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T08:47:48.409Z",
+        "duration": 8955.576000000001,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "reportSha256": "b4e446169f9aced3f6fdee41dbca094e75181a607bd6f37ae68893ef6992de49"
+    },
+    {
+      "run": "isolated-inspection-1793609112479",
+      "project": "mobile",
+      "file": "distinct-floral-forms-inspection.spec.ts",
+      "title": "grevillea: distinct floral forms specimen seven-view anatomy review",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T08:47:57.810Z",
+        "duration": 11591.386,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "reportSha256": "eeb2ef0e9fdd5bfa38f881cd23d538f3d8032b14b5f63416c41c6c17d83d084d"
+    },
+    {
+      "run": "isolated-inspection-1793609112479",
+      "project": "mobile",
+      "file": "distinct-floral-forms-inspection.spec.ts",
+      "title": "grevillea: distinct floral forms overview seven-view anatomy review",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T08:48:10.418Z",
+        "duration": 55012.88,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "reportSha256": "e3ca96b8c01e07e2c85d08bf0036c96645bb630b514c1cb6c66c983c128a97c9"
+    },
+    {
+      "run": "isolated-inspection-1793610290246",
+      "project": "mobile",
+      "file": "distinct-floral-forms-inspection.spec.ts",
+      "title": "calceolaria: distinct floral forms specimen seven-view anatomy review",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T09:04:51.288Z",
+        "duration": 42895.377,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "reportSha256": "e163175f7e5fcd029fca5604c120000743005574461b8ce5e844f04d9713ca98"
+    },
+    {
+      "run": "isolated-inspection-1793610290246",
+      "project": "mobile",
+      "file": "distinct-floral-forms-inspection.spec.ts",
+      "title": "calceolaria: distinct floral forms overview seven-view anatomy review",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T09:05:36.476Z",
+        "duration": 241055.667,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "reportSha256": "932f96749a6e82bb47427ff675b11d085efe65d1bd80ee09f18f8706b5b61c58"
+    }
+  ],
+  "allAttempts": [
+    {
+      "run": "isolated-inspection-1793609112479",
+      "project": "desktop",
+      "file": "cymes-and-spikes-inspection.spec.ts",
+      "title": "rose: cymes and spikes specimen seven-view anatomy review",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T08:45:12.907Z",
+        "duration": 6270.735000000001,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "reportSha256": "0f8fa8e7914c6e41ae292db61a738cf7ef42ae040fd0a481720c8002f0dc8e4d"
+    },
+    {
+      "run": "isolated-inspection-1793609112479",
+      "project": "desktop",
+      "file": "cymes-and-spikes-inspection.spec.ts",
+      "title": "rose: cymes and spikes overview seven-view anatomy review",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T08:45:19.657Z",
+        "duration": 4898.844999999999,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "reportSha256": "787372af0143e718bc2027c7b24844b0ffe9f1a8adc6d5357b7f861bbf5c8b72"
+    },
+    {
+      "run": "isolated-inspection-1793609112479",
+      "project": "mobile",
+      "file": "cymes-and-spikes-inspection.spec.ts",
+      "title": "rose: cymes and spikes specimen seven-view anatomy review",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T08:45:25.047Z",
+        "duration": 7161.638,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "reportSha256": "6e6a3d02b7b75fff7962d480ae3f530403ebcf321cfba88ce07233a95f1f8bf7"
+    },
+    {
+      "run": "isolated-inspection-1793609112479",
+      "project": "mobile",
+      "file": "cymes-and-spikes-inspection.spec.ts",
+      "title": "rose: cymes and spikes overview seven-view anatomy review",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T08:45:32.647Z",
+        "duration": 10693.062999999998,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "reportSha256": "1eed4ecb5be24a9c9bb5529bc6ab2c737c4e45b85000e6c6e9ec305dfc778e74"
+    },
+    {
+      "run": "isolated-inspection-1793609112479",
+      "project": "desktop",
+      "file": "distinct-floral-forms-inspection.spec.ts",
+      "title": "trillium: distinct floral forms specimen seven-view anatomy review",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T08:45:43.919Z",
+        "duration": 7653.3859999999995,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "reportSha256": "2fa1bcec84b941dd7e91543031fd1c4d383b0284a6711a2511f9aea2d1bb5a2c"
+    },
+    {
+      "run": "isolated-inspection-1793609112479",
+      "project": "desktop",
+      "file": "distinct-floral-forms-inspection.spec.ts",
+      "title": "trillium: distinct floral forms overview seven-view anatomy review",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T08:45:52.119Z",
+        "duration": 6150.763,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "reportSha256": "3fd3c6aa318a852cc9d860f158ceae4fd0dc60d127ac63634f8b4e5ff5f82bac"
+    },
+    {
+      "run": "isolated-inspection-1793609112479",
+      "project": "desktop",
+      "file": "distinct-floral-forms-inspection.spec.ts",
+      "title": "datura: distinct floral forms specimen seven-view anatomy review",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T08:45:58.773Z",
+        "duration": 6911.211,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "reportSha256": "80e30afa510832b9aca0844de5a7122dc77d6113fbcb928d52dfd27d080268e3"
+    },
+    {
+      "run": "isolated-inspection-1793609112479",
+      "project": "desktop",
+      "file": "distinct-floral-forms-inspection.spec.ts",
+      "title": "datura: distinct floral forms overview seven-view anatomy review",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T08:46:06.360Z",
+        "duration": 7028.807,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "reportSha256": "3c1bd10ea298562a19eb6cf21faea9a315b1bb9733d3aaca27bbe649efa033a6"
+    },
+    {
+      "run": "isolated-inspection-1793609112479",
+      "project": "desktop",
+      "file": "distinct-floral-forms-inspection.spec.ts",
+      "title": "allium: distinct floral forms specimen seven-view anatomy review",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T08:46:13.935Z",
+        "duration": 16015.721,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "reportSha256": "3dba5c2605f912ec8dd53a1950c68caf262ab04564691889fdd034929ee74213"
+    },
+    {
+      "run": "isolated-inspection-1793609112479",
+      "project": "desktop",
+      "file": "distinct-floral-forms-inspection.spec.ts",
+      "title": "allium: distinct floral forms overview seven-view anatomy review",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T08:46:30.464Z",
+        "duration": 7606.612,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "reportSha256": "e297da1640321399df11a7b03444d6b13e57bcedc3c5ce893fbcf96485d6269b"
+    },
+    {
+      "run": "isolated-inspection-1793609112479",
+      "project": "desktop",
+      "file": "distinct-floral-forms-inspection.spec.ts",
+      "title": "grevillea: distinct floral forms specimen seven-view anatomy review",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T08:46:38.499Z",
+        "duration": 8363.611,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "reportSha256": "932a4974dd64ad59632bbae07a5da22c47d682ba015117212b87103784d0b7c6"
+    },
+    {
+      "run": "isolated-inspection-1793609112479",
+      "project": "desktop",
+      "file": "distinct-floral-forms-inspection.spec.ts",
+      "title": "grevillea: distinct floral forms overview seven-view anatomy review",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T08:46:47.270Z",
+        "duration": 5757.072,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "reportSha256": "eebe225e150b1269680fd96f2a51bb644a6af6d74a61ca41e59623744f34b7c9"
+    },
+    {
+      "run": "isolated-inspection-1793609112479",
+      "project": "desktop",
+      "file": "distinct-floral-forms-inspection.spec.ts",
+      "title": "calceolaria: distinct floral forms specimen seven-view anatomy review",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T08:46:53.436Z",
+        "duration": 6661.703,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "reportSha256": "cf4c2cf339599f2124df237aa0dedb8a0e0872e4581f420c8cd23f365de9a3e6"
+    },
+    {
+      "run": "isolated-inspection-1793609112479",
+      "project": "desktop",
+      "file": "distinct-floral-forms-inspection.spec.ts",
+      "title": "calceolaria: distinct floral forms overview seven-view anatomy review",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T08:47:00.521Z",
+        "duration": 4417.571,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "reportSha256": "03c4fde92899526eda7b8b3bb799208ed3866acffb4bfa866d36005f3a06deda"
+    },
+    {
+      "run": "isolated-inspection-1793609112479",
+      "project": "mobile",
+      "file": "distinct-floral-forms-inspection.spec.ts",
+      "title": "trillium: distinct floral forms specimen seven-view anatomy review",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T08:47:05.387Z",
+        "duration": 6597.943,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "reportSha256": "d6aa31fc510ed049540416d7e1d3d600302a679ecc76d19513d18834848733e4"
+    },
+    {
+      "run": "isolated-inspection-1793609112479",
+      "project": "mobile",
+      "file": "distinct-floral-forms-inspection.spec.ts",
+      "title": "trillium: distinct floral forms overview seven-view anatomy review",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T08:47:12.535Z",
+        "duration": 7545.139,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "reportSha256": "1292175ffd0a8e0086cbd382b4a01cdacb24aa805650ceb71b0f8e5d4f252e23"
+    },
+    {
+      "run": "isolated-inspection-1793609112479",
+      "project": "mobile",
+      "file": "distinct-floral-forms-inspection.spec.ts",
+      "title": "datura: distinct floral forms specimen seven-view anatomy review",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T08:47:20.572Z",
+        "duration": 7438.65,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "reportSha256": "0830edadf620f2985e3474a4be827913e8ddfae53fd3be476c5f994489a0a16e"
+    },
+    {
+      "run": "isolated-inspection-1793609112479",
+      "project": "mobile",
+      "file": "distinct-floral-forms-inspection.spec.ts",
+      "title": "datura: distinct floral forms overview seven-view anatomy review",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T08:47:28.458Z",
+        "duration": 7239.415,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "reportSha256": "34563941952b40a064ab1cebe3c06795583b4594dba13f6ad7a0b0bb71c3b5cb"
+    },
+    {
+      "run": "isolated-inspection-1793609112479",
+      "project": "mobile",
+      "file": "distinct-floral-forms-inspection.spec.ts",
+      "title": "allium: distinct floral forms specimen seven-view anatomy review",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T08:47:36.195Z",
+        "duration": 11796.942000000001,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "reportSha256": "c24c3cfcf8afa8d0b44f92dde878b9b8afc0085d6b4a9447f0f582fbd1468d3d"
+    },
+    {
+      "run": "isolated-inspection-1793609112479",
+      "project": "mobile",
+      "file": "distinct-floral-forms-inspection.spec.ts",
+      "title": "allium: distinct floral forms overview seven-view anatomy review",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T08:47:48.409Z",
+        "duration": 8955.576000000001,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "reportSha256": "b4e446169f9aced3f6fdee41dbca094e75181a607bd6f37ae68893ef6992de49"
+    },
+    {
+      "run": "isolated-inspection-1793609112479",
+      "project": "mobile",
+      "file": "distinct-floral-forms-inspection.spec.ts",
+      "title": "grevillea: distinct floral forms specimen seven-view anatomy review",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T08:47:57.810Z",
+        "duration": 11591.386,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "reportSha256": "eeb2ef0e9fdd5bfa38f881cd23d538f3d8032b14b5f63416c41c6c17d83d084d"
+    },
+    {
+      "run": "isolated-inspection-1793609112479",
+      "project": "mobile",
+      "file": "distinct-floral-forms-inspection.spec.ts",
+      "title": "grevillea: distinct floral forms overview seven-view anatomy review",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T08:48:10.418Z",
+        "duration": 55012.88,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "reportSha256": "e3ca96b8c01e07e2c85d08bf0036c96645bb630b514c1cb6c66c983c128a97c9"
+    },
+    {
+      "run": "isolated-inspection-1793609112479",
+      "project": "mobile",
+      "file": "distinct-floral-forms-inspection.spec.ts",
+      "title": "calceolaria: distinct floral forms specimen seven-view anatomy review",
+      "exit": 1,
+      "passed": false,
+      "stats": {
+        "startTime": "2026-11-02T08:49:18.181Z",
+        "duration": 146123.354,
+        "expected": 0,
+        "skipped": 0,
+        "unexpected": 1,
+        "flaky": 0
+      },
+      "reportSha256": "8106b0d65d040507b62cc4fe4c0f54363401f7952a28f5718bfbbc7f0d5dcf45"
+    },
+    {
+      "run": "isolated-inspection-1793609112479",
+      "project": "mobile",
+      "file": "distinct-floral-forms-inspection.spec.ts",
+      "title": "calceolaria: distinct floral forms overview seven-view anatomy review",
+      "exit": 1,
+      "passed": false,
+      "stats": {
+        "startTime": "2026-11-02T08:51:56.063Z",
+        "duration": 342665.513,
+        "expected": 0,
+        "skipped": 0,
+        "unexpected": 1,
+        "flaky": 0
+      },
+      "reportSha256": "14cc011b352bc893cf7bfc7dfb414579c5de85a09370a3ee7d42210bad0b993b"
+    },
+    {
+      "run": "isolated-inspection-1793610290246",
+      "project": "mobile",
+      "file": "distinct-floral-forms-inspection.spec.ts",
+      "title": "calceolaria: distinct floral forms specimen seven-view anatomy review",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T09:04:51.288Z",
+        "duration": 42895.377,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "reportSha256": "e163175f7e5fcd029fca5604c120000743005574461b8ce5e844f04d9713ca98"
+    },
+    {
+      "run": "isolated-inspection-1793610290246",
+      "project": "mobile",
+      "file": "distinct-floral-forms-inspection.spec.ts",
+      "title": "calceolaria: distinct floral forms overview seven-view anatomy review",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T09:05:36.476Z",
+        "duration": 241055.667,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "reportSha256": "932f96749a6e82bb47427ff675b11d085efe65d1bd80ee09f18f8706b5b61c58"
+    }
+  ]
+}

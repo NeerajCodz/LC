@@ -14,6 +14,8 @@ One continuous hollow five-fold corolla, one tubular calyx, five included filame
 
 Opening unfurls the pleats through corresponding sealed open/folded skins and normals. The exterior skin is identified geometrically, with green basal shading and subtle pleat highlights. Roughness 0.66, scattering 0.065 and 220 / 70 contact nodes are authored. Pointer and wind response use the common bounded solver; the included organs remain attached throughout the morph.
 
+Filament bases meet the inner corolla skin at normalized height 0.25. A supported basal sleeve (`pinnedBase: 0.4`) keeps these insertions on carried tissue while the upper tube remains free. This represents authored calyx support, not measured calyx stiffness. Regression coverage includes the actual displacement/normal texture field and inner-skin distance during forcing, rather than only comparing undeformed endpoints.
+
 ## Evidence gaps and verification
 
 Reverse bloom does not represent biological reopening of a spent flower. No circadian model, scent transport, seed capsule or pharmacology is simulated. Scale, leaf count, wall thickness, pigments and mechanics are display parameters. Interior clearance tests sample the actual generated geometry; they do not prove every possible deformed configuration collision-free. Consult [batch validation](../validation/distinct-floral-forms-validation.md) for checks and limits.

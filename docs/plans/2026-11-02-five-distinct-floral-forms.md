@@ -33,16 +33,18 @@ Initial primary references: [NC State Trillium](https://plants.ces.ncsu.edu/plan
 ## Coherent slices and ownership
 
 - [x] 1. Confirm mix, inspect clean main and installed stack, research initial sources, create branch and commit plan.
-- [ ] 2. Complete five source-backed dossiers under docs/research/, documenting proportions, attachments, surfaces, buds, behavior and evidence gaps.
-- [ ] 3–7. Dedicated anatomy/geometry and meaningful generated-buffer regressions, one checked commit per species. Use a failing regression before its corresponding change.
-- [ ] 8–12. Dedicated foliage geometry and tests, one checked commit per species, including actual stem/leaf transformation and insertion where applicable.
-- [ ] 13. Register typed slugs, species assemblies, custom stems/foliage renderers, palettes, metadata, structures and wind profiles together so the catalog remains complete.
-- [ ] 14. Add species-specific optical response, pigments, anti-aliased veins and restrained micro-relief with shared shader programs and the existing atlas/fallback.
-- [ ] 15. Exercise actual assembled contact cages, pins, elastic recovery, frame-rate consistency, reverse bloom, extreme inputs, pause, reduced motion and quality changes. Fix real defects in separate slices.
+- [x] 2. Complete five source-backed dossiers under docs/research/, documenting proportions, attachments, surfaces, buds, behavior and evidence gaps.
+- [x] 3–7. Dedicated anatomy/geometry and meaningful generated-buffer regressions, one checked commit per species. Use a failing regression before its corresponding change.
+- [x] 8–12. Dedicated foliage geometry and tests, one checked commit per species, including actual stem/leaf transformation and insertion where applicable.
+- [x] 13. Register typed slugs, species assemblies, custom stems/foliage renderers, palettes, metadata, structures and wind profiles together so the catalog remains complete.
+- [x] 14. Add species-specific optical response, pigments, anti-aliased veins and restrained micro-relief with shared shader programs and the existing atlas/fallback.
+- [x] 15. Exercise actual assembled contact cages, pins, elastic recovery, frame-rate consistency, reverse bloom, extreme inputs, pause, reduced motion and quality changes. Fix real defects in separate slices.
 - [ ] 16. Verify actual framing and native garden budgets; implement measured distant-geometry improvements only when required and preserve defining anatomy/counts.
-- [ ] 17. Add desktop/mobile canonical-route, controls, themes, retained gallery/garden and seven-view inspection coverage with unchanged readiness/pixel deadlines.
-- [ ] 18. Add docs/specimens/<slug>.md companions, paired indexes and public API/development/reference updates; verify all local documentation links.
+- [x] 17. Add desktop/mobile canonical-route, controls, themes, retained gallery/garden and seven-view inspection coverage with unchanged readiness/pixel deadlines.
+- [x] 18. Add docs/specimens/<slug>.md companions, paired indexes and public API/development/reference updates; verify all local documentation links.
 - [ ] 19. Regenerate the inventory, run taxonomy and coverage audit, typecheck, lint, complete unit/geometry/motion checks and production build.
 - [ ] 20. Inspect every species at specimen/overview detail on standard/constrained devices; record fresh CPU/rendering costs and browser results with source hashes and all failures/limitations, review the branch, verify identities/trailers, push and create a PR.
 
 Trillium/Datura, Allium/Grevillea and Calceolaria have separate species owners. Root owns shared registries/materials, integration, GPU/browser serialization, commits and the final PR. Browser verification from the prior batch had intermittent mobile timing, RSC navigation and preparation observations; preserve that history and investigate new failures without relaxing checks.
+
+Progress: dedicated anatomy, foliage, catalog, optics, actual-cage dynamics and paired documentation are committed. Native development garden budgets, inventory/taxonomy audits and a 932-test full run pass. Final-source specimen/overview boards for the five new flowers and Rose are accepted after two recorded unchanged mobile retries; affected existing overview review and production checks remain in progress. CPU solver costs are recorded. See the validation record for source hashes, failures and remaining checks. Independent review findings on Allium and Datura attachments are resolved and regression-covered.

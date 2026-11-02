@@ -12,7 +12,7 @@ Preserve the three-petalled plan, three alternating sepals, six stamens and cent
 
 One flower, three bracts at the same insertion, scape length 1.4 scene units, petal length about 0.9 and bract length 1.45 are display choices, not a metric reconstruction. Petals have sealed 0.012-unit walls, subtly rolled margins and a blunt finite apex. Contact grids retain 270 desktop / 90 constrained nodes. The apex accommodates their finite contact thickness instead of collapsing several nonadjacent nodes into one point.
 
-White/ivory pigment, restrained branching veins, roughness 0.56 and scattering 0.055 are authored optical parameters. Fine relief uses the shared tissue atlas and procedural fallback. Opening raises and spreads the same three petal shells; attachments stay fixed while wind and local contact deform their distal tissue.
+White/ivory pigment, restrained branching veins, roughness 0.56 and scattering 0.055 are authored optical parameters. Fine relief uses the shared tissue atlas and procedural fallback. Opening spreads and recurves the same three petal shells; attachments stay fixed while wind and local contact deform their distal tissue.
 
 ## Evidence gaps and verification
 

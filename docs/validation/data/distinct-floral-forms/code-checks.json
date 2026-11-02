@@ -1,0 +1,85 @@
+{
+  "recordedAt": "2026-11-02T20:23:46.446Z",
+  "sourceCommit": "8d57c881a948a4e036cf6ecde2d7c692bb492d00",
+  "codeManifestSourceCommit": "49da8396d9c39a2f120e3393f586c26295bdb83f",
+  "matchingSourceFiles": 404,
+  "node": "v24.22.1",
+  "unit": {
+    "tests": 933,
+    "passed": 933,
+    "failed": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "durationMs": 491426.8816
+  },
+  "checks": [
+    {
+      "name": "unit",
+      "command": "node --import tsx --test --test-concurrency=1 tests/*.test.ts",
+      "exit": 0,
+      "logSha256": "2e54aa677e4b8cb246b045898c3b7d347909f63b8a6ae0a8ecf5bef8a98e93a2",
+      "logTail": [
+        "✔ wisteria leaflet: deterministic sealed surfaces, positive thickness and stable bloom normals (7.2709ms)",
+        "✔ wisteria leaflet: whole-plant cages respect both node ceilings (0.3034ms)",
+        "✔ wisteria: the green upper leaflet side faces upward after the compound leaf and shoot pitches (1.463ms)",
+        "✔ wisteria: sixteen pendant flowers each retain one banner, paired wings, paired keel and ten stamens (0.8628ms)",
+        "✔ wisteria: each pedicel meets its flower insertion and the rachis spans the pendant head (0.6218ms)",
+        "✔ wisteria: the long raceme carrier keeps every flower insertion attached during actual wind and contact frame rotations (2.0494ms)",
+        "✔ wisteria: its actual paired wings and keels depress under the shared articulation spring and recover elastically (0.7347ms)",
+        "✔ wisteria: supported woody shoot winds counter-clockwise, ends on the head and bears eleven pinnate leaflets (2.6656ms)",
+        "ℹ tests 933",
+        "ℹ suites 0",
+        "ℹ pass 933",
+        "ℹ fail 0",
+        "ℹ cancelled 0",
+        "ℹ skipped 0",
+        "ℹ todo 0",
+        "ℹ duration_ms 491426.8816"
+      ]
+    },
+    {
+      "name": "typecheck",
+      "command": "npm run typecheck",
+      "exit": 0,
+      "logSha256": "640ef49478aa49581564f02aab9ee23f7729686f5116e9c3a6fc29b5ee175a4d",
+      "logTail": [
+        "> living-colors@1.0.0 typecheck",
+        "> tsc --noEmit"
+      ]
+    },
+    {
+      "name": "lint",
+      "command": "npm run lint",
+      "exit": 0,
+      "logSha256": "fda8ca120e2e93f391a2b7b305bbe51d07cf5276472d75df16eb1f80cfe15485",
+      "logTail": [
+        "> living-colors@1.0.0 lint",
+        "> eslint ."
+      ]
+    },
+    {
+      "name": "build",
+      "command": "npm run build",
+      "exit": 0,
+      "logSha256": "9ac0d9fd34d0a015f972bea7e952849306d39c2ecc6fb1607e3180706e56c527",
+      "logTail": [
+        "┌ ƒ /",
+        "├ ○ /_not-found",
+        "├ ○ /dev/inspection",
+        "├   /flower/[type]",
+        "│ ├ ● /flower/trillium",
+        "│ ├ ● /flower/datura",
+        "│ ├ ● /flower/allium",
+        "│ └ ● [+83 more paths]",
+        "├ ○ /gallery",
+        "├ ○ /garden",
+        "└ ○ /icon.svg",
+        "",
+        "",
+        "○  (Static)   prerendered as static content",
+        "●  (SSG)      prerendered as static HTML (uses generateStaticParams)",
+        "ƒ  (Dynamic)  server-rendered on demand"
+      ]
+    }
+  ]
+}

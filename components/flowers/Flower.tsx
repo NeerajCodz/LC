@@ -1,4 +1,9 @@
 "use client";
+import { Trillium } from "./trillium/Trillium";
+import { Datura } from "./datura/Datura";
+import { Allium } from "./allium/Allium";
+import { Grevillea } from "./grevillea/Grevillea";
+import { Calceolaria } from "./calceolaria/Calceolaria";
 import { Gazania } from "./gazania/Gazania";
 import { Salvia } from "./salvia/Salvia";
 import { Nicotiana } from "./nicotiana/Nicotiana";
@@ -82,6 +87,11 @@ import { Pentas } from "./pentas/Pentas";
 import { Lobelia } from "./lobelia/Lobelia";
 import { Torenia } from "./torenia/Torenia";
 const SPECIES = {
+  trillium: Trillium,
+  datura: Datura,
+  allium: Allium,
+  grevillea: Grevillea,
+  calceolaria: Calceolaria,
   gazania: Gazania,
   salvia: Salvia,
   nicotiana: Nicotiana,

@@ -1,3 +1,8 @@
+import { trilliumStructure } from "../../components/flowers/trillium/Trillium";
+import { daturaStructure } from "../../components/flowers/datura/Datura";
+import { alliumStructure } from "../../components/flowers/allium/Allium";
+import { grevilleaStructure } from "../../components/flowers/grevillea/Grevillea";
+import { calceolariaStructure } from "../../components/flowers/calceolaria/Calceolaria";
 import { gazaniaStructure } from "../../components/flowers/gazania/Gazania";
 import { salviaStructure } from "../../components/flowers/salvia/Salvia";
 import { nicotianaStructure } from "../../components/flowers/nicotiana/Nicotiana";
@@ -97,6 +102,11 @@ import { pentasStructure } from "../../components/flowers/pentas/Pentas";
 import { lobeliaStructure } from "../../components/flowers/lobelia/Lobelia";
 import { toreniaStructure } from "../../components/flowers/torenia/Torenia";
 export const FLOWER_STRUCTURES: Record<FlowerType, FlowerStructure> = {
+  trillium: trilliumStructure,
+  datura: daturaStructure,
+  allium: alliumStructure,
+  grevillea: grevilleaStructure,
+  calceolaria: calceolariaStructure,
   gazania: gazaniaStructure,
   salvia: salviaStructure,
   nicotiana: nicotianaStructure,

@@ -1,4 +1,9 @@
 export const FLOWER_TYPES = [
+  "trillium",
+  "datura",
+  "allium",
+  "grevillea",
+  "calceolaria",
   "gazania",
   "salvia",
   "nicotiana",

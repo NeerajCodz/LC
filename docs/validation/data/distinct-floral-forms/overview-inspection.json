@@ -1,0 +1,534 @@
+{
+  "status": "passed",
+  "cases": 86,
+  "unexpected": 0,
+  "skipped": 0,
+  "flaky": 0,
+  "errors": [],
+  "projects": {
+    "desktop": 43,
+    "mobile": 43
+  },
+  "results": [
+    {
+      "project": "desktop",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "gazania: garden overview seven-view review",
+      "durationMs": 42725.939
+    },
+    {
+      "project": "desktop",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "echinacea: garden overview seven-view review",
+      "durationMs": 14068.052
+    },
+    {
+      "project": "desktop",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "carnation: garden overview seven-view review",
+      "durationMs": 13264.227
+    },
+    {
+      "project": "desktop",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "plumeria: garden overview seven-view review",
+      "durationMs": 14241.624
+    },
+    {
+      "project": "desktop",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "foxglove: garden overview seven-view review",
+      "durationMs": 12899.784
+    },
+    {
+      "project": "desktop",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "sweet-pea: garden overview seven-view review",
+      "durationMs": 10572.31
+    },
+    {
+      "project": "desktop",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "bougainvillea: garden overview seven-view review",
+      "durationMs": 12573.91
+    },
+    {
+      "project": "desktop",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "cyclamen: garden overview seven-view review",
+      "durationMs": 11709.122
+    },
+    {
+      "project": "desktop",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "snapdragon: garden overview seven-view review",
+      "durationMs": 7705.542
+    },
+    {
+      "project": "desktop",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "hardy-begonia: garden overview seven-view review",
+      "durationMs": 9553.951
+    },
+    {
+      "project": "desktop",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "hydrangea: garden overview seven-view review",
+      "durationMs": 13083.894
+    },
+    {
+      "project": "desktop",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "king-protea: garden overview seven-view review",
+      "durationMs": 12508.092
+    },
+    {
+      "project": "desktop",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "hellebore: garden overview seven-view review",
+      "durationMs": 16233.957999999999
+    },
+    {
+      "project": "desktop",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "primrose: garden overview seven-view review",
+      "durationMs": 11434.008
+    },
+    {
+      "project": "desktop",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "petunia: garden overview seven-view review",
+      "durationMs": 9153.585
+    },
+    {
+      "project": "desktop",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "lily-of-the-valley: garden overview seven-view review",
+      "durationMs": 12592.008
+    },
+    {
+      "project": "desktop",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "snowdrop: garden overview seven-view review",
+      "durationMs": 11525.452
+    },
+    {
+      "project": "desktop",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "gladiolus: garden overview seven-view review",
+      "durationMs": 11182.984
+    },
+    {
+      "project": "desktop",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "delphinium: garden overview seven-view review",
+      "durationMs": 15058.974
+    },
+    {
+      "project": "desktop",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "alstroemeria: garden overview seven-view review",
+      "durationMs": 13892.322
+    },
+    {
+      "project": "desktop",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "gerbera: garden overview seven-view review",
+      "durationMs": 14140.652
+    },
+    {
+      "project": "desktop",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "zinnia: garden overview seven-view review",
+      "durationMs": 13897.634
+    },
+    {
+      "project": "desktop",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "ranunculus: garden overview seven-view review",
+      "durationMs": 12781.711
+    },
+    {
+      "project": "desktop",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "anemone: garden overview seven-view review",
+      "durationMs": 11902.519
+    },
+    {
+      "project": "desktop",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "crocus: garden overview seven-view review",
+      "durationMs": 9362.087
+    },
+    {
+      "project": "desktop",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "freesia: garden overview seven-view review",
+      "durationMs": 11917.569000000001
+    },
+    {
+      "project": "desktop",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "lisianthus: garden overview seven-view review",
+      "durationMs": 12456.452
+    },
+    {
+      "project": "desktop",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "camellia: garden overview seven-view review",
+      "durationMs": 12954.634
+    },
+    {
+      "project": "desktop",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "magnolia: garden overview seven-view review",
+      "durationMs": 9742.837
+    },
+    {
+      "project": "desktop",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "gardenia: garden overview seven-view review",
+      "durationMs": 9511.922
+    },
+    {
+      "project": "desktop",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "nasturtium: garden overview seven-view review",
+      "durationMs": 8954.630000000001
+    },
+    {
+      "project": "desktop",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "cosmos: garden overview seven-view review",
+      "durationMs": 13665.822999999999
+    },
+    {
+      "project": "desktop",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "pansy: garden overview seven-view review",
+      "durationMs": 13084.801
+    },
+    {
+      "project": "desktop",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "african-violet: garden overview seven-view review",
+      "durationMs": 17128.854
+    },
+    {
+      "project": "desktop",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "bluebell: garden overview seven-view review",
+      "durationMs": 12765.318
+    },
+    {
+      "project": "desktop",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "wisteria: garden overview seven-view review",
+      "durationMs": 12690.553
+    },
+    {
+      "project": "desktop",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "bottlebrush: garden overview seven-view review",
+      "durationMs": 12356.736
+    },
+    {
+      "project": "desktop",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "scabiosa: garden overview seven-view review",
+      "durationMs": 16105.753
+    },
+    {
+      "project": "desktop",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "hyacinth: garden overview seven-view review",
+      "durationMs": 16355.182
+    },
+    {
+      "project": "desktop",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "amaryllis: garden overview seven-view review",
+      "durationMs": 14160.679
+    },
+    {
+      "project": "desktop",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "canna: garden overview seven-view review",
+      "durationMs": 12381.64
+    },
+    {
+      "project": "desktop",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "agapanthus: garden overview seven-view review",
+      "durationMs": 12813.476
+    },
+    {
+      "project": "desktop",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "impatiens: garden overview seven-view review",
+      "durationMs": 10878.149000000001
+    },
+    {
+      "project": "mobile",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "gazania: garden overview seven-view review",
+      "durationMs": 11067.472
+    },
+    {
+      "project": "mobile",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "echinacea: garden overview seven-view review",
+      "durationMs": 12045.349
+    },
+    {
+      "project": "mobile",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "carnation: garden overview seven-view review",
+      "durationMs": 11603.148
+    },
+    {
+      "project": "mobile",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "plumeria: garden overview seven-view review",
+      "durationMs": 10952.431
+    },
+    {
+      "project": "mobile",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "foxglove: garden overview seven-view review",
+      "durationMs": 12600.698999999999
+    },
+    {
+      "project": "mobile",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "sweet-pea: garden overview seven-view review",
+      "durationMs": 10403.714
+    },
+    {
+      "project": "mobile",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "bougainvillea: garden overview seven-view review",
+      "durationMs": 10810.730000000001
+    },
+    {
+      "project": "mobile",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "cyclamen: garden overview seven-view review",
+      "durationMs": 10726.955
+    },
+    {
+      "project": "mobile",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "snapdragon: garden overview seven-view review",
+      "durationMs": 11621.258000000002
+    },
+    {
+      "project": "mobile",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "hardy-begonia: garden overview seven-view review",
+      "durationMs": 11531.868999999999
+    },
+    {
+      "project": "mobile",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "hydrangea: garden overview seven-view review",
+      "durationMs": 12973.655999999999
+    },
+    {
+      "project": "mobile",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "king-protea: garden overview seven-view review",
+      "durationMs": 13295.342
+    },
+    {
+      "project": "mobile",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "hellebore: garden overview seven-view review",
+      "durationMs": 13680.036
+    },
+    {
+      "project": "mobile",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "primrose: garden overview seven-view review",
+      "durationMs": 14386.872
+    },
+    {
+      "project": "mobile",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "petunia: garden overview seven-view review",
+      "durationMs": 12025.831
+    },
+    {
+      "project": "mobile",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "lily-of-the-valley: garden overview seven-view review",
+      "durationMs": 13496.821
+    },
+    {
+      "project": "mobile",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "snowdrop: garden overview seven-view review",
+      "durationMs": 10688.294
+    },
+    {
+      "project": "mobile",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "gladiolus: garden overview seven-view review",
+      "durationMs": 11767.347000000002
+    },
+    {
+      "project": "mobile",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "delphinium: garden overview seven-view review",
+      "durationMs": 18892.065
+    },
+    {
+      "project": "mobile",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "alstroemeria: garden overview seven-view review",
+      "durationMs": 17370.877
+    },
+    {
+      "project": "mobile",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "gerbera: garden overview seven-view review",
+      "durationMs": 15407.356
+    },
+    {
+      "project": "mobile",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "zinnia: garden overview seven-view review",
+      "durationMs": 25649.739
+    },
+    {
+      "project": "mobile",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "ranunculus: garden overview seven-view review",
+      "durationMs": 15931.43
+    },
+    {
+      "project": "mobile",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "anemone: garden overview seven-view review",
+      "durationMs": 17656.75
+    },
+    {
+      "project": "mobile",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "crocus: garden overview seven-view review",
+      "durationMs": 25430.727
+    },
+    {
+      "project": "mobile",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "freesia: garden overview seven-view review",
+      "durationMs": 21429.107
+    },
+    {
+      "project": "mobile",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "lisianthus: garden overview seven-view review",
+      "durationMs": 22887.254
+    },
+    {
+      "project": "mobile",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "camellia: garden overview seven-view review",
+      "durationMs": 15525.804
+    },
+    {
+      "project": "mobile",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "magnolia: garden overview seven-view review",
+      "durationMs": 13771.815
+    },
+    {
+      "project": "mobile",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "gardenia: garden overview seven-view review",
+      "durationMs": 14593.99
+    },
+    {
+      "project": "mobile",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "nasturtium: garden overview seven-view review",
+      "durationMs": 12236.784
+    },
+    {
+      "project": "mobile",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "cosmos: garden overview seven-view review",
+      "durationMs": 24595.102
+    },
+    {
+      "project": "mobile",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "pansy: garden overview seven-view review",
+      "durationMs": 21750.475
+    },
+    {
+      "project": "mobile",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "african-violet: garden overview seven-view review",
+      "durationMs": 13519.646
+    },
+    {
+      "project": "mobile",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "bluebell: garden overview seven-view review",
+      "durationMs": 10806.888
+    },
+    {
+      "project": "mobile",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "wisteria: garden overview seven-view review",
+      "durationMs": 22521.201
+    },
+    {
+      "project": "mobile",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "bottlebrush: garden overview seven-view review",
+      "durationMs": 21773.93
+    },
+    {
+      "project": "mobile",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "scabiosa: garden overview seven-view review",
+      "durationMs": 13083.329
+    },
+    {
+      "project": "mobile",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "hyacinth: garden overview seven-view review",
+      "durationMs": 13947.836
+    },
+    {
+      "project": "mobile",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "amaryllis: garden overview seven-view review",
+      "durationMs": 13732.92
+    },
+    {
+      "project": "mobile",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "canna: garden overview seven-view review",
+      "durationMs": 13509.502
+    },
+    {
+      "project": "mobile",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "agapanthus: garden overview seven-view review",
+      "durationMs": 15697.432
+    },
+    {
+      "project": "mobile",
+      "file": "garden-overview-inspection.spec.ts",
+      "title": "impatiens: garden overview seven-view review",
+      "durationMs": 20977.184
+    }
+  ],
+  "sourceCommit": "187ae9e",
+  "sourceManifest": "source-manifest.json",
+  "mode": "development inspection",
+  "reportDirectory": "isolated-inspection-1793648925743"
+}

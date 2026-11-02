@@ -20,6 +20,11 @@ Generated from `lib/flowers/catalog.ts`; genus or ornamental studies never mark 
 
 | Study | Catalog scientific name | Taxonomic mapping |
 | --- | --- | --- |
+| [Great White Trillium](http://localhost:1607/flower/trillium/) | Trillium grandiflorum | Exact accepted-name match: `wfo-0000751101` |
+| [Devil’s Trumpet](http://localhost:1607/flower/datura/) | Datura stramonium | Exact accepted-name match: `wfo-0001021374` |
+| [Giant Allium](http://localhost:1607/flower/allium/) | Allium giganteum | Exact accepted-name match: `wfo-0000756312` |
+| [Rosemary Grevillea](http://localhost:1607/flower/grevillea/) | Grevillea rosmarinifolia | Exact accepted-name match: `wfo-0000709551` |
+| [Yellow Slipperwort](http://localhost:1607/flower/calceolaria/) | Calceolaria integrifolia | Exact accepted-name match: `wfo-0000579614` |
 | [Gazania](http://localhost:1607/flower/gazania/) | Gazania rigens | Exact accepted-name match: `wfo-0000087259` |
 | [Scarlet Sage](http://localhost:1607/flower/salvia/) | Salvia splendens | Exact accepted-name match: `wfo-0001277169` |
 | [Flowering Tobacco](http://localhost:1607/flower/nicotiana/) | Nicotiana alata | Exact accepted-name match: `wfo-0001023652` |
@@ -11170,7 +11175,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Allium geyeri — `wfo-0000756309`
 - Allium geyeri var. geyeri — `wfo-0000772072` · variety
 - Allium geyeri var. tenerum — `wfo-0000756310` · variety
-- Allium giganteum — `wfo-0000756312`
+- Allium giganteum — `wfo-0000756312` · authored study: `allium`
 - Allium gilgiticum — `wfo-0000756314`
 - Allium gillii — `wfo-0000756315`
 - Allium glaciale — `wfo-0000756317`
@@ -110743,7 +110748,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Calceolaria incarum subsp. incarum — `wfo-0001138938` · subspecies
 - Calceolaria incarum subsp. sanchezii — `wfo-0001404968` · subspecies
 - Calceolaria inflexa — `wfo-0000579612`
-- Calceolaria integrifolia — `wfo-0000579614`
+- Calceolaria integrifolia — `wfo-0000579614` · authored study: `calceolaria`
 - Calceolaria involuta — `wfo-0000579620`
 - Calceolaria irazuensis — `wfo-0000579622`
 - Calceolaria jujuyensis — `wfo-0000579623`
@@ -237310,7 +237315,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Trillium georgianum — `wfo-0001348016`
 - Trillium govanianum — `wfo-0000751103`
 - Trillium gracile — `wfo-0000751102`
-- Trillium grandiflorum — `wfo-0000751101`
+- Trillium grandiflorum — `wfo-0000751101` · authored study: `trillium`
 - Trillium hagae — `wfo-0000751098`
 - Trillium hibbersonii — `wfo-1000025092`
 - Trillium kurabayashii — `wfo-0000751093`
@@ -336320,7 +336325,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Grevillea robusta — `wfo-0000709544`
 - Grevillea rogersoniana — `wfo-0000709548`
 - Grevillea rosieri — `wfo-0000709550`
-- Grevillea rosmarinifolia — `wfo-0000709551`
+- Grevillea rosmarinifolia — `wfo-0000709551` · authored study: `grevillea`
 - Grevillea rosmarinifolia subsp. glabella — `wfo-0000709552` · subspecies
 - Grevillea roycei — `wfo-0000709553`
 - Grevillea rubicunda — `wfo-0000709555`
@@ -382493,7 +382498,7 @@ This large file contains the complete selected snapshot for local search. Search
 - Datura quercifolia — `wfo-0001021358`
 - Datura quercifolia — `wfo-0001021359`
 - Datura reburra — `wfo-0001021360`
-- Datura stramonium — `wfo-0001021374`
+- Datura stramonium — `wfo-0001021374` · authored study: `datura`
 - Datura wrightii — `wfo-0001021401`
 - Daturodendron absconditum — `wfo-1000089400`
 - Deprea abra-patriciae — `wfo-0001341692`

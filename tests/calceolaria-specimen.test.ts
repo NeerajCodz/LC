@@ -15,6 +15,24 @@ import { PetalDynamics } from "../lib/three/petalDynamics";
 import { verifySpecimen } from "./specimen-checks";
 
 verifySpecimen("calceolaria", CALCEOLARIA_MODEL);
+test("calceolaria: pouch sidewalls advance into a small neck without folding back into an open bowl", () => {
+  assert.ok(
+    calceolariaCorolla(0.25, 0.5, 1)[1] > 0.12,
+    "the pouch roof must inflate into a rounded shoulder",
+  );
+  for (const open of [0, 0.5, 1])
+    for (const u of [0, 0.5]) {
+      let previous = -Infinity;
+      for (let row = 0; row <= 32; row++) {
+        const point = calceolariaCorolla(u, row / 32, open);
+        assert.ok(
+          point[2] > previous,
+          "sidewall must advance toward the real mouth",
+        );
+        previous = point[2];
+      }
+    }
+});
 test("calceolaria: the pouch has a small doorway instead of an open cup rim", () => {
   for (const open of [0, 0.5, 1]) {
     const body = calceolariaCorolla(0, 0.5, open),

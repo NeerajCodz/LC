@@ -5,6 +5,29 @@ import { createSpecimenMaterial } from "../lib/three/specimenMaterials";
 import { specimenGeometry } from "../lib/three/specimenModel";
 import { DATURA_MODEL } from "../components/flowers/datura/daturaGeometry";
 import { GREVILLEA_MODEL } from "../components/flowers/grevillea/grevilleaGeometry";
+import { CALCEOLARIA_MODEL } from "../components/flowers/calceolaria/calceolariaGeometry";
+
+test("calceolaria: the advancing pouch labels its physical outside and lumen correctly", () => {
+  const surface = CALCEOLARIA_MODEL.surfaces.find((s) => s.role === "tube")!,
+    geometry = specimenGeometry(surface, "low"),
+    side = geometry.getAttribute("tissueSide");
+  try {
+    for (const positions of [
+      geometry.getAttribute("position"),
+      geometry.morphAttributes.position![0],
+    ]) {
+      const half = positions.count / 2;
+      for (let row = 0; row <= 16; row++) {
+        const index = row * 12;
+        assert.ok(positions.getX(index) > positions.getX(index + half));
+        assert.equal(side.getX(index), 1);
+        assert.equal(side.getX(index + half), -1);
+      }
+    }
+  } finally {
+    geometry.dispose();
+  }
+});
 test("allium papery spathe is drier and less coated than its flower tissue", () => {
   const petal = createSpecimenMaterial("allium", "petal"),
     spathe = createSpecimenMaterial("allium", "bract", undefined, "disc");

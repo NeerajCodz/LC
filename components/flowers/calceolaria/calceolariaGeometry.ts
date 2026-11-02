@@ -21,9 +21,13 @@ export function calceolariaCorolla(
       0.034 * (1 - 0.5 * v ** 8) +
       (0.3 * belly ** 0.85 + 0.02 * v ** 5) * inflation,
     lowerDepth = 0.04 + (0.35 * belly ** 0.9 + 0.06 * v) * inflation,
-    hoodHeight = 0.025 + (0.067 * v + 0.008 * belly) * (0.35 + 0.65 * s),
-    projection =
-      (0.46 * Math.sin(Math.PI * v * 0.8) - 0.04 * v) * (0.72 + 0.28 * s),
+    hoodHeight =
+      0.025 +
+      (0.067 * v + 0.008 * belly) * (0.35 + 0.65 * s) +
+      0.075 * belly * s,
+    // Advance into the small entrance: a returning sidewall cuts an apparent
+    // cup rim through the inflated body instead of making a closed pouch.
+    projection = (0.46 * v - 0.08 * v * v) * (0.72 + 0.28 * s),
     // A gently raised dorsal lip, a forward lower rim, and a real narrow entrance.
     hood = 0.082 * upper ** 2 * v ** 5 * (0.65 + 0.35 * s),
     neck = 1 - 0.5 * v ** 8;
@@ -116,7 +120,7 @@ for (let cluster = 0; cluster < CALCEOLARIA_MODEL.clusters.length; cluster++) {
     cluster,
     role: "tube",
     periodic: true,
-    outerSide: -1,
+    outerSide: 1,
     thickness: 0.012,
     overviewColumns: 12,
     overviewRows: 8,

@@ -16,17 +16,20 @@ export function calceolariaCorolla(
     upper = Math.max(0, Math.sin(angle)),
     lower = Math.max(0, -Math.sin(angle)),
     belly = Math.sin(Math.PI * v),
-    inflation = 0.5 + 0.5 * s,
-    width = 0.034 + (0.3 * belly ** 0.85 + 0.086 * v ** 5) * inflation,
-    lowerDepth = 0.025 + (0.35 * belly ** 0.9 + 0.06 * v) * inflation,
-    hoodHeight = 0.025 + (0.067 * v + 0.008 * belly) * (0.65 + 0.35 * s),
+    inflation = 0.2 + 0.8 * s,
+    width =
+      0.034 * (1 - 0.5 * v ** 8) +
+      (0.3 * belly ** 0.85 + 0.02 * v ** 5) * inflation,
+    lowerDepth = 0.04 + (0.35 * belly ** 0.9 + 0.06 * v) * inflation,
+    hoodHeight = 0.025 + (0.067 * v + 0.008 * belly) * (0.35 + 0.65 * s),
     projection =
       (0.46 * Math.sin(Math.PI * v * 0.8) - 0.04 * v) * (0.72 + 0.28 * s),
     // A gently raised dorsal lip, a forward lower rim, and a real narrow entrance.
-    hood = 0.082 * upper ** 2 * v ** 5 * (0.65 + 0.35 * s);
+    hood = 0.082 * upper ** 2 * v ** 5 * (0.65 + 0.35 * s),
+    neck = 1 - 0.5 * v ** 8;
   return [
     Math.cos(angle) * width,
-    0.012 * v + upper * hoodHeight - lower * lowerDepth,
+    0.012 * v + neck * (upper * hoodHeight - lower * lowerDepth),
     0.035 + projection - hood,
   ];
 }

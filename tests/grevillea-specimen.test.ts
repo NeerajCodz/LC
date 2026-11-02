@@ -9,6 +9,18 @@ import {
 import { specimenOrganGeometry } from "../lib/three/specimenModel";
 import { verifySpecimen } from "./specimen-checks";
 verifySpecimen("Grevillea paired spider flowers", GREVILLEA_MODEL);
+test("grevillea: four distal segments separate into curls rather than a continuous bowl", () => {
+  const center = grevilleaPerianth(0, 0.5, 1, 1),
+    edge = grevilleaPerianth(0, 1, 1, 1);
+  assert.ok(
+    Math.hypot(edge[0] - center[0], edge[2] - center[2]) < 0.03,
+    "distal segment remains a broad quadrant",
+  );
+  assert.ok(
+    grevilleaPerianth(0, 0.5, 1, 1)[1] < grevilleaPerianth(0, 0.5, 0.6, 1)[1],
+    "tip must curl down from its crest",
+  );
+});
 test("Grevillea: condensed paired flowers retain four tepals, four sessile anthers and one curved style each", () => {
   assert.equal(GREVILLEA_PAIRS.length, 6);
   assert.equal(GREVILLEA_MODEL.clusters.length, 13);

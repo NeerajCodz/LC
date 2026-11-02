@@ -15,6 +15,22 @@ import { PetalDynamics } from "../lib/three/petalDynamics";
 import { verifySpecimen } from "./specimen-checks";
 
 verifySpecimen("calceolaria", CALCEOLARIA_MODEL);
+test("calceolaria: the pouch has a small doorway instead of an open cup rim", () => {
+  for (const open of [0, 0.5, 1]) {
+    const body = calceolariaCorolla(0, 0.5, open),
+      mouth = calceolariaCorolla(0, 1, open);
+    assert.ok(
+      mouth[0] < body[0] * 0.28,
+      "mouth is too broad relative to the inflated body",
+    );
+  }
+  const full = calceolariaCorolla(0, 0.5, 1),
+    bud = calceolariaCorolla(0, 0.5, 0);
+  assert.ok(
+    bud[0] < full[0] * 0.4,
+    "bud must remain substantially more compact than full bloom",
+  );
+});
 
 test("calceolaria: four flowers and two young buds retain four sepals, two stamens and a complete pistil", () => {
   assert.equal(CALCEOLARIA_MODEL.clusters.length, 6);

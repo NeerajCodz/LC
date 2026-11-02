@@ -32,7 +32,7 @@ export const DATURA_MODEL: SpecimenModel = {
       periodic: true,
       sample: daturaCorolla,
       thickness: 0.011,
-      outerSide: -1,
+      outerSide: 1,
       flexible: true,
       cage: [20, 10],
       mobileCage: [10, 6],

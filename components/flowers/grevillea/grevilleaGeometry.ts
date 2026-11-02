@@ -13,12 +13,13 @@ export function grevilleaPerianth(
   v: number,
   open: number,
 ): Vec3 {
-  const a = (index * Math.PI) / 2 + (u - 0.5) * Math.PI * 0.51,
+  const split = open * Math.min(1, v / 0.6),
+    a = (index * Math.PI) / 2 + (u - 0.5) * Math.PI * 0.51 * (1 - 0.82 * split),
     width = 0.042 + 0.012 * Math.sin(Math.PI * v),
-    flare = 0.19 * Math.sin(v * Math.PI * 0.85) * open,
+    flare = 0.22 * Math.sin(v * Math.PI * 0.9) * open,
     r = width + flare,
     x = 0.095 * Math.sin(Math.PI * v) * (1 - open),
-    y = 0.64 * v - 0.49 * v * v * open,
+    y = 0.64 * v - 0.52 * v * v * open,
     z = 0.09 * v * v * (1 - open);
   return [x + Math.sin(a) * r, y, z + Math.cos(a) * r];
 }
@@ -61,20 +62,18 @@ export const GREVILLEA_STALKS: SpecimenOrgan[] = [
     endRadius: 0.015,
     color: "#796044",
   },
-  ...GREVILLEA_MODEL.clusters
-    .slice(1)
-    .map((c, i): SpecimenOrgan => ({
-      name: "paired flower pedicel",
-      cluster: 0,
-      points: [
-        [0, -0.15 + 0.06 * Math.floor(i / 2), 0],
-        [c.position[0] * 0.48, c.position[1] - 0.04, c.position[2] * 0.48],
-        c.position,
-      ],
-      radius: 0.009,
-      endRadius: 0.006,
-      color: "#9d624f",
-    })),
+  ...GREVILLEA_MODEL.clusters.slice(1).map((c, i): SpecimenOrgan => ({
+    name: "paired flower pedicel",
+    cluster: 0,
+    points: [
+      [0, -0.15 + 0.06 * Math.floor(i / 2), 0],
+      [c.position[0] * 0.48, c.position[1] - 0.04, c.position[2] * 0.48],
+      c.position,
+    ],
+    radius: 0.009,
+    endRadius: 0.006,
+    color: "#9d624f",
+  })),
 ];
 for (let c = 1; c < GREVILLEA_MODEL.clusters.length; c++) {
   const delay = 0.03 + (c % 6) * 0.015;
@@ -97,26 +96,7 @@ for (let c = 1; c < GREVILLEA_MODEL.clusters.length; c++) {
       sample: (u, v, o) => grevilleaPerianth(i, u, v, o),
     };
     GREVILLEA_MODEL.surfaces.push(perianth);
-    // A short cream inner limb is actual tissue over the distal perianth, not a free stamen.
-    GREVILLEA_MODEL.surfaces.push({
-      name: "cream distal perianth inner limb",
-      cluster: c,
-      role: "petal",
-      tissue: "inner",
-      thickness: 0.004,
-      cageAttachment: {
-        surface: perianth,
-        uv: (u, v) => [0.15 + 0.7 * u, 0.78 + v * 0.2],
-      },
-      overviewColumns: 2,
-      overviewRows: 2,
-      delay,
-      sample: (u, v, o) => {
-        const p = grevilleaPerianth(i, 0.15 + 0.7 * u, 0.78 + v * 0.2, o),
-          a = (i * Math.PI) / 2 + (u - 0.5) * Math.PI * 0.35;
-        return [p[0] - Math.sin(a) * 0.005, p[1], p[2] - Math.cos(a) * 0.005];
-      },
-    });
+    // Cream distal pigment belongs to this same two-sided perianth wall.
     const points = (open: number): Vec3[] =>
       [0.965, 0.986, 1.006].map((v) => grevilleaPerianth(i, 0.5, v, open));
     GREVILLEA_MODEL.organs.push({

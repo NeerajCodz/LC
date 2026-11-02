@@ -14,6 +14,7 @@ const dividedLimb: SpecimenSurface = {
   role: "petal",
   thickness: 0.004,
   overviewColumns: 20,
+  overviewRows: 6,
   sample: (u, v, open) => {
     const wave = Math.sin(u * Math.PI * 5);
     const lobe = Math.abs(wave) * (wave > 0 ? 0.06 : 0.02);

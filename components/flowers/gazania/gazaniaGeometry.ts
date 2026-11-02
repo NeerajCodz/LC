@@ -200,6 +200,8 @@ for (let i = 0; i < 20; i++) {
     cluster: 0,
     role: "petal",
     thickness: 0.011,
+    // Preserve the reviewed fluted ligule grid independently of distant defaults.
+    overviewRows: 6,
     flexible: true,
     cage: [3, 5],
     mobileCage: [2, 3],

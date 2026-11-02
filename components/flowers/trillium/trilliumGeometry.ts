@@ -14,7 +14,9 @@ export function trilliumPetal(
 ): Vec3 {
   const w = 2 * u - 1,
     a = (index * Math.PI * 2) / 3,
-    width = 0.022 * (1 - v) + 0.36 * Math.sin(Math.PI * v) ** 0.62 + 0.004,
+    // A blunt living apex keeps nonadjacent cage columns farther apart than
+    // the tissue thickness; an almost collapsed tip falsely contacts itself.
+    width = 0.022 * (1 - v) + 0.36 * Math.sin(Math.PI * v) ** 0.62 + 0.026,
     x = w * width * (0.16 + 0.84 * open),
     r = 0.065 + 0.11 * v * (1 - open) + 0.88 * v * open,
     // The bud carrier retains an outward slope so its two offset skins cannot exchange sides at the recurved rim.

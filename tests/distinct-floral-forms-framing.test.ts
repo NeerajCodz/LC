@@ -1,6 +1,15 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { Box3, Euler, Matrix4, Vector3 } from "three";
+import {
+  Box3,
+  DoubleSide,
+  Euler,
+  Matrix4,
+  Mesh,
+  MeshBasicMaterial,
+  Raycaster,
+  Vector3,
+} from "three";
 import type { FlowerType, FlowerStructure, Vec3 } from "../lib/flowers/types";
 import { FLOWER_STRUCTURES } from "../lib/flowers/structures";
 import {
@@ -12,6 +21,42 @@ import * as datura from "../components/flowers/datura/daturaLeaf";
 import * as allium from "../components/flowers/allium/alliumLeaf";
 import * as grevillea from "../components/flowers/grevillea/grevilleaLeaf";
 import * as calceolaria from "../components/flowers/calceolaria/calceolariaLeaf";
+import { DATURA_MODEL } from "../components/flowers/datura/daturaGeometry";
+import { flowerCameraPose } from "../lib/flowers/framing";
+
+test("Datura macro rays reach its included anthers and stigma through the actual trumpet mouth", () => {
+  const structure = FLOWER_STRUCTURES.datura,
+    camera = new Vector3(
+      ...flowerCameraPose(structure, structure.headCenter!, 3).position,
+    ),
+    ray = new Raycaster(),
+    target = new Vector3(),
+    direction = new Vector3();
+  for (const quality of ["overview", "low", "high"] as const) {
+    const geometry = specimenGeometry(DATURA_MODEL.surfaces[0], quality),
+      material = new MeshBasicMaterial({ side: DoubleSide }),
+      wall = new Mesh(geometry, material);
+    wall.updateMatrixWorld(true);
+    try {
+      for (const organ of DATURA_MODEL.organs.filter((o) =>
+        /anther|stigma/.test(o.name),
+      )) {
+        target.set(...organ.points[1]);
+        direction.subVectors(target, camera);
+        ray.set(camera, direction.normalize());
+        ray.far = camera.distanceTo(target) - 0.01;
+        assert.equal(
+          ray.intersectObject(wall, false).length,
+          0,
+          `${quality}/${organ.name}: near wall hides included organs`,
+        );
+      }
+    } finally {
+      geometry.dispose();
+      material.dispose();
+    }
+  }
+});
 const studies: {
   slug: FlowerType;
   leaf: SpecimenSurface;

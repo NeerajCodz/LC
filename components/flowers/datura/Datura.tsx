@@ -11,6 +11,7 @@ export const daturaStructure: FlowerStructure = {
   headRadius: 0.65,
   plantingRadius: 1,
   headTilt: 0,
+  cameraElevation: 0.9,
   stemLength: 1.65,
   stemRadius: 0.033,
   leafCount: 4,
@@ -18,7 +19,7 @@ export const daturaStructure: FlowerStructure = {
   calyx: false,
   airbornePollen: false,
   simulatedSurfaces: true,
-  portraitBounds: { min: [-1.6, -1.85, -1.6], max: [1.6, 1.72, 1.6] },
+  portraitBounds: { min: [-1.15, -1.85, -1.15], max: [1.15, 1.72, 1.15] },
   headCenter: DATURA_HEAD_CENTER,
 };
 

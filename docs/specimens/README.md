@@ -66,3 +66,8 @@ The implemented collection is defined by [the catalog](../../lib/flowers/catalog
 | [Tuberose — Agave amica / Polianthes tuberosa](tuberose.md)       | [Research](../research/tuberose.md)           |
 | [Chinese Wisteria — Wisteria sinensis](wisteria.md)               | [Research](../research/wisteria.md)           |
 | [Zinnia — Zinnia elegans](zinnia.md)                              | [Research](../research/zinnia.md)             |
+| [Great White Trillium - Trillium grandiflorum](trillium.md) | [Research](../research/trillium.md) |
+| [Devil's Trumpet - Datura stramonium](datura.md) | [Research](../research/datura.md) |
+| [Giant Allium - Allium giganteum](allium.md) | [Research](../research/allium.md) |
+| [Rosemary Grevillea - Grevillea rosmarinifolia](grevillea.md) | [Research](../research/grevillea.md) |
+| [Yellow Slipperwort - Calceolaria integrifolia](calceolaria.md) | [Research](../research/calceolaria.md) |

@@ -87,15 +87,18 @@ function rim(g: BufferGeometry, axis: number) {
   return values;
 }
 
-test("explicit dense shell grids free 576840 inputs while retaining every authored surface and instance pose", () => {
+test("explicit dense angular grids free 576840 inputs at the historical six-row reference without losing surfaces or poses", () => {
   let before = 0,
     after = 0;
   for (const model of models) {
     const poses = JSON.stringify(model.instances?.map((group) => group.poses));
     for (const surface of model.surfaces) {
-      const a = specimenGeometry(surface, "overview"),
+      // Hold axial sampling fixed to isolate the angular-grid savings. The
+      // separate complete garden census measures current production inputs.
+      const reference = { ...surface, overviewRows: surface.overviewRows ?? 6 },
+        a = specimenGeometry(reference, "overview"),
         b = specimenGeometry(
-          { ...surface, overviewColumns: undefined },
+          { ...reference, overviewColumns: undefined },
           "overview",
         );
       after += a.index!.count;

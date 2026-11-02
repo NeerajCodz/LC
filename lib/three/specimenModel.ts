@@ -39,6 +39,8 @@ export interface SpecimenSurface {
   compliance?: number;
   shapeCompliance?: number;
   pinMidrib?: boolean;
+  /** Authored support sleeve in normalized v, e.g. a rigid calyx around a tube base. */
+  pinnedBase?: number;
   /** Authored angular landmarks or a smooth circumference in the distant grid. */
   overviewColumns?: number;
   /** Axial landmarks that must survive the distant overview grid. */
@@ -163,7 +165,8 @@ function specimenGrid(surface: SpecimenSurface, quality: Quality) {
       : resolution[0];
   const rows =
     quality === "overview"
-      ? (surface.overviewRows ?? resolution[1])
+      ? (surface.overviewRows ??
+        (surface.tissue === "leaf" ? resolution[1] : 4))
       : resolution[1];
   return {
     columns: Math.max(columns, surface.minimumColumns ?? 0),
@@ -289,7 +292,9 @@ export function specimenCages(model: SpecimenModel, constrained: boolean) {
       ...s,
       columns,
       rows,
-      pinRows: s.flexible ? 1 : rows + 1,
+      pinRows: s.flexible
+        ? 1 + Math.floor(rows * Math.max(0, Math.min(1, s.pinnedBase ?? 0)))
+        : rows + 1,
       compliance: s.compliance ?? 0.00008,
     });
   });

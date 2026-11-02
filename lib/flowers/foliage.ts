@@ -21,6 +21,51 @@ export interface FoliageProfile {
 
 /** Cultivar-independent leaf traits; lotus has its own peltate blade generator. */
 export const FOLIAGE: Record<FlowerType, FoliageProfile> = {
+  trillium: {
+    length: 1,
+    width: 0.51,
+    color: "#53734b",
+    roughness: 0.8,
+    basal: true,
+    parallel: true,
+    opposite: false,
+  },
+  datura: {
+    length: 1,
+    width: 0.35,
+    color: "#637d48",
+    roughness: 0.8,
+    basal: false,
+    parallel: false,
+    opposite: false,
+  },
+  allium: {
+    length: 1,
+    width: 0.13,
+    color: "#898159",
+    roughness: 0.8,
+    basal: true,
+    parallel: true,
+    opposite: false,
+  },
+  grevillea: {
+    length: 1,
+    width: 0.046,
+    color: "#4e6c4c",
+    roughness: 0.8,
+    basal: false,
+    parallel: false,
+    opposite: false,
+  },
+  calceolaria: {
+    length: 1,
+    width: 0.18,
+    color: "#5a7545",
+    roughness: 0.8,
+    basal: false,
+    parallel: false,
+    opposite: true,
+  },
   gazania: {
     length: 1.02,
     width: 0.13,

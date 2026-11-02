@@ -1,0 +1,1623 @@
+{
+  "recordedAt": "2026-11-02T08:45:00.679Z",
+  "sourceCommit": "49da8396d9c39a2f120e3393f586c26295bdb83f",
+  "node": "v24.22.1",
+  "sourceFiles": [
+    {
+      "path": "app/dev/inspection/page.tsx",
+      "sha256": "406859782dea5504b800b190f2180f38311000f8e835f86fe57c73c2848d1b23"
+    },
+    {
+      "path": "app/error.tsx",
+      "sha256": "28b86b0720c4fccf4b527a47ea93b6fc17a53c3d85f5c1c4faa3a250426c3e27"
+    },
+    {
+      "path": "app/flower/[type]/page.tsx",
+      "sha256": "5e228a2a59baa7a46f45e2b34ea4e5679cc6ce3fc65fe6362bd36adf7e5ac9fd"
+    },
+    {
+      "path": "app/gallery/page.tsx",
+      "sha256": "dcf0c94e58ed566ffee22410aa4d1aeaf5dd7e9453a14a2a30c4008f219f42c5"
+    },
+    {
+      "path": "app/garden/page.tsx",
+      "sha256": "e50823032f64d41f60bda945e779b9e2b33cd2600803692b36422adc78fc050b"
+    },
+    {
+      "path": "app/globals.css",
+      "sha256": "687477f70e42980617a0217009e0778e66c4f73da1b4bd3385b39ec217e949ec"
+    },
+    {
+      "path": "app/icon.svg",
+      "sha256": "dd68f1e8584437fa52853a8152936abca842de757dc2bad6633d51643aa372b2"
+    },
+    {
+      "path": "app/layout.tsx",
+      "sha256": "dffea554167e13bb5804ec0715a6edf80c120085d9c8d4445148ad0018dd9640"
+    },
+    {
+      "path": "app/loading.tsx",
+      "sha256": "641778e463307273965608c6b139c74205d85e1cf4a445494b21ab8b0f042531"
+    },
+    {
+      "path": "app/not-found.tsx",
+      "sha256": "27bbcfa4def3a3631f964c7b578d9bc2f5791e3bbe88ac3c1586d1a92017d41b"
+    },
+    {
+      "path": "app/page.tsx",
+      "sha256": "961eca8bedcd79ec7bb1c69912825ea5c9d01371fb88cbc4848577f1ef36f4f1"
+    },
+    {
+      "path": "components/AngleGallery.tsx",
+      "sha256": "23f09ec32a439eb216bb05d022f9b4c387d6333927768c426f1ea64f92af0aca"
+    },
+    {
+      "path": "components/Experience.tsx",
+      "sha256": "a7da3fa628021e63289d3f607c72958ba06751acc0106f18a1ec5565e2d6ac37"
+    },
+    {
+      "path": "components/Gallery.tsx",
+      "sha256": "71eb3b1ce4971adaf6baef0d123a3d0a1d54428369dd9feb7598bb449ec717f7"
+    },
+    {
+      "path": "components/GalleryLoader.tsx",
+      "sha256": "429ffa5896cfda6547d3e378de3fb08c92457f4896d57ef60dc516cefa3c9e65"
+    },
+    {
+      "path": "components/Garden.tsx",
+      "sha256": "c06c2e46a93d1a2e062f71820375ac9dee663346af860a0dd2453ebc55414283"
+    },
+    {
+      "path": "components/Inspection.tsx",
+      "sha256": "c5e1a3233f769c89456c1a41be7859d6b610e0be16df0f9456453c78782314d4"
+    },
+    {
+      "path": "components/InspectionLoader.tsx",
+      "sha256": "da5754f01f1bd5117af68c9983bdf56e3f88166a609ed6d56d4e0a1993428a53"
+    },
+    {
+      "path": "components/flowers/BotanicalBlade.tsx",
+      "sha256": "653aacf937c4cd21f386b2320c8b73c8802d9a8c3b38d6e6ec5692e89fc8e827"
+    },
+    {
+      "path": "components/flowers/BotanicalStem.tsx",
+      "sha256": "a3bed9f0a5bf5e5f7cc1454e841bcfc534e10693ea3949f44a57a415c701ea89"
+    },
+    {
+      "path": "components/flowers/BotanicalView.tsx",
+      "sha256": "47fb3ab1facdc424cdaf310d5efb3f80b05aa6e85981a04a5affe31655f78c86"
+    },
+    {
+      "path": "components/flowers/Branch.tsx",
+      "sha256": "11b8366a27b2af68bedecb957d61758b40b8c25c25544b186be319038884337c"
+    },
+    {
+      "path": "components/flowers/Calyx.tsx",
+      "sha256": "5101b6be745e195a0392ee7b7a208508dacd136789de8f56332d1476802e8aaa"
+    },
+    {
+      "path": "components/flowers/FloralParts.tsx",
+      "sha256": "85923035d29492b0f0824228d2e9080a0e75e985d6e9dee7ed1f86c69897b46c"
+    },
+    {
+      "path": "components/flowers/FloretInstances.tsx",
+      "sha256": "e8e3177dcb2ab38d220e3c80714786b0d085a7d9d6a193bbe12d8ba4e95f5132"
+    },
+    {
+      "path": "components/flowers/Flower.tsx",
+      "sha256": "c49fe7867f3a769249d7eb60ddf37e69374681f52257a0e3bea40a16625c1e91"
+    },
+    {
+      "path": "components/flowers/FlowerCore.tsx",
+      "sha256": "d060eb42a97aec719366edaed7d30799fb1ef2f7181f981e5692b7c0ba062f50"
+    },
+    {
+      "path": "components/flowers/FlowerGarden.tsx",
+      "sha256": "ba2ec3f56cfa320e929a3f34d883e74be0de3467febdf8f8e93c4ec3cededebf"
+    },
+    {
+      "path": "components/flowers/FlowerInteraction.tsx",
+      "sha256": "ed07a94d5b5a4ca3d4f2279b29a62feef487d2925f35c5907d1bfd8a923203d8"
+    },
+    {
+      "path": "components/flowers/FlowerPlant.tsx",
+      "sha256": "85c4ba0691f7822bfbdaa5699fd74d9099aea43b9e0b2e8634659b0298cedd26"
+    },
+    {
+      "path": "components/flowers/FlowerPreview.tsx",
+      "sha256": "a979179b0ddb3d94e67a7c832b2938287fecba257d332caf955fa724c66ed1fc"
+    },
+    {
+      "path": "components/flowers/FlowerScene.tsx",
+      "sha256": "8b7e3622a8fea09265ccfdc5899562fb6a7de4bb4eb6a5d6931190c01151c316"
+    },
+    {
+      "path": "components/flowers/LeafSprig.tsx",
+      "sha256": "9c7b23213a6d261e774d29464111ca4e71fa96d47933967a14cecac2b9b22558"
+    },
+    {
+      "path": "components/flowers/OverviewOrgans.tsx",
+      "sha256": "b00a0830ca4ac2f83e86ef288913212f74aa459a6bb78d94c2d41793fd58032e"
+    },
+    {
+      "path": "components/flowers/OverviewSurfaces.tsx",
+      "sha256": "cd29cd7efb3218303dd02cbde613d8c655613a5e4866dd375daf8fa3d4e2fad3"
+    },
+    {
+      "path": "components/flowers/PetalWhorl.tsx",
+      "sha256": "70b2290b3501fdb6effca371e14ad024a9e149259a399790c384841918cad0c4"
+    },
+    {
+      "path": "components/flowers/SpecimenAssembly.tsx",
+      "sha256": "6e6ff5acc218224178a924e6c16eadae8262d9073f4c128385db8cc762087096"
+    },
+    {
+      "path": "components/flowers/StamenHeart.tsx",
+      "sha256": "0c7b2a2bc5c9ccb3b2855cca84749c936c06acb40db5b22b111c57d6b73136cb"
+    },
+    {
+      "path": "components/flowers/Stem.tsx",
+      "sha256": "cb080825e249de7f4b366d5a1424134a074c3621b5e61f096c83d866df10353f"
+    },
+    {
+      "path": "components/flowers/african-violet/AfricanViolet.tsx",
+      "sha256": "6a188e6b35c782c261eb0f2b6a884a22e67a8df7ee1aa4d47412668756c55d8e"
+    },
+    {
+      "path": "components/flowers/african-violet/AfricanVioletFoliage.tsx",
+      "sha256": "7839c9140e9b8be7effa911c68fb5b953dbd1a2933647b3a6475be7bf6f07e90"
+    },
+    {
+      "path": "components/flowers/african-violet/africanVioletGeometry.ts",
+      "sha256": "b278d43bf703ea8e39b0e979a18e9266992a67a99b776f364b87dd0ad25e921d"
+    },
+    {
+      "path": "components/flowers/african-violet/africanVioletLeaf.ts",
+      "sha256": "341850a4cf10c2857c658120efa8f8bf492d6081b174f799fcc1af7871b9f322"
+    },
+    {
+      "path": "components/flowers/agapanthus/Agapanthus.tsx",
+      "sha256": "d992aab4699c18d8c60d2f1c96352ea0748160f05665a5aa19045652413c1148"
+    },
+    {
+      "path": "components/flowers/agapanthus/AgapanthusFoliage.tsx",
+      "sha256": "7999f2249cc883b677ab10c16170c59c050e02a27b47f276e4effe343d68b37e"
+    },
+    {
+      "path": "components/flowers/agapanthus/agapanthusGeometry.ts",
+      "sha256": "bb575a850eefbd9377ab6c1eb2dee5823cfa488ddb1ca3ab164a326fa3ba3ebe"
+    },
+    {
+      "path": "components/flowers/agapanthus/agapanthusLeaf.ts",
+      "sha256": "f53a6541687aed1d8e5ea154c9a0f3c79bb28aa0323a97d1d3d7d5d205fd7acf"
+    },
+    {
+      "path": "components/flowers/allium/Allium.tsx",
+      "sha256": "1eb3e40034d625ffe35c164ad376d1a763f520783bac9a646958f21ca1bc058d"
+    },
+    {
+      "path": "components/flowers/allium/AlliumFoliage.tsx",
+      "sha256": "411adca066e3489644d6e469fafbc8dbe66282a8e7db341c89e3ee2484b86df8"
+    },
+    {
+      "path": "components/flowers/allium/alliumGeometry.ts",
+      "sha256": "57db69351293789cbd6f95a06bdd6aea15af39befc7b4ecd005884e42f255a5a"
+    },
+    {
+      "path": "components/flowers/allium/alliumLeaf.ts",
+      "sha256": "2ce5535e3206a907d84a937713714e4300a24cbe23f267fcac80349f88fc67fe"
+    },
+    {
+      "path": "components/flowers/alstroemeria/Alstroemeria.tsx",
+      "sha256": "b4e638a76c5e9ea6503d91156a07d3f4d22571e46ff1e407eda4df1d0eb1209d"
+    },
+    {
+      "path": "components/flowers/alstroemeria/AlstroemeriaFoliage.tsx",
+      "sha256": "83f155fff54acf0a20348913dd3f8ec4ebbd9ba5fc7fcaccb199a8e62c1aceb2"
+    },
+    {
+      "path": "components/flowers/alstroemeria/alstroemeriaGeometry.ts",
+      "sha256": "cabdd2325e9c3a7e3084080ad0d1d8f8b638f7bb3d262b1e89ef40bd3a11e2fc"
+    },
+    {
+      "path": "components/flowers/alstroemeria/alstroemeriaLeaf.ts",
+      "sha256": "18226157bd91adc681091cf01f0d83c37336825dfe1766583fc32a405a602577"
+    },
+    {
+      "path": "components/flowers/amaryllis/Amaryllis.tsx",
+      "sha256": "7ff5cf4de91d91b71a606422ce55168474e2682f8fa3ec1a9a10255ee24297ce"
+    },
+    {
+      "path": "components/flowers/amaryllis/AmaryllisFoliage.tsx",
+      "sha256": "c43c81dd7a723e5680a55f579bf624a76ec964ea917c73c38a5e6e09bc39f733"
+    },
+    {
+      "path": "components/flowers/amaryllis/amaryllisGeometry.ts",
+      "sha256": "a7835c7bb6cca5aa225ae25496bd5b814b87bbc2fae2754901190bd8c47fcc9e"
+    },
+    {
+      "path": "components/flowers/amaryllis/amaryllisLeaf.ts",
+      "sha256": "394660b632d5b42bf2adbbdc7a41370deeef0ec9e758f0e2bd4427a299dca238"
+    },
+    {
+      "path": "components/flowers/anemone/Anemone.tsx",
+      "sha256": "d2f5abd6116ac1610e9aedd32ad0ed808aa3912d7d885e719430bf638be1ce68"
+    },
+    {
+      "path": "components/flowers/anemone/AnemoneFoliage.tsx",
+      "sha256": "1e7e870c06d8dadb42909cb1f90eaf3e5df603f2044025c85e0b833a135a6127"
+    },
+    {
+      "path": "components/flowers/anemone/anemoneGeometry.ts",
+      "sha256": "b76a698735f9663241afb00b66e2770aa3e17366c2e9de902cda02e4e851e459"
+    },
+    {
+      "path": "components/flowers/anemone/anemoneLeaf.ts",
+      "sha256": "23b32ffcd934c869033255ce09962951d8a6527f579913ddfc3dd614230e1d38"
+    },
+    {
+      "path": "components/flowers/anthurium/Anthurium.tsx",
+      "sha256": "7b726fb4d5e9beb06a470b38cefeedc7e20e44349f679bca0253d86ecbecb887"
+    },
+    {
+      "path": "components/flowers/bird-of-paradise/BirdOfParadise.tsx",
+      "sha256": "a67d06a8ccaa154c5b3d219690f1aec3383fd9d3959b2d396a155c54999769c7"
+    },
+    {
+      "path": "components/flowers/bleeding-heart/BleedingHeart.tsx",
+      "sha256": "360a7273ecfa1d3a42b06e14fce516ceee65178e3a691d4693ee9d862866b252"
+    },
+    {
+      "path": "components/flowers/bluebell/Bluebell.tsx",
+      "sha256": "a0322554a7f81c0c50852c95ff2c5598bf44d0d1ad713dad57d4b2089d33c8f3"
+    },
+    {
+      "path": "components/flowers/bluebell/BluebellFoliage.tsx",
+      "sha256": "a5ff1df9537cabf909c5515eb56e489fb67eed3e4abe25482270856d2f02eb61"
+    },
+    {
+      "path": "components/flowers/bluebell/bluebellGeometry.ts",
+      "sha256": "0456ef527130564541370e3cdd6d6855ef8a09d504ddb8a5c67fa692dd7a538a"
+    },
+    {
+      "path": "components/flowers/bluebell/bluebellLeaf.ts",
+      "sha256": "bfc1e97aeac0ffb6fd835df01dcc52e362e166de4d81992b057cfd936385711a"
+    },
+    {
+      "path": "components/flowers/bottlebrush/Bottlebrush.tsx",
+      "sha256": "48846475cf3763183ef1bc5f94dc3f9a64cf96419335da5b888a055e955e3189"
+    },
+    {
+      "path": "components/flowers/bottlebrush/BottlebrushFoliage.tsx",
+      "sha256": "f33294b1741d44f324f6b7a8a77b73ddc3df0d0c5dbb8d558fd6b8bbeb7cf01a"
+    },
+    {
+      "path": "components/flowers/bottlebrush/bottlebrushGeometry.ts",
+      "sha256": "6a6cdbf01885a39da298601a2f74e45396ee020c4c50769f218d64cd4fd30279"
+    },
+    {
+      "path": "components/flowers/bottlebrush/bottlebrushLeaf.ts",
+      "sha256": "aa97540dfa8a29b1e2cd156f2527d8d4b60548121b13514ff21e46a541cfe469"
+    },
+    {
+      "path": "components/flowers/bougainvillea/Bougainvillea.tsx",
+      "sha256": "7dc1613834b41e28fc0b0506e099de0a0fac5dc5e01e2eb8b5abf306bc808bae"
+    },
+    {
+      "path": "components/flowers/bougainvillea/bougainvilleaGeometry.ts",
+      "sha256": "b2759d1b139559de03e35033e9321322d44742b2a76ac756fb773dde5e811038"
+    },
+    {
+      "path": "components/flowers/calceolaria/Calceolaria.tsx",
+      "sha256": "24240c3617207bb455d46db1443e62b5df6128c5e2cf497b2b21f0e7992fe7a2"
+    },
+    {
+      "path": "components/flowers/calceolaria/CalceolariaFoliage.tsx",
+      "sha256": "c2d9feb2891f426d35c270b04c5490864aafb31e4d391cbdccf5303c22f8982f"
+    },
+    {
+      "path": "components/flowers/calceolaria/calceolariaGeometry.ts",
+      "sha256": "fca176db1b54aec05f44084a0760d22e02643e3e315aa07f924a30dd9e8e32b6"
+    },
+    {
+      "path": "components/flowers/calceolaria/calceolariaLeaf.ts",
+      "sha256": "51da031da6d1ee5a9eaf1956bf991f1739586b724dcc4f2fba52a30c2d2455fc"
+    },
+    {
+      "path": "components/flowers/calla-lily/CallaLily.tsx",
+      "sha256": "bc791a73a9d01d99ef8207209f8555b1aa463bd58cfc65999c355cc7a406e61a"
+    },
+    {
+      "path": "components/flowers/camellia/Camellia.tsx",
+      "sha256": "4e30a32dbf060a0484a2802f15fe9b1da531dd4a4e1377628cc4f259582c8a6c"
+    },
+    {
+      "path": "components/flowers/camellia/CamelliaFoliage.tsx",
+      "sha256": "52d7ad24e70f86c397d48348a903d5b41f0c5c2833b61bc6595385b9b21a3236"
+    },
+    {
+      "path": "components/flowers/camellia/camelliaGeometry.ts",
+      "sha256": "766fd25211b44c34e257239862af877c4addca51918ca2c764000bb58e8d0861"
+    },
+    {
+      "path": "components/flowers/camellia/camelliaLeaf.ts",
+      "sha256": "50688b6ab01285d29288e40ad60f803256ee4a1c481321bd958e555b219cfd95"
+    },
+    {
+      "path": "components/flowers/canna/Canna.tsx",
+      "sha256": "aaf2de113019cd74f0b94d719bf1438a0d57923a83dd146559dedec28e2c6f9a"
+    },
+    {
+      "path": "components/flowers/canna/CannaFoliage.tsx",
+      "sha256": "b4643bced47037141061f48b7ceee4c9ccbbee638ed836b6e6e2043ffc53f398"
+    },
+    {
+      "path": "components/flowers/canna/cannaGeometry.ts",
+      "sha256": "e389c99e1613113d24b94cb0d1306d3b6eefe5ae89697465147b6d6c3fe86bc3"
+    },
+    {
+      "path": "components/flowers/canna/cannaLeaf.ts",
+      "sha256": "d31e01b9264e05bbb99651c0ca41477cf4c587576db60711a36a6fd737fb10f1"
+    },
+    {
+      "path": "components/flowers/carnation/Carnation.tsx",
+      "sha256": "dbd1a132c40bc2f5b0d93e8cfb98d01a4e43afe178187fa4a7a2a8bb6f8efd69"
+    },
+    {
+      "path": "components/flowers/carnation/carnationGeometry.ts",
+      "sha256": "0765c28caeac25e0d4a2ada7ebf2117f2b3031f782a5e3ab8e5ca295da994e91"
+    },
+    {
+      "path": "components/flowers/cherry-blossom/CherryBlossom.tsx",
+      "sha256": "587095b6edcb72cb277a05a528ddb27778d6bb8e51449a3dfca52ccd6b6f1044"
+    },
+    {
+      "path": "components/flowers/chrysanthemum/Chrysanthemum.tsx",
+      "sha256": "fb1c774b325e19bda6693f507286bf12b1ac661bbbc5204b11dcfd422ea0af89"
+    },
+    {
+      "path": "components/flowers/columbine/Columbine.tsx",
+      "sha256": "7258a8619ed619b5812a64993ef76700b230eda371c65b6c27f371ce757d9bfb"
+    },
+    {
+      "path": "components/flowers/cosmos/Cosmos.tsx",
+      "sha256": "ce2ec1bc3d1268421f9a1a141fcfe68b67efd7736f3469f76091cd8dc5e958a9"
+    },
+    {
+      "path": "components/flowers/cosmos/CosmosFoliage.tsx",
+      "sha256": "01084be5f7f6ce197dc4d4914bdf036f8929b889a77dd1bd11a53fc21b91c799"
+    },
+    {
+      "path": "components/flowers/cosmos/cosmosGeometry.ts",
+      "sha256": "ceb8c981b2922a8b7bd7ab9384762ea6b5a7492eeef55b534b1a1ed2c0c4c19a"
+    },
+    {
+      "path": "components/flowers/cosmos/cosmosLeaf.ts",
+      "sha256": "70846fc40739551792673a5a6bfa4a86bfb4600897d6dbaeffe3c0205b8e4f63"
+    },
+    {
+      "path": "components/flowers/crocus/Crocus.tsx",
+      "sha256": "ade787db5f083e820968e2cb520b994ba2298f4926cda9a539ab2e148ff7dfcb"
+    },
+    {
+      "path": "components/flowers/crocus/CrocusFoliage.tsx",
+      "sha256": "9bbf3841de9e568ec02dca6771faf5cac499c4f85eb643ad13fbc7bff0c1fd69"
+    },
+    {
+      "path": "components/flowers/crocus/crocusGeometry.ts",
+      "sha256": "788cbb9e7692fb6e6ce8cc422480b6ce08f498b10e4de75ec1b423d091950787"
+    },
+    {
+      "path": "components/flowers/crocus/crocusLeaf.ts",
+      "sha256": "a437ddc104ed4f8430bf215f15fe39b5c3b4d35a6ba982fff17c6a7a46192951"
+    },
+    {
+      "path": "components/flowers/cyclamen/Cyclamen.tsx",
+      "sha256": "8becf3f36d4b1794c8ec57427059aa615f91a4ffbb67cdbfa28074fb00728f0b"
+    },
+    {
+      "path": "components/flowers/cyclamen/CyclamenFoliage.tsx",
+      "sha256": "87fefb9dafa66fea73c06314e820526ffcecf461db3d583cc9cc182921959fc2"
+    },
+    {
+      "path": "components/flowers/cyclamen/cyclamenGeometry.ts",
+      "sha256": "899108358554f781eb2a8e3a445cad3a8d0565f85dd18cbcf8d5cde1ffcff73f"
+    },
+    {
+      "path": "components/flowers/cyclamen/cyclamenLeaf.ts",
+      "sha256": "b7a0f1515d7025c441c8c54cc12bd6a8dce77f424aa71f9272205f0c9de87035"
+    },
+    {
+      "path": "components/flowers/daffodil/Daffodil.tsx",
+      "sha256": "acb34298edf0c3aff6aac19ac80266e9c3af15f6c111f748a39c1d3c206e9f66"
+    },
+    {
+      "path": "components/flowers/dahlia/Dahlia.tsx",
+      "sha256": "980ac297b037843d470eb5e22baebf98c860365314e841c5e44a960fcd69016c"
+    },
+    {
+      "path": "components/flowers/daisy/Daisy.tsx",
+      "sha256": "0c476ad26cd3530103c19943151e8a76b82475b4062ca01646c2113188cf465e"
+    },
+    {
+      "path": "components/flowers/datura/Datura.tsx",
+      "sha256": "348d46d0c37b6c23571059e2eb785d0572eba1ef699139fb3ccd5eae0a69f24d"
+    },
+    {
+      "path": "components/flowers/datura/DaturaFoliage.tsx",
+      "sha256": "de911e08c3462b02612fe2a0d2046d3e30ac47fbcc9d5d3a7db3b699830bbe1b"
+    },
+    {
+      "path": "components/flowers/datura/DaturaStem.tsx",
+      "sha256": "58cbaa4c8dfef42816fde05c1f414fd292bfd7c9af9f85fd21101b5b01f4d672"
+    },
+    {
+      "path": "components/flowers/datura/daturaAttachments.ts",
+      "sha256": "d7e73d375337ccfee938e52400f98fead828c95d2e57351fab49904ee3ac2d22"
+    },
+    {
+      "path": "components/flowers/datura/daturaGeometry.ts",
+      "sha256": "c5a54411c1b5fcafbbfdfc8e6e488292c484e795613ed329c6cae45fadb725b8"
+    },
+    {
+      "path": "components/flowers/datura/daturaLeaf.ts",
+      "sha256": "18a53361c882e1f394cfa95f7e6b25ca953194217cf8f7535aa9b534ec93f2cb"
+    },
+    {
+      "path": "components/flowers/delphinium/Delphinium.tsx",
+      "sha256": "ba1a19ae98c4b5b6147a38bb16aafe81a75f46499771ba216d9a2d45ba875dca"
+    },
+    {
+      "path": "components/flowers/delphinium/DelphiniumFoliage.tsx",
+      "sha256": "b33b84104217b2d6f1d72753607a26b7f980a0f28c5fabc7909ec413910f8548"
+    },
+    {
+      "path": "components/flowers/delphinium/delphiniumGeometry.ts",
+      "sha256": "a189cd7fba21479769886e2b4ece1e57a9d2be721fe5672d25b17a50d205f0ff"
+    },
+    {
+      "path": "components/flowers/delphinium/delphiniumLeaf.ts",
+      "sha256": "b20fa16720913a5c7fdcd1ad0a89a3ba19162023ed6ffe038b31f40e8c642817"
+    },
+    {
+      "path": "components/flowers/echinacea/Echinacea.tsx",
+      "sha256": "31b4ce7a8dcc3bd7b62768493dd1e4b5bd7bccc4a27e8398d1f3d5b0c9dd4c3e"
+    },
+    {
+      "path": "components/flowers/echinacea/EchinaceaFoliage.tsx",
+      "sha256": "8c8424cf52eeb59c83cec853a34f31e571eb537dafa5a6a9da1c1af9bea64ff3"
+    },
+    {
+      "path": "components/flowers/echinacea/echinaceaGeometry.ts",
+      "sha256": "5b4122e9150de5a0db5ec1d78a93e74f1d89ed9bd16471ad5290d74f5b998d54"
+    },
+    {
+      "path": "components/flowers/echinacea/echinaceaLeaf.ts",
+      "sha256": "d9538506efe7ec7e46a07f13c4b8fa3e7fd365d31bd82ffa77f1d378805ea203"
+    },
+    {
+      "path": "components/flowers/foxglove/Foxglove.tsx",
+      "sha256": "642e6cc1bb0e17b69ee3d75d886f306b86510a310a35702da0c689a7bd4a871e"
+    },
+    {
+      "path": "components/flowers/foxglove/foxgloveGeometry.ts",
+      "sha256": "b3bf5eec6781308c7f759863e8b7202ff39e6a82e90d607d75f3cdd25e59c898"
+    },
+    {
+      "path": "components/flowers/freesia/Freesia.tsx",
+      "sha256": "e0fca51104ccb8a9998a818a6b845af6f28c43c087d6ba5ca0f8ff1f35d20e00"
+    },
+    {
+      "path": "components/flowers/freesia/FreesiaFoliage.tsx",
+      "sha256": "40eab25cbc7ac1c21713960c0542eaf9e16908f11222e2d1f8d26e165f171d5f"
+    },
+    {
+      "path": "components/flowers/freesia/freesiaGeometry.ts",
+      "sha256": "fcad65a43899d07f5a6e04dd083e162beeaf3e5d707696c987383afdf5d5d4b5"
+    },
+    {
+      "path": "components/flowers/freesia/freesiaLeaf.ts",
+      "sha256": "88a599fb35a13b98291d94005d2028294a2a6140e60a8b192f381d1feabb0d3f"
+    },
+    {
+      "path": "components/flowers/fritillaria/Fritillaria.tsx",
+      "sha256": "5911167d975d622d93d2b0f797efcab3b985e4730eb11fbf5edfac96b46d812b"
+    },
+    {
+      "path": "components/flowers/fritillaria/FritillariaFoliage.tsx",
+      "sha256": "97b739278b1bfacbc2ed12c9e74f960ea180f0b097e0ea45bd5774393a5b6b5d"
+    },
+    {
+      "path": "components/flowers/fritillaria/fritillariaGeometry.ts",
+      "sha256": "492ddc32a86f685aa291d84cb2f807f7a2538293a7f704e08a89825fc31156d2"
+    },
+    {
+      "path": "components/flowers/fritillaria/fritillariaLeaf.ts",
+      "sha256": "fa8de66e35eb6dd63989bab5f13f00cb9cb97d71a86e3895e1dbf9f63017c854"
+    },
+    {
+      "path": "components/flowers/fuchsia/Fuchsia.tsx",
+      "sha256": "8fa1ca376883243971bbe16e71b885488fa4af47c204edf42a335361d633a52d"
+    },
+    {
+      "path": "components/flowers/fuchsia/FuchsiaOrgans.tsx",
+      "sha256": "cd2640e7c228bc814d3fa6323a6f0526ac6483521e41026e1aab2199dd3bcb1b"
+    },
+    {
+      "path": "components/flowers/fuchsia/FuchsiaStem.tsx",
+      "sha256": "9c974c4cddf467a32857840a26a0fe6a3a34fe450716a6459f798b9fc52087ac"
+    },
+    {
+      "path": "components/flowers/fuchsia/fuchsiaGeometry.ts",
+      "sha256": "804d996b2d6596f08b8fd58c20f37ffd63df4abc0b2925bc7e9927e4e81cae53"
+    },
+    {
+      "path": "components/flowers/fuchsia/fuchsiaMotion.ts",
+      "sha256": "a5b69ac8aa13b4c56471bfeb835d91af3d44454336747b5d0fa811c5c2be0ab2"
+    },
+    {
+      "path": "components/flowers/gardenia/Gardenia.tsx",
+      "sha256": "da29dd26c462a4b4045e3904ddcfa6b833fa66a07fd279ab476b2010d4edd2ff"
+    },
+    {
+      "path": "components/flowers/gardenia/GardeniaFoliage.tsx",
+      "sha256": "8720ea7c8205424e69ea0df4b4f8e0557c3ef7fa0825ecc3540f642657db2700"
+    },
+    {
+      "path": "components/flowers/gardenia/gardeniaGeometry.ts",
+      "sha256": "f0681e3d310952c0144cadeb003bb6a35f32f6521257e7797ffb1b5bdc0680b8"
+    },
+    {
+      "path": "components/flowers/gardenia/gardeniaLeaf.ts",
+      "sha256": "b0c634d1914d145d4629569305d7e97029edd2ab9473b4bc46886959e9018615"
+    },
+    {
+      "path": "components/flowers/gazania/Gazania.tsx",
+      "sha256": "46791d8ee5b84e8c1d2ec28b11429f1b73ec5f57f263f5c2aad1903c8e2c2734"
+    },
+    {
+      "path": "components/flowers/gazania/GazaniaFoliage.tsx",
+      "sha256": "1945f3196cfef86a4c786efe18917f9bfeb4153e46f25bc922acfec6e6c86787"
+    },
+    {
+      "path": "components/flowers/gazania/gazaniaGeometry.ts",
+      "sha256": "a479ffe2190d83bc41e185fec86e98101d96c7f5d3e92ae36650d041d3318842"
+    },
+    {
+      "path": "components/flowers/gazania/gazaniaLeaf.ts",
+      "sha256": "7651c08201133d76a4c46c4f5344bd685b6687167009d7d0607f69f92e484be7"
+    },
+    {
+      "path": "components/flowers/gerbera/Gerbera.tsx",
+      "sha256": "aaea7ea8449acd58be5c7d5af76f651cd40bc46d1fdacd05c70a4e798e1c9317"
+    },
+    {
+      "path": "components/flowers/gerbera/GerberaFoliage.tsx",
+      "sha256": "674432669e4891fb006569b1d77736b7e4d6945e8f432ea6a2afe0f0ff03d7e0"
+    },
+    {
+      "path": "components/flowers/gerbera/gerberaGeometry.ts",
+      "sha256": "4f89ed8441e6cc6e22bc2015604fa3274765abea0bbb681d563de114a9ccbeb9"
+    },
+    {
+      "path": "components/flowers/gerbera/gerberaLeaf.ts",
+      "sha256": "f92758ecb4d98b782367541506f6564dc3627847ceb059cacc11e4c07b49332f"
+    },
+    {
+      "path": "components/flowers/gladiolus/Gladiolus.tsx",
+      "sha256": "ec89c1d8f8989a51ae0bd3535fac929173a464f193f91d30510e19d9528f8945"
+    },
+    {
+      "path": "components/flowers/gladiolus/GladiolusFoliage.tsx",
+      "sha256": "b698f98063497966caeefdcc375884a6484d4ae680098769b92b323df431c3e7"
+    },
+    {
+      "path": "components/flowers/gladiolus/gladiolusGeometry.ts",
+      "sha256": "fd31cadd452746e314d234e5baa25700619d68d1c144c95744c78ffab8d2dc99"
+    },
+    {
+      "path": "components/flowers/gladiolus/gladiolusLeaf.ts",
+      "sha256": "3d004a83bf45b268f104d09b1ad26cfe2c9a524a9512d716a61d1067088d1094"
+    },
+    {
+      "path": "components/flowers/grevillea/Grevillea.tsx",
+      "sha256": "7f8a634b7dfd49aa3d916c57b6860da416f1f8694160bb4413bd672fbab08813"
+    },
+    {
+      "path": "components/flowers/grevillea/GrevilleaFoliage.tsx",
+      "sha256": "46173ed4ae0824136bdecac9ff41cd2999d2dae1b83755dd708e2fa2699bc776"
+    },
+    {
+      "path": "components/flowers/grevillea/grevilleaGeometry.ts",
+      "sha256": "f03d09b67f56a988bee02d7fcd6aa08d75ee23ed8fb51b65caac7de09304d7cc"
+    },
+    {
+      "path": "components/flowers/grevillea/grevilleaLeaf.ts",
+      "sha256": "285a0d4fdeeb54fc055c4e3274e06df83c614795adcba1ad16bf4fb129094e47"
+    },
+    {
+      "path": "components/flowers/hardy-begonia/BegoniaFoliage.tsx",
+      "sha256": "733ffb59d32184cda4c5c24302b8a9c106d8d01c81eb9217f229e110f92e22ab"
+    },
+    {
+      "path": "components/flowers/hardy-begonia/HardyBegonia.tsx",
+      "sha256": "7d4d064380914b5adf7a90920eb0cb616650344a53d61b87ac8d104a29d628ee"
+    },
+    {
+      "path": "components/flowers/hardy-begonia/begoniaGeometry.ts",
+      "sha256": "826a3d2ce1ec5c86268bb45f46076a481c75d703f9be3e0a1c4113c34bed1192"
+    },
+    {
+      "path": "components/flowers/hardy-begonia/begoniaLeaf.ts",
+      "sha256": "d01d8d1185a0342ede529e4752d91b7b2c7edafc9a0a7d40798b00bd13ef9577"
+    },
+    {
+      "path": "components/flowers/hellebore/Hellebore.tsx",
+      "sha256": "b63881c6d4bcd7e6da52471a2d0c21b69186df05086e27ad9d8b8d8ad3574487"
+    },
+    {
+      "path": "components/flowers/hellebore/HelleboreFoliage.tsx",
+      "sha256": "ad287b7bdfe2d8090ee787d1845d3b288615b1a40157b4c3c52b499eb05af2d2"
+    },
+    {
+      "path": "components/flowers/hellebore/helleboreGeometry.ts",
+      "sha256": "592c23ba00be3a23abb3086da7a75a2132513e595c72bc04336c1a0aadd63fb9"
+    },
+    {
+      "path": "components/flowers/hellebore/helleboreLeaf.ts",
+      "sha256": "ee45d77eea926c6841d9141002f657b88ec2a1d5816c29f9f4e8d803af1b949a"
+    },
+    {
+      "path": "components/flowers/hibiscus/Hibiscus.tsx",
+      "sha256": "8f96ef7ee25a7fba4ab482e95fa990f065c0efc7bb611267dad2f8f105ed5940"
+    },
+    {
+      "path": "components/flowers/hollyhock/Hollyhock.tsx",
+      "sha256": "819ae47226e724fe42a0bb83ffa19af45e7d326d389dd2be9cea66ff7df63f58"
+    },
+    {
+      "path": "components/flowers/hollyhock/HollyhockFoliage.tsx",
+      "sha256": "f49a13dcab246724bbce12c813f273abe26303826acaf7bf7bcca36d3229fb71"
+    },
+    {
+      "path": "components/flowers/hollyhock/hollyhockGeometry.ts",
+      "sha256": "09668a805fdf254373a3bb4b9c57e3709a999c6341e3e075b2f562ad55e518e2"
+    },
+    {
+      "path": "components/flowers/hollyhock/hollyhockLeaf.ts",
+      "sha256": "6e6595823d4cfa479803d1bb5409344b269b6dec3f28c47850fea174ca74d5b8"
+    },
+    {
+      "path": "components/flowers/hollyhock/hollyhockPubescence.ts",
+      "sha256": "cc10092b32470260de051cc41b84f1cd1bbc81a0b48fa63f5459811594cc6a42"
+    },
+    {
+      "path": "components/flowers/hoya/Hoya.tsx",
+      "sha256": "12610174dd34d5f47e533c2bf6829b5a9d8ad2a286cb6d819c6802b8916a39a5"
+    },
+    {
+      "path": "components/flowers/hoya/HoyaFoliage.tsx",
+      "sha256": "677f33998f105081abd4f099ac89b4ca2bbe51a2cc32d06d27cf8e05d7acb99c"
+    },
+    {
+      "path": "components/flowers/hoya/hoyaGeometry.ts",
+      "sha256": "fef95ab61d5d9b884c793cf155a4f1088c6b26735a0bea9e12e3672dbef1f912"
+    },
+    {
+      "path": "components/flowers/hoya/hoyaLeaf.ts",
+      "sha256": "90bbdb20173fe5c369424e2101767bc05fa06177bd01504fa3298f34e1990625"
+    },
+    {
+      "path": "components/flowers/hyacinth/Hyacinth.tsx",
+      "sha256": "77e6819fd7d078d8ff7b7bfb2aa0c88662d6cc64f0e746a86762549ef6225777"
+    },
+    {
+      "path": "components/flowers/hyacinth/HyacinthFoliage.tsx",
+      "sha256": "54dc4855ec0c2a1160f97b147a793009acaa9907fae49e919f4327ef58e549ad"
+    },
+    {
+      "path": "components/flowers/hyacinth/hyacinthGeometry.ts",
+      "sha256": "3e5decf6e18ea739c1530293f8d9bfb222d4754a47e06c3dd1a9ac279b420b07"
+    },
+    {
+      "path": "components/flowers/hyacinth/hyacinthLeaf.ts",
+      "sha256": "2cd32b9618c7743ddadb4a26091c8c8a032e7d864bee9dc0265e76357636abf3"
+    },
+    {
+      "path": "components/flowers/hydrangea/Hydrangea.tsx",
+      "sha256": "1c448f29bb5fe2b99993c887bc0fb68d865ddf15e89f25f2a727457f47618de7"
+    },
+    {
+      "path": "components/flowers/hydrangea/hydrangeaGeometry.ts",
+      "sha256": "bc7cdc13e924e89382850a55759ec45c63f4dcc7d37ff110a6d373dfb568df4d"
+    },
+    {
+      "path": "components/flowers/impatiens/Impatiens.tsx",
+      "sha256": "aeaeb1c27de206123cff2163909d1fbdbca504297163b2e206ef7a36d5b3d86a"
+    },
+    {
+      "path": "components/flowers/impatiens/ImpatiensFoliage.tsx",
+      "sha256": "dfe1efacc8cc5fdff7bb15a01923b25420885acd061837c6e9dd4a897ac1b582"
+    },
+    {
+      "path": "components/flowers/impatiens/impatiensGeometry.ts",
+      "sha256": "ee307af3ac50485c5d717406436df60f389fda9675a2b246123739cd70f7ecb9"
+    },
+    {
+      "path": "components/flowers/impatiens/impatiensLeaf.ts",
+      "sha256": "d56d9d5a32fe20b486c7f6c3401387d2358d908783cc954e072e6225f46ff350"
+    },
+    {
+      "path": "components/flowers/iris/Iris.tsx",
+      "sha256": "e0dd963ab4d8f9c9d3020fc7689d579d5987e51a0ac31fca0ff9f4c73ee88496"
+    },
+    {
+      "path": "components/flowers/ixora/Ixora.tsx",
+      "sha256": "4f2a83a36210c400ba9757f32af44b9d732da2817bb9fa01baeb35beb83681d6"
+    },
+    {
+      "path": "components/flowers/ixora/IxoraFoliage.tsx",
+      "sha256": "987c72facad8f1f49e1e19e23d688eff5ba1998f27016f726f3bab478ff44bf9"
+    },
+    {
+      "path": "components/flowers/ixora/ixoraGeometry.ts",
+      "sha256": "feb9efdf09e1ad4498045c23763b9c3a1eb02a5bcb07393972d224eba3c81f7f"
+    },
+    {
+      "path": "components/flowers/ixora/ixoraLeaf.ts",
+      "sha256": "9744010bc87d22b097505965684fe5aefbc8bfa966c9b1713134b913fa563f76"
+    },
+    {
+      "path": "components/flowers/jasmine/Jasmine.tsx",
+      "sha256": "5945f25f96fb45568e9a46801fe8efcb0648be312291f269d10251035f1c64c5"
+    },
+    {
+      "path": "components/flowers/king-protea/KingProtea.tsx",
+      "sha256": "855ea1f5df94acf16f8134d5939aeaa500964397632e29c0ea07498440c6c0ac"
+    },
+    {
+      "path": "components/flowers/king-protea/proteaGeometry.ts",
+      "sha256": "92aaa1485c0a6309a36a72344af22b5df4a20751891a64be36850c079909fe99"
+    },
+    {
+      "path": "components/flowers/lantana/Lantana.tsx",
+      "sha256": "c2c3438d8df319f5b6cba97db66a1f015e40e1c4208fe31bd5c779087f70c3b1"
+    },
+    {
+      "path": "components/flowers/lantana/LantanaFoliage.tsx",
+      "sha256": "5ae361214418dc6f5c6de2e6e53826d07a88f536955866d4acf2465262fbe3da"
+    },
+    {
+      "path": "components/flowers/lantana/LantanaStem.tsx",
+      "sha256": "591035109d238fa5ae4ac9b8fd7e1d07a8ac841f48ea421f372bfba4bce9840b"
+    },
+    {
+      "path": "components/flowers/lantana/lantanaGeometry.ts",
+      "sha256": "4fb022d3d188a56de5e19b76ad3e27f41e9f0446eb2c02a13ae85d9bb9cd1b72"
+    },
+    {
+      "path": "components/flowers/lantana/lantanaLeaf.ts",
+      "sha256": "0d345f813d64ce2aca5db8aed8a8e96f21ec3f7cd3442c9d4688afb0706e611a"
+    },
+    {
+      "path": "components/flowers/lavender/Lavender.tsx",
+      "sha256": "a16e7d3eb320665863757bc5bdebe2f15bce852449392480f19cd6e793759325"
+    },
+    {
+      "path": "components/flowers/lily-of-the-valley/LilyOfTheValley.tsx",
+      "sha256": "56a826e69122025b6e8ac98da9cc7b5260a6bfeb2826682064fda11d62af7bfc"
+    },
+    {
+      "path": "components/flowers/lily-of-the-valley/LilyOfTheValleyFoliage.tsx",
+      "sha256": "63c966111b5512028c414e9de538258c2d481a39466704912dcbf3f8a2d5ca6d"
+    },
+    {
+      "path": "components/flowers/lily-of-the-valley/lilyOfTheValleyGeometry.ts",
+      "sha256": "b33b1fdb6119f2782ff6d97be7da2f079db3440f2826855a1597645d4f17b54c"
+    },
+    {
+      "path": "components/flowers/lily-of-the-valley/lilyOfTheValleyLeaf.ts",
+      "sha256": "f95ac0fb1150ac7d7f4f8e5a1bfde4d525547a08a497c5340136fdb35587b147"
+    },
+    {
+      "path": "components/flowers/lily/Lily.tsx",
+      "sha256": "5e20d3bd9f4ad52c83f8930d3ebecd04aca13001b2e912db76f5a8bb25f46a97"
+    },
+    {
+      "path": "components/flowers/lisianthus/Lisianthus.tsx",
+      "sha256": "bcb48014350b370a67b2bcd33cf3a2289cfa21c81f794e86f14389e08ac6332f"
+    },
+    {
+      "path": "components/flowers/lisianthus/LisianthusFoliage.tsx",
+      "sha256": "c1693bce0adba2b0065135c20b8a18848705772bc750cc4ec6098b5edee107b8"
+    },
+    {
+      "path": "components/flowers/lisianthus/lisianthusGeometry.ts",
+      "sha256": "88bf4e86a16bda1582610c8e86c58398b72e50686fd878759a40ce0bb0eae9ff"
+    },
+    {
+      "path": "components/flowers/lisianthus/lisianthusLeaf.ts",
+      "sha256": "2191a601e776e03f441b1b4edefbccdc962b7a9b6bcba6a7d17e2050e943b86d"
+    },
+    {
+      "path": "components/flowers/lobelia/Lobelia.tsx",
+      "sha256": "601be334dfe406a4f4fefce475cfb802eacd9934455fcd126153822c7a01b5df"
+    },
+    {
+      "path": "components/flowers/lobelia/LobeliaFoliage.tsx",
+      "sha256": "945207b46213a48d2cbd8cc0784f31a0012ee018c868d70c7bbb4ea52615fc3c"
+    },
+    {
+      "path": "components/flowers/lobelia/lobeliaGeometry.ts",
+      "sha256": "9fa895b2822ac45f92d23ffc45951e9b600d9f6495be272fe6178a613f040d18"
+    },
+    {
+      "path": "components/flowers/lobelia/lobeliaLeaf.ts",
+      "sha256": "56ab92ce230da22dfe540d8af6c7151e291a90fb83991cae466a379e690cebe6"
+    },
+    {
+      "path": "components/flowers/lobelia/lobeliaLeafAttachments.ts",
+      "sha256": "f5f8a50834e7940d863febb205737c37375df3dbfcb3ccca9a62616589dcde66"
+    },
+    {
+      "path": "components/flowers/lotus/Lotus.tsx",
+      "sha256": "c3f78b7ed9a977094333330929265c8e2f1b03cf42c13f46dc2aaf8d8df5f30d"
+    },
+    {
+      "path": "components/flowers/lotus/LotusFoliage.tsx",
+      "sha256": "86ff136cb97b981a8815c7d7c8cc08323d20e1b0ef27fecb34247ea21457b3e6"
+    },
+    {
+      "path": "components/flowers/lotus/LotusHeart.tsx",
+      "sha256": "1c517c281deaacf5ede5f735fd713ab569c2c591d32e4db9e82527ca1816842e"
+    },
+    {
+      "path": "components/flowers/lotus/lotusHeartGeometry.ts",
+      "sha256": "40077e65470c1cabb61e5697f694e2a5016d991f5fde962d6a09159953cc64b5"
+    },
+    {
+      "path": "components/flowers/lotus/lotusLeafGeometry.ts",
+      "sha256": "e8cbebbdd2502592e0dfab5e2d857a24c084c4ca021799caed23fd25c41a646c"
+    },
+    {
+      "path": "components/flowers/lupine/Lupine.tsx",
+      "sha256": "dea06362f254d6b0764fb9679bf77c92ea9320a94ef5e2ed9c433fdce666999a"
+    },
+    {
+      "path": "components/flowers/lupine/LupineFoliage.tsx",
+      "sha256": "87de5c1b8ed805403f5511250895427f911bb194d90f0bfdc183adf38ab19b0f"
+    },
+    {
+      "path": "components/flowers/lupine/lupineGeometry.ts",
+      "sha256": "24d2d3a4ccde780c5e432a4cf0948feb257dadf1eb16e2c749b7dc18d175aab9"
+    },
+    {
+      "path": "components/flowers/lupine/lupineLeaf.ts",
+      "sha256": "077ce8d50fe2c91d1a8f63cc591ae1e69787cebba85390e6cd8d96a91f0268e3"
+    },
+    {
+      "path": "components/flowers/magnolia/Magnolia.tsx",
+      "sha256": "73735a68b8901001a8e971ce34581f7c552d01b78c5e092ccb9be93a06e7e2cd"
+    },
+    {
+      "path": "components/flowers/magnolia/MagnoliaFoliage.tsx",
+      "sha256": "b4c3173f5ed29e9bd7ef3c6fd51ab1cc4dafb9a5409d8fc1852cf39aa69fc473"
+    },
+    {
+      "path": "components/flowers/magnolia/magnoliaGeometry.ts",
+      "sha256": "6ded7c883757e3d6dfe2e7bf97402698c7fe5e3a7075744482104eb035c3747f"
+    },
+    {
+      "path": "components/flowers/magnolia/magnoliaLeaf.ts",
+      "sha256": "01c8daa2f9e02d9478fb5905af39f51b2c0fb32fb1830996ddf1ac98715abd06"
+    },
+    {
+      "path": "components/flowers/marigold/Marigold.tsx",
+      "sha256": "c430f853d8de8f67be0b02fd29aff9fc5b19b4ba7065e52cbcf19ccf7e6fb550"
+    },
+    {
+      "path": "components/flowers/morning-glory/MorningGlory.tsx",
+      "sha256": "c90073fd7f9a11855509233bfd3c21f66f4e84c5fcfa54d43b5bf22d46f3c703"
+    },
+    {
+      "path": "components/flowers/morning-glory/MorningVine.tsx",
+      "sha256": "68fb305807ad9e9d71bf4391e7bdb16545890aed298ce900665244629096104a"
+    },
+    {
+      "path": "components/flowers/morning-glory/morningGloryGeometry.ts",
+      "sha256": "e1bea33c09b9ba356f154ff930160f879d9b26c4efd7cd659ec82d63deff541d"
+    },
+    {
+      "path": "components/flowers/morning-glory/morningGloryMaterial.ts",
+      "sha256": "a605642e9bb2d8ef1a3d9db67b87e0a18685538f1e9726653649d682d7091a27"
+    },
+    {
+      "path": "components/flowers/nasturtium/Nasturtium.tsx",
+      "sha256": "c1b809423fa59fa3305d60dd5066706ac9708f8f0e53816b0e9079fd92e7bc34"
+    },
+    {
+      "path": "components/flowers/nasturtium/NasturtiumFoliage.tsx",
+      "sha256": "36d12a760716dffa4289ef7049114bab94b69730f6dfd56106b168a2f6bde7a7"
+    },
+    {
+      "path": "components/flowers/nasturtium/nasturtiumGeometry.ts",
+      "sha256": "516580e757b531631c9796ad1e12acb6b7984d55c798aab3dc4cf784a87d7515"
+    },
+    {
+      "path": "components/flowers/nasturtium/nasturtiumLeaf.ts",
+      "sha256": "4fb50fd9a1d0f0b444df8d0ca4e5999fe18724f73f655e9afb96ebc4077b238f"
+    },
+    {
+      "path": "components/flowers/nicotiana/Nicotiana.tsx",
+      "sha256": "4428bf4c78be83a1810ce8a446d7b0a6fdb6d9664e4116084938f25918a5ce50"
+    },
+    {
+      "path": "components/flowers/nicotiana/NicotianaFoliage.tsx",
+      "sha256": "4ff0147d69189d25c5dd134f9b0f6279ae1f493688a8ebee91ca6402b0b374bd"
+    },
+    {
+      "path": "components/flowers/nicotiana/nicotianaGeometry.ts",
+      "sha256": "ec23f93c59eada25eca3d462341e753994d52838989a3a72b41f91f35baf7fca"
+    },
+    {
+      "path": "components/flowers/nicotiana/nicotianaLeaf.ts",
+      "sha256": "10a5065d50a59468002c1bc97789254e1c08cddd23022e7f066d5119a73f81cd"
+    },
+    {
+      "path": "components/flowers/orchid/Orchid.tsx",
+      "sha256": "0f68a91baab5291f92c240fc738592a41cee4e98c6ba25b7747bbbd7c787cb75"
+    },
+    {
+      "path": "components/flowers/pansy/Pansy.tsx",
+      "sha256": "9c5813ad05168bd83aae0d175300570a3a4d5d827194490ce88f39c2f5924fff"
+    },
+    {
+      "path": "components/flowers/pansy/PansyFoliage.tsx",
+      "sha256": "0d0525eaa790d49d67642e572db666cf87bc8f0900a6b66070f72effe6b94c13"
+    },
+    {
+      "path": "components/flowers/pansy/pansyGeometry.ts",
+      "sha256": "657868278ed7c0cdd93b3edd866a0e01dad25f63fd4382a126675cfed90d6233"
+    },
+    {
+      "path": "components/flowers/pansy/pansyLeaf.ts",
+      "sha256": "b966888a9d606036955609916eefd0775644503dce9f611d6017642d496f808e"
+    },
+    {
+      "path": "components/flowers/passionflower/PassionCorolla.tsx",
+      "sha256": "59920340d72de01f61f205a528fb5f5f927b9efbcaa51da3e28831967683a25f"
+    },
+    {
+      "path": "components/flowers/passionflower/PassionHeart.tsx",
+      "sha256": "7c7086e01a216f37e2461668e7bad48cef8e19338d5fcd1b6c29ba0ab91e1ac5"
+    },
+    {
+      "path": "components/flowers/passionflower/PassionVine.tsx",
+      "sha256": "878e9e9bab75d4f82ff4f460adffe0c265446868de9b4ace9077e682a67c87bf"
+    },
+    {
+      "path": "components/flowers/passionflower/Passionflower.tsx",
+      "sha256": "8ee0593b4cde6576f3a0ff200f1e019ddac22d75338fbeb411f751e05e3d1e82"
+    },
+    {
+      "path": "components/flowers/passionflower/passionflowerGeometry.ts",
+      "sha256": "fd5cc8700105a03c981493c89f9185524e1bb57a07c8fe800bdf469be3c82562"
+    },
+    {
+      "path": "components/flowers/passionflower/passionflowerMaterial.ts",
+      "sha256": "590b0eb6be16a4f835f277a7335b1a46d91137f6316c1a8c0e35642d6fb12c6d"
+    },
+    {
+      "path": "components/flowers/pentas/Pentas.tsx",
+      "sha256": "b654138ef7981e9d10f1159cb00544313a23197dc0938e3c7a2ed3563216c92c"
+    },
+    {
+      "path": "components/flowers/pentas/PentasFoliage.tsx",
+      "sha256": "00f8a9770aca8083454818547de27536fb6f2c920d23f1f2f766bf851e109ddb"
+    },
+    {
+      "path": "components/flowers/pentas/pentasGeometry.ts",
+      "sha256": "49df55293c486dcd975ca70e70448f407ac3d39b731b0ca5eb43fac418625b0d"
+    },
+    {
+      "path": "components/flowers/pentas/pentasLeaf.ts",
+      "sha256": "92f2a5bfb9aa06f3047a76cc20e97d227a96e45dd7030140e39180a880f0bfbc"
+    },
+    {
+      "path": "components/flowers/pentas/pentasPubescence.ts",
+      "sha256": "64daf226ae17f4983e3bb99abaa96df8fa459eab3ccb8c9129771af1d0a22c9f"
+    },
+    {
+      "path": "components/flowers/peony/Peony.tsx",
+      "sha256": "4169a04386e8589e6c705868305ce89215a6260ce615103f8238ebf53b389a87"
+    },
+    {
+      "path": "components/flowers/petunia/Petunia.tsx",
+      "sha256": "5a9388641d2896123533a2fe9ee11e4195b91f6e3322a13abfbf080cee735021"
+    },
+    {
+      "path": "components/flowers/petunia/PetuniaFoliage.tsx",
+      "sha256": "dccec4b4d7c1c28a40d108c584f2bb49d34f2ee3b09ab54bd3c564eeab39560c"
+    },
+    {
+      "path": "components/flowers/petunia/petuniaGeometry.ts",
+      "sha256": "3a225146e1ca43dd463085a31c3b9298dc06c3281733a066ca136a07ff847a0d"
+    },
+    {
+      "path": "components/flowers/petunia/petuniaLeaf.ts",
+      "sha256": "ad8c3c24b0a46f2e64ab20b83c5b3d1c8a1603c5351f8abd192463d68fa50d26"
+    },
+    {
+      "path": "components/flowers/plumeria/Plumeria.tsx",
+      "sha256": "776f2eef3134e08ffc0f5ee4dbcf5adbd36c33149897c5576d54a12aa132b529"
+    },
+    {
+      "path": "components/flowers/plumeria/plumeriaGeometry.ts",
+      "sha256": "291ae28577adf433ef993c3a17c933537208f29324cd570c3508b2cb725d7a8f"
+    },
+    {
+      "path": "components/flowers/poppy/Poppy.tsx",
+      "sha256": "bfdffcb151465a0f5e21db989d450ef75c01face280c2b62182129514170f2e3"
+    },
+    {
+      "path": "components/flowers/poppy/PoppySepals.tsx",
+      "sha256": "4b436f0d82ded6f387550c02f372cc2d29ef962c0b0062a2e74aa6388d9d7559"
+    },
+    {
+      "path": "components/flowers/primrose/Primrose.tsx",
+      "sha256": "7d706cbf4f99f9f392f3eee3f3c02f65854895c8e50cb649e1a5f2773bcd629d"
+    },
+    {
+      "path": "components/flowers/primrose/PrimroseFoliage.tsx",
+      "sha256": "2c56f9098667ac18b6b084d0f8e2ef53ccdf082e2c8051b3c00fac40d23542e8"
+    },
+    {
+      "path": "components/flowers/primrose/primroseGeometry.ts",
+      "sha256": "0e3847100cc963f0e31c4ecd261b2bcbfac1aa136a5e8f8fb90871f25b705ce9"
+    },
+    {
+      "path": "components/flowers/primrose/primroseLeaf.ts",
+      "sha256": "9e2ea5cdc83da404086142cddfcbb5db522c55355e9559c265401fc55d8c8e97"
+    },
+    {
+      "path": "components/flowers/ranunculus/Ranunculus.tsx",
+      "sha256": "dcff40b7510da6a9170374009a57bc39155403d503ccad67913b5d2fed07968d"
+    },
+    {
+      "path": "components/flowers/ranunculus/RanunculusFoliage.tsx",
+      "sha256": "19021b1d4faed089652511d6076bec34f9466ed0109529df736dccc260e1dcd6"
+    },
+    {
+      "path": "components/flowers/ranunculus/ranunculusGeometry.ts",
+      "sha256": "7a221866dbfea2a4a41315ccdbd1e29ecd355d744d36fd2edef75b8564e22c02"
+    },
+    {
+      "path": "components/flowers/ranunculus/ranunculusLeaf.ts",
+      "sha256": "ecdc56b2d25739041d7db3a8574a5c1b35f68fe66af093624b99739d968be096"
+    },
+    {
+      "path": "components/flowers/rose/Rose.tsx",
+      "sha256": "e6c371530f023b02d9e8a42793a806522e20b11c4e264dcd7bead7cc1cb89054"
+    },
+    {
+      "path": "components/flowers/rose/roseStructure.ts",
+      "sha256": "b0bebc188406f563933379420922d70a239135805c186786751221a273164e02"
+    },
+    {
+      "path": "components/flowers/salvia/Salvia.tsx",
+      "sha256": "4cffda1f4a0ec9c0437c4828253d16b2bd481bc968c0943db146ab20bc54a0a6"
+    },
+    {
+      "path": "components/flowers/salvia/SalviaFoliage.tsx",
+      "sha256": "460ca1b30ebc25eb64304a938b2a09f64cb84b83b11119f86198941186457d06"
+    },
+    {
+      "path": "components/flowers/salvia/salviaGeometry.ts",
+      "sha256": "ca5aa9136ec61fdacf3c941a63c6a893085cac08ff7e42e3eb722980f68e42c8"
+    },
+    {
+      "path": "components/flowers/salvia/salviaLeaf.ts",
+      "sha256": "57d68e01ed7e50ef75f0bfd089e31fcd7fbd8f03f1774e4b478f4e46308fc73d"
+    },
+    {
+      "path": "components/flowers/scabiosa/Scabiosa.tsx",
+      "sha256": "504d0b19e9ace22ecabaf613478f7d07966bba93b3041fea8af84248e724722e"
+    },
+    {
+      "path": "components/flowers/scabiosa/ScabiosaFoliage.tsx",
+      "sha256": "1d71e80ef3fbbb83de06d6d6dda1f6c6fff8fa1e54dd8d741221c3eaf440a54a"
+    },
+    {
+      "path": "components/flowers/scabiosa/scabiosaGeometry.ts",
+      "sha256": "90f415897ffb963a317e23663d57d96a51e3f1ba020995654e1a30d44f7a82eb"
+    },
+    {
+      "path": "components/flowers/scabiosa/scabiosaLeaf.ts",
+      "sha256": "d3ec1e0d5c7c768593c51c00f5f949d8969b74b46099a85fc5ec268bce1341d0"
+    },
+    {
+      "path": "components/flowers/snapdragon/Snapdragon.tsx",
+      "sha256": "41f54858c24eeecc401f7148607f1408c2fffdee50535b2be754f90cdba699bc"
+    },
+    {
+      "path": "components/flowers/snapdragon/snapdragonGeometry.ts",
+      "sha256": "a6e9123a9d3d92e2d7d1096f542f592216f0a7c2cdbc65a4974b14341fbbc0a4"
+    },
+    {
+      "path": "components/flowers/snowdrop/Snowdrop.tsx",
+      "sha256": "6c619025b3ebd972fe82d1ccb497cd5d70849246374dc9f17f1b9232beb8ab2c"
+    },
+    {
+      "path": "components/flowers/snowdrop/SnowdropFoliage.tsx",
+      "sha256": "fa8ccfdc950631b22c18f42f0e772d9025ce2185b97b1032e35f89b2bcb07a44"
+    },
+    {
+      "path": "components/flowers/snowdrop/snowdropGeometry.ts",
+      "sha256": "3e55ceb94ac3742e0f1cffd82c33b5719482a473414a6097bd250a77146a4042"
+    },
+    {
+      "path": "components/flowers/snowdrop/snowdropLeaf.ts",
+      "sha256": "6094739c7ca618c292835c28277ebfc24ecfca2b73f52e8f61fffd5dca54ec9d"
+    },
+    {
+      "path": "components/flowers/sunflower/Sunflower.tsx",
+      "sha256": "fc0183458f33bdf35cd2e06759fad027fdd53bb91db43b96bc8a03dd543f8f4c"
+    },
+    {
+      "path": "components/flowers/sweet-pea/SweetPea.tsx",
+      "sha256": "886157a8517b484bd718d4760ae138f68af4eb59123c1de6b9c336f3374bcf76"
+    },
+    {
+      "path": "components/flowers/sweet-pea/sweetPeaGeometry.ts",
+      "sha256": "447c5e14a765f7f1671a8c920e206f75a4dbc7c3b6cebc88f6b768fc3b84079a"
+    },
+    {
+      "path": "components/flowers/torenia/Torenia.tsx",
+      "sha256": "664453466386d57dcee8fbbc3ab69d3ff35e9c20d8b909c33e06f66073359fa0"
+    },
+    {
+      "path": "components/flowers/torenia/ToreniaFoliage.tsx",
+      "sha256": "67ae39d08707f7eba4a7c6a26453193637748e05f9a60ac56eb7c098192eb835"
+    },
+    {
+      "path": "components/flowers/torenia/ToreniaStigmas.tsx",
+      "sha256": "12081000f3298390a9211b17046b4568bbe7ef153ddc8d21a6fcf5133665a4fe"
+    },
+    {
+      "path": "components/flowers/torenia/toreniaGeometry.ts",
+      "sha256": "3fca732388f38a314d69cc3f1bd9843de124cbe8d005b01f7d4e7944088a0598"
+    },
+    {
+      "path": "components/flowers/torenia/toreniaLeaf.ts",
+      "sha256": "72e78cd4e94cf7b93fc8650289b70b4a02a233baf5b44a8e7d583445615acba7"
+    },
+    {
+      "path": "components/flowers/torenia/toreniaStigmaGeometry.ts",
+      "sha256": "95d60fb64b846ad3292c5fa9514df93e424180e593d077ed3560cf415431b38a"
+    },
+    {
+      "path": "components/flowers/torenia/toreniaStigmaProbe.ts",
+      "sha256": "0fd85155f086ffad6c9d8ba7a4dfa403e17e1262a588e271fc73c30ec1b166ec"
+    },
+    {
+      "path": "components/flowers/torenia/toreniaStigmaState.ts",
+      "sha256": "39b6bceec5b9a26dd3fb87a3a673a92f821aee8dea54d7dd595e6a6ea858c27d"
+    },
+    {
+      "path": "components/flowers/trillium/Trillium.tsx",
+      "sha256": "5bcfc4a1202e1e0d604694d1a256662e554db22ad1441118e0c9337cd7538c43"
+    },
+    {
+      "path": "components/flowers/trillium/TrilliumFoliage.tsx",
+      "sha256": "4003dc0d906efab20a348e5aad9a368ff16ed438da913cad8cf95114430e7087"
+    },
+    {
+      "path": "components/flowers/trillium/trilliumGeometry.ts",
+      "sha256": "0fcbe5e165dcef27e4fac691f380bed821c353a9e726a6e8523ce05b6e2c14a7"
+    },
+    {
+      "path": "components/flowers/trillium/trilliumLeaf.ts",
+      "sha256": "35ff33716dfb38c7122c07c6e5b984ba931fa93d514698967163488fa176727d"
+    },
+    {
+      "path": "components/flowers/tuberose/Tuberose.tsx",
+      "sha256": "91aaae56b82f5d1f0af672438e29f3eb743cc3e1b7641f224fdec6701ea94a04"
+    },
+    {
+      "path": "components/flowers/tuberose/TuberoseFoliage.tsx",
+      "sha256": "31ac4962e258e7304ba644f755735d5c9831d3479f2fdee29f49163f5c6ded17"
+    },
+    {
+      "path": "components/flowers/tuberose/tuberoseGeometry.ts",
+      "sha256": "c590c8b606a32b7816c688a3c4d6a35308262fcda0725f213e99ae977209164b"
+    },
+    {
+      "path": "components/flowers/tuberose/tuberoseLeaf.ts",
+      "sha256": "7de0dc8fbb597d20bbe04532be1af0a0e81275a7f78242a7a05000232054def5"
+    },
+    {
+      "path": "components/flowers/tulip/Tulip.tsx",
+      "sha256": "375feadb06defae8010ee588ebf0ae6b782fb0c0cb07618777fcd1612eb6e40d"
+    },
+    {
+      "path": "components/flowers/wisteria/Wisteria.tsx",
+      "sha256": "843502780c8036669daa07ee49cbfd8fd497ba0dafbc9f0c610d7bfbf08b5502"
+    },
+    {
+      "path": "components/flowers/wisteria/WisteriaFoliage.tsx",
+      "sha256": "9319d60813bd4b924b71c6bc386d516a77ebaea44cca02fab67d3ca11e30286c"
+    },
+    {
+      "path": "components/flowers/wisteria/wisteriaGeometry.ts",
+      "sha256": "f84402f24db6849e505dfffdf24039f7ba86e939141e386aea10c31d3c78fa00"
+    },
+    {
+      "path": "components/flowers/wisteria/wisteriaLeaf.ts",
+      "sha256": "b17c3a022edf3ad2de8af8fd9691010fa55ffbe5d0623c32f9404289cc174aa3"
+    },
+    {
+      "path": "components/flowers/zinnia/Zinnia.tsx",
+      "sha256": "c0e37df6ccd414d88e2f3345ae58a2ece0a1afdb23c41c02a53eee2597bbd026"
+    },
+    {
+      "path": "components/flowers/zinnia/ZinniaFoliage.tsx",
+      "sha256": "61801a8d1c3d6f3bd55589ef46e82713c8b48fe69ae434cd747281b571322bdc"
+    },
+    {
+      "path": "components/flowers/zinnia/zinniaGeometry.ts",
+      "sha256": "0a27e80a163f91e64fb4b6d79315f5d6f3a7de7ae6f910523950017b05d89fe2"
+    },
+    {
+      "path": "components/flowers/zinnia/zinniaLeaf.ts",
+      "sha256": "3c8963a64b893386719ff9671a422c48abc1373484805f64453e2cd32eb9372c"
+    },
+    {
+      "path": "components/scene/CameraRig.tsx",
+      "sha256": "b428d8d46ba126c61d39541705fdaf0f68078d1b14ae3ee07f04da5b9587c15d"
+    },
+    {
+      "path": "components/scene/Environment.tsx",
+      "sha256": "2c0512fef3094743e3d45f82701403436e258f4c9e4fc102cd72e1faf7dc55f7"
+    },
+    {
+      "path": "components/scene/GardenDynamics.tsx",
+      "sha256": "518dc8b51230f5e7ee474f143ee3ba815b46a6e3f62d862c5250ac257a690fe7"
+    },
+    {
+      "path": "components/scene/Lighting.tsx",
+      "sha256": "b81eaa6ec47073179989ff2ff1b656cd0c56a0b0f7e21356c058b5682c203603"
+    },
+    {
+      "path": "components/scene/Pollen.tsx",
+      "sha256": "84c8c56b2432fc0386e1968d3f62bdefc860640e75a6081525b456c10827d3a0"
+    },
+    {
+      "path": "components/scene/PostProcessing.tsx",
+      "sha256": "3b68de1ee76fea93fdaeed030eb2a6f4d99089ea67a40df32128f7d85f4a2b57"
+    },
+    {
+      "path": "components/scene/PreviewStage.tsx",
+      "sha256": "f7578fe9c1f2dde341ff792c99b5f239261c9d1acb627df1fe50b091d8db884f"
+    },
+    {
+      "path": "components/scene/RenderBudget.tsx",
+      "sha256": "752207852b79766c333c49e18b0ae16d08582711e6dfb13dfd05d8c6de6d8f16"
+    },
+    {
+      "path": "components/scene/RenderDiagnostics.tsx",
+      "sha256": "92a6981fa6cfc29f75cbbaf6737a4d6148374426b9cf80875a5048453cfbb451"
+    },
+    {
+      "path": "components/scene/SafeCanvas.tsx",
+      "sha256": "2064b5d8721f35fd49aa996becf119a3eff2885dae2b819bde8c9a5fb8c31bf9"
+    },
+    {
+      "path": "components/scene/SceneBoundary.tsx",
+      "sha256": "8e473ef166f61f02536d41bfcfd6ab7f91b013f3529f0d421ee4f7c8d4731bed"
+    },
+    {
+      "path": "components/scene/SceneReady.tsx",
+      "sha256": "e88d90a721ec41bbec185406a883f5c34d70eec34c9539f63c99adcdd1b999a1"
+    },
+    {
+      "path": "components/scene/SurfaceDetail.tsx",
+      "sha256": "2f98eb61db39d4f36e58d2f041aee8c69d84a74c89d6519746cb638b7fda7f5b"
+    },
+    {
+      "path": "components/scene/WebGLSupport.tsx",
+      "sha256": "21780445948e3a836ff0987ddf7630462aea709cdda90b76cfd7093fe4cf9399"
+    },
+    {
+      "path": "components/ui/BloomLoader.tsx",
+      "sha256": "a6497c9a23a2d7ebfa54c2525cda09253fdc8706a3163d04dd1952167a797db2"
+    },
+    {
+      "path": "components/ui/Header.tsx",
+      "sha256": "f23c300a38416dbc68d4b2628b96bd3709f5d2aef303583dedc8cc2179e92192"
+    },
+    {
+      "path": "components/ui/ThemeSwitcher.tsx",
+      "sha256": "16f323b1d64a7ccd886539de07193bf2758878b77d547504d8d72e556136fc60"
+    },
+    {
+      "path": "hooks/useActiveFrame.tsx",
+      "sha256": "5e35e9977310785b0a935bf2b859a97bbcc222c84ccd3db7cb2b49f9c056350e"
+    },
+    {
+      "path": "hooks/useBloomAnimation.ts",
+      "sha256": "3801bfb0cc5817fb05be9fed7c1254a91983170a3a0dd81918ef8367fd11e99a"
+    },
+    {
+      "path": "hooks/useCursor3D.ts",
+      "sha256": "40bd378b02c73e30ce61812f8f900525e1dbd54804d6bcdf855b308c6caf9af0"
+    },
+    {
+      "path": "hooks/useExperienceSettings.ts",
+      "sha256": "0cf9282eaec19458a4d58440a23d8b48aa6ccf141c75273528395d8ca4b2698f"
+    },
+    {
+      "path": "hooks/useFlowerInteraction.ts",
+      "sha256": "746ebe19b3f40474138b96ccb234b1fd6e5bf734e1e87591409b9779f49fac77"
+    },
+    {
+      "path": "hooks/useInView.ts",
+      "sha256": "f92a47dbdcf88d78328ab3527b2ffe56527a321e97d1121f1e917edaa3020c41"
+    },
+    {
+      "path": "hooks/useTheme.ts",
+      "sha256": "3a414a5e25928dcc9830e63754bef00b33cc92c0c908a12f1f7ccf6143ceb5ba"
+    },
+    {
+      "path": "lib/flowers/catalog.ts",
+      "sha256": "9c86086d0e34aaad3851c69f6bf9c4d37d263311a6e3c0af17cccc2dcb47ca54"
+    },
+    {
+      "path": "lib/flowers/foliage.ts",
+      "sha256": "dad6c229597a89de65151323ce4452aa36d9929ba8931fdfc7c3e6135e3c2551"
+    },
+    {
+      "path": "lib/flowers/framing.ts",
+      "sha256": "f7460dffef79bb00854a46bef9e974cd53191e9b1da376acacfec17da1a4b267"
+    },
+    {
+      "path": "lib/flowers/garden.ts",
+      "sha256": "4c8501c4fe259f113444b44bbd707841d3a5920c4e55c3c1b1fabed23da6a590"
+    },
+    {
+      "path": "lib/flowers/palettes.ts",
+      "sha256": "8bc874780a4a8a77468098442c904a2347d8f9588e1523f3613792d696818910"
+    },
+    {
+      "path": "lib/flowers/structure.ts",
+      "sha256": "35ff0b52f20c5175d803e43954c0b6a9954531ff3a292d97fbddbaf5a648d50e"
+    },
+    {
+      "path": "lib/flowers/structures.ts",
+      "sha256": "c2fd74dc2af063e662a5dc785522c2d4c9fcd1016623cff3fa90dc1aa24c2f5b"
+    },
+    {
+      "path": "lib/flowers/types.ts",
+      "sha256": "8ef2ea93bedee718b926d144667ff4d18530e01e9c79ef448d3ce326f4fd0ebb"
+    },
+    {
+      "path": "lib/flowers/views.ts",
+      "sha256": "5a85968e6ea01fb45774c5583abdce36037846ca189f23cef127ff6521b3ddea"
+    },
+    {
+      "path": "lib/flowers/wind.ts",
+      "sha256": "b492f35f5bf40cf837dd42b6e6e99c75c140338e548cb73bc22d851aacdfa5f6"
+    },
+    {
+      "path": "lib/gpu/bake-queue.ts",
+      "sha256": "3a3ee55862a3b4b9aff4852538fcb88e5064a6d97881ed179b600b057fc14111"
+    },
+    {
+      "path": "lib/gpu/render-studio.ts",
+      "sha256": "b1ab9c221f78b50089195313b6b39132543efacb99f3a13bb4b9351134e52532"
+    },
+    {
+      "path": "lib/gpu/render-tissue.ts",
+      "sha256": "21627222618b3f2b7062fb0863c3ae815cc71793587c03baa18c5ac6edbbc102"
+    },
+    {
+      "path": "lib/gpu/shaders/petal-tissue.wgsl",
+      "sha256": "95abbbccfa86c59564eb37dd4aa15c5a7583ba9fa5d31bd2f4e11d702160b30c"
+    },
+    {
+      "path": "lib/gpu/shaders/studio-lighting.wgsl",
+      "sha256": "e5d8d1cb4eedac4dfda5d3b970c846f646713011846df34a2cb3ecf9f9f2d3ff"
+    },
+    {
+      "path": "lib/gpu/studio-field.ts",
+      "sha256": "ad38826336b7395dfca1d3577d7f36dddf1a09636b1bfef629095127741f8227"
+    },
+    {
+      "path": "lib/gpu/tissue-atlas.ts",
+      "sha256": "8a7c9cc66d7a5be8b8dccc770bc4ee52590874d58fadb7b3a0de6ba898debd3a"
+    },
+    {
+      "path": "lib/gpu/tissue-fallback.ts",
+      "sha256": "dc840dcc27909e00fad5c7b322d5f1fd3461a389330b12e54ab00f50930befd2"
+    },
+    {
+      "path": "lib/performance.ts",
+      "sha256": "7de2e2211436b320c9b7256bd756bdfa18034a02878d654e0bad951e73a565b7"
+    },
+    {
+      "path": "lib/theme.ts",
+      "sha256": "8115160391eec12bdcdcfa5dcb39d35df1684532942f4d96b022a00f66db9640"
+    },
+    {
+      "path": "lib/three/botanicalBladeMaterial.ts",
+      "sha256": "928db115a273ccb662134013b58628e76ff7e580b85e448e2a46f03c01023ad1"
+    },
+    {
+      "path": "lib/three/botanicalBlades.ts",
+      "sha256": "b002ddbb61cd56ba5056be48e258ccf646fbfe060ff7f1efdeebbefa7398f11a"
+    },
+    {
+      "path": "lib/three/coreGeometry.ts",
+      "sha256": "2b8c5c56a787b57c3ccb27119752f81603b22207a8fc66e50bea3331ecd6d1db"
+    },
+    {
+      "path": "lib/three/documentRenderer.ts",
+      "sha256": "132154c00b73e403758a584243eb79a5b0193752b9bf7569e386cba5195c3223"
+    },
+    {
+      "path": "lib/three/easing.ts",
+      "sha256": "7c3b6a185c560c526727d8edd8c92f5793fd4c91bf4bca736b55bd9a783028a8"
+    },
+    {
+      "path": "lib/three/events.ts",
+      "sha256": "b231f4fedb26d2369c9fe31e907c9288844f7ea8357de92cb8d07c65787202e1"
+    },
+    {
+      "path": "lib/three/floralOrgans.ts",
+      "sha256": "a7ffa66437f81f82743f4ae4637873640a7a9e5cc62d322689560ec61b714dec"
+    },
+    {
+      "path": "lib/three/floralStamens.ts",
+      "sha256": "513e0cc07b6237c8b06bfab0abdb6bd56c0545c4d5fb2da7eead62703509b62a"
+    },
+    {
+      "path": "lib/three/floralSurfaces.ts",
+      "sha256": "3c8a0dcb9ddebf29f84cf941a278f6e7a657fa9976f744b0e544738b9afc31cf"
+    },
+    {
+      "path": "lib/three/floretBatches.ts",
+      "sha256": "4626d642c2a8ecd87255670f9fae2e7d78d001641becb2dc916384112a906fa7"
+    },
+    {
+      "path": "lib/three/floretInstances.ts",
+      "sha256": "6804184e22395729afdf53c3c3e98f14a85e6d39072dc3970da124cc0d35c1b7"
+    },
+    {
+      "path": "lib/three/geometry.ts",
+      "sha256": "08c966428a6c1d1fa6c0181994a94ed1793fb41f6ff448a524d05949a6511de8"
+    },
+    {
+      "path": "lib/three/gpuFrameGate.ts",
+      "sha256": "8ad50f8db7ea91043e670f0a609ac93441728bab3b3fda8d1f9f754f15256f75"
+    },
+    {
+      "path": "lib/three/inspectionFraming.ts",
+      "sha256": "6b2eb1fc864e76995462314db86aac3fa04ccc9c21495e8372a31d0bc1714bfe"
+    },
+    {
+      "path": "lib/three/inspectionStudies.ts",
+      "sha256": "e5baedf35190c7f94a823f63dabd5ea3f4ed82bd6fea2d3ef7cf23cf5134ff0c"
+    },
+    {
+      "path": "lib/three/materials.ts",
+      "sha256": "5bed0e5bb56a9d1d745350485e11cf4254c6d0b96a2150b87b5b5034b5b5ad13"
+    },
+    {
+      "path": "lib/three/noise.ts",
+      "sha256": "d5ace314791867e7f82b1cf489d1fad7708a0f7cf8bae09594cdc7d831e92b14"
+    },
+    {
+      "path": "lib/three/organBatch.ts",
+      "sha256": "b00e9ec5c724e20ce6de0621735b29dc3a491f4b3d2f4cfad2222a62ff2ea5a5"
+    },
+    {
+      "path": "lib/three/organicTube.ts",
+      "sha256": "5dee2ec6711aaa2e497bfcf62ff06d5911bc9390e4f2e582c86dc126495460eb"
+    },
+    {
+      "path": "lib/three/parametricShell.ts",
+      "sha256": "199c805e5e09747715791598ae3a49e223eee118549112101d063f4f2e0f7b2b"
+    },
+    {
+      "path": "lib/three/petalContacts.ts",
+      "sha256": "00e987f3ad7819e75c27737a9c5e9d24766ac82014831b7c59150a9513a5eafd"
+    },
+    {
+      "path": "lib/three/petalDeformation.ts",
+      "sha256": "c0c730435a496a5bf51be3cbfe38d87bd4e23f28bb319d1f961a74f3296c0dc3"
+    },
+    {
+      "path": "lib/three/petalDynamics.ts",
+      "sha256": "8b90eedb0f183d90c89dea796e303e294b2cb36b57ff42bb9b78a80726071549"
+    },
+    {
+      "path": "lib/three/plantAttachments.ts",
+      "sha256": "93832196a6bd1cd62744e844307e687d7f43301e791aa410823821dd6434b71b"
+    },
+    {
+      "path": "lib/three/previewResidency.ts",
+      "sha256": "bfcf8f0734cc1dec01ac34fb3b18fb99bb8147c5df45b55747545ed7fa1a5baf"
+    },
+    {
+      "path": "lib/three/pubescence.ts",
+      "sha256": "315ca0bcda675d24706909312eac5f162301f378248d51bd21ff7e37a8c2eaac"
+    },
+    {
+      "path": "lib/three/sceneProgramPreparation.ts",
+      "sha256": "e2dd9e76a172df0b06a17efc915515dbc8db920c01f1aa619bd9880da0a5ce80"
+    },
+    {
+      "path": "lib/three/shadows.ts",
+      "sha256": "4e4e9685684358f03897af8390582549fddfc7f0210a969f30b26edd41cc815e"
+    },
+    {
+      "path": "lib/three/spadixGeometry.ts",
+      "sha256": "2e43b106d4d91ce3c23dff174021f08228a0e3c8d1233c205783ad10c8f92673"
+    },
+    {
+      "path": "lib/three/specimenMaterials.ts",
+      "sha256": "60ee68e9565e12fa97a24992b16530e2edf52b1803550a900f74de77af75ca08"
+    },
+    {
+      "path": "lib/three/specimenModel.ts",
+      "sha256": "061fc3f4afc5a898aba6e89c953af8fb3efcb7459b89677330b61d544792857f"
+    },
+    {
+      "path": "lib/three/specimenMotion.ts",
+      "sha256": "fc50d70116fa933bda4f2d86b45cee6f10273bf039998c0455ae4d00204db9e9"
+    },
+    {
+      "path": "lib/three/specimenSurfaceDetail.ts",
+      "sha256": "007ad8a8709e839f1f17ca5d80bf469d806fe71a79d393a342a097da36548972"
+    },
+    {
+      "path": "lib/three/specimenTissue.ts",
+      "sha256": "0478069c11e82719e311fb3b55d14922637f9e5ec5d265bc912685552a318c0f"
+    },
+    {
+      "path": "lib/three/studio-environment.ts",
+      "sha256": "40240db946ddd44242f722a8e1bffa931a07c9f7cdabd34e493734fd93f0bc86"
+    },
+    {
+      "path": "lib/three/surfaceBatch.ts",
+      "sha256": "7849afbd58b734e1a57838bf51a685a0a1595c9677b5dc9852c84dfff44bb3da"
+    },
+    {
+      "path": "lib/three/surfaceBatchPose.ts",
+      "sha256": "3828b9fa54592c0fabec565c586aa32763cb4fbd0db8629719ea2c5a5324e91e"
+    },
+    {
+      "path": "lib/three/surfaceClock.ts",
+      "sha256": "4ac05b7d2f33bfaf31bf1a4b84ce3c609c14052a1fb527bb1621af2374c28474"
+    },
+    {
+      "path": "package.json",
+      "sha256": "9f30fb5b40433db03b380cb1134182b83daf8633089828272642a51a1b6480d9"
+    },
+    {
+      "path": "pnpm-lock.yaml",
+      "sha256": "fbda95cd23ef06288880893a9334d5a4c2c844d43d4b3c8dafa91aaf24091783"
+    },
+    {
+      "path": "scripts/benchmark-petal-physics.ts",
+      "sha256": "466b5fcf2319d5023854df89e3198b63c61dc8ab01d7f10974c7f5de7904e125"
+    },
+    {
+      "path": "scripts/benchmark-specimen-rendering.ts",
+      "sha256": "5e9cf965293452b4b953f13a4334e7899c2bd934301d59a9f41b51840568878c"
+    },
+    {
+      "path": "tests/browser/render-costs.ts",
+      "sha256": "06832feb291036852408808ae88cca55496557cd92393c6aebd37a016121c4b2"
+    }
+  ]
+}

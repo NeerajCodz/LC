@@ -62,6 +62,11 @@ export function createSpecimenMaterial(
     m.sheen = response.sheen;
     m.clearcoat = response.coat;
   }
+  if (type === "allium" && tissue === "disc") {
+    m.roughness = 0.87;
+    m.sheen = 0.04;
+    m.clearcoat = 0;
+  }
   const previous = m.onBeforeCompile;
   if (type === "king-protea" && !green) {
     m.roughness = role === "bract" ? 0.66 : 0.78;
@@ -255,7 +260,7 @@ export function createSpecimenMaterial(
         : "specimen-calyx-v2";
     if (!green && tissue === "leaf" && response) return "specimen-calyx-v2";
     // Pigments are uniforms. Organ names alone must not compile duplicate programs.
-    if (!green && response) return "specimen-shared-tissue-v6";
+    if (!green && response) return "specimen-shared-tissue-v7";
     // Legacy organs also share a program when only their uniform pigments differ.
     // Three adds material features (sheen, clearcoat, morphs, instancing) itself.
     if (type === "king-protea") return "specimen-protea-fibers-v2";

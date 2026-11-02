@@ -8,6 +8,8 @@ Run `npm run docs:check` after documentation changes. It checks local Markdown l
 
 ## Specimen verification suites
 
+`distinct-floral-forms.spec.ts` exercises Trillium, Datura, Giant Allium, Rosemary Grevillea and Yellow Slipperwort through controls, themes, search, focused physics and both garden layouts. `distinct-floral-forms-inspection.spec.ts` captures their seven-view specimen/overview boards on Chromium and mobile WebKit. The corresponding dynamics suite uses actual transformed cages at both node ceilings. [Validation](validation/distinct-floral-forms-validation.md) separates checks from authored mechanics. Direct overview floral shells default to four axial intervals; explicit landmarks/minima and leaves retain their samples, and selected/focused tiers remain unchanged. `overview-tessellation.test.ts` and the complete overview census enforce those limits.
+
 `five-floral-forms.spec.ts` exercises Gazania, Salvia, Nicotiana, Lantana and
 Echinacea through specimen controls, themes, search and garden selection on both
 browser projects. `five-floral-forms-inspection.spec.ts` captures seven anatomical

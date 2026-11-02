@@ -30,6 +30,35 @@ const palette = (
 });
 
 export const PETAL_PALETTES: Record<FlowerType, PetalPalette> = {
+  trillium: palette(
+    "#d2d8af",
+    "#f1eee3",
+    "#faf4ed",
+    "#a4b080",
+    0.35,
+    0.8,
+    0.055,
+  ),
+  datura: palette("#a7b485", "#eeeada", "#f5f0e6", "#b0b791", 0.35, 0.8, 0.055),
+  allium: palette("#846797", "#b994ca", "#d1b5df", "#8d70a7", 0.35, 0.8, 0.055),
+  grevillea: palette(
+    "#94263f",
+    "#d13958",
+    "#df657a",
+    "#a22b4c",
+    0.35,
+    0.8,
+    0.055,
+  ),
+  calceolaria: palette(
+    "#cba137",
+    "#e8c14b",
+    "#f3d56c",
+    "#b99731",
+    0.35,
+    0.8,
+    0.055,
+  ),
   gazania: palette(
     "#d9a138",
     "#efb73c",

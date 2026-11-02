@@ -55,8 +55,14 @@ export const TISSUE_RESPONSE: Record<
   alstroemeria: { roughness: 0.61, sheen: 0.18, coat: 0.025, scatter: 0.06 },
   gerbera: { roughness: 0.72, sheen: 0.13, coat: 0, scatter: 0.065 },
   zinnia: { roughness: 0.78, sheen: 0.16, coat: 0, scatter: 0.055 },
+  trillium: { roughness: 0.56, sheen: 0.16, coat: 0.03, scatter: 0.055 },
+  datura: { roughness: 0.66, sheen: 0.19, coat: 0.008, scatter: 0.065 },
+  allium: { roughness: 0.59, sheen: 0.15, coat: 0.015, scatter: 0.05 },
+  grevillea: { roughness: 0.54, sheen: 0.14, coat: 0.035, scatter: 0.045 },
+  calceolaria: { roughness: 0.7, sheen: 0.19, coat: 0.008, scatter: 0.06 },
 };
 export function specimenTissueColor(type: string, tissue?: SpecimenTissue) {
+  if (type === "allium" && tissue === "disc") return "#b6a989";
   if (type === "gazania" && tissue === "disc") return "#c7932e";
   if (type === "echinacea" && tissue === "disc") return "#69452c";
   if (type === "echinacea" && tissue === "inner") return "#45303b";
@@ -97,6 +103,31 @@ export function specimenTissueColor(type: string, tissue?: SpecimenTissue) {
 export function specimenTissueShader(type: string, tissue?: SpecimenTissue) {
   if (tissue === "leaf") return "";
   switch (type) {
+    case "trillium":
+      return `float trPhase=(vPetalUv.y-abs(vPetalUv.x-.5)*.4)*44.;
+      float trVein=pow(.5+.5*cos(trPhase),20.)*(1.-smoothstep(.35,1.5,fwidth(trPhase)));
+      diffuseColor.rgb*=1.-trVein*.038;`;
+    case "datura":
+      return `float dtExterior=step(0.,vTissueSide);
+      float dtTube=1.-smoothstep(.3,.73,vPetalUv.y);
+      diffuseColor.rgb=mix(diffuseColor.rgb,uPigmentRoot,dtTube*dtExterior*.55);
+      float dtPhase=vPetalUv.x*31.415927;
+      float dtRib=pow(.5+.5*cos(dtPhase),15.)*(1.-smoothstep(.35,1.5,fwidth(dtPhase)));
+      diffuseColor.rgb*=1.-dtRib*.04;`;
+    case "allium":
+      if (tissue === "disc") return `diffuseColor.rgb*=1.+(tissue.g-.5)*.05;`;
+      return `float alPhase=vPetalUv.x*18.849556;
+      diffuseColor.rgb*=1.-.04*pow(.5+.5*cos(alPhase),16.)*(1.-smoothstep(.35,1.5,fwidth(alPhase)));`;
+    case "grevillea":
+      return `float grInside=1.-step(0.,vTissueSide);
+      float grTip=smoothstep(.69,.96,vPetalUv.y);
+      diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.82,.73,.53),grTip*(.22+.78*grInside)*.94);
+      diffuseColor.rgb*=1.+(tissue.g-.5)*.035;`;
+    case "calceolaria":
+      return `float caPhase=(vPetalUv.y-abs(vPetalUv.x-.5)*.2)*51.;
+      float caVein=pow(.5+.5*cos(caPhase),23.)*(1.-smoothstep(.35,1.5,fwidth(caPhase)));
+      diffuseColor.rgb*=1.-caVein*.035;
+      diffuseColor.rgb=mix(diffuseColor.rgb,uPigmentRoot,smoothstep(.83,.99,vPetalUv.y)*.12);`;
     case "gazania":
       if (tissue === "disc")
         return `diffuseColor.rgb*=1.-.07*pow(.5+.5*cos(vPetalUv.x*31.416),12.);`;

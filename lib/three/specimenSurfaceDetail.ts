@@ -8,6 +8,11 @@ export const SPECIMEN_SURFACE_RELIEF: Record<
   nicotiana: [0.000075, 0.000014, 5],
   lantana: [0.000095, 0.000026, 4],
   echinacea: [0.00021, 0.000025, 3],
+  trillium: [0.00009, 0.000016, 3],
+  datura: [0.0001, 0.000014, 5],
+  allium: [0.00004, 0.000006, 3],
+  grevillea: [0.00006, 0.000008, 4],
+  calceolaria: [0.00011, 0.00002, 8],
 };
 
 /** Reuses the shared atlas sample; derivatives suppress unresolved fine relief. */

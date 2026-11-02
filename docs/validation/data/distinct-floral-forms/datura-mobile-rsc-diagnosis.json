@@ -1,0 +1,271 @@
+{
+  "sourceCommit": "8d57c881a948a4e036cf6ecde2d7c692bb492d00",
+  "run": "isolated-production-1793650990272",
+  "case": "mobile-014",
+  "title": "datura: distinct floral forms collection, canonical redirect and selected garden stay usable",
+  "tracePath": "test-results/isolated-production-1793650990272/mobile-014/distinct-floral-forms-datu-13f74-selected-garden-stay-usable-mobile/trace.zip",
+  "traceSha256": "1b32d4dfd697ea1ea7474ee14a90943f11a5ff996c3c6308ccba1bf307a0edd3",
+  "classification": "Three BrowserContext pageError events, not console error events. Existing healthy() error assertion remains unchanged.",
+  "errors": [
+    {
+      "timeMs": 12209.724,
+      "message": "/localhost:1607/?_rsc=HUpHXb47zDsuf_wu due to access control checks.",
+      "stack": "Fetch API cannot load http://localhost:1607/?_rsc=HUpHXb47zDsuf_wu due to access control checks.\n    at w (http://localhost:1607/_next/static/chunks/0l7ao2jnn5lqc.js:1:22193)"
+    },
+    {
+      "timeMs": 12209.921,
+      "message": "/localhost:1607/flower/datura/?_rsc=HUpHXb47zDsuf_wu due to access control checks.",
+      "stack": "Fetch API cannot load http://localhost:1607/flower/datura/?_rsc=HUpHXb47zDsuf_wu due to access control checks.\n    at w (http://localhost:1607/_next/static/chunks/0l7ao2jnn5lqc.js:1:22193)"
+    },
+    {
+      "timeMs": 12210.367,
+      "message": "/localhost:1607/garden/?_rsc=HUpHXb47zDsuf_wu due to access control checks.",
+      "stack": "Fetch API cannot load http://localhost:1607/garden/?_rsc=HUpHXb47zDsuf_wu due to access control checks.\n    at w (http://localhost:1607/_next/static/chunks/0l7ao2jnn5lqc.js:1:22193)"
+    }
+  ],
+  "gardenNavigation": {
+    "callStartMs": 12173.5,
+    "navigationLogMs": 12202.832,
+    "callEndMs": 12301.763,
+    "documentRequest": {
+      "monotonicTimeMs": 12207.661,
+      "durationMs": 21.352,
+      "url": "http://localhost:1607/garden/",
+      "method": "GET",
+      "resourceType": "document",
+      "status": 200,
+      "redirectURL": "",
+      "failureText": null,
+      "headers": {
+        "sec-fetch-mode": "navigate",
+        "sec-fetch-site": "none"
+      },
+      "cookieCount": 0
+    }
+  },
+  "failedUrlNetworkMatches": {
+    "http://localhost:1607/?_rsc=HUpHXb47zDsuf_wu": 0,
+    "http://localhost:1607/flower/datura/?_rsc=HUpHXb47zDsuf_wu": 0,
+    "http://localhost:1607/garden/?_rsc=HUpHXb47zDsuf_wu": 0
+  },
+  "recordedRscResponses": {
+    "count": 15,
+    "statuses": {
+      "200": 15
+    }
+  },
+  "relevantSuccessfulTreePrefetches": [
+    {
+      "monotonicTimeMs": 2067.169,
+      "durationMs": 10.143,
+      "url": "http://localhost:1607/?_rsc=-9sLjSlgneXyRTK-",
+      "method": "GET",
+      "resourceType": "fetch",
+      "status": 200,
+      "redirectURL": "",
+      "failureText": null,
+      "headers": {
+        "referer": "http://localhost:1607/gallery/",
+        "sec-fetch-mode": "cors",
+        "sec-fetch-site": "same-origin",
+        "rsc": "1",
+        "next-router-prefetch": "1",
+        "next-router-segment-prefetch": "/_tree",
+        "next-url": "/gallery"
+      },
+      "cookieCount": 0
+    },
+    {
+      "monotonicTimeMs": 2067.508,
+      "durationMs": 10.147,
+      "url": "http://localhost:1607/flower/trillium/?_rsc=-9sLjSlgneXyRTK-",
+      "method": "GET",
+      "resourceType": "fetch",
+      "status": 200,
+      "redirectURL": "",
+      "failureText": null,
+      "headers": {
+        "referer": "http://localhost:1607/gallery/",
+        "sec-fetch-mode": "cors",
+        "sec-fetch-site": "same-origin",
+        "rsc": "1",
+        "next-router-prefetch": "1",
+        "next-router-segment-prefetch": "/_tree",
+        "next-url": "/gallery"
+      },
+      "cookieCount": 0
+    },
+    {
+      "monotonicTimeMs": 2067.594,
+      "durationMs": 10.224,
+      "url": "http://localhost:1607/garden/?_rsc=-9sLjSlgneXyRTK-",
+      "method": "GET",
+      "resourceType": "fetch",
+      "status": 200,
+      "redirectURL": "",
+      "failureText": null,
+      "headers": {
+        "referer": "http://localhost:1607/gallery/",
+        "sec-fetch-mode": "cors",
+        "sec-fetch-site": "same-origin",
+        "rsc": "1",
+        "next-router-prefetch": "1",
+        "next-router-segment-prefetch": "/_tree",
+        "next-url": "/gallery"
+      },
+      "cookieCount": 0
+    },
+    {
+      "monotonicTimeMs": 2067.822,
+      "durationMs": 10.175,
+      "url": "http://localhost:1607/flower/datura/?_rsc=-9sLjSlgneXyRTK-",
+      "method": "GET",
+      "resourceType": "fetch",
+      "status": 200,
+      "redirectURL": "",
+      "failureText": null,
+      "headers": {
+        "referer": "http://localhost:1607/gallery/",
+        "sec-fetch-mode": "cors",
+        "sec-fetch-site": "same-origin",
+        "rsc": "1",
+        "next-router-prefetch": "1",
+        "next-router-segment-prefetch": "/_tree",
+        "next-url": "/gallery"
+      },
+      "cookieCount": 0
+    },
+    {
+      "monotonicTimeMs": 12577.879,
+      "durationMs": 11.007000000000001,
+      "url": "http://localhost:1607/?_rsc=wifD_5khc6neTH24",
+      "method": "GET",
+      "resourceType": "fetch",
+      "status": 200,
+      "redirectURL": "",
+      "failureText": null,
+      "headers": {
+        "referer": "http://localhost:1607/garden/",
+        "sec-fetch-mode": "cors",
+        "sec-fetch-site": "same-origin",
+        "rsc": "1",
+        "next-router-prefetch": "1",
+        "next-router-segment-prefetch": "/_tree",
+        "next-url": "/garden"
+      },
+      "cookieCount": 0
+    },
+    {
+      "monotonicTimeMs": 12578.09,
+      "durationMs": 13.175999999999998,
+      "url": "http://localhost:1607/flower/trillium/?_rsc=wifD_5khc6neTH24",
+      "method": "GET",
+      "resourceType": "fetch",
+      "status": 200,
+      "redirectURL": "",
+      "failureText": null,
+      "headers": {
+        "referer": "http://localhost:1607/garden/",
+        "sec-fetch-mode": "cors",
+        "sec-fetch-site": "same-origin",
+        "rsc": "1",
+        "next-router-prefetch": "1",
+        "next-router-segment-prefetch": "/_tree",
+        "next-url": "/garden"
+      },
+      "cookieCount": 0
+    },
+    {
+      "monotonicTimeMs": 12578.161,
+      "durationMs": 13.107000000000001,
+      "url": "http://localhost:1607/garden/?_rsc=wifD_5khc6neTH24",
+      "method": "GET",
+      "resourceType": "fetch",
+      "status": 200,
+      "redirectURL": "",
+      "failureText": null,
+      "headers": {
+        "referer": "http://localhost:1607/garden/",
+        "sec-fetch-mode": "cors",
+        "sec-fetch-site": "same-origin",
+        "rsc": "1",
+        "next-router-prefetch": "1",
+        "next-router-segment-prefetch": "/_tree",
+        "next-url": "/garden"
+      },
+      "cookieCount": 0
+    }
+  ],
+  "canonicalRedirectChain": [
+    {
+      "monotonicTimeMs": 11798.811,
+      "durationMs": 13.314,
+      "url": "http://localhost:1607/?flower=datura",
+      "method": "GET",
+      "resourceType": "document",
+      "status": 200,
+      "redirectURL": "",
+      "failureText": null,
+      "headers": {
+        "sec-fetch-mode": "navigate",
+        "sec-fetch-site": "none"
+      },
+      "cookieCount": 0
+    },
+    {
+      "monotonicTimeMs": 11875.576,
+      "durationMs": 0,
+      "url": "http://localhost:1607/flower/datura",
+      "method": "GET",
+      "resourceType": "document",
+      "status": 308,
+      "redirectURL": "http://localhost:1607/flower/datura/",
+      "failureText": null,
+      "headers": {
+        "referer": "http://localhost:1607/?flower=datura",
+        "sec-fetch-mode": "navigate",
+        "sec-fetch-site": "same-origin"
+      },
+      "cookieCount": 0
+    },
+    {
+      "monotonicTimeMs": 11878.548,
+      "durationMs": 6.6579999999999995,
+      "url": "http://localhost:1607/flower/datura/",
+      "method": "GET",
+      "resourceType": "document",
+      "status": 200,
+      "redirectURL": "",
+      "failureText": null,
+      "headers": {
+        "referer": "http://localhost:1607/?flower=datura",
+        "sec-fetch-mode": "navigate",
+        "sec-fetch-site": "same-origin"
+      },
+      "cookieCount": 0
+    }
+  ],
+  "installedNextFingerprint": {
+    "module": "node_modules/next/dist/shared/lib/router/utils/cache-busting-search-param.js",
+    "function": "computeCacheBustingSearchParam",
+    "args": [
+      "1",
+      "/_tree",
+      "<undefined>",
+      "/flower/datura"
+    ],
+    "result": "HUpHXb47zDsuf_wu",
+    "verification": "Computed using the installed helper under Node24; this exactly matches all three failing URLs. Same helper maps next-url /gallery to -9sLjSlgneXyRTK- and /garden to wifD_5khc6neTH24, both recorded200.",
+    "credentialsSource": "node_modules/next/dist/client/components/router-reducer/fetch-server-response.js createFetch sets credentials:same-origin; failing request headers/credentials are not recorded on the wire.",
+    "interpretation": "Consistent with prior Datura document tree prefetch during hard navigation, not evidence of an HTTP CORS rejection. Cancellation/unloading as the mechanism remains plausible and unproven.",
+    "fingerprintLine": 55,
+    "createFetchLine": 460,
+    "credentialsLine": 482,
+    "exactInvocation": "computeCacheBustingSearchParam('1', '/_tree', undefined, '/flower/datura')"
+  },
+  "limits": [
+    "No network entries exist for failing URLs; their actual wire headers/status/origin and exact cancellation state cannot be recovered from this trace.",
+    "Stack identifies compiled Next createFetch w at0l7ao2jnn5lqc.js:1:22193. No full initiator chain is recorded for failed fetches.",
+    "No source changes, test filters or relaxed checks were applied during this diagnosis."
+  ]
+}

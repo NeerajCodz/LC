@@ -13,6 +13,61 @@ export interface FlowerInfo {
 
 export const FLOWERS: FlowerInfo[] = [
   {
+    type: "trillium",
+    name: "Great White Trillium",
+    latin: "Trillium grandiflorum",
+    family: "Melanthiaceae",
+    color: "#f1eee3",
+    description:
+      "Ivory in three broad folds.\nA quiet whorl beneath the flower.",
+    detail:
+      "Three undulating white petals and three green sepals frame six stamens and three stigma branches above a single whorl of broad bracts.",
+  },
+  {
+    type: "datura",
+    name: "Devil’s Trumpet",
+    latin: "Datura stramonium",
+    family: "Solanaceae",
+    color: "#eeeada",
+    description:
+      "A folded white trumpet.\nFive slender points open to the light.",
+    detail:
+      "A continuous upright plicate corolla opens above a toothed tubular calyx, included stamens and irregular foliage on a forked shoot.",
+  },
+  {
+    type: "allium",
+    name: "Giant Allium",
+    latin: "Allium giganteum",
+    family: "Amaryllidaceae",
+    color: "#b994ca",
+    description:
+      "Lilac stars gather in a globe.\nA tall scape rises from fading straps.",
+    detail:
+      "Separate six-tepalled flowers, six stamens and real radial pedicels form a dense umbel above restrained senescent basal foliage.",
+  },
+  {
+    type: "grevillea",
+    name: "Rosemary Grevillea",
+    latin: "Grevillea rosmarinifolia",
+    family: "Proteaceae",
+    color: "#d13958",
+    description:
+      "Crimson curls and cream tips.\nPaired flowers carry their pollen forward.",
+    detail:
+      "Four perianth segments curl from each curved style and lateral pollen presenter in compact paired clusters above narrow rolled leaves.",
+  },
+  {
+    type: "calceolaria",
+    name: "Yellow Slipperwort",
+    latin: "Calceolaria integrifolia",
+    family: "Calceolariaceae",
+    color: "#e8c14b",
+    description:
+      "Small hoods over golden pouches.\nSoft folds hold a narrow doorway.",
+    detail:
+      "Hollow fused two-lipped corollas preserve inflated lower lips, small upper hoods and two stamens above opposite rugose foliage.",
+  },
+  {
     type: "gazania",
     name: "Gazania",
     latin: "Gazania rigens",

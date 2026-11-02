@@ -1,3 +1,4 @@
+import { DISTINCT_FLORAL_MODELS } from "./distinct-floral-forms-models";
 import test from "node:test";
 import { FIVE_FLORAL_MODELS } from "./five-floral-forms-models";
 import assert from "node:assert/strict";
@@ -43,7 +44,9 @@ import { TORENIA_MODEL } from "../components/flowers/torenia/toreniaGeometry";
 
 const models: Record<string, SpecimenModel> = {
   ...Object.fromEntries(
-    FIVE_FLORAL_MODELS.map(({ slug, model }) => [slug, model]),
+    [...FIVE_FLORAL_MODELS, ...DISTINCT_FLORAL_MODELS].map(
+      ({ slug, model }) => [slug, model],
+    ),
   ),
   torenia: TORENIA_MODEL,
   lobelia: LOBELIA_MODEL,

@@ -3,7 +3,11 @@ import { BASE_STRUCTURE } from "@/lib/flowers/structure";
 import { FlowerPlant } from "../FlowerPlant";
 import { SpecimenAssembly } from "../SpecimenAssembly";
 import type { FlowerOrgansProps } from "../FloralParts";
-import { ALLIUM_MODEL, ALLIUM_HEAD_CENTER } from "./alliumGeometry";
+import {
+  ALLIUM_MODEL,
+  ALLIUM_HEAD_CENTER,
+  ALLIUM_STALKS,
+} from "./alliumGeometry";
 import { BotanicalStem, type StemAnatomy } from "../BotanicalStem";
 import type { StemProps } from "../Stem";
 import { ALLIUM_FOLIAGE_NODES, ALLIUM_LEAF_TILT } from "./alliumLeaf";
@@ -12,6 +16,7 @@ export const alliumStructure: FlowerStructure = {
   ...BASE_STRUCTURE,
   layers: [],
   headRadius: 1.03,
+  plantingRadius: 1.65,
   headTilt: 0,
   stemLength: 2.25,
   stemRadius: 0.034,
@@ -24,6 +29,7 @@ export const alliumStructure: FlowerStructure = {
   headCenter: ALLIUM_HEAD_CENTER,
 };
 const anatomy: StemAnatomy = {
+  headExtras: ALLIUM_STALKS,
   color: "#809160",
   nodes: ALLIUM_FOLIAGE_NODES,
   leafTilt: ALLIUM_LEAF_TILT,

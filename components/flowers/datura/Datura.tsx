@@ -9,6 +9,7 @@ export const daturaStructure: FlowerStructure = {
   ...BASE_STRUCTURE,
   layers: [],
   headRadius: 0.65,
+  plantingRadius: 1,
   headTilt: 0,
   stemLength: 1.65,
   stemRadius: 0.033,

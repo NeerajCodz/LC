@@ -105,9 +105,19 @@ test("datura: real included anthers and stigma fit the actual interpolated tube 
               }
             }
             const cavity = rb + ((ra - rb) * (y - below)) / (above - below);
+            const insertionY =
+                organ.points[0][1] * open +
+                (organ.foldedPoints?.[0][1] ?? organ.points[0][1]) * (1 - open),
+              attachedBase =
+                organ.name === "included datura filament" &&
+                y < insertionY + 0.12;
+            // Only the basal filament strip joins the wall. Distal filaments,
+            // anthers, style and stigma retain the original strict clearance.
+            const clearance = attachedBase
+              ? -tube.thickness * 0.25
+              : tube.thickness;
             assert.ok(
-              Number.isFinite(cavity) &&
-                Math.hypot(x, z) < cavity - tube.thickness,
+              Number.isFinite(cavity) && Math.hypot(x, z) < cavity - clearance,
               `${organ.name} exits cavity at bloom=${open}, y=${y}`,
             );
           }

@@ -5,6 +5,38 @@ import { flowerEnvelope } from "../lib/flowers/wind";
 import { FLOWER_STRUCTURES } from "../lib/flowers/structures";
 import type { FlowerType, Vec3 } from "../lib/flowers/types";
 
+test("both gardens reserve the complete new foliage footprint without enlarging head contact", () => {
+  assert.ok(
+    garden.plantingEnvelope("allium") >
+      flowerEnvelope(FLOWER_STRUCTURES.allium),
+  );
+  assert.equal(flowerEnvelope(FLOWER_STRUCTURES.allium), 1.03);
+  for (const plants of [
+    garden.GARDEN_PLANTINGS,
+    garden.MOBILE_GARDEN_PLANTINGS,
+  ])
+    for (let i = 0; i < plants.length; i++)
+      for (let j = 0; j < i; j++) {
+        const a = plants[i],
+          b = plants[j];
+        if (
+          FLOWER_STRUCTURES[a.type].plantingRadius === undefined &&
+          FLOWER_STRUCTURES[b.type].plantingRadius === undefined
+        )
+          continue;
+        const reach =
+          garden.plantingEnvelope(a.type) * a.scale +
+          garden.plantingEnvelope(b.type) * b.scale;
+        assert.ok(
+          Math.hypot(
+            a.position[0] - b.position[0],
+            a.position[2] - b.position[2],
+          ) >= reach,
+          `${a.type}/${b.type} foliage clearance`,
+        );
+      }
+});
+
 test("planting clearance separates a crowded composition deterministically without moving ground roots", () => {
   const arrange = (
     garden as typeof garden & {

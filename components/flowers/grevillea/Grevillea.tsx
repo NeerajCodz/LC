@@ -16,6 +16,7 @@ export const grevilleaStructure: FlowerStructure = {
   ...BASE_STRUCTURE,
   layers: [],
   headRadius: 1.12,
+  plantingRadius: 0.6,
   headTilt: 0,
   stemLength: 1.36,
   stemRadius: 0.024,

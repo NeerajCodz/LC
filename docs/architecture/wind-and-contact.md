@@ -2,6 +2,8 @@
 
 Project LC models a gentle breeze with a fixed planting point. The stem bends above the ground; the whole plant no longer rotates around its flower head. This is an artistic mechanical approximation, not a simulation of storms or uprooting.
 
+Species may declare `plantingRadius` to reserve their actual horizontal foliage footprint during initial garden placement. `plantingEnvelope` combines this with the existing head envelope; those plants reserve horizontal room even beside a shorter neighbour. Runtime head contact still uses `flowerEnvelope` and never receives this foliage clearance. Trillium and Allium consequently retain broad bracts/basal straps without enlarging their flower colliders. Actual open/folded leaf vertices, including their inner half-turn and node transforms, are checked against portrait and planting bounds.
+
 ## Botanical basis
 
 Reviewed September 10, 2026. [de Langre, Effects of Wind on Plants](https://doi.org/10.1146/annurev.fluid.40.111406.102135) discusses plant motion, aerodynamic reconfiguration, and coupling between wind and flexible vegetation. The [NC State sources for every current specimen](../botanical-references.md) inform the response classes below. Numeric spring parameters are authored, not measured species-specific elastic constants.

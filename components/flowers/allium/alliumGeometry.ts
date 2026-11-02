@@ -175,7 +175,6 @@ export const ALLIUM_PEDICELS: SpecimenOrgan[] = ordered.map((p, i) => {
     endRadius: 0.0032,
     color: "#9c91a3",
     tipColor: "#9b76af",
-    overviewSides: 3,
   };
 });
 export const ALLIUM_STALKS: SpecimenOrgan[] = [

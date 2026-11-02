@@ -8,6 +8,11 @@ interface Planting {
   position: Vec3;
   scale: number;
 }
+/** Full foliage reserves horizontal room without enlarging runtime head contact. */
+export function plantingEnvelope(type: FlowerType): number {
+  const structure = FLOWER_STRUCTURES[type];
+  return Math.max(flowerEnvelope(structure), structure.plantingRadius ?? 0);
+}
 // Every catalog species is planted on both layouts. A deterministic spiral
 // gives the collection room to grow without a separate hand-maintained subset.
 function collectionPlantings(mobile: boolean): Planting[] {
@@ -35,7 +40,8 @@ export function arrangePlantings(plants: readonly Planting[]): Planting[] {
     x: plant.position[0],
     y: GARDEN_GROUND + FLOWER_STRUCTURES[plant.type].stemLength * plant.scale,
     z: plant.position[2],
-    radius: flowerEnvelope(FLOWER_STRUCTURES[plant.type]) * plant.scale + 0.08,
+    radius: plantingEnvelope(plant.type) * plant.scale + 0.08,
+    fullFoliage: FLOWER_STRUCTURES[plant.type].plantingRadius !== undefined,
   }));
   // Placement resolves the full overlap once; runtime head contact keeps its
   // small displacement cap and never moves these planted roots.
@@ -45,7 +51,9 @@ export function arrangePlantings(plants: readonly Planting[]): Planting[] {
       for (let j = i + 1; j < bounds.length; j++) {
         const a = bounds[i],
           b = bounds[j],
-          dy = (b.y - a.y) * 1.65,
+          // Foliage below the head can meet a shorter neighbour at another
+          // height. Reserve its horizontal footprint independently of head y.
+          dy = a.fullFoliage || b.fullFoliage ? 0 : (b.y - a.y) * 1.65,
           reach = a.radius + b.radius;
         if (Math.abs(dy) >= reach) continue;
         const dx = b.x - a.x,
@@ -79,7 +87,7 @@ export function gardenDistance(mobile: boolean): number {
       Math.max(
         max,
         Math.abs(plant.position[0]) +
-          flowerEnvelope(FLOWER_STRUCTURES[plant.type]) * plant.scale,
+          plantingEnvelope(plant.type) * plant.scale,
       ),
     0,
   );

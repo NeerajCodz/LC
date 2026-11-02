@@ -12,6 +12,7 @@ export const trilliumStructure: FlowerStructure = {
   ...BASE_STRUCTURE,
   layers: [],
   headRadius: 1.06,
+  plantingRadius: 1.5,
   headTilt: 0,
   cameraElevation: 0.55,
   stemLength: 1.4,

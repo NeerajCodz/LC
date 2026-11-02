@@ -1,5 +1,6 @@
 import type { Vec3 } from "@/lib/flowers/types";
 import { SINGLE_CLUSTER, type SpecimenModel } from "@/lib/three/specimenModel";
+const DATURA_COROLLA_THICKNESS = 0.011;
 
 /** A single periodic fused wall, with five plicate ridges continuing into slender rim teeth. */
 export function daturaCorolla(u: number, v: number, open: number): Vec3 {
@@ -20,6 +21,26 @@ export function daturaCorolla(u: number, v: number, open: number): Vec3 {
     y = (1.43 + 0.07 * open) * v + 0.075 * tooth * v ** 10 * open;
   return [Math.sin(a) * r, y, Math.cos(a) * r];
 }
+/** A basal epipetalous insertion on the same finite-difference inner skin as the shell. */
+function filamentInsertion(index: number, open: number): Vec3 {
+  const u = (index + 0.5) / 5,
+    v = 0.25,
+    point = daturaCorolla(u, v, open),
+    left = daturaCorolla(u - 0.0001, v, open),
+    right = daturaCorolla(u + 0.0001, v, open),
+    below = daturaCorolla(u, v - 0.0001, open),
+    above = daturaCorolla(u, v + 0.0001, open),
+    du = right.map((x, i) => x - left[i]),
+    dv = above.map((x, i) => x - below[i]),
+    normal = [
+      du[1] * dv[2] - du[2] * dv[1],
+      du[2] * dv[0] - du[0] * dv[2],
+      du[0] * dv[1] - du[1] * dv[0],
+    ],
+    offset =
+      (DATURA_COROLLA_THICKNESS * (1 - 0.2 * v) * 0.5) / Math.hypot(...normal);
+  return point.map((x, i) => x - normal[i] * offset) as Vec3;
+}
 export const DATURA_HEAD_CENTER: Vec3 = [0, 0.83, 0];
 export const DATURA_MODEL: SpecimenModel = {
   ambientSurfaceBatching: true,
@@ -31,9 +52,12 @@ export const DATURA_MODEL: SpecimenModel = {
       role: "tube",
       periodic: true,
       sample: daturaCorolla,
-      thickness: 0.011,
+      thickness: DATURA_COROLLA_THICKNESS,
       outerSide: 1,
       flexible: true,
+      // The calyx supports the basal tube and its epipetalous insertions.
+      // Free distal tissue retains detailed contact; this support is authored.
+      pinnedBase: 0.4,
       cage: [20, 10],
       mobileCage: [10, 6],
       overviewColumns: 20,
@@ -75,7 +99,7 @@ const add = (
   endRadius = radius * 0.65,
   flatten = 1,
 ) => {
-  DATURA_MODEL.organs.push({
+  const organ = {
     name,
     cluster: 0,
     bloomMorph: true,
@@ -90,17 +114,20 @@ const add = (
     endRadius,
     color,
     flatten,
-  });
+  };
+  DATURA_MODEL.organs.push(organ);
+  return organ;
 };
 for (let i = 0; i < 5; i++) {
   const a = ((i + 0.5) * Math.PI * 2) / 5,
     p = (r: number, y: number): Vec3 => [Math.sin(a) * r, y, Math.cos(a) * r];
-  add(
+  const filament = add(
     "included datura filament",
-    [p(0.027, 0.49), p(0.025, 0.91), p(0.025, 1.12)],
+    [filamentInsertion(i, 1), p(0.025, 0.91), p(0.025, 1.12)],
     0.0045,
     "#e6e1c5",
   );
+  filament.foldedPoints[0] = filamentInsertion(i, 0);
   add(
     "included datura anther",
     [p(0.025, 1.1), p(0.026, 1.17), p(0.027, 1.24)],

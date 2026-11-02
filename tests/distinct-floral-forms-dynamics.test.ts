@@ -108,6 +108,20 @@ const STILL: SurfaceForces = {
 };
 
 for (const { slug, model } of DISTINCT_FLORAL_MODELS) {
+  test(`${slug}: equal elapsed time gives identical contact state at 30, 60 and 120 Hz`, () => {
+    for (const constrained of [false, true]) {
+      const runs = [30, 60, 120].map((rate) => {
+        const { sim } = simulationFor(model, constrained);
+        for (let frame = 0; frame < rate * 0.4; frame++)
+          sim.step(1 / rate, { ...STILL, wind: 0.7, pulse: 0.3, time: 0.4 });
+        return sim;
+      });
+      for (const sim of runs.slice(1)) {
+        assert.deepEqual(sim.positions, runs[0].positions);
+        assert.deepEqual(sim.velocity, runs[0].velocity);
+      }
+    }
+  });
   test(`${slug}: transformed whole-model cages retain pins through contact, pulse and uninterrupted reverse bloom`, (t) => {
     for (const constrained of [false, true]) {
       const { sim, indices, patches, clusters, restAt } = simulationFor(

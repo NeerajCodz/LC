@@ -161,6 +161,8 @@ export interface FlowerStructure {
   layers: PetalLayer[];
   /** Conservative head bounds for non-radial organs. */
   headRadius?: number;
+  /** Horizontal foliage clearance for initial planting only; never a head collider. */
+  plantingRadius?: number;
   headCenter?: Vec3;
   /** Full-plant bounds relative to its head insertion, for a complete portrait. */
   portraitBounds?: { min: Vec3; max: Vec3 };

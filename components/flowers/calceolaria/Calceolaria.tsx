@@ -19,6 +19,7 @@ export const calceolariaStructure: FlowerStructure = {
   ...BASE_STRUCTURE,
   layers: [],
   headRadius: 1.1,
+  plantingRadius: 0.95,
   headTilt: 0,
   stemLength: 1.78,
   stemRadius: 0.029,

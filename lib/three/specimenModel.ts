@@ -163,7 +163,8 @@ function specimenGrid(surface: SpecimenSurface, quality: Quality) {
       : resolution[0];
   const rows =
     quality === "overview"
-      ? (surface.overviewRows ?? resolution[1])
+      ? (surface.overviewRows ??
+        (surface.tissue === "leaf" ? resolution[1] : 4))
       : resolution[1];
   return {
     columns: Math.max(columns, surface.minimumColumns ?? 0),

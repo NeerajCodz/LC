@@ -1,0 +1,2215 @@
+{
+  "primarySourceCommit": "8d57c881a948a4e036cf6ecde2d7c692bb492d00",
+  "codeManifest": "source-manifest.json",
+  "buildId": "k325WqYepIL7-GU-wW3WW",
+  "mode": "production",
+  "status": "passed-after-recorded-retry",
+  "acceptedCases": 60,
+  "attempts": 61,
+  "failedAttempts": [
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "distinct-floral-forms.spec.ts",
+      "title": "datura: distinct floral forms collection, canonical redirect and selected garden stay usable",
+      "exit": 1,
+      "passed": false,
+      "stats": {
+        "startTime": "2026-11-02T20:30:42.335Z",
+        "duration": 35488.733,
+        "expected": 0,
+        "skipped": 0,
+        "unexpected": 1,
+        "flaky": 0
+      },
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 5\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"/localhost:1607/?_rsc=HUpHXb47zDsuf_wu due to access control checks.\",\u001b[39m\n\u001b[31m+   \"/localhost:1607/flower/datura/?_rsc=HUpHXb47zDsuf_wu due to access control checks.\",\u001b[39m\n\u001b[31m+   \"/localhost:1607/garden/?_rsc=HUpHXb47zDsuf_wu due to access control checks.\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n   at cymes-and-spikes-cases.ts:55\n\n  53 |   });\n  54 |   return async () => {\n> 55 |     expect(errors).toEqual([]);\n     |                    ^\n  56 |     // The binding survives navigation, so a redirect cannot clear prior losses.\n  57 |     expect(contextLosses).toBe(0);\n  58 |     expect(\n    at healthy (E:\\codz\\Projects\\lc\\tests\\browser\\cymes-and-spikes-cases.ts:55:20)\n    at E:\\codz\\Projects\\lc\\tests\\browser\\distinct-floral-forms.spec.ts:268:11"
+      ],
+      "reportSha256": "c300b226b3286619848b590eaf4f38b5b33823acf8ccc707ef7b101e54f180de"
+    }
+  ],
+  "accepted": [
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "distinct-floral-forms.spec.ts",
+      "title": "trillium: distinct floral forms preserve bloom, macro, pulse, pause and reduced motion",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:23:10.722Z",
+        "duration": 17512.868,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "7089728f844e95a3487881fc170f087701b5bfd99c2cccc19ba72cbaf7d7b9f9"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "distinct-floral-forms.spec.ts",
+      "title": "trillium: distinct floral forms collection, canonical redirect and selected garden stay usable",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:23:28.809Z",
+        "duration": 45646.113,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "99c41d3742bb47ea0eea705e3d18c215f2137a4fe1bd611be27c851664f5b5d7"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "distinct-floral-forms.spec.ts",
+      "title": "datura: distinct floral forms preserve bloom, macro, pulse, pause and reduced motion",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:24:15.249Z",
+        "duration": 16851.683999999997,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "972f7cc2accd11fbbb55261f2fbf44d880a0f47cbb9a355ebd657660f7ca8eee"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "distinct-floral-forms.spec.ts",
+      "title": "datura: distinct floral forms collection, canonical redirect and selected garden stay usable",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:24:32.639Z",
+        "duration": 36792.172,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "3445b58cd0a80cffa17c06c061d59d0d64509d593ab7e4f0eadcf4b3ef4338a0"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "distinct-floral-forms.spec.ts",
+      "title": "allium: distinct floral forms preserve bloom, macro, pulse, pause and reduced motion",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:25:10.120Z",
+        "duration": 33383.30100000001,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "05740e41c32031ec42d1d5da300118bf26c3f55104127e14208fff1dbe99528d"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "distinct-floral-forms.spec.ts",
+      "title": "allium: distinct floral forms collection, canonical redirect and selected garden stay usable",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:25:44.569Z",
+        "duration": 56294.615999999995,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "5d59df881cd4df8f317b5c14b0ea0e54cb0a562dc95004c0f69fb036309c5948"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "distinct-floral-forms.spec.ts",
+      "title": "grevillea: distinct floral forms preserve bloom, macro, pulse, pause and reduced motion",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:26:41.489Z",
+        "duration": 28443.436,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "2e079301b6cb5e4b181801a8d89b4fd0bf0d81c99cffc53af45d13a07f9b3751"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "distinct-floral-forms.spec.ts",
+      "title": "grevillea: distinct floral forms collection, canonical redirect and selected garden stay usable",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:27:10.650Z",
+        "duration": 35138.676999999996,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "e36565df7252b756365c683a0d50a6ef623b49341e62e007325a488470594615"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "distinct-floral-forms.spec.ts",
+      "title": "calceolaria: distinct floral forms preserve bloom, macro, pulse, pause and reduced motion",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:27:46.419Z",
+        "duration": 26946.275,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "ce92944ae7ec644efcde879284e422d32707d70ebe2e0bb00c823f9094aad674"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "distinct-floral-forms.spec.ts",
+      "title": "calceolaria: distinct floral forms collection, canonical redirect and selected garden stay usable",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:28:14.108Z",
+        "duration": 46003.309,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "f41643286ce2705e832479a57c56eedf13cdb3a699f37822590f003393c75811"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "distinct-floral-forms.spec.ts",
+      "title": "trillium: distinct floral forms preserve bloom, macro, pulse, pause and reduced motion",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:29:00.928Z",
+        "duration": 36654.391,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "b5096b48a90575e306d8ffc0779f0d75859621fffdadb771251e382c41742f3d"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "distinct-floral-forms.spec.ts",
+      "title": "trillium: distinct floral forms collection, canonical redirect and selected garden stay usable",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:29:38.232Z",
+        "duration": 36916.573,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "a744eb5653822856780eba5fc806ebf74a11beda706b6c44746ab8171c5905fb"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "distinct-floral-forms.spec.ts",
+      "title": "datura: distinct floral forms preserve bloom, macro, pulse, pause and reduced motion",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:30:15.922Z",
+        "duration": 25875.996,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "58856a41c117269c1741a120592184adf174c4159f55159fe01c6cf5424af2ab"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "distinct-floral-forms.spec.ts",
+      "title": "allium: distinct floral forms preserve bloom, macro, pulse, pause and reduced motion",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:31:18.532Z",
+        "duration": 52636.784,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "1c850a99d58500176bd51f61094a7da5dae54401fa609d9b416b1ac299b93543"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "distinct-floral-forms.spec.ts",
+      "title": "allium: distinct floral forms collection, canonical redirect and selected garden stay usable",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:32:15.776Z",
+        "duration": 56856.761999999995,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "738fb6e293411f47de2154b6df917a9697eca070814c56d478675d60a0281128"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "distinct-floral-forms.spec.ts",
+      "title": "grevillea: distinct floral forms preserve bloom, macro, pulse, pause and reduced motion",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:33:13.259Z",
+        "duration": 25098.968999999997,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "fd793f06293165916109fce5bc9342d2c344bcd3bc4a78b711ff038d01ab45e0"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "distinct-floral-forms.spec.ts",
+      "title": "grevillea: distinct floral forms collection, canonical redirect and selected garden stay usable",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:33:38.917Z",
+        "duration": 39134.9,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "f98f4cfd94ad77b40cc685d3cfaaeb51644dfc54f54fdcc4710ace6ae3f96131"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "distinct-floral-forms.spec.ts",
+      "title": "calceolaria: distinct floral forms preserve bloom, macro, pulse, pause and reduced motion",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:34:18.605Z",
+        "duration": 26383.273999999998,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "0f73ba67392cb09aca221ae13f1404cb079b2a8740d6f137ea8036daea9a8534"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "distinct-floral-forms.spec.ts",
+      "title": "calceolaria: distinct floral forms collection, canonical redirect and selected garden stay usable",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:34:45.642Z",
+        "duration": 37403.17999999999,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "7bb046da08ff9762c874b84210923b340b2cd60cb7cf506bd9e834ee755a8fbf"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "document-lifecycle.spec.ts",
+      "title": "document navigation releases its renderer contexts and back navigation restores viewing",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:35:23.649Z",
+        "duration": 11222.36,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "991ba5ee9abbc0a10f263a0f600f9874e6074c4b30fbda6fb8d8491b4587c19e"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "document-lifecycle.spec.ts",
+      "title": "document navigation releases its renderer contexts and back navigation restores viewing",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:35:35.387Z",
+        "duration": 10659.809000000001,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "af275bc732a47660a6c65501feab45e36f8a961b193339321acbc2b1f1b57ab6"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "garden-preparation.spec.ts",
+      "title": "early garden selection preserves its loader until real shaders and flower pixels are ready",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:35:46.561Z",
+        "duration": 11724.798999999999,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "4adc8db4ffbd8df412a1c72efca5351d2198f7f61aa350b6ad386c96bd44c5fa"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "garden-preparation.spec.ts",
+      "title": "returning to the retained garden polls recreated programs without restarting its canvas or loader",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:35:58.878Z",
+        "duration": 16608.277,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "8dd8e77ebe685584d1127b263a70e51fcd814835696ec01292c255c6ae9748a3"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "garden-preparation.spec.ts",
+      "title": "native-profile garden return polls recreated programs without blocking page controls",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:36:16.057Z",
+        "duration": 21655.229,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "cb272c63af328305ca2c8608b2b18c4c4abaf6e0e426f541d3d882c989e2031c"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "garden-preparation.spec.ts",
+      "title": "context loss during shader preparation cancels polling and explicit retry draws the garden",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:36:38.251Z",
+        "duration": 15801.601,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "25102cfa7a160298c927e2c07c174777289a7072c1a64cef7175a861ad66407c"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "garden-preparation.spec.ts",
+      "title": "early garden selection preserves its loader until real shaders and flower pixels are ready",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:36:54.613Z",
+        "duration": 16812.542999999998,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "c35c229e5140e6eb4e600ebe156903a078d1c74fb3eb1a44ffcf028d423edd33"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "garden-preparation.spec.ts",
+      "title": "returning to the retained garden polls recreated programs without restarting its canvas or loader",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:37:11.940Z",
+        "duration": 20994.670000000002,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "bd9f308fcbba4bfa4e94882a4931ae9fe30f400479102dcb0a2ebf2a5eb8840a"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "garden-preparation.spec.ts",
+      "title": "native-profile garden return polls recreated programs without blocking page controls",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:37:33.565Z",
+        "duration": 22093.365,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "0481cb1a15a4e57da6d97bc3187c11302000447a49933324c716a3accae5d0e2"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "garden-preparation.spec.ts",
+      "title": "context loss during shader preparation cancels polling and explicit retry draws the garden",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:37:56.230Z",
+        "duration": 17418.273,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "70e3444e54f12c43b6d21c90f5527fb51e8814ff2454fbc5a86ba85d75bebe04"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "lifecycle.spec.ts",
+      "title": "gallery preview teardown and route changes keep Canvas providers alive",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:38:14.172Z",
+        "duration": 16688.672,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "d6ee45995b9ab68fcf21364973d0d000f76280bf0169a5f4cbf1d7b7e40fbb3b"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "lifecycle.spec.ts",
+      "title": "specimen loader releases before the visibility observer responds",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:38:31.493Z",
+        "duration": 5587.869,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "1c1fbb92bd212f9824801231920b1c6b252dfdb211ad17998f6a7dbf619dcd46"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "lifecycle.spec.ts",
+      "title": "complete flower viewing works when WebGPU is unavailable",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:38:37.733Z",
+        "duration": 6867.231,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "b4fa77b01bf477a06bab31d003e29ae5677343a27033e7f15142b2b35637a5af"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "lifecycle.spec.ts",
+      "title": "catalog routes stay usable when WebGL 2 is unavailable",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:38:45.221Z",
+        "duration": 2667.2879999999996,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "fdccc8a4aa6088690dd15cb973427f58cc1a92b39153082b37572c63a14b2467"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "lifecycle.spec.ts",
+      "title": "gallery preview teardown and route changes keep Canvas providers alive",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:38:48.654Z",
+        "duration": 13085.980000000001,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "99d8852cf8e35c316e95916a73b444352889ce909ac8b016651d7d38f96335c1"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "lifecycle.spec.ts",
+      "title": "specimen loader releases before the visibility observer responds",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:39:02.310Z",
+        "duration": 4195.349,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "dcb315f3e22789d21fbe3b1824e88699910b68ddb2fe5126a57711cdd464318c"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "lifecycle.spec.ts",
+      "title": "complete flower viewing works when WebGPU is unavailable",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:39:07.090Z",
+        "duration": 5641.045999999999,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "75e6f4e118232290a60d5775b88b84b520ccb005099246c27d66d447f2b73412"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "lifecycle.spec.ts",
+      "title": "catalog routes stay usable when WebGL 2 is unavailable",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:39:13.263Z",
+        "duration": 2587.021,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "887580c95f60f37d4931f23844de8185e745f685f8e1cc1d6cb1ff1d7ac929c4"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "rendering-fallback.spec.ts",
+      "title": "botanical browsing survives a null WebGL probe",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:39:16.388Z",
+        "duration": 3294.0730000000003,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "4c1d6af580162df35593155b3931f85433ac09189b6ef88c8112ede1c4ede0ed"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "rendering-fallback.spec.ts",
+      "title": "botanical browsing survives a throw WebGL probe",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:39:20.203Z",
+        "duration": 3359.192,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "418858d188fff53b5bd564e3f0753133145980d7022b17fdec1163931e705ca5"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "rendering-fallback.spec.ts",
+      "title": "renderer setup rejection stays inside the optional scene",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:39:24.111Z",
+        "duration": 2345.7740000000003,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "57ec0c995996ec0176953170102360f07b7e137cbeaaa99657b437aa9ea5d141"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "rendering-fallback.spec.ts",
+      "title": "context loss stops rendering and explicit retry keeps bloom state",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:39:27.099Z",
+        "duration": 10947.338,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "a2711237e6bf035d07c98145d6efa4556d23e5c13c4ccdafea95bc270122745a"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "rendering-fallback.spec.ts",
+      "title": "an exception during drawing stops the frame loop without failing the route",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:39:38.599Z",
+        "duration": 9260.902,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "6788802dc5ca043582a98893ef09f9a65801eb5697da611496711e16d841ca5d"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "rendering-fallback.spec.ts",
+      "title": "botanical browsing survives a null WebGL probe",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:39:48.555Z",
+        "duration": 4274.879,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "bfb542a84b88d53c977cc50fc4fb3e5c16daf700c5c04508e2ae5b23aaad0adf"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "rendering-fallback.spec.ts",
+      "title": "botanical browsing survives a throw WebGL probe",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:39:53.404Z",
+        "duration": 4145.858,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "32c82b9ecb4f296a3900dfdd604330b86192caddd1175671f72cb5d0aeae2cb3"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "rendering-fallback.spec.ts",
+      "title": "renderer setup rejection stays inside the optional scene",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:39:58.121Z",
+        "duration": 2366.192,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "a7a03214f2f6b7376b19fca22b9cff341710b4d1311abb136994b1bc385f962f"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "rendering-fallback.spec.ts",
+      "title": "context loss stops rendering and explicit retry keeps bloom state",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:40:01.031Z",
+        "duration": 12212.8,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "03765e2ae8e572a14e853e769554d803716993600abcee1bce752f78e8499af6"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "rendering-fallback.spec.ts",
+      "title": "an exception during drawing stops the frame loop without failing the route",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:40:13.770Z",
+        "duration": 6156.005,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "1a4a001f620e00c19330f5ddca0cf588e8bcc6be0daf79f12dd57bffd777c2ad"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "retention.spec.ts",
+      "title": "all catalog scenes survive a round-trip scroll in one WebGL context",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:40:20.485Z",
+        "duration": 82622.886,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "cf2f1d0d693f20584f88ccdc530f88bf791e45e23276e18059ac07a2b1b32406"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "retention.spec.ts",
+      "title": "specimen angle views and scroll study retain canvases and bloom",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:41:43.670Z",
+        "duration": 9411.654999999999,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "7dd9cc690eef6a718637bbe12f3501652f6e7f5f146189dab50c52e3a6ea8844"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "retention.spec.ts",
+      "title": "all catalog scenes survive a round-trip scroll in one WebGL context",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:41:53.623Z",
+        "duration": 110753.277,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "7f5a41a82a462daa819b2d821c0691a16f9c92679cf7ef452cf64db6b1948735"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "retention.spec.ts",
+      "title": "specimen angle views and scroll study retain canvases and bloom",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:43:45.031Z",
+        "duration": 11207.471,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "3a6f91f82a4972de4688dd889a4ab55401fd6073296a4494876880bb91f183a6"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "scroll.spec.ts",
+      "title": "collection keeps flowers aligned with captions while scrolling",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:43:56.735Z",
+        "duration": 6283.876,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "03079bec688935fe140f54467894f13517a9b955eb9a279882effd45f2f2450f"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "scroll.spec.ts",
+      "title": "specimen hero keeps flowers aligned with captions while scrolling",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:44:03.531Z",
+        "duration": 5210.819,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "7a3cfe80f49843d123323fb435b5eada25cd0c9b224df39ccfbc77e6c77fd035"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "scroll.spec.ts",
+      "title": "specimen angle gallery keeps flowers aligned with captions while scrolling",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:44:09.311Z",
+        "duration": 7788.420999999999,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "53f7bec44dc5842257562d8e2a9ad40d5ee22fa9a37603a50d00f3df3da33994"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "scroll.spec.ts",
+      "title": "collection keeps flowers aligned with captions while scrolling",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:44:17.652Z",
+        "duration": 4809.213,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "4468e5bae149b4072535f389ad873edfb248459ef0fcf0dbc00916b43e1df320"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "scroll.spec.ts",
+      "title": "specimen hero keeps flowers aligned with captions while scrolling",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:44:22.991Z",
+        "duration": 3659.0389999999998,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "62d44cf662a6f6131ccf514cebfe26e1fb9704366ca7a96f0e64b332b44a566e"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "scroll.spec.ts",
+      "title": "specimen angle gallery keeps flowers aligned with captions while scrolling",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:44:27.149Z",
+        "duration": 7131.25,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "ba84162a85db758b060045dcb41f6789ab22864f22c5c09a6726c5b8c7d76bc3"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "shader-reuse.spec.ts",
+      "title": "shadowless garden shader sources stay shared through canvas reconfiguration",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:44:34.977Z",
+        "duration": 17438.435999999998,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "936eb9122f67251f3c75faaad07897c9d50841bbd209bc23df910a5ec7177b6c"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "shader-reuse.spec.ts",
+      "title": "shadowless garden shader sources stay shared through canvas reconfiguration",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:44:52.959Z",
+        "duration": 21036.285,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "5b1b4c0629cc5c19f66973c0020e8f64005384dd1ca23960396e413d1413af87"
+    },
+    {
+      "run": "isolated-production-1793652341455",
+      "project": "mobile",
+      "file": "distinct-floral-forms.spec.ts",
+      "title": "datura: distinct floral forms collection, canonical redirect and selected garden stay usable",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:45:42.102Z",
+        "duration": 45417.257999999994,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "313dbe699bdc4f1a95f1cddf3a9d5d4e0c4594ef6e05f8c4092482bd082d75ac"
+    }
+  ],
+  "allAttempts": [
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "distinct-floral-forms.spec.ts",
+      "title": "trillium: distinct floral forms preserve bloom, macro, pulse, pause and reduced motion",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:23:10.722Z",
+        "duration": 17512.868,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "7089728f844e95a3487881fc170f087701b5bfd99c2cccc19ba72cbaf7d7b9f9"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "distinct-floral-forms.spec.ts",
+      "title": "trillium: distinct floral forms collection, canonical redirect and selected garden stay usable",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:23:28.809Z",
+        "duration": 45646.113,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "99c41d3742bb47ea0eea705e3d18c215f2137a4fe1bd611be27c851664f5b5d7"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "distinct-floral-forms.spec.ts",
+      "title": "datura: distinct floral forms preserve bloom, macro, pulse, pause and reduced motion",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:24:15.249Z",
+        "duration": 16851.683999999997,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "972f7cc2accd11fbbb55261f2fbf44d880a0f47cbb9a355ebd657660f7ca8eee"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "distinct-floral-forms.spec.ts",
+      "title": "datura: distinct floral forms collection, canonical redirect and selected garden stay usable",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:24:32.639Z",
+        "duration": 36792.172,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "3445b58cd0a80cffa17c06c061d59d0d64509d593ab7e4f0eadcf4b3ef4338a0"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "distinct-floral-forms.spec.ts",
+      "title": "allium: distinct floral forms preserve bloom, macro, pulse, pause and reduced motion",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:25:10.120Z",
+        "duration": 33383.30100000001,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "05740e41c32031ec42d1d5da300118bf26c3f55104127e14208fff1dbe99528d"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "distinct-floral-forms.spec.ts",
+      "title": "allium: distinct floral forms collection, canonical redirect and selected garden stay usable",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:25:44.569Z",
+        "duration": 56294.615999999995,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "5d59df881cd4df8f317b5c14b0ea0e54cb0a562dc95004c0f69fb036309c5948"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "distinct-floral-forms.spec.ts",
+      "title": "grevillea: distinct floral forms preserve bloom, macro, pulse, pause and reduced motion",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:26:41.489Z",
+        "duration": 28443.436,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "2e079301b6cb5e4b181801a8d89b4fd0bf0d81c99cffc53af45d13a07f9b3751"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "distinct-floral-forms.spec.ts",
+      "title": "grevillea: distinct floral forms collection, canonical redirect and selected garden stay usable",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:27:10.650Z",
+        "duration": 35138.676999999996,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "e36565df7252b756365c683a0d50a6ef623b49341e62e007325a488470594615"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "distinct-floral-forms.spec.ts",
+      "title": "calceolaria: distinct floral forms preserve bloom, macro, pulse, pause and reduced motion",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:27:46.419Z",
+        "duration": 26946.275,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "ce92944ae7ec644efcde879284e422d32707d70ebe2e0bb00c823f9094aad674"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "distinct-floral-forms.spec.ts",
+      "title": "calceolaria: distinct floral forms collection, canonical redirect and selected garden stay usable",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:28:14.108Z",
+        "duration": 46003.309,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "f41643286ce2705e832479a57c56eedf13cdb3a699f37822590f003393c75811"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "distinct-floral-forms.spec.ts",
+      "title": "trillium: distinct floral forms preserve bloom, macro, pulse, pause and reduced motion",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:29:00.928Z",
+        "duration": 36654.391,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "b5096b48a90575e306d8ffc0779f0d75859621fffdadb771251e382c41742f3d"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "distinct-floral-forms.spec.ts",
+      "title": "trillium: distinct floral forms collection, canonical redirect and selected garden stay usable",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:29:38.232Z",
+        "duration": 36916.573,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "a744eb5653822856780eba5fc806ebf74a11beda706b6c44746ab8171c5905fb"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "distinct-floral-forms.spec.ts",
+      "title": "datura: distinct floral forms preserve bloom, macro, pulse, pause and reduced motion",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:30:15.922Z",
+        "duration": 25875.996,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "58856a41c117269c1741a120592184adf174c4159f55159fe01c6cf5424af2ab"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "distinct-floral-forms.spec.ts",
+      "title": "datura: distinct floral forms collection, canonical redirect and selected garden stay usable",
+      "exit": 1,
+      "passed": false,
+      "stats": {
+        "startTime": "2026-11-02T20:30:42.335Z",
+        "duration": 35488.733,
+        "expected": 0,
+        "skipped": 0,
+        "unexpected": 1,
+        "flaky": 0
+      },
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 5\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"/localhost:1607/?_rsc=HUpHXb47zDsuf_wu due to access control checks.\",\u001b[39m\n\u001b[31m+   \"/localhost:1607/flower/datura/?_rsc=HUpHXb47zDsuf_wu due to access control checks.\",\u001b[39m\n\u001b[31m+   \"/localhost:1607/garden/?_rsc=HUpHXb47zDsuf_wu due to access control checks.\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n   at cymes-and-spikes-cases.ts:55\n\n  53 |   });\n  54 |   return async () => {\n> 55 |     expect(errors).toEqual([]);\n     |                    ^\n  56 |     // The binding survives navigation, so a redirect cannot clear prior losses.\n  57 |     expect(contextLosses).toBe(0);\n  58 |     expect(\n    at healthy (E:\\codz\\Projects\\lc\\tests\\browser\\cymes-and-spikes-cases.ts:55:20)\n    at E:\\codz\\Projects\\lc\\tests\\browser\\distinct-floral-forms.spec.ts:268:11"
+      ],
+      "reportSha256": "c300b226b3286619848b590eaf4f38b5b33823acf8ccc707ef7b101e54f180de"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "distinct-floral-forms.spec.ts",
+      "title": "allium: distinct floral forms preserve bloom, macro, pulse, pause and reduced motion",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:31:18.532Z",
+        "duration": 52636.784,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "1c850a99d58500176bd51f61094a7da5dae54401fa609d9b416b1ac299b93543"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "distinct-floral-forms.spec.ts",
+      "title": "allium: distinct floral forms collection, canonical redirect and selected garden stay usable",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:32:15.776Z",
+        "duration": 56856.761999999995,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "738fb6e293411f47de2154b6df917a9697eca070814c56d478675d60a0281128"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "distinct-floral-forms.spec.ts",
+      "title": "grevillea: distinct floral forms preserve bloom, macro, pulse, pause and reduced motion",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:33:13.259Z",
+        "duration": 25098.968999999997,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "fd793f06293165916109fce5bc9342d2c344bcd3bc4a78b711ff038d01ab45e0"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "distinct-floral-forms.spec.ts",
+      "title": "grevillea: distinct floral forms collection, canonical redirect and selected garden stay usable",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:33:38.917Z",
+        "duration": 39134.9,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "f98f4cfd94ad77b40cc685d3cfaaeb51644dfc54f54fdcc4710ace6ae3f96131"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "distinct-floral-forms.spec.ts",
+      "title": "calceolaria: distinct floral forms preserve bloom, macro, pulse, pause and reduced motion",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:34:18.605Z",
+        "duration": 26383.273999999998,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "0f73ba67392cb09aca221ae13f1404cb079b2a8740d6f137ea8036daea9a8534"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "distinct-floral-forms.spec.ts",
+      "title": "calceolaria: distinct floral forms collection, canonical redirect and selected garden stay usable",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:34:45.642Z",
+        "duration": 37403.17999999999,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "7bb046da08ff9762c874b84210923b340b2cd60cb7cf506bd9e834ee755a8fbf"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "document-lifecycle.spec.ts",
+      "title": "document navigation releases its renderer contexts and back navigation restores viewing",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:35:23.649Z",
+        "duration": 11222.36,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "991ba5ee9abbc0a10f263a0f600f9874e6074c4b30fbda6fb8d8491b4587c19e"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "document-lifecycle.spec.ts",
+      "title": "document navigation releases its renderer contexts and back navigation restores viewing",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:35:35.387Z",
+        "duration": 10659.809000000001,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "af275bc732a47660a6c65501feab45e36f8a961b193339321acbc2b1f1b57ab6"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "garden-preparation.spec.ts",
+      "title": "early garden selection preserves its loader until real shaders and flower pixels are ready",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:35:46.561Z",
+        "duration": 11724.798999999999,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "4adc8db4ffbd8df412a1c72efca5351d2198f7f61aa350b6ad386c96bd44c5fa"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "garden-preparation.spec.ts",
+      "title": "returning to the retained garden polls recreated programs without restarting its canvas or loader",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:35:58.878Z",
+        "duration": 16608.277,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "8dd8e77ebe685584d1127b263a70e51fcd814835696ec01292c255c6ae9748a3"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "garden-preparation.spec.ts",
+      "title": "native-profile garden return polls recreated programs without blocking page controls",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:36:16.057Z",
+        "duration": 21655.229,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "cb272c63af328305ca2c8608b2b18c4c4abaf6e0e426f541d3d882c989e2031c"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "garden-preparation.spec.ts",
+      "title": "context loss during shader preparation cancels polling and explicit retry draws the garden",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:36:38.251Z",
+        "duration": 15801.601,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "25102cfa7a160298c927e2c07c174777289a7072c1a64cef7175a861ad66407c"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "garden-preparation.spec.ts",
+      "title": "early garden selection preserves its loader until real shaders and flower pixels are ready",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:36:54.613Z",
+        "duration": 16812.542999999998,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "c35c229e5140e6eb4e600ebe156903a078d1c74fb3eb1a44ffcf028d423edd33"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "garden-preparation.spec.ts",
+      "title": "returning to the retained garden polls recreated programs without restarting its canvas or loader",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:37:11.940Z",
+        "duration": 20994.670000000002,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "bd9f308fcbba4bfa4e94882a4931ae9fe30f400479102dcb0a2ebf2a5eb8840a"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "garden-preparation.spec.ts",
+      "title": "native-profile garden return polls recreated programs without blocking page controls",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:37:33.565Z",
+        "duration": 22093.365,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "0481cb1a15a4e57da6d97bc3187c11302000447a49933324c716a3accae5d0e2"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "garden-preparation.spec.ts",
+      "title": "context loss during shader preparation cancels polling and explicit retry draws the garden",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:37:56.230Z",
+        "duration": 17418.273,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "70e3444e54f12c43b6d21c90f5527fb51e8814ff2454fbc5a86ba85d75bebe04"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "lifecycle.spec.ts",
+      "title": "gallery preview teardown and route changes keep Canvas providers alive",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:38:14.172Z",
+        "duration": 16688.672,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "d6ee45995b9ab68fcf21364973d0d000f76280bf0169a5f4cbf1d7b7e40fbb3b"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "lifecycle.spec.ts",
+      "title": "specimen loader releases before the visibility observer responds",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:38:31.493Z",
+        "duration": 5587.869,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "1c1fbb92bd212f9824801231920b1c6b252dfdb211ad17998f6a7dbf619dcd46"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "lifecycle.spec.ts",
+      "title": "complete flower viewing works when WebGPU is unavailable",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:38:37.733Z",
+        "duration": 6867.231,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "b4fa77b01bf477a06bab31d003e29ae5677343a27033e7f15142b2b35637a5af"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "lifecycle.spec.ts",
+      "title": "catalog routes stay usable when WebGL 2 is unavailable",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:38:45.221Z",
+        "duration": 2667.2879999999996,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "fdccc8a4aa6088690dd15cb973427f58cc1a92b39153082b37572c63a14b2467"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "lifecycle.spec.ts",
+      "title": "gallery preview teardown and route changes keep Canvas providers alive",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:38:48.654Z",
+        "duration": 13085.980000000001,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "99d8852cf8e35c316e95916a73b444352889ce909ac8b016651d7d38f96335c1"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "lifecycle.spec.ts",
+      "title": "specimen loader releases before the visibility observer responds",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:39:02.310Z",
+        "duration": 4195.349,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "dcb315f3e22789d21fbe3b1824e88699910b68ddb2fe5126a57711cdd464318c"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "lifecycle.spec.ts",
+      "title": "complete flower viewing works when WebGPU is unavailable",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:39:07.090Z",
+        "duration": 5641.045999999999,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "75e6f4e118232290a60d5775b88b84b520ccb005099246c27d66d447f2b73412"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "lifecycle.spec.ts",
+      "title": "catalog routes stay usable when WebGL 2 is unavailable",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:39:13.263Z",
+        "duration": 2587.021,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "887580c95f60f37d4931f23844de8185e745f685f8e1cc1d6cb1ff1d7ac929c4"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "rendering-fallback.spec.ts",
+      "title": "botanical browsing survives a null WebGL probe",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:39:16.388Z",
+        "duration": 3294.0730000000003,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "4c1d6af580162df35593155b3931f85433ac09189b6ef88c8112ede1c4ede0ed"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "rendering-fallback.spec.ts",
+      "title": "botanical browsing survives a throw WebGL probe",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:39:20.203Z",
+        "duration": 3359.192,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "418858d188fff53b5bd564e3f0753133145980d7022b17fdec1163931e705ca5"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "rendering-fallback.spec.ts",
+      "title": "renderer setup rejection stays inside the optional scene",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:39:24.111Z",
+        "duration": 2345.7740000000003,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "57ec0c995996ec0176953170102360f07b7e137cbeaaa99657b437aa9ea5d141"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "rendering-fallback.spec.ts",
+      "title": "context loss stops rendering and explicit retry keeps bloom state",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:39:27.099Z",
+        "duration": 10947.338,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "a2711237e6bf035d07c98145d6efa4556d23e5c13c4ccdafea95bc270122745a"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "rendering-fallback.spec.ts",
+      "title": "an exception during drawing stops the frame loop without failing the route",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:39:38.599Z",
+        "duration": 9260.902,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "6788802dc5ca043582a98893ef09f9a65801eb5697da611496711e16d841ca5d"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "rendering-fallback.spec.ts",
+      "title": "botanical browsing survives a null WebGL probe",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:39:48.555Z",
+        "duration": 4274.879,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "bfb542a84b88d53c977cc50fc4fb3e5c16daf700c5c04508e2ae5b23aaad0adf"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "rendering-fallback.spec.ts",
+      "title": "botanical browsing survives a throw WebGL probe",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:39:53.404Z",
+        "duration": 4145.858,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "32c82b9ecb4f296a3900dfdd604330b86192caddd1175671f72cb5d0aeae2cb3"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "rendering-fallback.spec.ts",
+      "title": "renderer setup rejection stays inside the optional scene",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:39:58.121Z",
+        "duration": 2366.192,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "a7a03214f2f6b7376b19fca22b9cff341710b4d1311abb136994b1bc385f962f"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "rendering-fallback.spec.ts",
+      "title": "context loss stops rendering and explicit retry keeps bloom state",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:40:01.031Z",
+        "duration": 12212.8,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "03765e2ae8e572a14e853e769554d803716993600abcee1bce752f78e8499af6"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "rendering-fallback.spec.ts",
+      "title": "an exception during drawing stops the frame loop without failing the route",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:40:13.770Z",
+        "duration": 6156.005,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "1a4a001f620e00c19330f5ddca0cf588e8bcc6be0daf79f12dd57bffd777c2ad"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "retention.spec.ts",
+      "title": "all catalog scenes survive a round-trip scroll in one WebGL context",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:40:20.485Z",
+        "duration": 82622.886,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "cf2f1d0d693f20584f88ccdc530f88bf791e45e23276e18059ac07a2b1b32406"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "retention.spec.ts",
+      "title": "specimen angle views and scroll study retain canvases and bloom",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:41:43.670Z",
+        "duration": 9411.654999999999,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "7dd9cc690eef6a718637bbe12f3501652f6e7f5f146189dab50c52e3a6ea8844"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "retention.spec.ts",
+      "title": "all catalog scenes survive a round-trip scroll in one WebGL context",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:41:53.623Z",
+        "duration": 110753.277,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "7f5a41a82a462daa819b2d821c0691a16f9c92679cf7ef452cf64db6b1948735"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "retention.spec.ts",
+      "title": "specimen angle views and scroll study retain canvases and bloom",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:43:45.031Z",
+        "duration": 11207.471,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "3a6f91f82a4972de4688dd889a4ab55401fd6073296a4494876880bb91f183a6"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "scroll.spec.ts",
+      "title": "collection keeps flowers aligned with captions while scrolling",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:43:56.735Z",
+        "duration": 6283.876,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "03079bec688935fe140f54467894f13517a9b955eb9a279882effd45f2f2450f"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "scroll.spec.ts",
+      "title": "specimen hero keeps flowers aligned with captions while scrolling",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:44:03.531Z",
+        "duration": 5210.819,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "7a3cfe80f49843d123323fb435b5eada25cd0c9b224df39ccfbc77e6c77fd035"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "scroll.spec.ts",
+      "title": "specimen angle gallery keeps flowers aligned with captions while scrolling",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:44:09.311Z",
+        "duration": 7788.420999999999,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "53f7bec44dc5842257562d8e2a9ad40d5ee22fa9a37603a50d00f3df3da33994"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "scroll.spec.ts",
+      "title": "collection keeps flowers aligned with captions while scrolling",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:44:17.652Z",
+        "duration": 4809.213,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "4468e5bae149b4072535f389ad873edfb248459ef0fcf0dbc00916b43e1df320"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "scroll.spec.ts",
+      "title": "specimen hero keeps flowers aligned with captions while scrolling",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:44:22.991Z",
+        "duration": 3659.0389999999998,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "62d44cf662a6f6131ccf514cebfe26e1fb9704366ca7a96f0e64b332b44a566e"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "scroll.spec.ts",
+      "title": "specimen angle gallery keeps flowers aligned with captions while scrolling",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:44:27.149Z",
+        "duration": 7131.25,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "ba84162a85db758b060045dcb41f6789ab22864f22c5c09a6726c5b8c7d76bc3"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "desktop",
+      "file": "shader-reuse.spec.ts",
+      "title": "shadowless garden shader sources stay shared through canvas reconfiguration",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:44:34.977Z",
+        "duration": 17438.435999999998,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "936eb9122f67251f3c75faaad07897c9d50841bbd209bc23df910a5ec7177b6c"
+    },
+    {
+      "run": "isolated-production-1793650990272",
+      "project": "mobile",
+      "file": "shader-reuse.spec.ts",
+      "title": "shadowless garden shader sources stay shared through canvas reconfiguration",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:44:52.959Z",
+        "duration": 21036.285,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "5b1b4c0629cc5c19f66973c0020e8f64005384dd1ca23960396e413d1413af87"
+    },
+    {
+      "run": "isolated-production-1793652341455",
+      "project": "mobile",
+      "file": "distinct-floral-forms.spec.ts",
+      "title": "datura: distinct floral forms collection, canonical redirect and selected garden stay usable",
+      "exit": 0,
+      "passed": true,
+      "stats": {
+        "startTime": "2026-11-02T20:45:42.102Z",
+        "duration": 45417.257999999994,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "reportSha256": "313dbe699bdc4f1a95f1cddf3a9d5d4e0c4594ef6e05f8c4092482bd082d75ac"
+    }
+  ]
+}

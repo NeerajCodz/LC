@@ -25,7 +25,7 @@ export const FLOWERS: FlowerInfo[] = [
   },
   {
     type: "datura",
-    name: "Devil�s Trumpet",
+    name: "Devil’s Trumpet",
     latin: "Datura stramonium",
     family: "Solanaceae",
     color: "#eeeada",

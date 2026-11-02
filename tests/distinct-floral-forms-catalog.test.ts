@@ -21,6 +21,12 @@ for (const [slug, latin, family] of APPROVED)
     assert.equal(entries.length, 1, `${slug} must appear exactly once`);
     assert.equal(entries[0].latin, latin);
     assert.equal(entries[0].family, family);
+    assert.ok(
+      ![entries[0].name, entries[0].description, entries[0].detail].some(
+        (text) => text.includes("\uFFFD"),
+      ),
+      "public botanical text must not contain encoding replacement characters",
+    );
     const structure = FLOWER_STRUCTURES[type];
     assert.equal(
       structure.layers.length,
